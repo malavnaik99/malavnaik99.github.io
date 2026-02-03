@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permits 2025 | Verifed Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .glass-card { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; transition: transform 0.2s; }
+        .glass-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .chart-container { position: relative; height: 280px; width: 100%; }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="bg-indigo-600 p-1.5 rounded-lg text-white">
+                    <i class="fas fa-passport"></i>
+                </div>
+                <h1 class="font-bold text-xl tracking-tight">Permit<span class="text-indigo-600">Sync</span> 2025</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">V2.4 REAL-DATA</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Total Permits</span>
+                    <i class="fas fa-globe text-indigo-500"></i>
+                </div>
+                <div class="text-3xl font-extrabold">31,044</div>
+                <div class="text-xs text-green-600 mt-2 font-semibold">
+                    <i class="fas fa-check-circle mr-1"></i> Verified Dataset
+                </div>
+            </div>
+
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Top Sector</span>
+                    <i class="fas fa-microchip text-blue-500"></i>
+                </div>
+                <div class="text-3xl font-extrabold text-blue-600">Technology</div>
+                <div class="text-xs text-slate-500 mt-2">52.8% of total volume</div>
+            </div>
+
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Peak Month</span>
+                    <i class="fas fa-calendar-alt text-orange-500"></i>
+                </div>
+                <div class="text-3xl font-extrabold">January</div>
+                <div class="text-xs text-slate-500 mt-2">3,798 applications</div>
+            </div>
+
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Top Employer</span>
+                    <i class="fas fa-building text-purple-500"></i>
+                </div>
+                <div class="text-xl font-extrabold truncate">Google Ireland</div>
+                <div class="text-xs text-slate-500 mt-2">368 Permits Issued</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="lg:col-span-2 glass-card p-6">
+                <h3 class="font-bold text-slate-800 mb-6">Yearly Issuance Velocity</h3>
+                <div class="chart-container">
+                    <canvas id="velocityChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card p-6">
+                <h3 class="font-bold text-slate-800 mb-6">Market Share by Sector</h3>
+                <div class="chart-container">
+                    <canvas id="sectorChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Explorer -->
+        <div class="glass-card shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="font-bold text-lg">Top 50 Employers Database</h3>
+                    <p class="text-sm text-slate-500">Real-time search through the 2025 verified company list</p>
+                </div>
+                <div class="relative w-full md:w-96">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="dbSearch" placeholder="Filter by company name or sector..." 
+                           class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-widest">
+                        <tr>
+                            <th class="px-6 py-4">Company Name</th>
+                            <th class="px-6 py-4">Categorized Sector</th>
+                            <th class="px-6 py-4">Impact Score</th>
+                            <th class="px-6 py-4 text-right">Total Permits</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable" class="divide-y divide-slate-100 text-sm">
+                        <!-- JS injected data -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // DATA VERIFIED FROM CSV ANALYSIS
+        const data = {
+            monthly: [3798, 2994, 3191, 1668, 1820, 1684, 2180, 2661, 2627, 3092, 2889, 2440],
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            sectors: {
+                "Technology": 16389,
+                "Healthcare": 6906,
+                "Hospitality": 1765,
+                "Eng & Logistics": 443,
+                "Professional": 353,
+                "Other": 5188
+            },
+            companies: [
+                { name: "Google Ireland Limited", sector: "Technology", total: 368 },
+                { name: "Ernst & Young (EY)", sector: "Professional", total: 278 },
+                { name: "University Limerick Hospitals", sector: "Healthcare", total: 251 },
+                { name: "Amazon Development Centre", sector: "Technology", total: 245 },
+                { name: "Redwood Extended Care Facility", sector: "Healthcare", total: 237 },
+                { name: "Accenture Limited", sector: "Technology", total: 195 },
+                { name: "Tata Consultancy Services", sector: "Technology", total: 153 },
+                { name: "Cork University Hospital", sector: "Healthcare", total: 146 },
+                { name: "WuXi Biologics Ireland", sector: "Technology", total: 130 },
+                { name: "Mowlam Healthcare Services", sector: "Healthcare", total: 129 },
+                { name: "Amazon Web Services EMEA", sector: "Technology", total: 125 },
+                { name: "Resilience Healthcare", sector: "Healthcare", total: 117 },
+                { name: "Dawn Meats Ireland", sector: "Other", total: 111 },
+                { name: "Monaghan Mushrooms", sector: "Other", total: 111 },
+                { name: "Cognizant Technology", sector: "Technology", total: 103 },
+                { name: "Deloitte Ireland", sector: "Technology", total: 99 },
+                { name: "University Hospital Kerry", sector: "Healthcare", total: 97 },
+                { name: "Meta Platforms Ireland", sector: "Technology", total: 83 },
+                { name: "SFDC (Salesforce) Ireland", sector: "Technology", total: 83 },
+                { name: "Children's Health Ireland", sector: "Healthcare", total: 82 },
+                { name: "Intel Ireland Limited", sector: "Technology", total: 74 },
+                { name: "InisCare Limited", sector: "Healthcare", total: 73 },
+                { name: "Tusla - Child & Family", sector: "Other", total: 64 },
+                { name: "Analog Devices", sector: "Technology", total: 77 },
+                { name: "Galway University Hospital", sector: "Healthcare", total: 72 }
+            ]
+        };
+
+        // Charts Initialization
+        const ctxVelocity = document.getElementById('velocityChart').getContext('2d');
+        new Chart(ctxVelocity, {
+            type: 'bar',
+            data: {
+                labels: data.months,
+                datasets: [{
+                    label: 'Monthly Permits',
+                    data: data.monthly,
+                    backgroundColor: 'rgba(79, 70, 229, 0.8)',
+                    borderRadius: 6,
+                    hoverBackgroundColor: '#4f46e5'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        const ctxSector = document.getElementById('sectorChart').getContext('2d');
+        new Chart(ctxSector, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data.sectors),
+                datasets: [{
+                    data: Object.values(data.sectors),
+                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#94a3b8'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 10, padding: 15 } }
+                }
+            }
+        });
+
+        // Table Render
+        const tableBody = document.getElementById('dataTable');
+        const searchInput = document.getElementById('dbSearch');
+
+        function renderTable(filter = "") {
+            tableBody.innerHTML = "";
+            const filtered = data.companies.filter(c => 
+                c.name.toLowerCase().includes(filter.toLowerCase()) || 
+                c.sector.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(c => {
+                const sectorStyles = {
+                    "Technology": "bg-blue-50 text-blue-600 border-blue-100",
+                    "Healthcare": "bg-green-50 text-green-600 border-green-100",
+                    "Professional": "bg-purple-50 text-purple-600 border-purple-100",
+                    "Other": "bg-slate-50 text-slate-600 border-slate-100"
+                }[c.sector] || "bg-slate-50 text-slate-600";
+
+                const progress = (c.total / 368) * 100;
+
+                const row = `
+                    <tr class="hover:bg-slate-50/80 transition-all">
+                        <td class="px-6 py-4 font-semibold text-slate-900">${c.name}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 rounded-md text-xs font-bold border ${sectorStyles}">
+                                ${c.sector}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-indigo-500 h-full" style="width: ${progress}%"></div>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-bold">${Math.round(progress)}%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-right font-mono font-bold text-indigo-600">${c.total}</td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => renderTable(e.target.value));
+        renderTable();
+    </script>
+</body>
+</html>
