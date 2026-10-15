@@ -1,0 +1,20 @@
+---
+layout: default
+title: LinkedIn login code
+permalink: /linkedin-callback/
+sitemap: false
+---
+<meta name="robots" content="noindex">
+<h1>Your LinkedIn code</h1>
+<p>Copy this code and paste it to Claude Code.</p>
+<p id="code" style="font-size:1.4rem;font-weight:700;word-break:break-all;background:rgba(127,127,127,.12);padding:1rem;border-radius:8px">No code found in this link.</p>
+<button id="copy" style="font-size:1.2rem;padding:.6rem 1.4rem">Copy</button>
+<script>
+  var code = new URLSearchParams(location.search).get("code");
+  var err = new URLSearchParams(location.search).get("error_description");
+  if (code) document.getElementById("code").textContent = code;
+  else if (err) document.getElementById("code").textContent = "LinkedIn said: " + err;
+  document.getElementById("copy").onclick = function () {
+    navigator.clipboard.writeText(code || "").then(function () { document.getElementById("copy").textContent = "Copied ✓"; });
+  };
+</script>

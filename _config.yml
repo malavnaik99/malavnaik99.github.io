@@ -1,0 +1,18 @@
+title: Malav Naik
+description: Data, AI and trust & safety. Notes from 10 years of building with data, now in Dublin.
+url: https://malavnaik99.github.io
+author: Malav Naik
+permalink: /blog/:slug/
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+exclude:
+  - README.md
+defaults:
+  - scope: { path: "", type: posts }
+    values: { layout: post }
+social:
+  name: Malav Naik
+  links:
+    - https://www.linkedin.com/in/malav-naik
+    - https://github.com/malavnaik99
