@@ -37,6 +37,6 @@ profiles:
   - { name: Medium, url: "https://medium.com/@malavnaik206" }
   - { name: MSc thesis, url: "https://norma.ncirl.ie/9439/" }
 # Filled in once Malav creates the accounts (public values, not secrets).
-goatcounter: ""
+goatcounter: "malavnaik"
 webmaster_verifications:
   google: ""
