@@ -4,36 +4,54 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% seo %}
+  {% feed_meta %}
+  <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+  {% if page.person_jsonld %}{% include jsonld-person.html %}{% endif %}
   <style>
-    :root { --text: #1f2328; --muted: #59636e; --bg: #fff; --link: #0b57d0; --line: #e5e7eb; }
-    @media (prefers-color-scheme: dark) { :root { --text: #e6e6e6; --muted: #a0a7b0; --bg: #111418; --link: #8ab4f8; --line: #2a2f36; } }
+    :root { --text: #1f2328; --muted: #59636e; --bg: #fff; --card: #f6f8fa; --link: #0b57d0; --line: #e5e7eb; }
+    @media (prefers-color-scheme: dark) { :root { --text: #e6e6e6; --muted: #a0a7b0; --bg: #111418; --card: #1a1f25; --link: #8ab4f8; --line: #2a2f36; } }
     body { margin: 0; background: var(--bg); color: var(--text); font: 18px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .wrap { max-width: 42rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
-    nav { display: flex; gap: 1.25rem; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: .75rem; margin-bottom: 2rem; }
+    .wrap { max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+    .skip { position: absolute; left: -999px; } .skip:focus { left: 1rem; top: 1rem; background: var(--bg); padding: .5rem; }
+    nav { display: flex; gap: .4rem 1.1rem; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: .75rem; margin-bottom: 2rem; font-size: .95rem; }
     nav a:first-child { font-weight: 700; margin-right: auto; color: var(--text); }
+    nav a[aria-current] { text-decoration: underline; }
     a { color: var(--link); text-decoration: none; } a:hover { text-decoration: underline; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
     img { max-width: 100%; height: auto; border-radius: 8px; }
-    h1 { line-height: 1.25; } .muted { color: var(--muted); font-size: .9rem; }
-    pre { overflow-x: auto; background: rgba(127,127,127,.12); padding: .75rem; border-radius: 6px; font-size: .85rem; }
+    h1 { line-height: 1.25; font-size: clamp(1.6rem, 6vw, 2.2rem); } .muted { color: var(--muted); font-size: .9rem; }
+    pre { overflow-x: auto; background: var(--card); padding: .75rem; border-radius: 6px; font-size: .85rem; }
     code { font-size: .9em; } table { border-collapse: collapse; display: block; overflow-x: auto; }
     td, th { border: 1px solid var(--line); padding: .3rem .6rem; }
     ul.posts { list-style: none; padding: 0; } ul.posts li { margin: 0 0 1.1rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; padding: 0; list-style: none; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; }
+    .card h3 { margin: 0 0 .4rem; font-size: 1.05rem; } .card p { margin: 0 0 .5rem; font-size: .92rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: .35rem; padding: 0; list-style: none; }
+    .chips li { background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: .05rem .6rem; font-size: .8rem; }
+    .hero { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+    .hero img { width: 9rem; height: 9rem; object-fit: cover; border-radius: 50%; }
+    .hero div { flex: 1 1 16rem; }
     footer { margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+    footer ul { display: flex; flex-wrap: wrap; gap: .3rem 1rem; padding: 0; list-style: none; margin: .3rem 0 0; }
+    @page { margin: 12mm 14mm; }
+    @media print { nav, footer, .noprint { display: none; } body { font-size: 10pt; line-height: 1.45; } .wrap { padding: 0; } h1 { font-size: 18pt; margin: 0 0 .3rem; } h2 { font-size: 12.5pt; margin: .9rem 0 .3rem; } p, ul, dl { margin: .3rem 0; } a { color: inherit; } }
   </style>
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <div class="wrap">
-    <nav>
-      <a href="/">Malav Naik</a>
-      <a href="/">Blog</a>
-      <a href="/about/">About</a>
-      <a href="/permits-2025/">Projects</a>
+    <nav aria-label="Main">
+      {% assign nav = "/|Malav Naik,/projects/|Projects,/blog/|Blog,/about/|About,/resume/|Résumé,/now/|Now" | split: "," %}
+      {% for item in nav %}{% assign p = item | split: "|" %}<a href="{{ p[0] | relative_url }}"{% if page.url == p[0] %} aria-current="page"{% endif %}>{{ p[1] }}</a>
+      {% endfor %}
     </nav>
-    <main>{{ content }}</main>
+    <main id="main">{{ content }}</main>
     <footer class="muted">
-      <a href="https://www.linkedin.com/in/malav-naik">LinkedIn</a> ·
-      <a href="https://github.com/malavnaik99">GitHub</a>
+      Find me online:
+      <ul>{% for p in site.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}<li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li></ul>
     </footer>
   </div>
+  {% if site.goatcounter != "" %}<script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>{% endif %}
 </body>
 </html>

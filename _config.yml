@@ -1,18 +1,42 @@
 title: Malav Naik
-description: Data, AI and trust & safety. Notes from 10 years of building with data, now in Dublin.
+tagline: Data Analyst & Data Engineer (GenAI) in Dublin, Ireland
+description: Malav Naik is a data analyst and data engineer in Dublin, Ireland, building with SQL, Python, Azure and generative AI, and writing about data engineering, GenAI and trust & safety.
+# The one line to change when moving to malavnaik.com (see HOW_IT_WORKS.md in the claudecode repo).
 url: https://malavnaik99.github.io
 author: Malav Naik
+image: /images/malav-naik-portrait.jpg
 permalink: /blog/:slug/
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-feed
 exclude:
   - README.md
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
 defaults:
   - scope: { path: "", type: posts }
     values: { layout: post }
+  - scope: { path: "", type: projects }
+    values: { layout: project }
 social:
   name: Malav Naik
   links:
     - https://www.linkedin.com/in/malav-naik
     - https://github.com/malavnaik99
+    - https://dev.to/malavnaik_0381711024683d4
+    - https://medium.com/@malavnaik206
+    - https://norma.ncirl.ie/9439/
+# "Find me online" links. Only profiles Malav actually has.
+profiles:
+  - { name: LinkedIn, url: "https://www.linkedin.com/in/malav-naik" }
+  - { name: GitHub, url: "https://github.com/malavnaik99" }
+  - { name: DEV, url: "https://dev.to/malavnaik_0381711024683d4" }
+  - { name: Medium, url: "https://medium.com/@malavnaik206" }
+  - { name: MSc thesis, url: "https://norma.ncirl.ie/9439/" }
+# Filled in once Malav creates the accounts (public values, not secrets).
+goatcounter: ""
+webmaster_verifications:
+  google: ""

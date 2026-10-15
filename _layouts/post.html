@@ -1,8 +1,20 @@
 ---
 layout: default
 ---
+{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200 | at_least: 1 %}
 <article>
   <h1>{{ page.title }}</h1>
-  <p class="muted">{{ page.date | date: "%-d %B %Y" }}</p>
+  <p class="muted">{{ page.date | date: "%-d %B %Y" }} · {{ minutes }} min read · by <a href="{{ '/about/' | relative_url }}">Malav Naik</a>
+    {% if page.series %}· <a href="{{ '/blog/topics/' | relative_url }}#series-{{ page.series }}">{{ page.series | replace: "-", " " | capitalize }}</a>{% endif %}</p>
   {{ content }}
+  {% if page.tags.size > 0 %}
+  <ul class="chips" aria-label="Tags">{% for t in page.tags %}<li><a href="{{ '/blog/topics/' | relative_url }}#tag-{{ t }}">#{{ t }}</a></li>{% endfor %}</ul>
+  {% endif %}
 </article>
+{% assign related = site.posts | where: "series", page.series | where_exp: "p", "p.url != page.url" %}
+{% if page.series and related.size > 0 %}
+<section aria-labelledby="related">
+  <h2 id="related">Related posts</h2>
+  <ul class="posts">{% for p in related limit: 3 %}<li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>{% endfor %}</ul>
+</section>
+{% endif %}

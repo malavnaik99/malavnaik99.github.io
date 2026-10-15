@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": {% if page.code_url %}"SoftwareSourceCode"{% else %}"CreativeWork"{% endif %},
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "url": {{ page.url | absolute_url | jsonify }},
+  {% if page.code_url %}"codeRepository": {{ page.code_url | jsonify }},{% endif %}
+  "author": { "@type": "Person", "@id": {{ "/#person" | absolute_url | jsonify }}, "name": "Malav Naik" }
+}
+</script>
+<article>
+  <p class="muted"><a href="{{ '/projects/' | relative_url }}">← All projects</a></p>
+  <h1>{{ page.title }}</h1>
+  <p>{{ page.description }}</p>
+  {% if page.tech %}<ul class="chips" aria-label="Tech used">{% for t in page.tech %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
+  <p>{% if page.demo_url %}<a href="{{ page.demo_url | relative_url }}">See it live →</a>{% endif %}
+     {% if page.code_url %}{% if page.demo_url %} · {% endif %}<a href="{{ page.code_url }}">Code on GitHub →</a>{% endif %}</p>
+  {{ content }}
+</article>
