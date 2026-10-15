@@ -47,6 +47,8 @@ A bot that does all the publishing work and **waits for one tap from me**. Every
 *An illustration of the real flow, recreated with example content.*
 
 ## Results
+{% include automation-lab.html %}
+
 - In use since October 2026: posts going out to [this blog]({{ '/blog/' | relative_url }}), [DEV](https://dev.to/malavnaik_0381711024683d4), LinkedIn and Medium, with one tap each.
 - 50 posts queued at two a week; each one takes me about a minute (one tap, plus the Medium import) instead of copying, pasting and re-uploading it on four sites.
 - Runs entirely on GitHub's free tier – no server, nothing to keep switched on.

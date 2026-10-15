@@ -1,0 +1,12 @@
+{% assign lab = site.data.automation %}{% if lab %}
+<section class="card" aria-labelledby="lab-title">
+  <h3 id="lab-title">🤖 Automation Lab</h3>
+  <p>Live numbers from my <a href="{{ '/projects/blog-automation-bot/' | relative_url }}">blog automation bot</a>, updated by the bot itself after each post.</p>
+  <ul class="chips" aria-label="Posts published per platform">
+    <li><strong>{{ lab.posts_published }}</strong> posts published</li>
+    {% for p in lab.platforms %}<li>{{ p[0] }}: {{ p[1] }}</li>{% endfor %}
+    <li>{{ lab.posts_queued }} in the queue</li>
+  </ul>
+  <p class="muted">Latest: <a href="{{ lab.last_post.url }}">{{ lab.last_post.title }}</a> · updated {{ lab.updated | date: "%-d %b %Y" }}</p>
+</section>
+{% endif %}

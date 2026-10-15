@@ -25,6 +25,8 @@ Malav Naik is a data analyst and data engineer in Dublin with about 10 years of 
 
 [All projects →]({{ '/projects/' | relative_url }})
 
+{% include automation-lab.html %}
+
 ## Latest posts
 
 <ul class="posts">

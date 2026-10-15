@@ -1,0 +1,15 @@
+{
+ "posts_published": 2,
+ "posts_queued": 48,
+ "platforms": {
+  "Blog": 2,
+  "DEV": 1,
+  "LinkedIn": 1,
+  "Medium": 2
+ },
+ "last_post": {
+  "title": "Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%",
+  "url": "https://malavnaik99.github.io/blog/azure-sql-migration-25-percent/"
+ },
+ "updated": "2026-10-15"
+}
