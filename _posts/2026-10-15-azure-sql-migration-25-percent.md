@@ -14,7 +14,7 @@ status: ready
 linkedin_intro: "At S&P Global I helped move 10 to 50 SQL Server databases to Azure SQL Managed Instance, cutting infrastructure costs by about 25%. The savings came from right-sizing, but the real problems were hard-coded connections, SSIS jobs and local file paths. Here are six lessons from that migration."
 ---
 
-![Malav Naik on a rooftop with a city skyline behind – Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%](/images/malav-naik-london-skyline.jpg)
+![Malav Naik on a rooftop with a city skyline behind – Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%](/images/malav-naik-london-skyline.jpg){: width="960" height="1280"}
 
 At S&P Global Market Intelligence I helped migrate on-premise SQL Server databases to Azure SQL PaaS. Our team moved between 10 and 50 databases to Azure SQL Managed Instance. The headline result was a reduction in infrastructure costs of about 25%. The more important result was that the people using those databases barely noticed it happened.
 

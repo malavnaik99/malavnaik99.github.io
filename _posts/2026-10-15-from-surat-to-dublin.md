@@ -14,7 +14,7 @@ status: ready
 linkedin_intro: "Ten years ago I was doing SEO keyword research in Gujarat. Since then I've built data platforms at S&P Global, moved to Dublin for an MSc in Data Analytics, and now work on platform integrity. I'm starting a blog about what I've learned along the way, and here's the first post."
 ---
 
-![Malav Naik in graduation gown outside a glass building in Dublin – From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started](/images/malav-naik-msc-graduation-convention-centre.jpg)
+![Malav Naik in graduation gown outside a glass building in Dublin – From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started](/images/malav-naik-msc-graduation-convention-centre.jpg){: width="1200" height="1599"}
 
 In 2015 I finished a Bachelor of Computer Applications in Gujarat and took my first job doing SEO keyword research. Ten years later I hold an MSc in Data Analytics from National College of Ireland, I've built data platforms for a global financial information company, and I work on platform integrity operations in Dublin.
 
