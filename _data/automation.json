@@ -1,15 +1,15 @@
 {
- "posts_published": 2,
- "posts_queued": 48,
+ "posts_published": 3,
+ "posts_queued": 47,
  "platforms": {
-  "Blog": 2,
+  "Blog": 3,
   "DEV": 1,
-  "LinkedIn": 2,
+  "LinkedIn": 3,
   "Medium": 2
  },
  "last_post": {
-  "title": "Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%",
-  "url": "https://malavnaik99.github.io/blog/azure-sql-migration-25-percent/"
+  "title": "Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces",
+  "url": "https://malavnaik99.github.io/blog/precision-recall-content-moderation/"
  },
- "updated": "2026-10-18"
+ "updated": "2026-10-20"
 }
