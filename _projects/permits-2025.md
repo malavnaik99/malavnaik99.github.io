@@ -2,7 +2,7 @@
 title: "Employment Permits 2025 dashboard"
 summary: "Which Irish sectors and employers sponsor work permits, and when – an interactive dashboard built from the official 2025 dataset."
 description: "An interactive dashboard by Malav Naik analysing employment permits issued to companies in Ireland in 2025: sectors, top employers and monthly demand."
-order: 7
+order: 8
 featured: true
 demo_url: /permits-2025/
 code_url: https://github.com/malavnaik99/malavnaik99.github.io/tree/main/permits-2025
