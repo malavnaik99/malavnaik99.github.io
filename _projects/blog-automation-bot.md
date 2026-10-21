@@ -2,7 +2,7 @@
 title: "Blog automation bot with Telegram approval"
 summary: "Writes nothing until I approve on Telegram, then publishes each post to my blog, DEV and LinkedIn – running for free on GitHub Actions."
 description: "A Python bot by Malav Naik that sends weekly blog post previews to Telegram and, only after approval, publishes to GitHub Pages, DEV and LinkedIn via their APIs using GitHub Actions."
-order: 2
+order: 3
 featured: true
 code_url: https://github.com/malavnaik99/telegram-approval-bots
 tech: [Python, GitHub Actions, Telegram Bot API, DEV (Forem) API, LinkedIn Posts API, Jekyll]
