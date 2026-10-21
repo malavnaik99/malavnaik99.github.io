@@ -2,7 +2,7 @@
 title: "Gmail auto-reply with Telegram approval"
 summary: "Claude drafts a reply to each new email; nothing is sent until I tap ✅ on Telegram."
 description: "A Python assistant by Malav Naik that uses Claude to draft Gmail replies, saves them as drafts and sends them only after approval on Telegram."
-order: 4
+order: 5
 featured: true
 code_url: https://github.com/malavnaik99/telegram-approval-bots
 tech: [Python, Claude API, Gmail API, Telegram Bot API, Prompt engineering]
