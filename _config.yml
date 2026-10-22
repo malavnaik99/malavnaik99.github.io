@@ -30,6 +30,8 @@ social:
     - https://medium.com/@malavnaik206
     - https://huggingface.co/Malavnaik
     - https://www.kaggle.com/malavnaik
+    - https://x.com/malavnaik99
+    - https://www.reddit.com/user/malavnaik
     - https://norma.ncirl.ie/9439/
 # "Find me online" links. Only profiles Malav actually has.
 profiles:
@@ -39,6 +41,8 @@ profiles:
   - { name: Medium, url: "https://medium.com/@malavnaik206" }
   - { name: Hugging Face, url: "https://huggingface.co/Malavnaik" }
   - { name: Kaggle, url: "https://www.kaggle.com/malavnaik" }
+  - { name: X, url: "https://x.com/malavnaik99" }
+  - { name: Reddit, url: "https://www.reddit.com/user/malavnaik" }
   - { name: MSc thesis, url: "https://norma.ncirl.ie/9439/" }
 # Filled in once Malav creates the accounts (public values, not secrets).
 goatcounter: "malavnaik"
