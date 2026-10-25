@@ -12,6 +12,13 @@ platforms: [blog, linkedin, medium]
 canonical_url: "https://malavnaik.com/blog/masters-in-ireland-after-industry/"
 status: ready
 linkedin_intro: "After nine years in industry, I went back to university for an MSc in Data Analytics in Dublin. People asked why. A year later, here's my honest answer, and what I'd tell anyone thinking about doing the same."
+tldr: "In September 2024, after nine years working with data in India, I started an MSc in Data Analytics at National College of Ireland. Industry had given me depth; the degree gave me breadth and showed how fast the field had moved, and the dissertation was the best part."
+faq:
+  - q: "Was the MSc worth it?"
+    a: "Yes. Not because of the certificate, but because it changed what I believe I can build."
+  - q: "How should you choose a dissertation topic?"
+    a: "Pick one you'd want to talk about in interviews. It becomes your portfolio."
+last_modified_at: 2026-10-25
 ---
 
 ![Malav Naik in a graduation gown by the River Liffey – What a Master's in Ireland Taught Me After Nine Years in Industry](/images/malav-naik-msc-graduation-dublin.jpg){: width="1200" height="1599"}
@@ -20,7 +27,7 @@ In September 2024 I started an MSc in Data Analytics at National College of Irel
 
 A year later, here's my honest answer.
 
-## Industry teaches depth, university teaches breadth
+## What does a master's add after years in industry?
 
 Nine years of work had made me very good at a narrow set of things: SQL, ETL, data modelling, dashboards. The MSc forced me into modules I'd never have picked on my own: optimisation, deep learning, generative AI, data mining. Some I loved, some I struggled with, and all of them widened what I could imagine building.
 
@@ -32,11 +39,11 @@ When I started my career, "machine learning" meant regression models in a notebo
 
 Where I did have an edge was knowing how real projects fail: unclear requirements, messy data, stakeholders who change their minds. In group projects I often ended up translating between the technical plan and what the "client" actually needed. That's a skill no module teaches.
 
-## The dissertation was the best part
+## What was the most valuable part of the MSc?
 
 My dissertation, [*Enhanced Personalized Learning Experiences by Leveraging Knowledge Graphs and Prompt Engineering*](https://norma.ncirl.ie/9439/), is published in the NCI research repository. Owning a research question for months, with nobody telling me the answer, was very different from delivering tickets at work. It taught me to frame problems, not just solve them.
 
-## What I'd tell anyone considering it
+## Should you do a master's after years in industry?
 
 - **Pick a dissertation you'd want to talk about in interviews.** It becomes your portfolio.
 - **Build in public while you study.** Coursework disappears; blog posts and repos stay.

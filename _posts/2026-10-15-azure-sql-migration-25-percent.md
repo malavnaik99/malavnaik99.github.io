@@ -12,6 +12,13 @@ platforms: [blog, devto, medium, linkedin]
 canonical_url: "https://malavnaik.com/blog/azure-sql-migration-25-percent/"
 status: ready
 linkedin_intro: "At S&P Global I helped move 10 to 50 SQL Server databases to Azure SQL Managed Instance, cutting infrastructure costs by about 25%. The savings came from right-sizing, but the real problems were hard-coded connections, SSIS jobs and local file paths. Here are six lessons from that migration."
+tldr: "At S&P Global Market Intelligence our team moved between 10 and 50 SQL Server databases to Azure SQL Managed Instance and cut infrastructure costs by about 25%, while users barely noticed. Most of the savings came from right-sizing instead of copying on-prem capacity."
+faq:
+  - q: "Where did the 25% saving come from?"
+    a: "Mostly from right-sizing: measuring real CPU, memory and IO over several weeks instead of copying servers sized for peak load, and retiring the old infrastructure."
+  - q: "Azure SQL Database or Managed Instance?"
+    a: "Managed Instance keeps more instance-level features, such as Agent jobs and cross-database queries, so it suits lift-and-shift. Single databases are simpler and can be cheaper but may need refactoring. Decide per workload."
+last_modified_at: 2026-10-25
 ---
 
 ![Malav Naik on a rooftop with a city skyline behind – Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%](/images/malav-naik-london-skyline.jpg){: width="960" height="1280"}
@@ -26,11 +33,11 @@ Before choosing a target, list everything that touches the database: ETL jobs, r
 
 Microsoft's Data Migration Assistant and Azure Migrate help here, but they don't know about the Excel workbook someone in finance refreshes every Monday. Talk to users.
 
-## 2. Pick the right PaaS flavour
+## 2. Azure SQL Database or Managed Instance?
 
 Azure SQL Database and Azure SQL Managed Instance trade compatibility against simplicity. Managed Instance keeps more instance-level features (Agent jobs, cross-database queries), so it suits lift-and-shift. Single databases are simpler and can be cheaper, but may need refactoring. Decide per workload, not per estate. We went with Managed Instance, which kept most instance-level features in place and meant fewer changes to existing code.
 
-## 3. Right-size, don't copy
+## 3. Where do the cloud savings come from?
 
 Most of the savings came from not paying for capacity we didn't use. On-prem servers are sized for peak load plus growth plus fear. In the cloud you can measure actual usage and scale. Look at real CPU, memory and IO over several weeks before choosing service tiers.
 
@@ -48,7 +55,7 @@ Performance gets attention. In our migration, the real problems came from elsewh
 
 Also worth checking: time zone and collation differences, firewall rules and private endpoints.
 
-## 6. Define "done" with the users
+## 6. When is a migration really finished?
 
 A migration isn't finished when the data moves. It's finished when every report, job and application works as before and the old servers are switched off. Agree that checklist with stakeholders up front.
 
