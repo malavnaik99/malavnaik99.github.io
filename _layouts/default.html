@@ -6,6 +6,7 @@
   {% seo %}
   <!-- Search Console code for the malavnaik.com property; the one in _config.yml is for the old github.io property. -->
   <meta name="google-site-verification" content="u0GXVjXGCfKV_599fhM71S3dI8h0X3AUgWg73udEDn0">
+  {% if page.image_alt %}<meta property="og:image:alt" content="{{ page.image_alt | escape }}">{% endif %}
   {% feed_meta %}
   <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}">

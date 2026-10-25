@@ -4,7 +4,6 @@ description: Malav Naik is a data analyst and data engineer in Dublin, Ireland, 
 # The site's address. The custom domain itself is set in GitHub → Settings → Pages (no CNAME file needed with Actions deploys).
 url: https://malavnaik.com
 author: Malav Naik
-image: /images/malav-naik-portrait.jpg
 permalink: /blog/:slug/
 plugins:
   - jekyll-seo-tag
@@ -17,6 +16,10 @@ collections:
     output: true
     permalink: /projects/:name/
 defaults:
+  # Default share image for every page; posts and pages with their own `image` keep theirs.
+  - scope: { path: "" }
+    values:
+      image: { path: /images/og-banner.png, width: 1200, height: 627, alt: "Malav Naik – Data Engineer, GenAI & AI Automation, Dublin, Ireland" }
   - scope: { path: "", type: posts }
     values: { layout: post }
   - scope: { path: "", type: projects }

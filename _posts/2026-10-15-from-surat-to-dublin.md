@@ -9,7 +9,7 @@ image: "/images/malav-naik-msc-graduation-convention-centre.jpg"
 image_alt: "Malav Naik in graduation gown outside a glass building in Dublin"
 week: 1
 platforms: [blog, linkedin, medium]
-canonical_url: "https://malavnaik99.github.io/blog/from-surat-to-dublin/"
+canonical_url: "https://malavnaik.com/blog/from-surat-to-dublin/"
 status: ready
 linkedin_intro: "Ten years ago I was doing SEO keyword research in Gujarat. Since then I've built data platforms at S&P Global, moved to Dublin for an MSc in Data Analytics, and now work on platform integrity. I'm starting a blog about what I've learned along the way, and here's the first post."
 ---

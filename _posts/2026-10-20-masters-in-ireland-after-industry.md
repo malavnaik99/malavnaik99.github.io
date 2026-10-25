@@ -9,7 +9,7 @@ image: "/images/malav-naik-msc-graduation-dublin.jpg"
 image_alt: "Malav Naik in a graduation gown by the River Liffey"
 week: 3
 platforms: [blog, linkedin, medium]
-canonical_url: "https://malavnaik99.github.io/blog/masters-in-ireland-after-industry/"
+canonical_url: "https://malavnaik.com/blog/masters-in-ireland-after-industry/"
 status: ready
 linkedin_intro: "After nine years in industry, I went back to university for an MSc in Data Analytics in Dublin. People asked why. A year later, here's my honest answer, and what I'd tell anyone thinking about doing the same."
 ---

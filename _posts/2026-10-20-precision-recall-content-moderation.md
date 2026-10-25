@@ -9,7 +9,7 @@ image: "/images/malav-naik-convention-centre-dublin-suit.jpg"
 image_alt: "Malav Naik in a suit outside a curved glass building"
 week: 2
 platforms: [blog, linkedin, medium]
-canonical_url: "https://malavnaik99.github.io/blog/precision-recall-content-moderation/"
+canonical_url: "https://malavnaik.com/blog/precision-recall-content-moderation/"
 status: ready
 linkedin_intro: "Every content moderation system makes two kinds of mistakes: it removes things that were fine, and it misses things that weren't. You can't drive both to zero, so the real question is which mistake you'd rather make, for which harm. I wrote about how integrity teams choose where to set the line."
 ---

@@ -9,7 +9,7 @@ image: "/images/malav-naik-london-skyline.jpg"
 image_alt: "Malav Naik on a rooftop with a city skyline behind"
 week: 2
 platforms: [blog, devto, medium, linkedin]
-canonical_url: "https://malavnaik99.github.io/blog/azure-sql-migration-25-percent/"
+canonical_url: "https://malavnaik.com/blog/azure-sql-migration-25-percent/"
 status: ready
 linkedin_intro: "At S&P Global I helped move 10 to 50 SQL Server databases to Azure SQL Managed Instance, cutting infrastructure costs by about 25%. The savings came from right-sizing, but the real problems were hard-coded connections, SSIS jobs and local file paths. Here are six lessons from that migration."
 ---
