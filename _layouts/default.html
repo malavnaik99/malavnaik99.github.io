@@ -149,7 +149,7 @@
     <div class="container">
       Find me online:
       <ul>{% for p in site.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>
-      <ul><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li><a href="{{ '/llms.txt' | relative_url }}">llms.txt</a></li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
+      <ul><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
     </div>
   </footer>
   <script src="{{ '/assets/site.js' | relative_url }}" defer></script>
