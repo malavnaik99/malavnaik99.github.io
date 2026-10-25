@@ -7,7 +7,11 @@
   <!-- Search Console code for the malavnaik.com property; the one in _config.yml is for the old github.io property. -->
   <meta name="google-site-verification" content="u0GXVjXGCfKV_599fhM71S3dI8h0X3AUgWg73udEDn0">
   {% feed_meta %}
-  <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon-16x16.png' | relative_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-touch-icon.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
   {% if page.person_jsonld %}{% include jsonld-person.html %}{% endif %}
   <style>
     :root { --text: #1f2328; --muted: #59636e; --bg: #fff; --card: #f6f8fa; --link: #0b57d0; --line: #e5e7eb; }
