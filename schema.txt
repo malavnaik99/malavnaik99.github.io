@@ -1,0 +1,3 @@
+errors: 0 warnings: 0
+ - BreadcrumbList errors: 0 warnings: 0
+ - BlogPosting errors: 0 warnings: 0

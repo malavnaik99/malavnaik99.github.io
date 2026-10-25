@@ -1,0 +1,13 @@
+home Performance 100 | Accessibility 100 | Best Practices 100 | SEO 100
+   below 90: uses-long-cache-ttl 2 resources found
+   below 90: modern-image-formats Potential savings of 19 KiB
+   below 90: uses-responsive-images Potential savings of 41 KiB
+blog Performance 100 | Accessibility 100 | Best Practices 100 | SEO 100
+   below 90: uses-long-cache-ttl 1 resource found
+post Performance 96 | Accessibility 100 | Best Practices 100 | SEO 100
+   below 90: largest-contentful-paint 2.7 s
+   below 90: uses-long-cache-ttl 2 resources found
+   below 90: modern-image-formats Potential savings of 88 KiB
+   below 90: uses-responsive-images Potential savings of 178 KiB
+about Performance 100 | Accessibility 100 | Best Practices 100 | SEO 100
+   below 90: uses-long-cache-ttl 1 resource found
