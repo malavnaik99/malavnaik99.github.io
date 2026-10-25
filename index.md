@@ -36,7 +36,3 @@ Malav Naik is a data analyst and data engineer in Dublin with about 10 years of 
 </ul>
 
 [All posts →]({{ '/blog/' | relative_url }})
-
-## Find me online
-
-<ul class="chips">{% for p in site.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>

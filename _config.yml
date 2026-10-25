@@ -1,8 +1,8 @@
 title: Malav Naik
 tagline: Data Analyst & Data Engineer (GenAI) in Dublin, Ireland
 description: Malav Naik is a data analyst and data engineer in Dublin, Ireland, building with SQL, Python, Azure and generative AI, and writing about data engineering, GenAI and trust & safety.
-# The one line to change when moving to malavnaik.com (see HOW_IT_WORKS.md in the claudecode repo).
-url: https://malavnaik99.github.io
+# The site's address. The custom domain itself is set in GitHub → Settings → Pages (no CNAME file needed with Actions deploys).
+url: https://malavnaik.com
 author: Malav Naik
 image: /images/malav-naik-portrait.jpg
 permalink: /blog/:slug/
