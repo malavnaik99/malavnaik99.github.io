@@ -38,9 +38,10 @@ layout: default
   </p>
   {% include author-box.html %}
 </article>
-{% assign related = site.posts | where: "series", page.series | where_exp: "p", "p.url != page.url" %}
-{% if related.size == 0 and page.tags.size > 0 %}{% assign related = site.posts | where_exp: "p", "p.tags contains page.tags.first" | where_exp: "p", "p.url != page.url" %}{% endif %}
-{% if related.size == 0 %}{% assign related = site.posts | where_exp: "p", "p.url != page.url" %}{% endif %}
+{% comment %} Same series first, then the newest other posts; the loop below takes 3. {% endcomment %}
+{% assign same = site.posts | where: "series", page.series | where_exp: "p", "p.url != page.url" %}
+{% assign rest = site.posts | where_exp: "p", "p.series != page.series" %}
+{% assign related = same | concat: rest %}
 {% if related.size > 0 %}
 <section aria-labelledby="related">
   <h2 id="related">Related posts</h2>
