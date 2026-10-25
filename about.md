@@ -34,8 +34,4 @@ Today I work with Accenture for a global technology client on platform integrity
 - **MSc in Data Analytics**, National College of Ireland, Dublin (2024–2025)
 - **Bachelor of Computer Applications**, Gujarat, India (2015)
 
-## Find me online
-
-<ul class="chips">{% for p in site.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>
-
 See also my [projects]({{ '/projects/' | relative_url }}), [résumé]({{ '/resume/' | relative_url }}) and [what I'm doing now]({{ '/now/' | relative_url }}).

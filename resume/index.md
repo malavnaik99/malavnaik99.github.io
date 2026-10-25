@@ -1,11 +1,11 @@
 ---
 layout: default
 title: Résumé
-description: Résumé of Malav Naik – data analyst and data engineer (GenAI) in Dublin, Ireland.
+description: Résumé of Malav Naik – Data Engineer, GenAI & AI Automation in Dublin, Ireland.
 ---
 # Malav Naik – Résumé
 
-Data Analyst & Data Engineer (GenAI) · Dublin, Ireland · [malavnaik.com]({{ '/' | absolute_url }}) · [LinkedIn](https://www.linkedin.com/in/malav-naik) · [GitHub](https://github.com/malavnaik99)
+Data Engineer, GenAI & AI Automation · Dublin, Ireland · [malavnaik.com]({{ '/' | absolute_url }}) · [LinkedIn](https://www.linkedin.com/in/malav-naik) · [GitHub](https://github.com/malavnaik99)
 
 <p class="noprint"><a href="{{ '/resume/malav-naik-resume.pdf' | relative_url }}">Download as PDF</a></p>
 
