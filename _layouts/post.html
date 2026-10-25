@@ -14,7 +14,10 @@ layout: default
       · {{ minutes }} min read · by <a href="{{ '/about/' | relative_url }}">Malav Naik</a></p>
   </header>
   {% if page.tldr %}<aside class="tldr" aria-label="Summary"><p class="eyebrow">TL;DR</p>{{ page.tldr | markdownify }}</aside>{% endif %}
-  <nav id="toc" class="toc" aria-label="Contents" hidden><p class="eyebrow">Contents</p></nav>
+  {% assign h2s = content | split: '<h2 id="' %}{% if h2s.size > 4 %}
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol>
+    {% for part in h2s offset: 1 %}{% assign id = part | split: '"' | first %}<li><a href="#{{ id }}">{{ part | split: '</h2>' | first | remove_first: id | remove_first: '">' | strip_html }}</a></li>
+    {% endfor %}</ol></nav>{% endif %}
   <div class="post-body">
     {{ content | replace: '<img ', '<img loading="lazy" decoding="async" ' | replace_first: 'loading="lazy"', 'fetchpriority="high"' }}
   </div>

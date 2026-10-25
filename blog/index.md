@@ -15,4 +15,5 @@ description: Posts by Malav Naik on data engineering, generative AI, trust & saf
 <noscript><p class="small">Series: {% for s in site.data.series %}<a href="{{ '/blog/series/' | append: s.id | append: '/' | relative_url }}">{{ s.name }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p></noscript>
 
 {% if site.posts.size == 0 %}<p class="muted">First posts coming soon.</p>{% endif %}
+<h2 class="sr-only">All posts</h2>
 <ul class="grid">{% for post in site.posts %}{% include post-card.html post=post %}{% endfor %}</ul>

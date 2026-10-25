@@ -17,7 +17,7 @@ jobs:
       - run: |
           sudo chown -R "$USER" _site
           missing=$(grep -rlP '<img(?![^>]*\balt=)[^>]*>' _site || true); echo "Images without alt: ${missing:-none}"
-          (cd _site && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          (npx -y serve@14.2.4 -l 8080 _site >/dev/null 2>&1 &)
           npm i --no-save --silent playwright@1.48.2 lighthouse@12.2.1
           npx playwright install --with-deps chromium >/dev/null
           mkdir out
@@ -32,7 +32,7 @@ jobs:
       - name: Schema validator (one post)
         run: |
           curl -s -X POST https://validator.schema.org/validate --data-urlencode "html@_site/blog/precision-recall-content-moderation/index.html" | tail -c +5 > out/schema-post.json
-          node -e "const r=require('./out/schema-post.json');console.log('errors:',r.numErrors,'warnings:',r.numWarnings);for(const g of r.tripleGroups||[])for(const n of g.nodes||[])console.log(' -',n.typeGroup||n.types||'',(n.errors||[]).length+' errors')" | tee out/schema.txt
+          node -e "const r=require('./out/schema-post.json');console.log('errors:',r.totalNumErrors,'warnings:',r.totalNumWarnings);for(const g of r.tripleGroups||[])for(const n of g.nodes||[])console.log(' -',n.typeGroup,'errors:',n.numErrors,'warnings:',n.numWarnings)" | tee out/schema.txt
       - name: Save results to the redesign-preview branch
         run: |
           cd out && git init -q && git checkout -q -b redesign-preview && git add . \

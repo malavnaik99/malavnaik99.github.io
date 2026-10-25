@@ -1,4 +1,4 @@
-// Theme toggle, mobile menu, copy buttons, table of contents, blog filter. Vanilla JS; the site works without it.
+// Theme toggle, mobile menu, copy buttons, blog filter. Vanilla JS; the site works without it.
 (function () {
   var root = document.documentElement;
 
@@ -32,18 +32,6 @@
 
   var shareCopy = document.querySelector("[data-copy-link]");
   if (shareCopy) shareCopy.replaceWith(Object.assign(copyButton("Copy link", function () { return location.href.split("#")[0]; }), { className: "btn small" }));
-
-  // Table of contents for long posts (4+ sections).
-  var tocSlot = document.getElementById("toc");
-  var heads = document.querySelectorAll(".post-body h2[id]");
-  if (tocSlot && heads.length >= 4) {
-    var list = document.createElement("ol");
-    heads.forEach(function (h) {
-      var li = document.createElement("li"), a = document.createElement("a");
-      a.href = "#" + h.id; a.textContent = h.textContent; li.appendChild(a); list.appendChild(li);
-    });
-    tocSlot.appendChild(list); tocSlot.hidden = false;
-  }
 
   // Blog index: filter by series.
   var filters = document.querySelectorAll("[data-filter]");
