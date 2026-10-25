@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add("js")</script>
   {%- comment -%} jekyll-seo-tag's own JSON-LD is cut off here; _includes/schema.html writes the structured data instead. {%- endcomment -%}
-  {% capture seo_tags %}{% seo %}{% endcapture %}{{ seo_tags | split: '<script type="application/ld+json">' | first }}
+  {% capture seo_tags %}{% seo %}{% endcapture %}{% assign seo_tags = seo_tags | split: '<script type="application/ld+json">' | first %}
+  {%- comment -%} The plugin gives the home page a bare "Malav Naik" share title; use the full home title instead. {%- endcomment -%}
+  {% if page.url == "/" %}{% assign full = site.title | append: " | " | append: site.tagline | escape %}{% assign seo_tags = seo_tags | replace: '<meta property="og:title" content="Malav Naik" />', '<meta property="og:title" content="FULL" />' | replace: '<meta property="twitter:title" content="Malav Naik" />', '<meta property="twitter:title" content="FULL" />' | replace: 'FULL', full %}{% endif %}{{ seo_tags }}
   <!-- Search Console code for the malavnaik.com property; the one in _config.yml is for the old github.io property. -->
   <meta name="google-site-verification" content="u0GXVjXGCfKV_599fhM71S3dI8h0X3AUgWg73udEDn0">
   {% if page.image_alt %}<meta property="og:image:alt" content="{{ page.image_alt | escape }}">{% endif %}
