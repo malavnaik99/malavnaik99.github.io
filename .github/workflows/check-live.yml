@@ -1,0 +1,10 @@
+# Temporary: prints the live related-posts section once. Deleted right after.
+name: Check live related posts
+on:
+  push:
+    paths: [".github/workflows/check-live.yml"]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -s https://malavnaik.com/blog/precision-recall-content-moderation/ | sed -n '/<section aria-labelledby="related">/,/<\/section>/p'
