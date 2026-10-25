@@ -1,19 +1,10 @@
 ---
 layout: default
 title: Projects
-description: Projects by Malav Naik – AI automation, data engineering and analytics, each with how it works, a demo and the code.
+wide: true
+description: Projects by Malav Naik – AI automation, data engineering and analytics, each with the problem, approach, result, stack and code.
 ---
-# Projects
-
-What I've built, with how it works, a demo and the code.
-
-<ul class="cards">
-{% assign projects = site.projects | sort: "order" %}
-{% for p in projects %}
-  <li class="card">
-    <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-    <p>{{ p.summary }}</p>
-    {% if p.tech %}<ul class="chips">{% for t in p.tech limit: 4 %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
-  </li>
-{% endfor %}
-</ul>
+<h1>Projects</h1>
+<p class="lead">What I've built: the problem, the approach, the measured result, and the code.</p>
+<h2 class="sr-only">All projects</h2>
+<ul class="grid">{% assign projects = site.projects | sort: "order" %}{% for p in projects %}{% include project-card.html project=p %}{% endfor %}</ul>

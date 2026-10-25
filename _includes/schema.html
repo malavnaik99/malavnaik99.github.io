@@ -1,0 +1,56 @@
+{% assign person_id = "/#person" | absolute_url %}{% assign page_url = page.canonical_url | default: page.url | absolute_url %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": {{ person_id | jsonify }},
+      "name": "Malav Naik",
+      "alternateName": "Malav Hiteshbhai Naik",
+      "url": {{ "/" | absolute_url | jsonify }},
+      "image": {{ "/images/malav-naik-portrait.jpg" | absolute_url | jsonify }},
+      "jobTitle": "Escalation Operations Analyst – Platform Integrity",
+      "worksFor": { "@type": "Organization", "name": "Accenture" },
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "National College of Ireland" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Dublin", "addressCountry": "IE" },
+      "knowsAbout": ["Data engineering", "SQL", "Python", "Azure", "Power BI", "ETL", "dbt", "Retrieval-augmented generation (RAG)", "Knowledge graphs", "LLM fine-tuning", "AI automation", "Trust and safety"],
+      "sameAs": {{ site.profiles | map: "url" | jsonify }}
+    }{% if page.url == "/" %},
+    {
+      "@type": "WebSite",
+      "@id": {{ "/#website" | absolute_url | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "url": {{ "/" | absolute_url | jsonify }},
+      "description": {{ site.description | jsonify }},
+      "inLanguage": "en",
+      "author": { "@id": {{ person_id | jsonify }} }
+    }{% endif %}{% if page.url == "/about/" %},
+    {
+      "@type": "ProfilePage",
+      "url": {{ page_url | jsonify }},
+      "mainEntity": { "@id": {{ person_id | jsonify }} }
+    }{% endif %}{% if page.collection == "posts" %},
+    {
+      "@type": "BlogPosting",
+      "headline": {{ page.title | jsonify }},
+      "description": {{ page.description | jsonify }},
+      "image": {{ page.image.path | default: page.image | absolute_url | jsonify }},
+      "author": { "@id": {{ person_id | jsonify }}, "name": "Malav Naik", "url": {{ "/about/" | absolute_url | jsonify }} },
+      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+      "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+      "mainEntityOfPage": { "@type": "WebPage", "@id": {{ page_url | jsonify }} },
+      "keywords": {{ page.tags | join: ", " | jsonify }},
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ "/" | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": {{ "/blog/" | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ page_url | jsonify }} }
+      ]
+    }{% endif %}
+  ]
+}
+</script>

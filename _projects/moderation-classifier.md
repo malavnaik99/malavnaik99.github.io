@@ -1,6 +1,9 @@
 ---
 title: "Content moderation classifier, with a fairness check"
 summary: "A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group – plus a demo that runs in your browser."
+problem: "A single accuracy number can't say where to draw the line, how much lands on human reviewers, or whether a model is fair."
+approach: "Trained a TF-IDF baseline and DistilBERT on 1.8 million public comments, set two threshold policies, simulated a review queue and checked false-positive rates by identity group."
+result: "ROC-AUC 0.957; 36.6% of toxic comments auto-actioned at ≥ 90% precision; harmless comments wrongly flagged cut from 12.8% to 9.6%."
 description: "A portfolio project by Malav Naik: a DistilBERT content moderation classifier on the public Civil Comments data, with threshold policies, a simulated review queue, prevalence estimation and false-positive rates by identity group."
 order: 1
 featured: true

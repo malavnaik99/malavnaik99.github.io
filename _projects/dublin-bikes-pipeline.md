@@ -1,6 +1,9 @@
 ---
 title: "Dublin bikes + weather data pipeline"
 summary: "Collects every Dublinbikes station every 15 minutes, models it with dbt and DuckDB into a tested star schema, and feeds a live dashboard – for €0."
+problem: "The Dublinbikes feed only shows right now; questions about weather and time of day need history that can be trusted."
+approach: "A collector every 15 minutes, then a daily dbt + DuckDB run into an incremental star schema with 14 automatic data tests and Telegram alerts."
+result: "Every station, every 15 minutes, modelled and tested into a live dashboard and public dataset, for €0."
 description: "A data engineering portfolio project by Malav Naik: a scheduled Python collector, dbt + DuckDB models with freshness and volume checks, and a live dashboard of Dublinbikes availability and weather."
 order: 2
 featured: true

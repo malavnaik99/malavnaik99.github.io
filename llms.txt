@@ -1,0 +1,21 @@
+---
+layout: null
+sitemap: false
+permalink: /llms.txt
+---
+# Malav Naik
+
+> Data engineer in Dublin, Ireland, working on data pipelines, GenAI and AI automation.
+
+Malav Naik is a data analyst and data engineer in Dublin with about 10 years of experience across India and Ireland. He builds data pipelines and AI automation with SQL, Python, Azure and large language models, holds an MSc in Data Analytics from National College of Ireland, and works as an Escalation Operations Analyst – Platform Integrity at Accenture, for a global technology client. He writes about data engineering, generative AI and trust & safety.
+
+## Pages
+
+- [About]({{ '/about/' | absolute_url }}): his story, skills, education and MSc thesis.
+- [Projects]({{ '/projects/' | absolute_url }}): {{ site.projects.size }} public projects, each with the problem, approach, measured result and code.
+- [Résumé]({{ '/resume/' | absolute_url }}): experience, education and skills, with a PDF download.
+
+## Blog series
+{% for s in site.data.series %}
+- [{{ s.name }}]({{ '/blog/series/' | append: s.id | append: '/' | absolute_url }}): {{ s.description }}{% endfor %}
+

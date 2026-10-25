@@ -3,7 +3,6 @@ layout: default
 title: About
 permalink: /about/
 description: About Malav Naik – data analyst and data engineer in Dublin with 10 years in data across India and Ireland, MSc in Data Analytics from National College of Ireland.
-person_jsonld: true
 ---
 # About Malav Naik
 

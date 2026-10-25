@@ -1,0 +1,11 @@
+{% assign p = include.project %}
+<li class="card case">
+  <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+  <dl>
+    {% if p.problem %}<dt>Problem</dt><dd>{{ p.problem }}</dd>{% endif %}
+    {% if p.approach %}<dt>Approach</dt><dd>{{ p.approach }}</dd>{% endif %}
+    {% if p.result %}<dt>Result</dt><dd>{{ p.result }}</dd>{% endif %}
+  </dl>
+  {% if p.tech %}<ul class="chips" aria-label="Stack">{% for t in p.tech %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
+  <p class="small"><a href="{{ p.url | relative_url }}">Case study<span class="sr-only">: {{ p.title }}</span></a>{% if p.demo_url %} · <a href="{{ p.demo_url | relative_url }}">Demo</a>{% endif %}{% if p.code_url %} · <a href="{{ p.code_url }}">Code</a>{% endif %}</p>
+</li>

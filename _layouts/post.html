@@ -2,19 +2,48 @@
 layout: default
 ---
 {% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200 | at_least: 1 %}
+{% assign series = site.data.series | where: "id", page.series | first %}
+{% assign updated = page.last_modified_at | default: page.date %}
 <article>
-  <h1>{{ page.title }}</h1>
-  <p class="muted">{{ page.date | date: "%-d %B %Y" }} · {{ minutes }} min read · by <a href="{{ '/about/' | relative_url }}">Malav Naik</a>
-    {% if page.series %}· <a href="{{ '/blog/topics/' | relative_url }}#series-{{ page.series }}">{{ page.series | replace: "-", " " | capitalize }}</a>{% endif %}</p>
-  {{ content }}
+  <header>
+    {% if series %}<p class="eyebrow"><a href="{{ '/blog/series/' | append: series.id | append: '/' | relative_url }}">{{ series.name }}</a></p>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
+    <p class="meta">Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+      · Updated <time datetime="{{ updated | date_to_xmlschema }}">{{ updated | date: "%-d %B %Y" }}</time>
+      · {{ minutes }} min read · by <a href="{{ '/about/' | relative_url }}">Malav Naik</a></p>
+  </header>
+  {% if page.tldr %}<aside class="tldr" aria-label="Summary"><p class="eyebrow">TL;DR</p>{{ page.tldr | markdownify }}</aside>{% endif %}
+  {% assign h2s = content | split: '<h2 id="' %}{% if h2s.size > 4 %}
+  <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol>
+    {% for part in h2s offset: 1 %}{% assign id = part | split: '"' | first %}<li><a href="#{{ id }}">{{ part | split: '</h2>' | first | remove_first: id | remove_first: '">' | strip_html }}</a></li>
+    {% endfor %}</ol></nav>{% endif %}
+  <div class="post-body">
+    {{ content | replace: '<img ', '<img loading="lazy" decoding="async" ' | replace_first: 'loading="lazy"', 'fetchpriority="high"' }}
+  </div>
+  {% if page.faq %}
+  <section aria-labelledby="faq">
+    <h2 id="faq">Frequently asked questions</h2>
+    {% for f in page.faq %}<h3>{{ f.q }}</h3>{{ f.a | markdownify }}{% endfor %}
+  </section>
+  {% endif %}
   {% if page.tags.size > 0 %}
   <ul class="chips" aria-label="Tags">{% for t in page.tags %}<li><a href="{{ '/blog/topics/' | relative_url }}#tag-{{ t }}">#{{ t }}</a></li>{% endfor %}</ul>
   {% endif %}
+  {% assign share_url = page.url | absolute_url | url_encode %}
+  <p class="share small">Share:
+    <a class="btn small" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" rel="noopener">LinkedIn</a>
+    <a class="btn small" href="https://x.com/intent/post?url={{ share_url }}&amp;text={{ page.title | url_encode }}" rel="noopener">X</a>
+    <span data-copy-link></span>
+  </p>
+  {% include author-box.html %}
 </article>
 {% assign related = site.posts | where: "series", page.series | where_exp: "p", "p.url != page.url" %}
-{% if page.series and related.size > 0 %}
+{% if related.size == 0 and page.tags.size > 0 %}{% assign related = site.posts | where_exp: "p", "p.tags contains page.tags.first" | where_exp: "p", "p.url != page.url" %}{% endif %}
+{% if related.size == 0 %}{% assign related = site.posts | where_exp: "p", "p.url != page.url" %}{% endif %}
+{% if related.size > 0 %}
 <section aria-labelledby="related">
   <h2 id="related">Related posts</h2>
-  <ul class="posts">{% for p in related limit: 3 %}<li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>{% endfor %}</ul>
+  <ul class="plain">{% for p in related limit: 3 %}<li><a href="{{ p.url | relative_url }}">{{ p.title }}</a><br><span class="meta">{{ p.date | date: "%-d %b %Y" }}</span></li>{% endfor %}</ul>
 </section>
 {% endif %}

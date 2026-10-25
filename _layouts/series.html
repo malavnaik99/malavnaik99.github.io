@@ -1,0 +1,11 @@
+---
+layout: default
+wide: true
+---
+{% assign s = site.data.series | where: "id", page.series | first %}{% assign posts = site.posts | where: "series", page.series %}
+<p class="eyebrow"><a href="{{ '/blog/' | relative_url }}">Blog</a> · Series</p>
+<h1>{{ s.name }}</h1>
+<p class="lead">{{ s.description }}</p>
+{% if posts.size == 0 %}<p class="muted">The first post in this series is coming soon. Meanwhile, see <a href="{{ '/blog/' | relative_url }}">all posts</a>.</p>{% endif %}
+<h2 class="sr-only">Posts in this series</h2>
+<ul class="grid">{% for post in posts %}{% include post-card.html post=post %}{% endfor %}</ul>

@@ -1,0 +1,13 @@
+# Blog series: hub pages, the blog filter and llms.txt read these.
+- id: data-engineering
+  name: Data engineering
+  description: SQL, ETL, Azure, dbt and building data pipelines people can trust.
+- id: genai
+  name: GenAI
+  description: RAG, knowledge graphs, LLM fine-tuning and AI automation, built and measured.
+- id: trust-safety
+  name: Trust & safety
+  description: Content moderation, integrity metrics and policy, explained with public data.
+- id: career
+  name: Career
+  description: From India to Dublin, an MSc after years in industry, and building a data career in Ireland.

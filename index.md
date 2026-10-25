@@ -1,38 +1,27 @@
 ---
 layout: default
-person_jsonld: true
+wide: true
 ---
-<div class="hero">
-  <img src="{{ '/images/malav-naik-portrait.jpg' | relative_url }}" alt="Malav Naik in a navy suit outside the Convention Centre Dublin" width="480" height="480">
+<section class="hero">
+  <img src="{{ '/images/malav-naik-portrait.jpg' | relative_url }}" alt="Malav Naik in a navy suit outside the Convention Centre Dublin" width="480" height="480" fetchpriority="high">
   <div>
-    <h1>Malav Naik – Data Analyst &amp; Data Engineer (GenAI) in Dublin, Ireland</h1>
+    <p class="eyebrow">Dublin, Ireland</p>
+    <h1>Malav Naik</h1>
+    <p class="lead">Data Engineer, GenAI &amp; AI Automation</p>
+    <p>Malav Naik is a data analyst and data engineer in Dublin with about 10 years of experience across India and Ireland. He builds data pipelines and AI automation with SQL, Python, Azure and large language models, and writes about data engineering, generative AI and trust &amp; safety.</p>
+    <ul class="proof">
+      <li><strong>About 10 years in data</strong> across India and Ireland, from SQL Server and SSIS to Azure</li>
+      <li><strong>MSc in Data Analytics</strong> from National College of Ireland</li>
+      <li><strong>{{ site.projects.size }} public projects</strong> with code, measured results and write-ups</li>
+    </ul>
+    <p class="actions"><a class="btn btn-primary" href="{{ '/blog/' | relative_url }}">Read the blog</a> <a class="btn" href="{{ '/projects/' | relative_url }}">View projects</a></p>
   </div>
-</div>
+</section>
 
-Malav Naik is a data analyst and data engineer in Dublin with about 10 years of experience across India and Ireland. He builds data pipelines and AI automation with SQL, Python, Azure and large language models, and writes about data engineering, generative AI and trust & safety.
+<div class="section-head"><h2>Latest posts</h2><a href="{{ '/blog/' | relative_url }}">All posts</a></div>
+<ul class="grid">{% for post in site.posts limit: 3 %}{% include post-card.html post=post %}{% endfor %}</ul>
 
-## Featured projects
-
-<ul class="cards">
-{% assign featured = site.projects | where: "featured", true | sort: "order" %}
-{% for p in featured %}
-  <li class="card">
-    <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-    <p>{{ p.summary }}</p>
-  </li>
-{% endfor %}
-</ul>
-
-[All projects →]({{ '/projects/' | relative_url }})
+<div class="section-head"><h2>Featured projects</h2><a href="{{ '/projects/' | relative_url }}">All projects</a></div>
+<ul class="grid">{% assign featured = site.projects | where: "featured", true | sort: "order" %}{% for p in featured limit: 3 %}{% include project-card.html project=p %}{% endfor %}</ul>
 
 {% include automation-lab.html %}
-
-## Latest posts
-
-<ul class="posts">
-{% for post in site.posts limit: 3 %}
-  <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a><br><span class="muted">{{ post.date | date: "%-d %b %Y" }} · {{ post.description }}</span></li>
-{% endfor %}
-</ul>
-
-[All posts →]({{ '/blog/' | relative_url }})
