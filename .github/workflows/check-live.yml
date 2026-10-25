@@ -1,0 +1,12 @@
+# Temporary: prints the live share tags once. Deleted right after.
+name: Check live tags
+on:
+  push:
+    paths: [".github/workflows/check-live.yml"]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -s https://malavnaik.com/ | grep -E 'og:|twitter:'
+          echo "og-banner.png: $(curl -s -o /dev/null -w '%{http_code} %{content_type}' https://malavnaik.com/images/og-banner.png)"
