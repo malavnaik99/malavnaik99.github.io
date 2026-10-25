@@ -1,0 +1,15 @@
+# Temporary: prints the live changes once. Deleted right after.
+name: Check live wording
+on:
+  push:
+    paths: [".github/workflows/check-live.yml"]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          B=https://malavnaik.com
+          curl -s $B/ | grep -o '<meta name="description" content="[^"]*"'
+          echo "worksFor on home: $(curl -s $B/ | grep -c worksFor)"
+          curl -s $B/resume/ | grep -o 'Data Engineer, GenAI &amp; AI Automation · Dublin, Ireland'
+          echo "'Find me online' on About: $(curl -s $B/about/ | grep -c 'Find me online') (1 = footer only)"
