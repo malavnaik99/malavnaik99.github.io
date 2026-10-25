@@ -1,6 +1,9 @@
 ---
 title: "Blog automation bot with Telegram approval"
 summary: "Writes nothing until I approve on Telegram, then publishes each post to my blog, DEV and LinkedIn – running for free on GitHub Actions."
+problem: "Cross-posting by hand to four sites is slow, but nothing should go public under my name without me seeing it first."
+approach: "A Python bot on GitHub Actions that previews each post on Telegram and publishes only after one tap."
+result: "Posts go to the blog, DEV and LinkedIn in about a minute of my time, on GitHub's free tier."
 description: "A Python bot by Malav Naik that sends weekly blog post previews to Telegram and, only after approval, publishes to GitHub Pages, DEV and LinkedIn via their APIs using GitHub Actions."
 order: 6
 featured: true

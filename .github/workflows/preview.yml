@@ -1,0 +1,38 @@
+# Temporary: screenshots, Lighthouse and schema check for the redesign branch. Removed before merging.
+name: Redesign preview
+on:
+  push:
+    branches: [redesign]
+permissions:
+  contents: write
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sed -i 's#^url: .*#url: http://localhost:8080#' _config.yml  # preview only: links point at the local copy
+      - uses: actions/jekyll-build-pages@v1
+      - run: |
+          sudo chown -R "$USER" _site
+          missing=$(grep -rlP '<img(?![^>]*\balt=)[^>]*>' _site || true); echo "Images without alt: ${missing:-none}"
+          (cd _site && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          npm i --no-save --silent playwright@1.48.2 lighthouse@12.2.1
+          npx playwright install --with-deps chromium >/dev/null
+          mkdir out
+      - run: node .github/preview/shots.mjs out
+      - name: Lighthouse (mobile)
+        run: |
+          for p in home:/ blog:/blog/ post:/blog/precision-recall-content-moderation/ about:/about/; do
+            n=${p%%:*}; u=http://localhost:8080${p#*:}
+            npx lighthouse "$u" --quiet --output=json --output-path=out/lighthouse-$n.json --chrome-flags="--headless=new --no-sandbox"
+            node -e "const r=require('./out/lighthouse-$n.json');console.log('$n', Object.values(r.categories).map(c=>c.title+' '+Math.round(c.score*100)).join(' | '));for(const a of Object.values(r.audits))if(a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable')console.log('   below 90:',a.id,a.displayValue||'')" | tee -a out/lighthouse.txt
+          done
+      - name: Schema validator (one post)
+        run: |
+          curl -s -X POST https://validator.schema.org/validate --data-urlencode "html@_site/blog/precision-recall-content-moderation/index.html" | tail -c +5 > out/schema-post.json
+          node -e "const r=require('./out/schema-post.json');console.log('errors:',r.numErrors,'warnings:',r.numWarnings);for(const g of r.tripleGroups||[])for(const n of g.nodes||[])console.log(' -',n.typeGroup||n.types||'',(n.errors||[]).length+' errors')" | tee out/schema.txt
+      - name: Save results to the redesign-preview branch
+        run: |
+          cd out && git init -q && git checkout -q -b redesign-preview && git add . \
+            && git -c user.name=preview -c user.email=preview@users.noreply.github.com commit -qm "Preview of ${GITHUB_SHA::7}" \
+            && git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" redesign-preview
