@@ -7,6 +7,7 @@ result: "The right article is in the top 3 for 84% of test questions (72% in the
 description: "A portfolio project by Malav Naik: semantic search over the EU Digital Services Act (Regulation (EU) 2022/2065), with keyword, semantic and hybrid search compared on 25 hand-written test questions."
 order: 3
 featured: true
+sandbox: dsa
 code_url: https://github.com/malavnaik99/eu-dsa-search
 demo_url: https://huggingface.co/spaces/Malavnaik/ask-the-dsa
 tech: [Python, BeautifulSoup, sentence-transformers, BM25, transformers.js, Kaggle, Hugging Face, GitHub Actions]

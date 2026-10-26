@@ -1,0 +1,8 @@
+<div class="sandbox-card" id="sandbox-dsa">
+  <p class="label">Sandbox · keyword vs vector</p>
+  <h3>Same question, two ways of searching the law</h3>
+  <p class="small muted">Precomputed, clearly labelled: the top 3 articles that keyword search (BM25) and vector search (the all-MiniLM-L6-v2 embedding model) returned for each of the 25 test questions. Keyword search had the right article in its top 3 for 17 of 25 questions, vector search for 21. Nothing is searched live here. Text: EUR-Lex, © European Union. Not legal advice. Source: <a href="https://github.com/malavnaik99/eu-dsa-search">code and evaluation</a>.</p>
+  <div class="island" data-island="dsa" data-src="{{ '/assets/data/dsa-examples.json' | relative_url }}">
+    <button class="btn btn-accent" type="button" data-island-load>Open the sandbox</button>
+  </div>
+</div>

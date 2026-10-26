@@ -7,6 +7,7 @@ result: "Posts go to the blog, DEV and LinkedIn in about a minute of my time, on
 description: "A Python bot by Malav Naik that sends weekly blog post previews to Telegram and, only after approval, publishes to GitHub Pages, DEV and LinkedIn via their APIs using GitHub Actions."
 order: 6
 featured: true
+sandbox: automation
 code_url: https://github.com/malavnaik99/telegram-approval-bots
 tech: [Python, GitHub Actions, Telegram Bot API, DEV (Forem) API, LinkedIn Posts API, Jekyll]
 ---
@@ -52,7 +53,7 @@ A bot that does all the publishing work and **waits for one tap from me**. Every
 ## Results
 {% include automation-lab.html %}
 
-- In use since October 2026: posts going out to [this blog]({{ '/blog/' | relative_url }}), [DEV](https://dev.to/malavnaik_0381711024683d4), LinkedIn and Medium, with one tap each.
+- In use since October 2026: posts going out to [this blog]({{ '/writing/' | relative_url }}), [DEV](https://dev.to/malavnaik_0381711024683d4), LinkedIn and Medium, with one tap each.
 - 50 posts queued at two a week; each one takes me about a minute (one tap, plus the Medium import) instead of copying, pasting and re-uploading it on four sites.
 - Runs entirely on GitHub's free tier – no server, nothing to keep switched on.
 - 10 automated tests cover post selection, the blog transformation, the never-twice rule, LinkedIn text escaping and login reminders; they run before every bot run.

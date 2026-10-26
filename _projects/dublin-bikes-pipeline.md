@@ -7,6 +7,7 @@ result: "Every station, every 15 minutes, modelled and tested into a live dashbo
 description: "A data engineering portfolio project by Malav Naik: a scheduled Python collector, dbt + DuckDB models with freshness and volume checks, and a live dashboard of Dublinbikes availability and weather."
 order: 2
 featured: true
+sandbox: sql
 code_url: https://github.com/malavnaik99/dublin-data-pipeline
 tech: [Python, GitHub Actions, dbt, DuckDB, Parquet, Hugging Face Datasets, GBFS, Met Éireann]
 ---

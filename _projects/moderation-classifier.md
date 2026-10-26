@@ -7,6 +7,7 @@ result: "ROC-AUC 0.957; 36.6% of toxic comments auto-actioned at ≥ 90% precisi
 description: "A portfolio project by Malav Naik: a DistilBERT content moderation classifier on the public Civil Comments data, with threshold policies, a simulated review queue, prevalence estimation and false-positive rates by identity group."
 order: 1
 featured: true
+sandbox: moderation
 code_url: https://github.com/malavnaik99/moderation-classifier
 demo_url: https://huggingface.co/spaces/Malavnaik/moderation-classifier-demo
 tech: [Python, scikit-learn, PyTorch, DistilBERT, Kaggle, Hugging Face, ONNX, transformers.js]

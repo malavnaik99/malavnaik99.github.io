@@ -46,7 +46,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ "/" | absolute_url | jsonify }} },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": {{ "/blog/" | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 2, "name": "Writing", "item": {{ "/writing/" | absolute_url | jsonify }} },
         { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ page_url | jsonify }} }
       ]
     }{% endif %}
