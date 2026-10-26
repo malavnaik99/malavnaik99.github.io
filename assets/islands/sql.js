@@ -10,7 +10,7 @@
       '<div class="sql-out" data-out></div>';
     var input = box.querySelector("textarea"), run = box.querySelector("[data-run]"), status = box.querySelector("[data-status]"), out = box.querySelector("[data-out]");
     var conn = null, pending = null;
-    function exampleSql(name) { return card.querySelector('[data-sql-text="' + name + '"]').textContent; }
+    function exampleSql(name) { return card.querySelector('[data-sql-text="' + name + '"] code').textContent; } // not the pre: it also holds the Copy button
     input.value = exampleSql("empty");
     function fmt(v, f) {
       if (v === null || v === undefined) return "";
