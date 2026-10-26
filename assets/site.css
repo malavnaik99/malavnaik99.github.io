@@ -287,3 +287,11 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .flow-anim.playing li:nth-child(4) { animation-delay: 3s; } .flow-anim.playing li:nth-child(5) { animation-delay: 4s; }
 @keyframes flow-step { 0% { border-color: var(--line); } 4%, 100% { border-color: var(--accent); background: var(--soft); } }
 .sandbox-card .flow { margin-top: 1rem; }
+.schema summary { cursor: pointer; font-size: .9rem; min-height: 32px; }
+.schema ul { margin: .5rem 0 0; padding-left: 1.1rem; }
+.examples-sql { display: flex; flex-wrap: wrap; gap: .5rem; }
+.sql-in { width: 100%; min-height: 8rem; padding: .8rem .9rem; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: 400 .85rem/1.5 var(--font-mono); resize: vertical; }
+.sql-out { max-height: 26rem; overflow: auto; border: 1px solid var(--line); border-radius: 12px; margin-top: .75rem; }
+.sql-out:empty { display: none; }
+.sql-out table { display: table; width: 100%; margin: 0; font: 400 .8rem var(--font-mono); }
+.sql-out th { position: sticky; top: 0; background: var(--card); }

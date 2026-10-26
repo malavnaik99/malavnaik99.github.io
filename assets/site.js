@@ -109,6 +109,8 @@
     });
   });
 
+  if (location.hash === "#sql") { var sqlBtn = $("#sql [data-island-load]"); if (sqlBtn) sqlBtn.click(); }
+
   // Ctrl+K (or the search button) loads the search island on first use.
   function openSearch() {
     if (window.openSearch) return window.openSearch();

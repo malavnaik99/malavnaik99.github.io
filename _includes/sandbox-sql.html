@@ -1,0 +1,35 @@
+<div class="sandbox-card" id="sql">
+  <p class="label">Sandbox · SQL console</p>
+  <h3>Query the pipeline's tables in your browser</h3>
+  <p class="small muted">A read-only DuckDB database runs in your browser over a small sample of the published tables: {% if site.data.sql_sample %}every station from {{ site.data.sql_sample.from_utc | date: "%-d %b" }} to {{ site.data.sql_sample.to_utc | date: "%-d %b %Y" }}, {{ site.data.sql_sample.rows.fct_station_hour }} station-hours{% else %}the last 14 days{% endif %}. Opening it downloads DuckDB (about 10 MB, once) from jsDelivr. Full tables: <a href="https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts">Hugging Face dataset</a>.</p>
+  <details class="schema"><summary>Tables and columns</summary>
+    <ul class="small">
+      <li><code>fct_station_hour</code>: station_id, hour_utc, snapshots, avg_bikes, min_bikes, max_bikes, avg_free_docks, share_empty, share_full, share_renting</li>
+      <li><code>dim_station</code>: station_id, station_name, address, lat, lon, capacity</li>
+      <li><code>dim_hour</code>: hour_utc, hour_local, local_date, local_hour, weekday, is_weekend, temperature_c, rainfall_mm, wind_kmh, humidity_pct, weather_description</li>
+    </ul>
+  </details>
+  <p class="small muted" style="margin:.75rem 0 .4rem">Example queries:</p>
+  <div class="examples-sql">
+    <button type="button" class="btn small" data-sql="empty">Which stations are most often empty?</button>
+    <button type="button" class="btn small" data-sql="hours">Bikes by hour: weekdays vs weekends</button>
+    <button type="button" class="btn small" data-sql="rain">Fewer bikes taken when it rains?</button>
+  </div>
+<pre hidden data-sql-text="empty"><code>select s.station_name, round(avg(f.share_empty) * 100, 1) as pct_time_empty, s.capacity
+from fct_station_hour f join dim_station s using (station_id)
+where s.capacity &gt; 0
+group by all order by pct_time_empty desc limit 10</code></pre>
+<pre hidden data-sql-text="hours"><code>select h.local_hour, h.is_weekend, round(avg(f.avg_bikes), 1) as avg_bikes_per_station
+from fct_station_hour f join dim_hour h using (hour_utc)
+group by all order by h.is_weekend, h.local_hour</code></pre>
+<pre hidden data-sql-text="rain"><code>select case when h.rainfall_mm > 0 then 'raining' else 'dry' end as weather,
+       count(*) as station_hours,
+       round(avg(1 - f.avg_bikes / s.capacity) * 100, 1) as pct_docks_without_bike
+from fct_station_hour f
+join dim_hour h using (hour_utc) join dim_station s using (station_id)
+where s.capacity > 0 and h.rainfall_mm is not null and h.local_hour between 7 and 21
+group by all</code></pre>
+  <div class="island" data-island="sql" data-src="{{ '/assets/data/dublin-bikes/' | relative_url }}">
+    <button class="btn btn-accent" type="button" data-island-load>Open the SQL console</button>
+  </div>
+</div>
