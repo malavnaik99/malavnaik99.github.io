@@ -25,4 +25,15 @@ for (const [name, path] of pages)
   await page.screenshot({ path: `${out}/search-desktop-dark.png` });
   await page.close();
 }
+for (const [name, path, sel] of [["sandbox-moderation", "/projects/moderation-classifier/", "#sandbox-moderation"]]) // sandboxes, opened
+  for (const [vp, width, height] of [["mobile", 390, 844], ["desktop", 1280, 900]])
+    for (const scheme of ["dark", "light"]) {
+      const page = await browser.newPage({ viewport: { width, height }, colorScheme: scheme });
+      page.on("pageerror", e => console.log(`JS error on ${name}: ${e.message}`));
+      await page.goto(base + path, { waitUntil: "networkidle" });
+      await page.click(`${sel} [data-island-load]`);
+      await page.waitForTimeout(1500);
+      await (await page.$(sel)).screenshot({ path: `${out}/${name}-${vp}-${scheme}.png` });
+      await page.close();
+    }
 await browser.close();
