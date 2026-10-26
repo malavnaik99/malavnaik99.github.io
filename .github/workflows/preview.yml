@@ -8,7 +8,7 @@ permissions:
 jobs:
   preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - run: mkdir -p out
@@ -35,7 +35,7 @@ jobs:
       - name: Lighthouse (mobile)
         run: |
           npx lighthouse http://localhost:8080/ --quiet --output=json --output-path=/dev/null --chrome-flags="--headless=new --no-sandbox"  # warm-up run, not counted
-          for p in home:/ post:/blog/precision-recall-content-moderation/; do
+          for p in home:/ post:/blog/precision-recall-content-moderation/ work:/work/ writing:/writing/ about:/about/; do
             n=${p%%:*}; u=http://localhost:8080${p#*:}
             npx lighthouse "$u" --quiet --output=json --output-path=out/lighthouse-$n.json --chrome-flags="--headless=new --no-sandbox"
             node -e "const r=require('./out/lighthouse-$n.json');console.log('$n', Object.values(r.categories).map(c=>c.title+' '+Math.round(c.score*100)).join(' | '));for(const a of Object.values(r.audits))if(a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable')console.log('   below 90:',a.id,a.displayValue||'')" | tee -a out/lighthouse.txt
