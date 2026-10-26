@@ -1,0 +1,8 @@
+<div class="sandbox-card" id="sandbox-moderation">
+  <p class="label">Sandbox · threshold</p>
+  <h3>Move the line: what happens when you flag more, or less?</h3>
+  <p class="small muted">Real results, not a simulation: the published DistilBERT model's scores for 180,488 held-out test comments (8.0% toxic), saved for every threshold from 0.02 to 0.98. Nothing runs a model in your browser. Source: <a href="https://www.kaggle.com/code/malavnaik/moderation-classifier-civil-comments">Kaggle notebook</a> and the threshold sweep that re-scored the same test set.</p>
+  <div class="island" data-island="moderation" data-src="{{ '/assets/data/moderation-sweep.json' | relative_url }}">
+    <button class="btn btn-accent" type="button" data-island-load>Open the sandbox</button>
+  </div>
+</div>

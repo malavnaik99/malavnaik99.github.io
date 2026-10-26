@@ -94,7 +94,8 @@ wide: true
       <div class="row-body"><div>
         <p>A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group, plus a demo that runs in your browser.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>scikit-learn</li><li>PyTorch</li><li>DistilBERT</li><li>ONNX</li><li>transformers.js</li></ul>
-        <div class="sandbox"><p class="label">Sandbox</p><p class="small muted">The interactive threshold sandbox is coming next. For now, <a href="{{ '/projects/moderation-classifier/' | relative_url }}">read the case study</a>.</p></div>
+        {% include sandbox-moderation.html %}
+        <p class="small"><a href="{{ '/projects/moderation-classifier/' | relative_url }}">Read the case study</a></p>
       </div></div>
     </details>
     <details class="row">

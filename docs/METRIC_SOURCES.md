@@ -17,6 +17,12 @@ Every metric shown on malavnaik.com must trace to a source below. If a number ca
 | N posts published, platform counts, queued | Project row 04, bot status line | `_data/automation.json`, written by the blog bot after each post |
 | ~25% lower infrastructure cost | Ask answer, journey | Résumé and post 03: the Azure SQL migration at S&P Global Market Intelligence cut infrastructure costs by about 25% |
 
+## Sandboxes
+
+| Sandbox | Data file | Source |
+|---|---|---|
+| Moderation threshold | `assets/data/moderation-sweep.json` | [moderation-classifier `results/threshold-sweep.json`](https://github.com/malavnaik99/moderation-classifier/blob/main/results/threshold-sweep.json), made by the Kaggle notebook `moderation-threshold-sweep`: the published DistilBERT re-scores the same 180,488 test comments (no retraining). It reproduced ROC-AUC 0.9574, 79.7% recall at the 0.219 review threshold, and the published false-positive rates (e.g. 35.6% for "black", 9.6% overall) before saving. |
+
 ## Job titles (journey)
 
 From Malav, 26 Oct 2026:

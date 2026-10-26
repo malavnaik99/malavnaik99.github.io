@@ -87,6 +87,20 @@
     });
   });
 
+  // Sandboxes are islands: their code loads only when a visitor opens one.
+  $$("[data-island-load]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = btn.closest("[data-island]"), name = box.dataset.island;
+      btn.disabled = true;
+      var run = function () { window.islands[name](box); };
+      if (window.islands && window.islands[name]) return run();
+      var sc = document.createElement("script");
+      sc.src = "/assets/islands/" + name + ".js";
+      sc.onload = run;
+      document.head.appendChild(sc);
+    });
+  });
+
   // Ctrl+K (or the search button) loads the search island on first use.
   function openSearch() {
     if (window.openSearch) return window.openSearch();

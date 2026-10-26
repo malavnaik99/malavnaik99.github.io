@@ -19,5 +19,6 @@ layout: default
   {% if page.tech %}<ul class="chips" aria-label="Tech used">{% for t in page.tech %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
   <p class="actions">{% if page.demo_url %}<a class="btn btn-primary" href="{{ page.demo_url | relative_url }}">See it live</a>{% endif %}
      {% if page.code_url %}<a class="btn" href="{{ page.code_url }}">Code on GitHub</a>{% endif %}</p>
+  {% if page.sandbox %}{% include sandbox-{{ page.sandbox }}.html %}{% endif %}
   {{ content }}
 </article>
