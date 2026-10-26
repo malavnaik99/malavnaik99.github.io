@@ -1,0 +1,254 @@
+== TEXT ==
+Malav Naik | Data Engineer, GenAI & AI Automation in Dublin
+[meta description] Malav Naik is a data engineer in Dublin, Ireland, working on data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Data & GenAI Engineer · ~10 years · Dublin
+I build data pipelines and GenAI systems, and prove they work.
+About 10 years in data, from SSIS pipelines and an Azure SQL migration at S&P Global Market Intelligence to dbt, DuckDB and LLM tools today. Every project here shows its code and measured results.
+Ask about my work
+Your question
+[placeholder] e.g. How do you test a data pipeline?
+Ask
+[aria-label] Example questions
+What's your strongest project?
+How do you build data pipelines?
+What's your background?
+A content moderation classifier trained on 1.8 million public comments. The DistilBERT model reached a ROC-AUC of 0.957, and I checked how often harmless comments mentioning each identity group were wrongly flagged.
+source: /projects/moderation-classifier/
+Small and append-only first: the Dublin bikes collector saves every station every 15 minutes. dbt on DuckDB then builds a tested star schema with 14 automatic data checks, published as Parquet on Hugging Face, for €0 a month.
+source: /projects/dublin-bikes-pipeline/
+About 10 years in data: Data Analyst at Bright Info Solutions, then Data Analyst & ETL Developer at S&P Global Market Intelligence, where an Azure SQL migration cut infrastructure costs by about 25%. Then an MSc in Data Analytics at National College of Ireland, and now platform integrity work at Accenture for a global technology client.
+source: /about/
+Coming soon: free-text answers are still being built. Try one of the example questions for now.
+[alt] Malav Naik in a navy suit outside the Convention Centre Dublin
+name
+Malav Naik
+based
+Dublin, Ireland
+focus
+data pipelines · GenAI · AI automation
+pipeline
+runs every 15 min
+[aria-label] Key numbers
+~10 yrsin data, across India and Ireland
+0.957ROC-AUC, content moderation model
+15 minpipeline refresh, €0 a month
+MScData Analytics, National College of Ireland
+01 / Featured project
+Dublin bikes + weather data pipeline
+running every 15 minutes
+Collects every Dublinbikes station every 15 minutes, models it with dbt and DuckDB into a tested star schema, and feeds a live dashboard, on free tiers only.
+15 mincollection interval
+14automatic data tests on every run
+€0monthly cost
+[aria-label] How the pipeline works
+SourceDublinbikes + Met Éireann
+DuckDB stagingtypes, time zones, de-duplication
+dbt martsstar schema · 14 tests
+Parquet on Hugging Facepublic dataset
+Dashboard + SQL consolein your browser
+Run SQL in your browser Case study
+02 / More projects
+More projects
+01Content moderation classifier, with a fairness checkROC-AUC 0.957
+A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group, plus a demo that runs in your browser.
+[aria-label] Stack
+Python
+scikit-learn
+PyTorch
+DistilBERT
+ONNX
+transformers.js
+Sandbox · threshold
+Move the line: what happens when you flag more, or less?
+Real results, not a simulation: the published DistilBERT model's scores for 180,488 held-out test comments (8.0% toxic), saved for every threshold from 0.02 to 0.98. Nothing runs a model in your browser. Source: Kaggle notebook and the threshold sweep that re-scored the same test set.
+Open the sandbox
+Read the case study
+02Ask the EU Digital Services Act84% top-3 hit rate
+Type a question in plain English and get the articles of the EU Digital Services Act that answer it, quoted and linked. Tested on 25 questions: semantic search put the right article in the top 3 for 84% of them.
+[aria-label] Stack
+Python
+BM25
+sentence-transformers
+transformers.js
+Hugging Face
+Sandbox · keyword vs vector
+Same question, two ways of searching the law
+Precomputed, clearly labelled: the top 3 articles that keyword search (BM25) and vector search (the all-MiniLM-L6-v2 embedding model) returned for each of the 25 test questions. Keyword search had the right article in its top 3 for 17 of 25 questions, vector search for 21. Nothing is searched live here. Text: EUR-Lex, © European Union. Not legal advice. Source: code and evaluation.
+Open the sandbox
+Read the case study
+03SkillBot: from job title to the skills it needs48% skill match
+My MSc project on personalised learning with LLMs and knowledge graphs, plus a free, tested rebuild: type a job title and see the skills real job ads ask for. In a leave-one-out test on 1,167 ads, 48% of suggested skills were in the real ad.
+[aria-label] Stack
+Python
+Knowledge graphs
+sentence-transformers
+transformers.js
+Sandbox
+Open the skills explorer Case study
+04Automation Lab: blog publishing with Telegram approval6 posts published
+A bot that writes nothing until I approve on Telegram, then publishes each post to this site, DEV and LinkedIn, running for free on GitHub Actions.
+[aria-label] Stack
+Python
+GitHub Actions
+Telegram Bot API
+DEV API
+LinkedIn API
+Sandbox · approval flow
+How a post goes out: nothing is published without one tap
+An animated walk-through of the real flow. No message is sent and nothing is published from this page.
+Draftwritten and fact-checked with Claude Code, saved in the repo
+Preview on TelegramMondays 09:00, with Post and Skip buttons
+One tap: PostSkip means it waits for next week
+Publishthis site, then DEV and LinkedIn with a link back
+Medium30-second import steps sent to me
+Play the flow
+See the code
+Read the case study
+All projects →
+03 / Toolkit
+Tools I've used in real projects
+[aria-label] Toolkit areas
+01Data engineering
+02Analytics & BI
+03GenAI & ML
+04Automation & web
+Data engineering
+SQL
+SQL Server
+SSIS (ETL)
+Azure SQL
+Data modelling
+dbt
+DuckDB
+Parquet
+GitHub Actions
+Analytics & BI
+Python
+pandas
+Power BI
+Excel
+Chart.js
+Kaggle
+GenAI & ML
+LLMs
+RAG
+Knowledge graphs
+Prompt engineering
+Claude API
+sentence-transformers
+BM25
+scikit-learn
+PyTorch
+DistilBERT
+ONNX
+transformers.js
+Hugging Face
+Automation & web
+Telegram Bot API
+Gmail API
+DEV API
+LinkedIn API
+Jekyll
+JavaScript
+Tailwind CSS
+BeautifulSoup
+Featured product
+Cadentiq
+Walks, workouts, a focus garden and one-tap reminders in one Android app, with Health Connect. Minimums and freezes carry you through bad days.
+Visit cadentiq.si
+04 / From Surat to Dublin
+Ten years, two countries, one thread: data
+2015 – 2019
+Data Analyst
+Bright Info Solutions, Ahmedabad
+Pulled data with SQL, cleaned it in Excel and Python, and built weekly reports.
+2019 – 2024
+Data Analyst & ETL Developer
+S&P Global Market Intelligence
+SSIS pipelines over multi-million-record financial datasets, and an Azure SQL migration that cut infrastructure costs by about 25%.
+2024 – 2025
+MSc Data Analytics
+National College of Ireland, Dublin
+Thesis on knowledge graphs and prompt engineering for personalised learning.
+2026 – now
+Escalation Operations Analyst
+Accenture, Dublin
+Platform integrity work for a global technology client, analysing complex escalations with AI-assisted tools.
+05 / Writing & Automation Lab
+Latest writing
+All posts →
+blog bot · 6 posts published · Blog 6 · DEV 3 · LinkedIn 6 · Medium 2 · 47 queued · updated 26 Oct 2026
+26 Oct 2026What 1.8 Million Comments Taught Me About Fair Content Moderation
+26 Oct 2026I Built a Tested Data Pipeline for Dublin Bikes, for €0
+20 Oct 2026Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/projects/moderation-classifier/
+/projects/dublin-bikes-pipeline/
+/about/
+/projects/dublin-bikes-pipeline/
+/projects/dublin-bikes-pipeline/#sql
+/projects/dublin-bikes-pipeline/
+https://www.kaggle.com/code/malavnaik/moderation-classifier-civil-comments
+/projects/moderation-classifier/
+https://github.com/malavnaik99/eu-dsa-search
+/projects/ask-the-dsa/
+https://huggingface.co/spaces/Malavnaik/skillbot-skills-explorer
+/projects/skillbot/
+https://github.com/malavnaik99/telegram-approval-bots
+/projects/blog-automation-bot/
+/work/
+https://cadentiq.si
+/writing/
+/blog/trust-safety-dashboard-public-data/
+/blog/dublin-bikes-data-pipeline/
+/blog/precision-recall-content-moderation/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

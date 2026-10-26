@@ -1,0 +1,117 @@
+== TEXT ==
+Blog automation bot with Telegram approval | Malav Naik
+[meta description] A Python bot by Malav Naik that sends weekly blog post previews to Telegram and, only after approval, publishes to GitHub Pages, DEV and LinkedIn via their APIs using GitHub Actions.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Work
+Blog automation bot with Telegram approval
+Writes nothing until I approve on Telegram, then publishes each post to my blog, DEV and LinkedIn – running for free on GitHub Actions.
+[aria-label] Tech used
+Python
+GitHub Actions
+Telegram Bot API
+DEV (Forem) API
+LinkedIn Posts API
+Jekyll
+Code on GitHub
+Sandbox · approval flow
+How a post goes out: nothing is published without one tap
+An animated walk-through of the real flow. No message is sent and nothing is published from this page.
+Draftwritten and fact-checked with Claude Code, saved in the repo
+Preview on TelegramMondays 09:00, with Post and Skip buttons
+One tap: PostSkip means it waits for next week
+Publishthis site, then DEV and LinkedIn with a link back
+Medium30-second import steps sent to me
+Play the flow
+See the code
+The problem
+I wanted to publish two posts a week on my own site and cross-post them to DEV, LinkedIn and Medium. Doing that by hand means copying text, uploading photos and fixing links four times per post. But fully automatic posting is risky: nothing should go public under my name without me seeing it first.
+What I built
+A bot that does all the publishing work and waits for one tap from me. Every Monday at 9:00 it sends me previews of my next two posts on Telegram. When I tap ✅, it publishes the post to this blog, then to DEV and LinkedIn, and sends me the 30-second Medium import steps. When I tap ❌, the post waits until next week.
+How it works
+Flow: post files go to a Telegram preview; after approval GitHub Actions publishes to the blog, then DEV and LinkedIn, and sends Medium steps
+Post files (Markdown) Monday: Telegram preview ✅ / ❌ GitHub Actions (every 15 min) Blog live? (waits for HTTP 200) My blogDEV LinkedInMedium steps
+Posts are plain Markdown files with front matter (title, tags, photo, where to post, status). Only posts I’ve marked ready – and with no open fact-check note – are offered.
+A GitHub Actions workflow runs every 15 minutes. It reads Telegram button taps (only from my own chat; anyone else’s taps are ignored) and on Mondays sends the week’s previews.
+On ✅ it publishes to my blog first by committing the post to this GitHub Pages site, then waits until the page actually loads before posting anywhere else, so the links never point to a missing page.
+DEV gets the full article with my blog as the canonical (original) source. LinkedIn gets a short post with the photo, an intro and the link, through LinkedIn’s official Posts API.
+Never twice: after each platform succeeds, the bot writes the URL into the post file and commits it straight away. A re-run skips whatever is already done, and a failure on one platform is reported to me in plain words while the others carry on.
+LinkedIn logins expire every ~60 days. The bot reminds me a week before; I log in through a small page on this site and send the code to the bot, which stores the new token securely as a GitHub secret.
+Demo
+[alt] Animated illustration of the Telegram chat: a post preview, the Post button being tapped, then confirmations for the blog, DEV and LinkedIn, the Medium steps and a status table
+An illustration of the real flow, recreated with example content.
+Results
+Automation Lab
+Live numbers from my blog automation bot, updated by the bot itself after each post.
+[aria-label] Posts published per platform
+6 posts published
+Blog: 6
+DEV: 3
+LinkedIn: 6
+Medium: 2
+47 in the queue
+Latest: I Built a Tested Data Pipeline for Dublin Bikes, for €0 · updated 26 Oct 2026
+In use since October 2026: posts going out to this blog, DEV, LinkedIn and Medium, with one tap each.
+50 posts queued at two a week; each one takes me about a minute (one tap, plus the Medium import) instead of copying, pasting and re-uploading it on four sites.
+Runs entirely on GitHub’s free tier – no server, nothing to keep switched on.
+10 automated tests cover post selection, the blog transformation, the never-twice rule, LinkedIn text escaping and login reminders; they run before every bot run.
+What I learned
+Human approval is a feature, not a limitation. One tap keeps me in control while the bot does almost all of the work.
+Record progress immediately. Writing each platform’s result before moving on is what makes re-runs safe.
+Use official APIs. LinkedIn and DEV both offer them; browser automation would break their terms and risk the account.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/projects/blog-automation-bot/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/work/
+https://github.com/malavnaik99/telegram-approval-bots
+https://github.com/malavnaik99/telegram-approval-bots
+/projects/blog-automation-bot/
+https://malavnaik.com/blog/dublin-bikes-data-pipeline/
+/writing/
+https://dev.to/malavnaik_0381711024683d4
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

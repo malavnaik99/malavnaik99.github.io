@@ -1,0 +1,71 @@
+== TEXT ==
+Data engineering – blog series | Malav Naik
+[meta description] Malav Naik’s posts on SQL, ETL, Azure, dbt and building data pipelines people can trust.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Writing · Series
+Data engineering
+SQL, ETL, Azure, dbt and building data pipelines people can trust.
+Posts in this series
+Data engineering
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+26 Oct 2026 · 3 min read
+How I collect every Dublinbikes station every 15 minutes, model it with dbt and DuckDB, test it daily and feed a live dashboard, using only free tiers.
+Data engineering
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+15 Oct 2026 · 2 min read
+Lessons from moving production SQL Server databases to Azure SQL PaaS without disrupting the people who depend on them.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/blog/series/data-engineering/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/writing/
+/blog/series/data-engineering/
+/blog/dublin-bikes-data-pipeline/
+/blog/series/data-engineering/
+/blog/azure-sql-migration-25-percent/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

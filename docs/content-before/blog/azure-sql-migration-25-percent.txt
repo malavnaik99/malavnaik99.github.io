@@ -1,0 +1,137 @@
+== TEXT ==
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25% | Malav Naik
+[meta description] Lessons from moving production SQL Server databases to Azure SQL PaaS without disrupting the people who depend on them.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Data engineering
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+Lessons from moving production SQL Server databases to Azure SQL PaaS without disrupting the people who depend on them.
+Published 15 October 2026 · Updated 25 October 2026 · 2 min read · by Malav Naik
+[aria-label] Summary
+TL;DR
+At S&P Global Market Intelligence our team moved between 10 and 50 SQL Server databases to Azure SQL Managed Instance and cut infrastructure costs by about 25%, while users barely noticed. Most of the savings came from right-sizing instead of copying on-prem capacity.
+[aria-label] Contents
+Contents
+1. Inventory before you plan
+2. Azure SQL Database or Managed Instance?
+3. Where do the cloud savings come from?
+4. Migrate in waves
+5. Test the boring things
+6. When is a migration really finished?
+The takeaway
+[alt] Malav Naik on a rooftop with a city skyline behind – Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+At S&P Global Market Intelligence I helped migrate on-premise SQL Server databases to Azure SQL PaaS. Our team moved between 10 and 50 databases to Azure SQL Managed Instance. The headline result was a reduction in infrastructure costs of about 25%. The more important result was that the people using those databases barely noticed it happened.
+Here’s what I learned about doing a migration like that well.
+1. Inventory before you plan
+Before choosing a target, list everything that touches the database: ETL jobs, reports, linked servers, SQL Agent jobs, cross-database queries, CLR assemblies. PaaS options don’t support every on-prem feature in the same way, and you want to find the gaps on a spreadsheet, not in production.
+Microsoft’s Data Migration Assistant and Azure Migrate help here, but they don’t know about the Excel workbook someone in finance refreshes every Monday. Talk to users.
+2. Azure SQL Database or Managed Instance?
+Azure SQL Database and Azure SQL Managed Instance trade compatibility against simplicity. Managed Instance keeps more instance-level features (Agent jobs, cross-database queries), so it suits lift-and-shift. Single databases are simpler and can be cheaper, but may need refactoring. Decide per workload, not per estate. We went with Managed Instance, which kept most instance-level features in place and meant fewer changes to existing code.
+3. Where do the cloud savings come from?
+Most of the savings came from not paying for capacity we didn’t use. On-prem servers are sized for peak load plus growth plus fear. In the cloud you can measure actual usage and scale. Look at real CPU, memory and IO over several weeks before choosing service tiers.
+4. Migrate in waves
+Start with low-risk databases: development, reporting copies, internal tools. Each wave teaches you something about networking, permissions or performance that makes the next wave smoother.
+5. Test the boring things
+Performance gets attention. In our migration, the real problems came from elsewhere:
+Connection strings hard-coded in old applications and reports
+SSIS packages and SQL Agent jobs that needed reworking to run against Azure
+Jobs that relied on local file paths on the old servers
+Also worth checking: time zone and collation differences, firewall rules and private endpoints.
+6. When is a migration really finished?
+A migration isn’t finished when the data moves. It’s finished when every report, job and application works as before and the old servers are switched off. Agree that checklist with stakeholders up front.
+The takeaway
+Cloud migration savings come mostly from right-sizing and retiring infrastructure. Keeping users happy comes from inventory, testing and communication. Neither is glamorous, and both matter more than the migration tooling.
+Frequently asked questions
+Where did the 25% saving come from?
+Mostly from right-sizing: measuring real CPU, memory and IO over several weeks instead of copying servers sized for peak load, and retiring the old infrastructure.
+Azure SQL Database or Managed Instance?
+Managed Instance keeps more instance-level features, such as Agent jobs and cross-database queries, so it suits lift-and-shift. Single databases are simpler and can be cheaper but may need refactoring. Decide per workload.
+[aria-label] Tags
+#azure
+#sql
+#dataengineering
+#cloud
+Share: LinkedIn X
+[aria-label] About the author
+[alt] Malav Naik
+Malav Naik builds data pipelines, GenAI tools and AI automation in Dublin, and writes about them here.
+He is an Escalation Operations Analyst – Platform Integrity at Accenture, for a global technology client.
+LinkedIn · GitHub · About
+Related posts
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+26 Oct 2026
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+26 Oct 2026
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+20 Oct 2026
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/blog/azure-sql-migration-25-percent/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/blog/series/data-engineering/
+/about/
+#1-inventory-before-you-plan
+#2-azure-sql-database-or-managed-instance
+#3-where-do-the-cloud-savings-come-from
+#4-migrate-in-waves
+#5-test-the-boring-things
+#6-when-is-a-migration-really-finished
+#the-takeaway
+/blog/topics/#tag-azure
+/blog/topics/#tag-sql
+/blog/topics/#tag-dataengineering
+/blog/topics/#tag-cloud
+https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fazure-sql-migration-25-percent%2F
+https://x.com/intent/post?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fazure-sql-migration-25-percent%2F&text=Migrating+On-Prem+SQL+Server+to+Azure+SQL+PaaS%3A+How+We+Cut+Infrastructure+Costs+by+25%25
+/about/
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+/about/
+/blog/dublin-bikes-data-pipeline/
+/blog/trust-safety-dashboard-public-data/
+/blog/precision-recall-content-moderation/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

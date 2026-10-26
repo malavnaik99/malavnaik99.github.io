@@ -1,0 +1,102 @@
+== TEXT ==
+About | Malav Naik
+[meta description] About Malav Naik – data analyst and data engineer in Dublin with 10 years in data across India and Ireland, MSc in Data Analytics from National College of Ireland.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+About Malav Naik
+I’m Malav Naik, a data professional based in Dublin with about 10 years of experience across India and Ireland.
+My story
+I finished a Bachelor of Computer Applications in Gujarat in 2015 and started out in SEO keyword research. My first data role was at Bright Info Solutions in Ahmedabad: pulling data with SQL, cleaning it in Excel and Python, and building weekly reports.
+From 2019 to 2024 I was a data analyst and ETL developer at S&P Global Market Intelligence. I built SSIS pipelines over multi-million-record financial datasets, designed data models for analytics, and helped migrate on-premise SQL Server to Azure SQL PaaS, which cut infrastructure costs by about 25%.
+In 2024 I moved to Dublin for an MSc in Data Analytics at National College of Ireland, where I worked on knowledge graphs, prompt engineering and retrieval-augmented generation.
+Today I work with Accenture for a global technology client on platform integrity, analysing complex escalations with AI-assisted tools.
+Journey
+2015 – 2019
+Data Analyst
+Bright Info Solutions, Ahmedabad
+Pulled data with SQL, cleaned it in Excel and Python, and built weekly reports.
+2019 – 2024
+Data Analyst & ETL Developer
+S&P Global Market Intelligence
+SSIS pipelines over multi-million-record financial datasets, and an Azure SQL migration that cut infrastructure costs by about 25%.
+2024 – 2025
+MSc Data Analytics
+National College of Ireland, Dublin
+Thesis on knowledge graphs and prompt engineering for personalised learning.
+2026 – now
+Escalation Operations Analyst
+Accenture, Dublin
+Platform integrity work for a global technology client, analysing complex escalations with AI-assisted tools.
+Skills
+SQL & SQL Server
+SSIS / ETL
+Azure SQL
+Python
+Data modelling
+Power BI
+Excel
+Large language models
+RAG
+Knowledge graphs
+Prompt engineering
+GitHub Actions
+Trust & safety analytics
+Publications
+Enhanced Personalized Learning Experiences by Leveraging Knowledge Graphs and Prompt Engineering – MSc thesis, National College of Ireland, 2025. Read it in the NCI repository.
+Education
+MSc in Data Analytics, National College of Ireland, Dublin (2024–2025)
+Bachelor of Computer Applications, Gujarat, India (2015)
+See also my work, résumé and what I’m doing now.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/about/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+https://norma.ncirl.ie/9439/
+/work/
+/resume/
+/now/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

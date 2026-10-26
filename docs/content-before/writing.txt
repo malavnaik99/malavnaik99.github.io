@@ -1,0 +1,88 @@
+== TEXT ==
+Writing | Malav Naik
+[meta description] Writing by Malav Naik on data engineering, generative AI, trust & safety and building a data career in Dublin.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Writing
+Notes on data, GenAI and trust & safety
+Browse by series or by tag, or follow via RSS.
+[aria-label] Filter by series
+All
+Data engineering
+GenAI
+Trust & safety
+Career
+All posts
+26 Oct 2026
+3 min readWhat 1.8 Million Comments Taught Me About Fair Content ModerationI trained two content moderation models on 1.8 million public comments and measured them like a trust & safety team: thresholds, review queues, prevalence and fairness.Trust & safety
+26 Oct 2026
+3 min readI Built a Tested Data Pipeline for Dublin Bikes, for €0How I collect every Dublinbikes station every 15 minutes, model it with dbt and DuckDB, test it daily and feed a live dashboard, using only free tiers.Data engineering
+20 Oct 2026
+2 min readPrecision vs Recall in Content Moderation: The Trade-Off Every Integrity Team FacesWhy no moderation system can catch everything without hurting innocent users, and how to choose where to set the line.Trust & safety
+20 Oct 2026
+2 min readWhat a Master's in Ireland Taught Me After Nine Years in IndustryGoing back to university as an experienced data professional: what was worth it, what surprised me, and advice for anyone considering it.Career
+15 Oct 2026
+2 min readFrom Surat to Dublin: 10 Years in Data, and Why I'm Just Getting StartedA decade of data work across India and Ireland, what changed along the way, and where I'm heading next.Career
+15 Oct 2026
+2 min readMigrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%Lessons from moving production SQL Server databases to Azure SQL PaaS without disrupting the people who depend on them.Data engineering
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/writing/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/blog/topics/
+/feed.xml
+/blog/series/data-engineering/
+/blog/series/genai/
+/blog/series/trust-safety/
+/blog/series/career/
+/blog/trust-safety-dashboard-public-data/
+/blog/dublin-bikes-data-pipeline/
+/blog/precision-recall-content-moderation/
+/blog/masters-in-ireland-after-industry/
+/blog/from-surat-to-dublin/
+/blog/azure-sql-migration-25-percent/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

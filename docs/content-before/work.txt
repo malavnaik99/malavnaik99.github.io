@@ -1,0 +1,213 @@
+== TEXT ==
+Work | Malav Naik
+[meta description] Projects by Malav Naik – data engineering, GenAI and AI automation, each with the problem, approach, measured result, stack and code.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Work
+Projects, with the numbers to back them
+Each case study shows the problem, the approach, the measured result, the stack and the code. Sources for every number are on each project page.
+All projects
+Content moderation classifier, with a fairness check
+Problem
+A single accuracy number can't say where to draw the line, how much lands on human reviewers, or whether a model is fair.
+Approach
+Trained a TF-IDF baseline and DistilBERT on 1.8 million public comments, set two threshold policies, simulated a review queue and checked false-positive rates by identity group.
+Result
+ROC-AUC 0.957; 36.6% of toxic comments auto-actioned at ≥ 90% precision; harmless comments wrongly flagged cut from 12.8% to 9.6%.
+[aria-label] Stack
+Python
+scikit-learn
+PyTorch
+DistilBERT
+Kaggle
+Hugging Face
+ONNX
+transformers.js
+Case study: Content moderation classifier, with a fairness check · Demo · Code
+Dublin bikes + weather data pipeline
+Problem
+The Dublinbikes feed only shows right now; questions about weather and time of day need history that can be trusted.
+Approach
+A collector every 15 minutes, then a daily dbt + DuckDB run into an incremental star schema with 14 automatic data tests and Telegram alerts.
+Result
+Every station, every 15 minutes, modelled and tested into a live dashboard and public dataset, for €0.
+[aria-label] Stack
+Python
+GitHub Actions
+dbt
+DuckDB
+Parquet
+Hugging Face Datasets
+GBFS
+Met Éireann
+Case study: Dublin bikes + weather data pipeline · Code
+Ask the EU Digital Services Act
+Problem
+People ask about the EU Digital Services Act in everyday words, while the law uses its own terms across 93 articles.
+Approach
+Split the official text into 482 chunks and compared keyword, semantic and hybrid search on 25 hand-written questions; the demo quotes the law only.
+Result
+The right article is in the top 3 for 84% of test questions (72% in the free browser version).
+[aria-label] Stack
+Python
+BeautifulSoup
+sentence-transformers
+BM25
+transformers.js
+Kaggle
+Hugging Face
+GitHub Actions
+Case study: Ask the EU Digital Services Act · Demo · Code
+SkillBot: from job title to the skills it needs
+Problem
+Job ads and course catalogues live apart, so "what do I need to learn for this job?" is usually guesswork.
+Approach
+MSc research on an LLM plus a knowledge graph, and a free in-browser rebuild that matches a job title to similar public job ads.
+Result
+About 5 of 10 suggested skills appear in the real ad, in a leave-one-out test on 1,167 ads (48%).
+[aria-label] Stack
+Python
+LLMs
+Knowledge graphs
+Prompt engineering
+sentence-transformers
+transformers.js
+Hugging Face
+GitHub Actions
+Case study: SkillBot: from job title to the skills it needs · Demo · Code
+Irish rents, 2008–2025: an open dataset, cleaned
+Problem
+Ireland's official rent table has 674,352 rows, codes repeated as labels and 70% empty cells.
+Approach
+A reproducible Python cleaning pipeline with a Kaggle notebook that rebuilds the data from the official source.
+Result
+201,912 rents for 437 places, 2008–2025, published on Kaggle and Hugging Face.
+[aria-label] Stack
+Python
+pandas
+Kaggle
+Hugging Face Datasets
+GitHub Actions
+CSO open data
+Case study: Irish rents, 2008–2025: an open dataset, cleaned · Demo · Code
+Blog automation bot with Telegram approval
+Problem
+Cross-posting by hand to four sites is slow, but nothing should go public under my name without me seeing it first.
+Approach
+A Python bot on GitHub Actions that previews each post on Telegram and publishes only after one tap.
+Result
+Posts go to the blog, DEV and LinkedIn in about a minute of my time, on GitHub's free tier.
+[aria-label] Stack
+Python
+GitHub Actions
+Telegram Bot API
+DEV (Forem) API
+LinkedIn Posts API
+Jekyll
+Case study: Blog automation bot with Telegram approval · Code
+Gmail auto-reply with Telegram approval
+Problem
+Routine emails take time, but an AI that sends email on its own can misunderstand or be manipulated.
+Approach
+Claude drafts a reply as a Gmail draft and sends it to Telegram with Send and Discard buttons.
+Result
+A routine reply becomes one tap, and the AI never sends anything by itself.
+[aria-label] Stack
+Python
+Claude API
+Gmail API
+Telegram Bot API
+Prompt engineering
+Case study: Gmail auto-reply with Telegram approval · Code
+Employment Permits 2025 dashboard
+Problem
+International students in Ireland rarely know which employers sponsor work permits, or when hiring peaks.
+Approach
+Cleaned the official 2025 permits dataset, grouped companies into sectors and built a single-page Chart.js dashboard.
+Result
+A searchable, serverless dashboard of permits by sector, month and employer.
+[aria-label] Stack
+Excel
+Data cleaning
+Chart.js
+JavaScript
+Tailwind CSS
+Case study: Employment Permits 2025 dashboard · Demo · Code
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/work/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/projects/moderation-classifier/
+/projects/moderation-classifier/
+https://huggingface.co/spaces/Malavnaik/moderation-classifier-demo
+https://github.com/malavnaik99/moderation-classifier
+/projects/dublin-bikes-pipeline/
+/projects/dublin-bikes-pipeline/
+https://github.com/malavnaik99/dublin-data-pipeline
+/projects/ask-the-dsa/
+/projects/ask-the-dsa/
+https://huggingface.co/spaces/Malavnaik/ask-the-dsa
+https://github.com/malavnaik99/eu-dsa-search
+/projects/skillbot/
+/projects/skillbot/
+https://huggingface.co/spaces/Malavnaik/skillbot-skills-explorer
+https://github.com/malavnaik99/SkillBot-AI-Driven-Personalized-Learning-Platform
+/projects/irish-rents/
+/projects/irish-rents/
+https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
+https://github.com/malavnaik99/irish-rents-dataset
+/projects/blog-automation-bot/
+/projects/blog-automation-bot/
+https://github.com/malavnaik99/telegram-approval-bots
+/projects/gmail-auto-reply/
+/projects/gmail-auto-reply/
+https://github.com/malavnaik99/telegram-approval-bots
+/projects/permits-2025/
+/projects/permits-2025/
+/permits-2025/
+https://github.com/malavnaik99/malavnaik99.github.io/tree/main/permits-2025
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml
