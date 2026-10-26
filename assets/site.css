@@ -189,7 +189,7 @@ main { display: block; }
 .site-footer ul a:hover { color: var(--text); }
 
 /* Content pages and posts (calm reading column) */
-.page { padding: 56px 0 0; }
+.page { padding-top: 56px; }
 .prose { max-width: 680px; margin: 0 auto; font-size: 18px; line-height: 1.7; }
 .prose h1 { font-size: clamp(2rem, 5vw, 2.75rem); }
 .prose h2 { font-size: 1.55rem; margin: 2.4rem 0 .7rem; }
@@ -229,3 +229,22 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @page { margin: 12mm 14mm; }
 @media print { .site-header, .site-footer, .noprint { display: none; } body { font-size: 10pt; line-height: 1.45; background: #fff; color: #000; } .prose { max-width: none; } a { color: inherit; } }
+
+/* Writing list */
+.writing-list .pdesc { display: block; color: var(--muted); font-size: .95rem; margin: .3rem 0 .5rem; }
+.writing-list .pt { display: block; }
+.prose .journey { grid-template-columns: 1fr 1fr; }
+@media (max-width: 560px) { .prose .journey { grid-template-columns: 1fr; } }
+
+/* Search dialog (Ctrl+K) */
+.search-dialog { width: min(640px, calc(100vw - 32px)); max-height: 70vh; margin: 12vh auto auto; padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--text); }
+.search-dialog::backdrop { background: rgba(0,0,0,.55); }
+.search-dialog form { display: flex; flex-direction: column; max-height: 70vh; }
+.search-dialog input { min-height: 56px; padding: 0 1.1rem; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--text); font: 400 1.05rem var(--font); outline: none; }
+.search-dialog ul { list-style: none; margin: 0; padding: .4rem; overflow-y: auto; }
+.search-dialog li a { display: flex; flex-direction: column; padding: .6rem .8rem; border-radius: 10px; color: var(--text); text-decoration: none; min-height: 44px; }
+.search-dialog li[aria-selected="true"] a, .search-dialog li a:hover { background: var(--soft); }
+.search-dialog .sk { font: 400 .72rem var(--font-mono); color: var(--muted); }
+.search-dialog .st { font-weight: 500; }
+.search-empty { padding: .8rem; color: var(--muted); }
+.search-hint { margin: 0; padding: .5rem 1.1rem; border-top: 1px solid var(--line); font: 400 .75rem var(--font-mono); color: var(--muted); }

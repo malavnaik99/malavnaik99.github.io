@@ -6,7 +6,7 @@
       <h2 id="product-title">{{ pr.name }}</h2>
       {% if pr.description != "" %}<p class="muted" style="margin:0">{{ pr.description }}</p>{% endif %}
     </div>
-    <p class="actions"><a class="btn btn-accent" href="{{ pr.site }}">Visit {{ pr.site | remove: "https://" }}</a> <a class="btn" href="{{ pr.play }}">Get it on Google Play</a></p>
+    <p class="actions"><a class="btn btn-accent" href="{{ pr.site }}">Visit {{ pr.site | remove: "https://" }}</a> {% if pr.play != "" %}<a class="btn" href="{{ pr.play }}">Get it on Google Play</a>{% endif %}</p>
   </div>
 </section>
 {% endif %}
