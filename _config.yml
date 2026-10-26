@@ -11,6 +11,7 @@ plugins:
   - jekyll-feed
 exclude:
   - README.md
+  - docs/
 collections:
   projects:
     output: true
