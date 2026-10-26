@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Facts for the design (Cadentiq description, live pipeline source)
+        timeout-minutes: 2
+        continue-on-error: true
         run: |
           mkdir -p out
           {
@@ -24,12 +26,21 @@ jobs:
         run: |
           sed -i 's#^url: .*#url: http://localhost:8080#' _config.yml
       - uses: actions/jekyll-build-pages@v1
-      - run: |
+      - name: Check image alt text
+        run: |
           sudo chown -R "$USER" _site
           missing=$(grep -rlP '<img(?![^>]*\balt=)[^>]*>' _site || true); echo "Images without alt: ${missing:-none}"
-          (npx -y serve@14.2.4 -l 8080 _site >/dev/null 2>&1 &)
-          npm i --no-save --silent playwright@1.48.2 lighthouse@12.2.1
-          npx playwright install --with-deps chromium >/dev/null
+      - name: Install test tools
+        timeout-minutes: 6
+        run: |
+          npm i --no-save --no-audit --no-fund playwright@1.48.2 lighthouse@12.2.1 serve@14.2.4
+          npx playwright install --with-deps chromium
+      - name: Start a local web server (compressed, like GitHub Pages)
+        timeout-minutes: 1
+        run: |
+          nohup ./node_modules/.bin/serve -l 8080 _site > /tmp/serve.log 2>&1 &
+          for i in $(seq 30); do curl -sf http://localhost:8080/ >/dev/null && echo "server up" && exit 0; sleep 1; done
+          cat /tmp/serve.log; exit 1
       - run: node .github/preview/shots.mjs out | tee out/js-errors.txt
       - name: Lighthouse (mobile)
         run: |
