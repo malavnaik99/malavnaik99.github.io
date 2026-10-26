@@ -8,6 +8,7 @@ permissions:
 jobs:
   preview:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Facts for the design (Cadentiq description, live pipeline source)
