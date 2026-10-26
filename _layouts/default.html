@@ -20,7 +20,10 @@
   <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  {%- comment -%} Fonts load without blocking the first paint; the metric-matched fallbacks in site.css keep text from jumping. {%- endcomment -%}
+  {% assign fonts = "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" %}
+  <link rel="preload" as="style" href="{{ fonts }}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ fonts }}"></noscript>
   <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
   {% include schema.html %}
   <noscript><style>[role="tabpanel"][hidden]{display:block}</style></noscript>
