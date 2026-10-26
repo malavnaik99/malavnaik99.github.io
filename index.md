@@ -3,7 +3,6 @@ layout: default
 wide: true
 ---
 {% assign lab = site.data.automation %}
-<div class="container">
 
 <section class="hero" aria-labelledby="hero-title">
   <div>
@@ -149,12 +148,7 @@ wide: true
 <section class="section" id="journey" aria-labelledby="journey-title">
   <p class="label"><b>04</b> / From Surat to Dublin</p>
   <h2 id="journey-title">Ten years, two countries, one thread: data</h2>
-  <ol class="journey">
-    <li class="card"><p class="when">2015 – 2019</p><h3>Data Analyst</h3><p class="where">Bright Info Solutions, Ahmedabad</p><p>Pulled data with SQL, cleaned it in Excel and Python, and built weekly reports.</p></li>
-    <li class="card"><p class="when">2019 – 2024</p><h3>Data Analyst &amp; ETL Developer</h3><p class="where">S&amp;P Global Market Intelligence</p><p>SSIS pipelines over multi-million-record financial datasets, and an Azure SQL migration that cut infrastructure costs by about 25%.</p></li>
-    <li class="card"><p class="when">2024 – 2025</p><h3>MSc Data Analytics</h3><p class="where">National College of Ireland, Dublin</p><p>Thesis on knowledge graphs and prompt engineering for personalised learning.</p></li>
-    <li class="card"><p class="when">2026 – now</p><h3>Escalation Operations Analyst</h3><p class="where">Accenture, Dublin</p><p>Platform integrity work for a global technology client, analysing complex escalations with AI-assisted tools.</p></li>
-  </ol>
+  {% include journey.html %}
 </section>
 
 <section class="section" aria-labelledby="writing-title">
@@ -167,4 +161,3 @@ wide: true
   </ul>
 </section>
 
-</div>
