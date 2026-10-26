@@ -16,6 +16,12 @@
     menuBtn.setAttribute("aria-expanded", nav.classList.toggle("open"));
   });
 
+  // Toolkit constellation: label each node with the matching tool from its tab panel.
+  $$(".constellation .area").forEach(function (g) {
+    var tools = $$("#" + g.dataset.panel + " li");
+    $$("text", g).forEach(function (t, i) { if (tools[i]) t.textContent = tools[i].textContent; });
+  });
+
   // Toolkit tabs (WAI-ARIA tabs pattern: arrows, Home and End move between tabs).
   $$("[role=tablist]").forEach(function (list) {
     var tabs = $$("[role=tab]", list);
@@ -26,6 +32,7 @@
         t.tabIndex = on ? 0 : -1;
         document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
       });
+      $$(".constellation .area").forEach(function (g) { g.classList.toggle("on", g.dataset.panel === tab.getAttribute("aria-controls")); });
       if (focus) tab.focus();
     }
     tabs.forEach(function (t, i) {
