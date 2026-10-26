@@ -2,7 +2,7 @@
 import { chromium } from "playwright";
 const out = process.argv[2], base = "http://localhost:8080";
 const pages = [["home", "/"], ["post", "/blog/precision-recall-content-moderation/"], ["work", "/work/"], ["writing", "/writing/"], ["about", "/about/"]];
-const browser = await chromium.launch();
+const browser = await chromium.launch({ channel: "chrome" });
 async function open(path, width, height, scheme, label) {
   const page = await browser.newPage({ viewport: { width, height }, colorScheme: scheme });
   page.on("pageerror", e => console.log(`JS error (${label}): ${e.message}`));

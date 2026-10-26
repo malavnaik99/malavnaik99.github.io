@@ -23,8 +23,8 @@ jobs:
       - name: Install test tools
         timeout-minutes: 15
         run: |
+          google-chrome --version  # preinstalled on GitHub's runners; Playwright and Lighthouse both use it
           npm i --no-save --no-audit --no-fund playwright@1.48.2 lighthouse@12.2.1 serve@14.2.4
-          npx playwright install --with-deps chromium
       - name: Start a local web server (compressed, like GitHub Pages)
         timeout-minutes: 1
         run: |
