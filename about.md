@@ -18,6 +18,10 @@ In 2024 I moved to Dublin for an MSc in Data Analytics at National College of Ir
 
 Today I work with Accenture for a global technology client on platform integrity, analysing complex escalations with AI-assisted tools.
 
+## Journey
+
+{% include journey.html %}
+
 ## Skills
 
 <ul class="chips">
@@ -34,4 +38,4 @@ Today I work with Accenture for a global technology client on platform integrity
 - **MSc in Data Analytics**, National College of Ireland, Dublin (2024–2025)
 - **Bachelor of Computer Applications**, Gujarat, India (2015)
 
-See also my [projects]({{ '/projects/' | relative_url }}), [résumé]({{ '/resume/' | relative_url }}) and [what I'm doing now]({{ '/now/' | relative_url }}).
+See also my [work]({{ '/work/' | relative_url }}), [résumé]({{ '/resume/' | relative_url }}) and [what I'm doing now]({{ '/now/' | relative_url }}).

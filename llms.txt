@@ -11,8 +11,9 @@ Malav Naik is a data analyst and data engineer in Dublin with about 10 years of 
 
 ## Pages
 
-- [About]({{ '/about/' | absolute_url }}): his story, skills, education and MSc thesis.
-- [Projects]({{ '/projects/' | absolute_url }}): {{ site.projects.size }} public projects, each with the problem, approach, measured result and code.
+- [About]({{ '/about/' | absolute_url }}): his story, journey, skills, education and MSc thesis.
+- [Work]({{ '/work/' | absolute_url }}): {{ site.projects.size }} public projects, each with the problem, approach, measured result and code.
+- [Writing]({{ '/writing/' | absolute_url }}): all blog posts, filterable by series.
 - [Résumé]({{ '/resume/' | absolute_url }}): experience, education and skills, with a PDF download.
 
 ## Blog series

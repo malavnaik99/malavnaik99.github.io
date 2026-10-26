@@ -6,8 +6,8 @@ Source for **[malavnaik.com](https://malavnaik.com)**, the personal site and blo
 
 The site has:
 
-- **[Projects](https://malavnaik.com/projects/)**: case studies covering the problem, the approach, measured results, the stack and the code.
-- **[Blog](https://malavnaik.com/blog/)**: posts on data engineering, generative AI and trust & safety, grouped into series.
+- **[Work](https://malavnaik.com/work/)**: case studies covering the problem, the approach, measured results, the stack and the code.
+- **[Writing](https://malavnaik.com/writing/)**: posts on data engineering, generative AI and trust & safety, grouped into series.
 - **[About](https://malavnaik.com/about/)**, **[Résumé](https://malavnaik.com/resume/)** and **[Contact](https://malavnaik.com/contact/)**.
 
 ## Tech stack

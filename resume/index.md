@@ -31,7 +31,7 @@ About 10 years in data across India and Ireland: SQL Server and SSIS pipelines, 
 
 ## Selected projects
 - **SkillBot** – a skill-recommendation chatbot pairing a fine-tuned GPT-3.5 model with a 2.3-million-triple knowledge graph using retrieval-augmented generation.
-- **More** on the [projects page]({{ '/projects/' | absolute_url }}).
+- **More** on the [work page]({{ '/work/' | absolute_url }}).
 
 ## Skills
 SQL, SQL Server, SSIS, Azure SQL, Python, data modelling, Power BI, Excel, LLMs, RAG, knowledge graphs, prompt engineering, GitHub Actions.
