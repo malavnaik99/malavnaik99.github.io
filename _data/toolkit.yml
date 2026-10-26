@@ -1,0 +1,13 @@
+# Toolkit tabs on the home page. Only tools from the résumé or a project page (sources in docs/METRIC_SOURCES.md).
+- id: data-engineering
+  name: Data engineering
+  tools: [SQL, SQL Server, SSIS (ETL), Azure SQL, Data modelling, dbt, DuckDB, Parquet, GitHub Actions]
+- id: analytics
+  name: Analytics & BI
+  tools: [Python, pandas, Power BI, Excel, Chart.js, Kaggle]
+- id: genai
+  name: GenAI & ML
+  tools: [LLMs, RAG, Knowledge graphs, Prompt engineering, Claude API, sentence-transformers, BM25, scikit-learn, PyTorch, DistilBERT, ONNX, transformers.js, Hugging Face]
+- id: automation
+  name: Automation & web
+  tools: [Telegram Bot API, Gmail API, DEV API, LinkedIn API, Jekyll, JavaScript, Tailwind CSS, BeautifulSoup]

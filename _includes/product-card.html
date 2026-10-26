@@ -1,0 +1,12 @@
+{% assign pr = site.data.product %}{% if pr %}
+<section class="section" aria-labelledby="product-title">
+  <p class="label">Featured product</p>
+  <div class="card card-big product">
+    <div>
+      <h2 id="product-title">{{ pr.name }}</h2>
+      {% if pr.description != "" %}<p class="muted" style="margin:0">{{ pr.description }}</p>{% endif %}
+    </div>
+    <p class="actions"><a class="btn btn-accent" href="{{ pr.site }}">Visit {{ pr.site | remove: "https://" }}</a> <a class="btn" href="{{ pr.play }}">Get it on Google Play</a></p>
+  </div>
+</section>
+{% endif %}
