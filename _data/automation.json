@@ -1,15 +1,15 @@
 {
- "posts_published": 5,
- "posts_queued": 48,
+ "posts_published": 6,
+ "posts_queued": 47,
  "platforms": {
-  "Blog": 5,
-  "DEV": 2,
-  "LinkedIn": 5,
+  "Blog": 6,
+  "DEV": 3,
+  "LinkedIn": 6,
   "Medium": 2
  },
  "last_post": {
-  "title": "What 1.8 Million Comments Taught Me About Fair Content Moderation",
-  "url": "https://malavnaik.com/blog/trust-safety-dashboard-public-data/"
+  "title": "I Built a Tested Data Pipeline for Dublin Bikes, for €0",
+  "url": "https://malavnaik.com/blog/dublin-bikes-data-pipeline/"
  },
  "updated": "2026-10-26"
 }
