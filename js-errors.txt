@@ -1,0 +1,6 @@
+sql mobile empty: 10 rows · 16 ms
+sql mobile hours: 48 rows · 13 ms
+sql mobile rain: 2 rows · 22 ms
+sql desktop empty: 10 rows · 19 ms
+sql desktop hours: 48 rows · 12 ms
+sql desktop rain: 2 rows · 23 ms

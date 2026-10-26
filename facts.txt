@@ -1,0 +1,12 @@
+== cadentiq.si
+<title>Cadentiq: Habits, Walk &amp; Focus · Your daily rhythm, kept
+<meta name="description" content="Walks, workouts, a focus garden and one-tap reminders in one Android app, with Health Connect. Minimums and freezes carry you through bad days.">
+<meta property="og:title" content="Cadentiq · Your daily rhythm, kept.">
+<meta property="og:description" content="Walk, work out, focus and keep your routines in one app. Steps and water from Health Connect, a garden that grows while you focus, and minimums and freezes for the hard days.">
+== play store
+<title>Not Found
+== GitHub Actions API (latest successful ingest run) + CORS
+access-control-allow-origin: *
+      "conclusion": "success",
+      "updated_at": "2026-10-26T18:01:08Z",
+      "run_started_at": "2026-10-26T18:00:39Z",
