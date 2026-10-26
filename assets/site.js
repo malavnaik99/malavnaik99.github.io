@@ -87,6 +87,14 @@
     });
   });
 
+  // Automation Lab sandbox: replay the CSS animation of the approval flow.
+  $$("[data-play-flow]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var flow = btn.closest(".sandbox-card").querySelector(".flow-anim");
+      flow.classList.remove("playing"); void flow.offsetWidth; flow.classList.add("playing");
+    });
+  });
+
   // Sandboxes are islands: their code loads only when a visitor opens one.
   $$("[data-island-load]").forEach(function (btn) {
     btn.addEventListener("click", function () {

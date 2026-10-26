@@ -120,7 +120,8 @@ wide: true
       <div class="row-body"><div>
         <p>A bot that writes nothing until I approve on Telegram, then publishes each post to this site, DEV and LinkedIn, running for free on GitHub Actions.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>GitHub Actions</li><li>Telegram Bot API</li><li>DEV API</li><li>LinkedIn API</li></ul>
-        <div class="sandbox"><p class="label">Sandbox</p><p class="small muted">An animated walk-through of the approval flow is coming next. For now, <a href="{{ '/projects/blog-automation-bot/' | relative_url }}">read the case study</a>.</p></div>
+        {% include sandbox-automation.html %}
+        <p class="small"><a href="{{ '/projects/blog-automation-bot/' | relative_url }}">Read the case study</a></p>
       </div></div>
     </details>
   </div>

@@ -7,6 +7,7 @@ result: "Posts go to the blog, DEV and LinkedIn in about a minute of my time, on
 description: "A Python bot by Malav Naik that sends weekly blog post previews to Telegram and, only after approval, publishes to GitHub Pages, DEV and LinkedIn via their APIs using GitHub Actions."
 order: 6
 featured: true
+sandbox: automation
 code_url: https://github.com/malavnaik99/telegram-approval-bots
 tech: [Python, GitHub Actions, Telegram Bot API, DEV (Forem) API, LinkedIn Posts API, Jekyll]
 ---
