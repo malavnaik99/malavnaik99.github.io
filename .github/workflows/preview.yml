@@ -8,7 +8,7 @@ permissions:
 jobs:
   preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - run: mkdir -p out
@@ -21,7 +21,7 @@ jobs:
           sudo chown -R "$USER" _site
           missing=$(grep -rlP '<img(?![^>]*\balt=)[^>]*>' _site || true); echo "Images without alt: ${missing:-none}"
       - name: Install test tools
-        timeout-minutes: 6
+        timeout-minutes: 15
         run: |
           npm i --no-save --no-audit --no-fund playwright@1.48.2 lighthouse@12.2.1 serve@14.2.4
           npx playwright install --with-deps chromium
