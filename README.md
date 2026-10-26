@@ -17,7 +17,9 @@ The site has:
 | Site generator | [Jekyll](https://jekyllrb.com/), with layouts and includes written by hand and no theme |
 | Hosting | GitHub Pages, built and deployed by a GitHub Actions workflow ([`static.yml`](.github/workflows/static.yml)) |
 | Domain | `malavnaik.com` with Cloudflare DNS and HTTPS |
-| Front end | Semantic HTML, one inline stylesheet, light and dark mode, and a few lines of vanilla JavaScript ([`assets/site.js`](assets/site.js)) |
+| Front end | Semantic HTML, one stylesheet with design tokens ([`assets/site.css`](assets/site.css)), dark and light themes, and a small vanilla JavaScript file ([`assets/site.js`](assets/site.js)) |
+| Interactive sandboxes | "Islands" that load only on click ([`assets/islands/`](assets/islands)): a moderation threshold explorer, a keyword-vs-vector search comparison, and an in-browser SQL console (DuckDB-WASM in a Web Worker) |
+| Search | Ctrl+K over a build-time index ([`search.json`](search.json)) |
 | SEO | `jekyll-seo-tag` (titles, Open Graph and Twitter cards), `jekyll-sitemap`, `jekyll-feed` (RSS) |
 | Structured data | schema.org JSON-LD for Person, WebSite, BlogPosting and BreadcrumbList ([`_includes/schema.html`](_includes/schema.html)) |
 | AI and answer engines | [`llms.txt`](llms.txt), a [`robots.txt`](robots.txt) that welcomes search and AI crawlers, and an optional TL;DR and FAQ on each post |
@@ -55,8 +57,9 @@ _includes/      schema.org JSON-LD, author box, cards, Automation Lab
 _posts/         blog posts (added by the publishing bot)
 _projects/      project case studies (a Jekyll collection)
 _data/          blog series and the Automation Lab numbers
-blog/           blog index, topics and series hub pages
-assets/         site JavaScript
+work/, writing/ the Work and Writing index pages (old /projects/ and /blog/ redirect here)
+blog/           tags and series hub pages
+assets/         stylesheet, site JavaScript, sandbox islands and their data
 images/         photos and the social share image
 permits-2025/   the Employment Permits 2025 dashboard (Chart.js)
 docs/           README assets (not published)
