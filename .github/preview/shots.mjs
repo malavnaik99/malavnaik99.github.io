@@ -25,7 +25,7 @@ for (const [name, path] of pages)
   await page.screenshot({ path: `${out}/search-desktop-dark.png` });
   await page.close();
 }
-for (const [name, path, sel] of [["sandbox-moderation", "/projects/moderation-classifier/", "#sandbox-moderation"]]) // sandboxes, opened
+for (const [name, path, sel] of [["sandbox-moderation", "/projects/moderation-classifier/", "#sandbox-moderation"], ["sandbox-dsa", "/projects/ask-the-dsa/", "#sandbox-dsa"]]) // sandboxes, opened
   for (const [vp, width, height] of [["mobile", 390, 844], ["desktop", 1280, 900]])
     for (const scheme of ["dark", "light"]) {
       const page = await browser.newPage({ viewport: { width, height }, colorScheme: scheme });
