@@ -103,7 +103,8 @@ wide: true
       <div class="row-body"><div>
         <p>Type a question in plain English and get the articles of the EU Digital Services Act that answer it, quoted and linked. Tested on 25 questions: semantic search put the right article in the top 3 for 84% of them.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>BM25</li><li>sentence-transformers</li><li>transformers.js</li><li>Hugging Face</li></ul>
-        <div class="sandbox"><p class="label">Sandbox</p><p class="small muted">A BM25 vs vector comparison is coming next. For now, <a href="{{ '/projects/ask-the-dsa/' | relative_url }}">read the case study</a>.</p></div>
+        {% include sandbox-dsa.html %}
+        <p class="small"><a href="{{ '/projects/ask-the-dsa/' | relative_url }}">Read the case study</a></p>
       </div></div>
     </details>
     <details class="row">

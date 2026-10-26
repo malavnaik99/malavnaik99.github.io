@@ -22,6 +22,7 @@ Every metric shown on malavnaik.com must trace to a source below. If a number ca
 | Sandbox | Data file | Source |
 |---|---|---|
 | Moderation threshold | `assets/data/moderation-sweep.json` | [moderation-classifier `results/threshold-sweep.json`](https://github.com/malavnaik99/moderation-classifier/blob/main/results/threshold-sweep.json), made by the Kaggle notebook `moderation-threshold-sweep`: the published DistilBERT re-scores the same 180,488 test comments (no retraining). It reproduced ROC-AUC 0.9574, 79.7% recall at the 0.219 review threshold, and the published false-positive rates (e.g. 35.6% for "black", 9.6% overall) before saving. |
+| DSA keyword vs vector | `assets/data/dsa-examples.json` | [eu-dsa-search `out/sandbox.json`](https://github.com/malavnaik99/eu-dsa-search/blob/main/out/sandbox.json), made by `eval/sandbox_examples.py` with the same documents, tokenizer and model as the published evaluation. It reproduced the published top-3 hits (keyword 17/25 = 68%, vector 21/25 = 84%) before saving. |
 
 ## Job titles (journey)
 

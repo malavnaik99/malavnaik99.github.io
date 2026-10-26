@@ -268,3 +268,16 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .groups .v { text-align: right; }
 .groups .avg { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--text); opacity: .6; }
 @media (max-width: 760px) { .meters { grid-template-columns: 1fr; } .groups li { grid-template-columns: 7.5rem 1fr 3.8rem; font-size: .82rem; } }
+.pick { display: grid; gap: .3rem; margin-bottom: .75rem; }
+.pick select { width: 100%; min-height: 48px; padding: 0 .8rem; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: 400 .95rem var(--font); max-width: 100%; }
+.expected { font-family: var(--font-mono); color: var(--accent); }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.compare section { border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1rem; background: var(--bg); }
+.compare h4 { margin: 0 0 .6rem; font-size: 1rem; }
+.compare h4::after { content: " · " attr(data-verdict); font: 400 .78rem var(--font-mono); color: var(--muted); }
+.compare ol { margin: 0; padding-left: 1.2rem; display: grid; gap: .7rem; }
+.compare .art { font-weight: 600; font-size: .95rem; text-decoration: none; }
+.compare .ok { display: block; font-size: .72rem; color: var(--live); }
+.compare .hit .art { color: var(--live); }
+.compare p { margin: .2rem 0 0; }
+@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
