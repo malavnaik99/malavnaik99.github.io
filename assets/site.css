@@ -270,7 +270,7 @@ main { display: block; }
 .tablist { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px; border-radius: 16px; background: var(--glass); border: 1px solid var(--line); }
 .tablist [role="tab"] { min-height: 48px; text-align: left; padding: .5rem .9rem; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--sub); font: 600 .95rem var(--font); cursor: pointer; }
 .tablist [role="tab"][aria-selected="true"] { background: var(--text); color: var(--bg); }
-.tablist [role="tab"] .mono { font-size: .72rem; color: inherit; opacity: .7; margin-right: .5rem; font-weight: 500; }
+.tablist [role="tab"] .mono { font-size: .72rem; color: var(--muted); margin-right: .5rem; font-weight: 500; } .tablist [role="tab"][aria-selected="true"] .mono { color: inherit; }
 [role="tabpanel"] .tools { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
 [role="tabpanel"] .tools li { border: 1px solid var(--line); border-radius: 999px; padding: .4rem .9rem; background: var(--glass); font-size: .92rem; }
 [role="tabpanel"] h3 { font-size: 1rem; margin-bottom: 1rem; }
