@@ -1,0 +1,11 @@
+# Temporary: verifies the live site once after the redesign merge. Deleted right after.
+name: Check live site
+on:
+  push:
+    paths: [".github/workflows/check-live.yml"]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .github/check/verify.py
