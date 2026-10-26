@@ -1,0 +1,84 @@
+== TEXT ==
+Résumé | Malav Naik
+[meta description] Résumé of Malav Naik – Data Engineer, GenAI & AI Automation in Dublin, Ireland.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Malav Naik – Résumé
+Data Engineer, GenAI & AI Automation · Dublin, Ireland · malavnaik.com · LinkedIn · GitHub
+Download as PDF
+Summary
+About 10 years in data across India and Ireland: SQL Server and SSIS pipelines, Azure migration, analytics data models, and generative AI (RAG, knowledge graphs, LLM automation). MSc in Data Analytics from National College of Ireland.
+Experience
+Accenture, Dublin – work for a global technology client
+Platform integrity: analysing complex escalations with AI-assisted tools.
+S&P Global Market Intelligence – Data Analyst & ETL Developer, 2019–2024
+Built SSIS pipelines over multi-million-record financial datasets.
+Designed data models for analytics.
+Helped migrate on-premise SQL Server databases to Azure SQL Managed Instance, cutting infrastructure costs by about 25%.
+Bright Info Solutions, Ahmedabad – Data & reporting
+Pulled data with SQL, cleaned it in Excel and Python, and built weekly reports.
+Education
+MSc in Data Analytics, National College of Ireland, Dublin, 2024–2025. Thesis: Enhanced Personalized Learning Experiences by Leveraging Knowledge Graphs and Prompt Engineering (NCI repository).
+Bachelor of Computer Applications, Gujarat, India, 2015.
+Selected projects
+SkillBot – a skill-recommendation chatbot pairing a fine-tuned GPT-3.5 model with a 2.3-million-triple knowledge graph using retrieval-augmented generation.
+More on the work page.
+Skills
+SQL, SQL Server, SSIS, Azure SQL, Python, data modelling, Power BI, Excel, LLMs, RAG, knowledge graphs, prompt engineering, GitHub Actions.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/resume/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+https://malavnaik.com/
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+/resume/malav-naik-resume.pdf
+https://norma.ncirl.ie/9439/
+https://malavnaik.com/work/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

@@ -1,0 +1,118 @@
+== TEXT ==
+Dublin bikes + weather data pipeline | Malav Naik
+[meta description] A data engineering portfolio project by Malav Naik: a scheduled Python collector, dbt + DuckDB models with freshness and volume checks, and a live dashboard of Dublinbikes availability and weather.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Work
+Dublin bikes + weather data pipeline
+Collects every Dublinbikes station every 15 minutes, models it with dbt and DuckDB into a tested star schema, and feeds a live dashboard – for €0.
+[aria-label] Tech used
+Python
+GitHub Actions
+dbt
+DuckDB
+Parquet
+Hugging Face Datasets
+GBFS
+Met Éireann
+Code on GitHub
+Sandbox · SQL console
+Query the pipeline's tables in your browser
+A read-only DuckDB database runs in your browser over a small sample of the published tables: every station from 16 Oct to 26 Oct 2026, 27140 station-hours. Opening it downloads DuckDB (about 10 MB, once) from jsDelivr. Full tables: Hugging Face dataset.
+Tables and columns
+fct_station_hour: station_id, hour_utc, snapshots, avg_bikes, min_bikes, max_bikes, avg_free_docks, share_empty, share_full, share_renting
+dim_station: station_id, station_name, address, lat, lon, capacity
+dim_hour: hour_utc, hour_local, local_date, local_hour, weekday, is_weekend, temperature_c, rainfall_mm, wind_kmh, humidity_pct, weather_description
+Example queries:
+Which stations are most often empty?
+Bikes by hour: weekdays vs weekends
+Fewer bikes taken when it rains?
+select s.station_name, round(avg(f.share_empty) * 100, 1) as pct_time_empty, s.capacity from fct_station_hour f join dim_station s using (station_id) where s.capacity > 0 group by all order by pct_time_empty desc limit 10
+select h.local_hour, h.is_weekend, round(avg(f.avg_bikes), 1) as avg_bikes_per_station from fct_station_hour f join dim_hour h using (hour_utc) group by all order by h.is_weekend, h.local_hour
+select case when h.rainfall_mm > 0 then 'raining' else 'dry' end as weather, count(*) as station_hours, round(avg(1 - f.avg_bikes / s.capacity) * 100, 1) as pct_docks_without_bike from fct_station_hour f join dim_hour h using (hour_utc) join dim_station s using (station_id) where s.capacity > 0 and h.rainfall_mm is not null and h.local_hour between 7 and 21 group by all
+Open the SQL console
+The problem
+Public city data is published live and then gone: the Dublinbikes feed only shows right now. To answer a question like “how do weather and time of day change how many bikes are free?” you need history, collected reliably and modelled so it can be trusted.
+What I built
+An end-to-end pipeline that runs on free tiers only:
+a collector that saves a snapshot of all Dublinbikes stations every 15 minutes, plus the hourly Dublin weather, without ever overwriting old data;
+dbt + DuckDB models that turn raw snapshots into a small star schema, with automatic data checks;
+a live dashboard (below) that reads the newest results straight from the published data.
+How it works
+Flow: Dublinbikes and Met Éireann feeds are collected every 15 minutes into raw Parquet files on Hugging Face; a daily dbt run on DuckDB builds staging, hourly and star-schema tables with tests; the results feed the dashboard, and failures alert on Telegram
+Dublinbikes feed (GBFS)Met Éireann weather Every 15 min: raw Parquet, never overwritten Daily: dbt + DuckDB models and data checks Live dashboardTelegram alert if a check fails
+Collect: a Python job on GitHub Actions, started every 15 minutes, saves each station’s bikes and free docks, and once an hour the Dublin Airport weather, as date-partitioned Parquet files in a public Hugging Face dataset. After three failures in a row it switches itself off and messages me on Telegram.
+Model: every morning dbt builds, in DuckDB: staging views (types, time zones, de-duplication) → an hourly summary per station → a star schema: fct_station_hour with dim_station and dim_hour (local time, weekday and that hour’s weather). The fact table is incremental and idempotent: each run recomputes only the last few hours, and rerunning gives the same result. See the dbt docs and lineage graph.
+Check: 14 automatic data tests run every time: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day). A failure sends me a Telegram alert.
+Publish: the tables, a run log and the dashboard summary go to a second Hugging Face dataset. Cost: €0.
+Live dashboard
+Loading the latest data…
+What’s next
+The question needs weeks of data, across different weather, before any answer is honest. Once enough has built up, I’ll publish an analysis notebook and write up what the data says.
+Data and credits
+Bikes: Dublinbikes GBFS feed, Dublin City Council / JCDecaux, CC BY 4.0.
+Weather: Source: Met Éireann, CC BY 4.0.
+Raw snapshots · Modelled tables · dbt docs · Code on GitHub
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/projects/dublin-bikes-pipeline/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/work/
+https://github.com/malavnaik99/dublin-data-pipeline
+https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts
+https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw
+https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs
+https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts
+https://creativecommons.org/licenses/by/4.0/
+https://creativecommons.org/licenses/by/4.0/
+https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw
+https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts
+https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs
+https://github.com/malavnaik99/dublin-data-pipeline
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

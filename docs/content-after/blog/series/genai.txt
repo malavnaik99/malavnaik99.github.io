@@ -1,0 +1,63 @@
+== TEXT ==
+GenAI – blog series | Malav Naik
+[meta description] Malav Naik’s posts on RAG, knowledge graphs, LLM fine-tuning and AI automation, built and measured.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Writing · Series
+GenAI
+RAG, knowledge graphs, LLM fine-tuning and AI automation, built and measured.
+The first post in this series is coming soon. Meanwhile, see all posts.
+Posts in this series
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/blog/series/genai/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/writing/
+/writing/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

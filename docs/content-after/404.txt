@@ -1,0 +1,63 @@
+== TEXT ==
+Page not found | Malav Naik
+[meta description] Malav Naik is a data engineer in Dublin, Ireland, working on data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Error 404
+Page not found
+That page doesn't exist, or it has moved.
+Home Writing Work
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/404.html
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/
+/writing/
+/work/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

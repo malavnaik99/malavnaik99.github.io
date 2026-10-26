@@ -1,0 +1,131 @@
+== TEXT ==
+What a Master’s in Ireland Taught Me After Nine Years in Industry | Malav Naik
+[meta description] Going back to university as an experienced data professional: what was worth it, what surprised me, and advice for anyone considering it.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Career
+What a Master's in Ireland Taught Me After Nine Years in Industry
+Going back to university as an experienced data professional: what was worth it, what surprised me, and advice for anyone considering it.
+Published 20 October 2026 · Updated 25 October 2026 · 2 min read · by Malav Naik
+[aria-label] Summary
+TL;DR
+In September 2024, after nine years working with data in India, I started an MSc in Data Analytics at National College of Ireland. Industry had given me depth; the degree gave me breadth and showed how fast the field had moved, and the dissertation was the best part.
+[aria-label] Contents
+Contents
+What does a master’s add after years in industry?
+The field had moved faster than I realised
+Experience is an unfair advantage in group work
+What was the most valuable part of the MSc?
+Should you do a master’s after years in industry?
+[alt] Malav Naik in a graduation gown by the River Liffey – What a Master's in Ireland Taught Me After Nine Years in Industry
+In September 2024 I started an MSc in Data Analytics at National College of Ireland. I’d already spent nine years working with data in India, most of them building SQL Server and Azure platforms at S&P Global. People asked why I’d go back to university.
+A year later, here’s my honest answer.
+What does a master’s add after years in industry?
+Nine years of work had made me very good at a narrow set of things: SQL, ETL, data modelling, dashboards. The MSc forced me into modules I’d never have picked on my own: optimisation, deep learning, generative AI, data mining. Some I loved, some I struggled with, and all of them widened what I could imagine building.
+The field had moved faster than I realised
+When I started my career, “machine learning” meant regression models in a notebook. By 2024, students were fine-tuning language models and building retrieval systems for coursework. Being in a room with people who’d grown up with these tools was the fastest way to catch up.
+Experience is an unfair advantage in group work
+Where I did have an edge was knowing how real projects fail: unclear requirements, messy data, stakeholders who change their minds. In group projects I often ended up translating between the technical plan and what the “client” actually needed. That’s a skill no module teaches.
+What was the most valuable part of the MSc?
+My dissertation, Enhanced Personalized Learning Experiences by Leveraging Knowledge Graphs and Prompt Engineering, is published in the NCI research repository. Owning a research question for months, with nobody telling me the answer, was very different from delivering tickets at work. It taught me to frame problems, not just solve them.
+Should you do a master’s after years in industry?
+Pick a dissertation you’d want to talk about in interviews. It becomes your portfolio.
+Build in public while you study. Coursework disappears; blog posts and repos stay.
+Use the city. Dublin has meetups for Python, data, AI and cloud almost every week. Go to them.
+Don’t treat it as a reset. Your industry experience is the thing that makes your degree valuable. Lead with both.
+Was it worth it? Yes. Not because of the certificate, but because it changed what I believe I can build.
+Frequently asked questions
+Was the MSc worth it?
+Yes. Not because of the certificate, but because it changed what I believe I can build.
+How should you choose a dissertation topic?
+Pick one you’d want to talk about in interviews. It becomes your portfolio.
+[aria-label] Tags
+#career
+#education
+#datascience
+#ireland
+Share: LinkedIn X
+[aria-label] About the author
+[alt] Malav Naik
+Malav Naik builds data pipelines, GenAI tools and AI automation in Dublin, and writes about them here.
+He is an Escalation Operations Analyst – Platform Integrity at Accenture, for a global technology client.
+LinkedIn · GitHub · About
+Related posts
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+15 Oct 2026
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+26 Oct 2026
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+26 Oct 2026
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/blog/masters-in-ireland-after-industry/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/blog/series/career/
+/about/
+#what-does-a-masters-add-after-years-in-industry
+#the-field-had-moved-faster-than-i-realised
+#experience-is-an-unfair-advantage-in-group-work
+#what-was-the-most-valuable-part-of-the-msc
+#should-you-do-a-masters-after-years-in-industry
+https://norma.ncirl.ie/9439/
+/blog/topics/#tag-career
+/blog/topics/#tag-education
+/blog/topics/#tag-datascience
+/blog/topics/#tag-ireland
+https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fmasters-in-ireland-after-industry%2F
+https://x.com/intent/post?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fmasters-in-ireland-after-industry%2F&text=What+a+Master%27s+in+Ireland+Taught+Me+After+Nine+Years+in+Industry
+/about/
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+/about/
+/blog/from-surat-to-dublin/
+/blog/trust-safety-dashboard-public-data/
+/blog/dublin-bikes-data-pipeline/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

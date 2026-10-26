@@ -1,0 +1,109 @@
+== TEXT ==
+Irish rents, 2008–2025: an open dataset, cleaned | Malav Naik
+[meta description] A portfolio project by Malav Naik: the RTB average rent table from the CSO, cleaned into one tidy, documented open dataset with a reproducible cleaning notebook, published on Kaggle and Hugging Face.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Work
+Irish rents, 2008–2025: an open dataset, cleaned
+The official average rent of new tenancies in every Irish county, town and area since 2008, cleaned into one tidy, documented table and published on Kaggle and Hugging Face.
+[aria-label] Tech used
+Python
+pandas
+Kaggle
+Hugging Face Datasets
+GitHub Actions
+CSO open data
+See it live Code on GitHub
+The problem
+Ireland publishes excellent open data on rents. The Residential Tenancies Board (RTB) records the average rent of every new tenancy, and the Central Statistics Office (CSO) publishes it. But the raw table is hard to use: 674,352 rows, every category repeated as a code and a label, and 70% of the cells empty.
+What I built
+A reproducible cleaning pipeline that turns the official table into one tidy, documented dataset:
+201,912 rents, every half-year from 2008 to 2025
+437 places: all 26 counties, 36 towns, cities and Dublin postal districts, and 375 smaller areas
+by number of bedrooms and property type
+It’s published on Kaggle and Hugging Face, with a Kaggle notebook that shows every cleaning step and rebuilds the data from the official source.
+How it was cleaned
+Readable columns: keep the labels, drop the repeated codes and the columns that never change.
+Empty means “not published”, not zero. The RTB leaves a cell empty when too few new tenancies were registered for a reliable average. Those rows are dropped and the reason is documented, so nobody averages in a zero.
+Label every place as a county, a town or district, or a smaller area. My first attempt guessed the level from the CSO’s location codes and found only 4 “counties”, so I switched to matching the 26 county names.
+Flag the totals. “All bedrooms”, “1 to 2 bed” and “All property types” are sums of other rows, so they’re marked to stop anyone adding them up twice.
+Check before publishing: one row per half-year, place, bedrooms and property type, and every rent between €50 and €20,000.
+A GitHub Actions workflow runs the cleaning, publishes the files with a data card, and runs the same notebook on Kaggle. Both runs produce the same 201,912 rows.
+What the data shows
+Average monthly rent for a new tenancy, all homes:
+Line chart of average monthly rent for new tenancies, 2008 to 2025: Dublin falls from €1,325 to €1,004 in 2011, then rises to €2,162; Cork goes from €921 to a low of €710 and up to €1,558; Leitrim from €551 to a low of €398 and up to €1,010.
+€0 €500 €1,000 €1,500 €2,000 2008 2012 2016 2020 2024 Dublin €2,162 Cork €1,558 Leitrim €1,010
+Dublin fell from €1,325 in early 2008 to €1,004 in early 2011, then more than doubled to €2,162 by late 2025.
+In the last ten years (late 2015 to late 2025), rents at least doubled in 17 of the 26 counties. The biggest rises were in Longford (+156%), Limerick (+146%) and Roscommon (+133%). Dublin rose 67%, from a much higher starting point.
+Late 2025, the most expensive counties were Dublin (€2,162), Wicklow (€1,739) and Kildare (€1,719); the least expensive were Donegal (€992), Leitrim (€1,010) and Monaghan (€1,034).
+These are averages for new tenancies only, not what all tenants pay, and they’re not adjusted for inflation.
+Data and credits
+Source: CSO table RIH02, “RTB Average Monthly Rent Report”, © Central Statistics Office and Residential Tenancies Board, licensed under CC BY 4.0. The cleaned dataset uses the same licence.
+Links
+Dataset on Kaggle
+Cleaning notebook on Kaggle
+Dataset on Hugging Face
+Code on GitHub
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/projects/irish-rents/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/work/
+https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
+https://github.com/malavnaik99/irish-rents-dataset
+https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
+https://huggingface.co/datasets/Malavnaik/irish-rents-rtb
+https://www.kaggle.com/code/malavnaik/cleaning-irish-rents-rtb
+https://data.cso.ie/table/RIH02
+https://creativecommons.org/licenses/by/4.0/
+https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
+https://www.kaggle.com/code/malavnaik/cleaning-irish-rents-rtb
+https://huggingface.co/datasets/Malavnaik/irish-rents-rtb
+https://github.com/malavnaik99/irish-rents-dataset
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

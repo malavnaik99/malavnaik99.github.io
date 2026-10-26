@@ -1,0 +1,91 @@
+== TEXT ==
+Gmail auto-reply with Telegram approval | Malav Naik
+[meta description] A Python assistant by Malav Naik that uses Claude to draft Gmail replies, saves them as drafts and sends them only after approval on Telegram.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Work
+Gmail auto-reply with Telegram approval
+Claude drafts a reply to each new email; nothing is sent until I tap ✅ on Telegram.
+[aria-label] Tech used
+Python
+Claude API
+Gmail API
+Telegram Bot API
+Prompt engineering
+Code on GitHub
+The problem
+Replying to routine emails takes time, but letting an AI send emails on its own is a bad idea: it can misunderstand, promise things I didn’t agree to, or be manipulated by the email itself.
+What I built
+An assistant that reads my new Primary-inbox emails, asks Claude to draft a reply in my voice, and saves it as a Gmail draft. It then sends me the email and the draft on Telegram with ✅ Send and ❌ Discard buttons. Nothing leaves my inbox until I tap Send – and I can still edit the draft in Gmail first.
+How it works
+Flow: new email, Claude drafts a reply, the draft is saved in Gmail, Telegram asks for approval, then the draft is sent or deleted
+New emailClaude drafts Gmail draftTelegram ✅ / ❌ ✅ Sent❌ Deleted
+Checks Gmail for unread Primary-inbox mail. Newsletters, receipts and noreply senders get no draft (the model answers SKIP).
+Claude drafts the reply with a short system prompt: my voice, short and friendly, no invented facts, prices or dates.
+Prompt-injection guard: the email is treated as untrusted data. The model is told to reply to it, never to follow instructions inside it.
+Saves a threaded Gmail draft and sends the email plus the draft to Telegram with buttons.
+Only my chat can approve. Taps from anyone else are ignored; ✅ sends the draft, ❌ deletes it.
+Demo
+[alt] Animated illustration of the Telegram chat: a fake email from Anna asking for a coffee chat, Claude's draft reply, and the Send button being tapped, then 'Sent'
+An illustration with a fake example email.
+Results
+Built and tested end to end: a routine reply becomes one tap instead of writing it from scratch.
+Every email still gets a human decision – the AI never sends anything by itself.
+Unit tests cover email parsing and correct reply threading.
+What I learned
+Treat inputs as untrusted. An email can contain instructions aimed at the AI; the prompt has to say clearly that it’s data, not commands.
+Drafts are the right safety net. Saving to Gmail Drafts means I can always edit before sending, and nothing is lost if the bot stops.
+Small, boring code wins. A few functions, standard libraries and one shared Telegram helper are easy to trust and to test.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/projects/gmail-auto-reply/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/work/
+https://github.com/malavnaik99/telegram-approval-bots
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

@@ -1,0 +1,118 @@
+
+### 404.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### about.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/azure-sql-migration-25-percent.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/dublin-bikes-data-pipeline.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/from-surat-to-dublin.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/masters-in-ireland-after-industry.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/precision-recall-content-moderation.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/series/career.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/series/data-engineering.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/series/genai.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/series/trust-safety.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/topics.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### blog/trust-safety-dashboard-public-data.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### contact.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### index.txt
+  + added: Search
+  + added x2: MALAV NAIK
+  + added: Live signals
+  + added x2: pipeline runs every 15 min
+  + added x2: 0.957 ROC-AUC, content moderation model
+  + added x2: 14 automatic data tests on every run
+  + added x2: €0 monthly cost
+  + added x2: Ask the EU Digital Services Act 84% top-3 hit rate
+  + added x2: blog bot 6 posts published
+  + added x2: 47 queued
+  + added x2: 26 Oct 2026 What 1.8 Million Comments Taught Me About Fair Content Moderation
+
+### now.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/ask-the-dsa.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/blog-automation-bot.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/dublin-bikes-pipeline.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/gmail-auto-reply.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/irish-rents.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/moderation-classifier.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/permits-2025.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### projects/skillbot.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### resume.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### work.txt
+  + added: Search
+  + added: MALAV NAIK
+
+### writing.txt
+  + added: Search
+  + added: MALAV NAIK
+
