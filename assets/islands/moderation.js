@@ -14,7 +14,7 @@
         '<div class="meters">' +
         '<div class="meter"><span class="k">Precision</span><span class="v mono" data-v="precision"></span><span class="bar"><i data-b="precision"></i></span><span class="small muted">of flagged comments that really are toxic</span></div>' +
         '<div class="meter"><span class="k">Recall</span><span class="v mono" data-v="recall"></span><span class="bar"><i data-b="recall"></i></span><span class="small muted">of all toxic comments that get flagged</span></div>' +
-        '<div class="meter"><span class="k">Review queue</span><span class="v mono" data-v="flagged"></span><span class="bar"><i data-b="flagged"></i></span><span class="small muted">of all comments flagged, <b data-per1000></b> per 1,000</span></div>' +
+        '<div class="meter"><span class="k">Flagged</span><span class="v mono" data-v="flagged"></span><span class="bar"><i data-b="flagged"></i></span><span class="small muted">of all comments: <b data-per1000></b> per 1,000 go to human review or automatic action</span></div>' +
         '</div>' +
         '<h4 class="groups-title">Harmless comments wrongly flagged, by group mentioned</h4>' +
         '<p class="small muted">Across all identity-labelled harmless comments: <b class="mono" data-all></b> (the thin line on each bar). Groups with at least 200 harmless test comments.</p>' +
