@@ -87,6 +87,20 @@
     });
   });
 
+  // Ctrl+K (or the search button) loads the search island on first use.
+  function openSearch() {
+    if (window.openSearch) return window.openSearch();
+    var sc = document.createElement("script");
+    sc.src = "/assets/islands/search.js";
+    sc.onload = function () { window.openSearch(); };
+    document.head.appendChild(sc);
+  }
+  var searchBtn = $(".search-btn");
+  if (searchBtn) searchBtn.addEventListener("click", openSearch);
+  document.addEventListener("keydown", function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openSearch(); }
+  });
+
   // Live pipeline readout: the latest successful run of the public Dublin bikes collector on GitHub Actions.
   // Without an answer within 4 seconds, the page keeps saying "runs every 15 min" and claims nothing live.
   var live = $$("[data-pipeline]");

@@ -1,0 +1,19 @@
+---
+layout: null
+sitemap: false
+permalink: /search.json
+---
+{%- assign out = "" | split: "" -%}
+[
+{%- for p in site.posts -%}
+  {"t": {{ p.title | jsonify }}, "u": {{ p.url | relative_url | jsonify }}, "d": {{ p.description | jsonify }}, "k": "Post · {{ p.date | date: '%-d %b %Y' }}"},
+{%- endfor -%}
+{%- assign projects = site.projects | sort: "order" -%}
+{%- for p in projects -%}
+  {"t": {{ p.title | jsonify }}, "u": {{ p.url | relative_url | jsonify }}, "d": {{ p.summary | default: p.description | jsonify }}, "k": "Project"},
+{%- endfor -%}
+{%- for p in site.html_pages -%}{%- if p.title and p.sitemap != false and p.redirect_to == nil -%}
+  {"t": {{ p.title | jsonify }}, "u": {{ p.url | relative_url | jsonify }}, "d": {{ p.description | jsonify }}, "k": "Page"},
+{%- endif -%}{%- endfor -%}
+  {"t": "Home", "u": "/", "d": {{ site.description | jsonify }}, "k": "Page"}
+]
