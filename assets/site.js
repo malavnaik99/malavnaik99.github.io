@@ -18,8 +18,14 @@
     langBtn.textContent = "English"; langBtn.lang = "en"; langBtn.hreflang = "en"; langBtn.title = "Back to the English page";
     langBtn.href = original;
     langBtn.addEventListener("click", function (e) { e.preventDefault(); location.href = original; });
-    // Google spells the big wordmarks wrongly, so they skip translation and get Malav's own spelling.
-    $$(".wordmark, .footer-wordmark").forEach(function (w) { w.textContent = "માલવ નાઈક"; w.lang = "gu"; });
+    // Malav's own spelling of his name is માલવ નાયક: set it on the wordmarks, and correct Google's "નાઈક" wherever it translates the name.
+    $$(".wordmark, .footer-wordmark").forEach(function (w) { w.textContent = "માલવ નાયક"; w.lang = "gu"; });
+    var fixName = function () {
+      var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n;
+      while ((n = walk.nextNode())) if (/નાઈક/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/નાઈક/g, "નાયક");
+    };
+    fixName();
+    new MutationObserver(fixName).observe(document.body, { childList: true, subtree: true, characterData: true });
   }
 
   var menuBtn = $(".menu-btn"), nav = $("#site-nav");
