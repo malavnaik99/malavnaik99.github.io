@@ -16,3 +16,6 @@ credentials*.json
 # Tooling and OS files
 node_modules/
 .DS_Store
+
+# Private SEO notes live in the malavnaik-seo repo
+seo/
