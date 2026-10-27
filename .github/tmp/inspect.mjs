@@ -2,7 +2,7 @@
 import { chromium } from "playwright";
 const b = await chromium.launch({ channel: "chrome" });
 const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
-await p.goto("https://malavnaik-com.translate.goog/?_x_tr_sl=en&_x_tr_tl=gu&_x_tr_hl=gu", { waitUntil: "networkidle" });
+await p.goto("https://malavnaik-com.translate.goog/?_x_tr_sl=en&_x_tr_tl=gu&_x_tr_hl=gu", { waitUntil: "load", timeout: 60000 });
 await p.waitForTimeout(4000);
 console.log(JSON.stringify(await p.evaluate(() => {
   const d = el => ({ tag: el.tagName, id: el.id, cls: String(el.className).slice(0, 80), pos: getComputedStyle(el).position, h: Math.round(el.getBoundingClientRect().height), top: Math.round(el.getBoundingClientRect().top) });

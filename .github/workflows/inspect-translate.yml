@@ -1,4 +1,4 @@
-# Temporary: inspect Google Translate's top bar on the Gujarati copy of the site. Removed right after.
+# Temporary (run 2): inspect Google Translate's top bar on the Gujarati copy of the site. Removed right after.
 name: Inspect translate bar
 on:
   push:
