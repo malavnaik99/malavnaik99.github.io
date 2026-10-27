@@ -6,7 +6,8 @@ slug: maintenance-window-failed-deployment-rollback
 description: "What turns a short maintenance window into days? A visual guide to failed deployments, database migrations and rollback, with Employment Permits Online as a case study."
 series: data-engineering
 tags: [devops, deployment, rollback, incident-response, site-reliability, database-migration, data-engineering, cloud]
-image: { path: /images/og-maintenance-window-rollback.png, width: 1200, height: 627, alt: "Rollback decision tree: did the schema change, is it backward compatible, can we fix forward, or restore from backup" }
+image: "/images/malav-naik-black-kurta-festival-umbrellas.jpg"
+image_alt: "Malav Naik in a black kurta in front of colourful umbrellas and marigold garlands"
 canonical_url: "https://malavnaik.com/blog/maintenance-window-failed-deployment-rollback/"
 minutes: 8  # reading time for the main text; the collapsed deep dives are optional
 tldr: "Maintenance windows are planned around everything going right. They stretch into days when a step fails at production scale and the change can't simply be undone: rolling back code takes minutes, but rolling back data means restores, lost writes and reconciliation. Expand/contract migrations, blue-green deploys and rehearsed restores keep failures small."
@@ -21,6 +22,8 @@ faq:
     a: "A way to change a database schema in small, reversible steps across several releases: add the new structure, move the application and data over while both work, and only remove the old structure once nothing uses it."
 last_modified_at: 2026-10-27
 ---
+
+![Malav Naik in a black kurta in front of colourful umbrellas and marigold garlands – Why '2 Hours of Maintenance' Becomes 3 Days: The Engineering Behind Failed Deployments and Rollbacks](/images/malav-naik-black-kurta-festival-umbrellas.jpg){: width="720" height="1280" style="display:block; margin: 0 auto; max-width: min(100%, 400px)"}
 
 As I write this on 27 October 2026, Ireland's **Employment Permits Online** portal has shown this page for about three days:
 
