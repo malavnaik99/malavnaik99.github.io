@@ -13,6 +13,8 @@ console.log(JSON.stringify(await p.evaluate(() => {
     fixedOrTop: [...document.querySelectorAll("body *")].filter(el => { const r = el.getBoundingClientRect(); return r.top < 80 && r.height > 30 && r.width > 1000; }).slice(0, 12).map(d),
     iframes: [...document.querySelectorAll("iframe")].map(f => ({ id: f.id, cls: f.className, src: (f.src || "").slice(0, 100), parent: f.parentElement.tagName + "#" + f.parentElement.id + "." + f.parentElement.className })),
     header: document.querySelector(".site-header") && Math.round(document.querySelector(".site-header").getBoundingClientRect().top),
+    barDisplay: document.getElementById("gt-nvframe") && getComputedStyle(document.getElementById("gt-nvframe")).display,
+    langBtn: document.querySelector(".lang-btn") && [document.querySelector(".lang-btn").textContent, document.querySelector(".lang-btn").href],
   };
 }), null, 1));
 await b.close();

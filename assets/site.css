@@ -59,6 +59,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-padding-top: 80px; }
+/* Google Translate's copy (the Gujarati button): hide Google's top bar and the gap it adds; the header button says "English" instead. */
+#gt-nvframe { display: none !important; } body { margin-top: 0 !important; }
 body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--text); font: 400 17px/1.65 var(--font); -webkit-font-smoothing: antialiased; }
 h1, h2, h3 { font-family: var(--font-head); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 .5em; }
 h1 { font-size: clamp(2.1rem, 5.2vw, 3.6rem); }

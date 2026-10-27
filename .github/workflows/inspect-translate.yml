@@ -10,4 +10,4 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - run: npm i --no-save --no-audit --no-fund playwright@1.48.2 && node .github/tmp/inspect.mjs
+      - run: npm i --no-save --no-audit --no-fund playwright@1.48.2 && sleep 150 && node .github/tmp/inspect.mjs  # after the Pages deploy
