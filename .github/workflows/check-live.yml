@@ -1,0 +1,29 @@
+# Temporary: after the Signal merge, check every live page and re-run the content check. Removed right after.
+name: Check live site
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/check-live.yml]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for the new design to be live
+        run: |
+          for i in $(seq 60); do curl -s "https://malavnaik.com/?v=$i" | grep -q footer-wordmark && echo "new design is live" && exit 0; sleep 20; done
+          echo "new design not live after 20 min"; exit 1
+      - name: Every sitemap page returns 200
+        run: |
+          for u in $(curl -s https://malavnaik.com/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//'); do echo "$(curl -s -o /dev/null -w '%{http_code}' "$u") $u"; done | tee status.txt
+          echo "missing page: $(curl -s -o /dev/null -w '%{http_code}' https://malavnaik.com/no-such-page/)"
+          ! grep -v '^200 ' status.txt
+      - name: Content check against the live site (only the allowed lines may differ)
+        run: |
+          python3 docs/content-check.py snapshot https://malavnaik.com live
+          python3 docs/content-check.py diff docs/content-before live | grep -E 'added|removed|order' | sort | uniq -c | sort -rn || true
+          echo "== same as the approved after-snapshot?"; diff -r docs/content-after live && echo "yes, identical"
+      - name: Structured data
+        run: |
+          for p in / /blog/precision-recall-content-moderation/ /about/; do echo "$p: $(curl -s https://malavnaik.com$p | grep -o '"@type": *"[A-Za-z]*"' | sort -u | tr '\n' ' ')"; done
