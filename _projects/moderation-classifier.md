@@ -1,5 +1,5 @@
 ---
-title: "Content moderation classifier, with a fairness check"
+title: "Content moderation classifier + fairness check"
 summary: "A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group – plus a demo that runs in your browser."
 problem: "A single accuracy number can't say where to draw the line, how much lands on human reviewers, or whether a model is fair."
 approach: "Trained a TF-IDF baseline and DistilBERT on 1.8 million public comments, set two threshold policies, simulated a review queue and checked false-positive rates by identity group."
