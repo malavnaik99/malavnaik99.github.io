@@ -1,17 +1,6 @@
 ---
 layout: default
 ---
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": {% if page.code_url %}"SoftwareSourceCode"{% else %}"CreativeWork"{% endif %},
-  "name": {{ page.title | jsonify }},
-  "description": {{ page.description | jsonify }},
-  "url": {{ page.url | absolute_url | jsonify }},
-  {% if page.code_url %}"codeRepository": {{ page.code_url | jsonify }},{% endif %}
-  "author": { "@type": "Person", "@id": {{ "/#person" | absolute_url | jsonify }}, "name": "Malav Naik" }
-}
-</script>
 <article>
   <p class="eyebrow"><a href="{{ '/work/' | relative_url }}">Work</a></p>
   <h1>{{ page.title }}</h1>
