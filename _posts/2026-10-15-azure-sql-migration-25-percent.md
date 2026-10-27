@@ -1,6 +1,6 @@
 ---
 id: 3
-title: "Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%"
+title: "Azure SQL Migration: How We Cut Costs by 25%"
 slug: azure-sql-migration-25-percent
 description: "Lessons from moving production SQL Server databases to Azure SQL PaaS without disrupting the people who depend on them."
 series: data-engineering

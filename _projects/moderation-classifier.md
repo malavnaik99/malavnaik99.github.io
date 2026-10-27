@@ -104,7 +104,7 @@ The modern model is fairer for every group, but harmless comments mentioning som
 **What I'd do next:** tackle that bias directly. I'd add more harmless training examples that mention these groups, track the false-positive rate for each group separately, and only call the model "better" when those gaps shrink.
 
 ## Links
-- [Read the story: What 1.8 Million Comments Taught Me About Fair Content Moderation]({{ '/blog/trust-safety-dashboard-public-data/' | relative_url }})
+- [Read the story: Content Moderation Fairness on 1.8M Comments]({{ '/blog/trust-safety-dashboard-public-data/' | relative_url }})
 - [Kaggle notebook](https://www.kaggle.com/code/malavnaik/moderation-classifier-civil-comments): the full analysis, top to bottom
 - [Model and model card on Hugging Face](https://huggingface.co/Malavnaik/civil-comments-distilbert-moderation)
 - [Demo on Hugging Face](https://huggingface.co/spaces/Malavnaik/moderation-classifier-demo)

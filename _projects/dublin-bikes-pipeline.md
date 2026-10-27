@@ -96,7 +96,7 @@ An end-to-end pipeline that runs on free tiers only:
 The question needs weeks of data, across different weather, before any answer is honest. Once enough has built up, I'll publish an analysis notebook and write up what the data says.
 
 ## Data and credits
-- [Read the story: I Built a Tested Data Pipeline for Dublin Bikes, for €0]({{ '/blog/dublin-bikes-data-pipeline/' | relative_url }})
+- [Read the story: A Tested Dublin Bikes Data Pipeline, for €0]({{ '/blog/dublin-bikes-data-pipeline/' | relative_url }})
 - Bikes: Dublinbikes GBFS feed, Dublin City Council / JCDecaux, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - Weather: Source: Met Éireann, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - [Raw snapshots](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw) · [Modelled tables](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts) · [dbt docs](https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs) · [Code on GitHub](https://github.com/malavnaik99/dublin-data-pipeline)

@@ -1,6 +1,6 @@
 ---
 id: 1
-title: "From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started"
+title: "From Surat to Dublin: 10 Years in Data"
 slug: from-surat-to-dublin
 description: "A decade of data work across India and Ireland, what changed along the way, and where I'm heading next."
 series: career

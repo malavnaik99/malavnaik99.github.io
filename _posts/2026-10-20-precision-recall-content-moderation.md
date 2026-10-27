@@ -1,6 +1,6 @@
 ---
 id: 4
-title: "Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces"
+title: "Precision vs Recall in Content Moderation"
 slug: precision-recall-content-moderation
 description: "Why no moderation system can catch everything without hurting innocent users, and how to choose where to set the line."
 series: trust-safety
