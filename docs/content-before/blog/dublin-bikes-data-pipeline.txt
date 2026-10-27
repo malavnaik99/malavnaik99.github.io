@@ -1,0 +1,145 @@
+== TEXT ==
+I Built a Tested Data Pipeline for Dublin Bikes, for €0 | Malav Naik
+[meta description] How I collect every Dublinbikes station every 15 minutes, model it with dbt and DuckDB, test it daily and feed a live dashboard, using only free tiers.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Data engineering
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+How I collect every Dublinbikes station every 15 minutes, model it with dbt and DuckDB, test it daily and feed a live dashboard, using only free tiers.
+Published 26 October 2026 · Updated 26 October 2026 · 3 min read · by Malav Naik
+[aria-label] Contents
+Contents
+1. Collect: small, boring and append-only
+2. Model: dbt on DuckDB
+3. Test: 14 checks, every run
+4. Publish: a dashboard with no backend
+What it costs
+What I’d do differently
+What’s next
+[alt] Malav Naik leaning on a red pole by the water in Dublin Docklands – I Built a Tested Data Pipeline for Dublin Bikes, for €0
+The Dublinbikes feed tells you how many bikes are at each station right now. It doesn’t keep history. So if you want to ask “how do weather and time of day change how many bikes are free?”, you first need a pipeline that collects the data, keeps it safe and tells you when something breaks.
+I built one, end to end, using only free tiers. The code is on GitHub and the project page has a live dashboard.
+1. Collect: small, boring and append-only
+A Python script runs on GitHub Actions every 15 minutes. It reads the Dublinbikes GBFS feed (all 115 stations) and, once an hour, the Met Éireann observations for Dublin Airport. Both are open data under CC BY 4.0.
+Each run writes a new Parquet file, partitioned by date, to a public Hugging Face dataset. Nothing is ever overwritten, so a bad run can’t damage history.
+Two lessons from this step:
+GitHub’s own scheduler is unreliable for frequent jobs. My 15-minute schedule didn’t fire once in its first hour. A free external timer (cron-job.org) that calls GitHub’s API fixed it.
+Fail loudly, then stop. After three failed runs in a row the workflow switches itself off and sends me a Telegram message, instead of failing silently for days.
+2. Model: dbt on DuckDB
+Every morning, dbt builds the models inside a DuckDB file:
+Staging: proper types, UTC timestamps (the weather comes in Irish local time) and de-duplication. Each hourly weather file repeats the whole day so far, so only the latest copy of each observation is kept.
+Intermediate: one row per station per hour, with average, minimum and maximum bikes, and the share of the hour the station was empty or full.
+Marts: a small star schema. fct_station_hour sits in the middle, with dim_station (name, location, capacity) and dim_hour (Dublin local time, weekday and that hour’s weather).
+The fact table is incremental: each run only recomputes the last three hours. It is also idempotent: running it twice gives exactly the same table. That matters, because reruns are the first thing you reach for when something goes wrong.
+DuckDB writes everything to a single file, so I store it in a second Hugging Face dataset between runs. That’s how the incremental table “remembers” what it already built without a database server.
+3. Test: 14 checks, every run
+dbt runs 14 data tests on every build:
+keys are unique and never empty;
+every row in the fact table links to a station and an hour;
+bike and dock counts are never negative;
+freshness: the newest snapshot is less than 2 hours old;
+volume: at least 75% of the expected snapshots arrived in the last 24 hours.
+The last two catch the real-world failures: a feed that goes quiet, or a collector that silently stops. If any check fails, I get a Telegram alert.
+The data also taught me something: one “station” in the feed is a placeholder that never has a bike. Left in, it tops every “most often empty” list. The dashboard now leaves out stations that never had a bike in the period.
+4. Publish: a dashboard with no backend
+Each run publishes the tables as Parquet, a run log and a small dashboard.json summary. The project page fetches that file in the browser and draws the chart. There’s no server to keep running, and the dashboard updates as soon as the morning run finishes. The dbt docs and lineage graph are published as a free static page.
+What it costs
+€0: public-repo GitHub Actions minutes, free Hugging Face datasets and a static Space, and one free cron-job.org job.
+What I’d do differently
+Compact the small files. About 100 small Parquet files a day is fine for now, but over a year I’d merge them into daily files.
+Add a “late data” test per station, not just overall, to spot a single broken dock.
+What’s next
+The pipeline is the easy part. The question needs weeks of data across different weather before any answer is honest. Once that has built up, I’ll publish the analysis and write up what the data says.
+[aria-label] Tags
+#dataengineering
+#dbt
+#duckdb
+#python
+Share: LinkedIn X
+[aria-label] About the author
+[alt] Malav Naik
+Malav Naik builds data pipelines, GenAI tools and AI automation in Dublin, and writes about them here.
+He is an Escalation Operations Analyst – Platform Integrity at Accenture, for a global technology client.
+LinkedIn · GitHub · About
+Related posts
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+15 Oct 2026
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+26 Oct 2026
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+20 Oct 2026
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/blog/dublin-bikes-data-pipeline/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/blog/series/data-engineering/
+/about/
+#1-collect-small-boring-and-append-only
+#2-model-dbt-on-duckdb
+#3-test-14-checks-every-run
+#4-publish-a-dashboard-with-no-backend
+#what-it-costs
+#what-id-do-differently
+#whats-next
+https://github.com/malavnaik99/dublin-data-pipeline
+https://malavnaik.com/projects/dublin-bikes-pipeline/
+https://malavnaik.com/projects/dublin-bikes-pipeline/
+https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs
+/blog/topics/#tag-dataengineering
+/blog/topics/#tag-dbt
+/blog/topics/#tag-duckdb
+/blog/topics/#tag-python
+https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fdublin-bikes-data-pipeline%2F
+https://x.com/intent/post?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fdublin-bikes-data-pipeline%2F&text=I+Built+a+Tested+Data+Pipeline+for+Dublin+Bikes%2C+for+%E2%82%AC0
+/about/
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+/about/
+/blog/azure-sql-migration-25-percent/
+/blog/trust-safety-dashboard-public-data/
+/blog/precision-recall-content-moderation/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

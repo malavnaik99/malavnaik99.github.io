@@ -1,0 +1,10 @@
+{%- comment -%} Decorative toolkit graph (aria-hidden): the open tab's tools from _data/toolkit.yml around the MN signal mark. site.js copies the labels from the tab's own list (so no text is repeated in the page) and shows the group for the selected tab. {%- endcomment -%}
+{%- assign slots = "564,236,start,12,4|295,344,end,-12,4|219,83,end,-12,4|498,167,start,12,4|367,408,middle,0,22|218,175,end,-12,4|491,75,start,12,4|434,340,start,12,4|157,249,end,-12,4|391,85,start,12,4|533,322,start,12,4|239,302,end,-12,4|304,38,end,-12,4" | split: "|" -%}
+<svg class="constellation" viewBox="0 0 720 440" aria-hidden="true" focusable="false">
+  <g class="radar"><circle cx="360" cy="220" r="90"/><circle cx="360" cy="220" r="150"/><circle cx="360" cy="220" r="205"/></g>
+  {% for area in site.data.toolkit %}<g class="area{% if forloop.first %} on{% endif %}" data-panel="panel-{{ area.id }}">
+    {% for t in area.tools limit: 13 %}{% assign s = slots[forloop.index0] | split: "," %}<line x1="360" y1="220" x2="{{ s[0] }}" y2="{{ s[1] }}"/><circle class="node" cx="{{ s[0] }}" cy="{{ s[1] }}" r="6" style="animation-delay:-{{ forloop.index0 | times: 0.4 }}s"/><text x="{{ s[0] | plus: s[3] }}" y="{{ s[1] | plus: s[4] }}" text-anchor="{{ s[2] }}"></text>
+    {% endfor %}</g>
+  {% endfor %}<circle class="core" cx="360" cy="220" r="34"/>
+  <g transform="translate(336 204)"><path class="mark" d="M4 26 V6 L14 17 L24 6 V26 V6 L40 26 V6" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="6" r="3.4" fill="#34D399"/></g>
+</svg>

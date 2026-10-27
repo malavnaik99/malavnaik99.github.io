@@ -1,0 +1,71 @@
+== TEXT ==
+Trust & safety – blog series | Malav Naik
+[meta description] Malav Naik’s posts on content moderation, integrity metrics and policy, explained with public data.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Writing · Series
+Trust & safety
+Content moderation, integrity metrics and policy, explained with public data.
+Posts in this series
+Trust & safety
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+26 Oct 2026 · 3 min read
+I trained two content moderation models on 1.8 million public comments and measured them like a trust & safety team: thresholds, review queues, prevalence and fairness.
+Trust & safety
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+20 Oct 2026 · 2 min read
+Why no moderation system can catch everything without hurting innocent users, and how to choose where to set the line.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/blog/series/trust-safety/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/writing/
+/blog/series/trust-safety/
+/blog/trust-safety-dashboard-public-data/
+/blog/series/trust-safety/
+/blog/precision-recall-content-moderation/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

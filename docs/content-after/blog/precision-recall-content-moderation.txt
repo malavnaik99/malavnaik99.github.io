@@ -1,0 +1,151 @@
+== TEXT ==
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces | Malav Naik
+[meta description] Why no moderation system can catch everything without hurting innocent users, and how to choose where to set the line.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+Search
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Trust & safety
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+Why no moderation system can catch everything without hurting innocent users, and how to choose where to set the line.
+Published 20 October 2026 · Updated 25 October 2026 · 2 min read · by Malav Naik
+[aria-label] Summary
+TL;DR
+Every moderation system removes some things that were fine and misses some things that weren’t, and you can’t drive both to zero. The right threshold depends on the cost of each error: favour recall for severe harms like child safety, and precision for satire and political speech.
+[aria-label] Contents
+Contents
+What are precision and recall in content moderation?
+How do you choose a moderation threshold?
+The human review layer changes the maths
+Why is recall harder to measure than precision?
+Practical advice
+[alt] Malav Naik in a suit outside a curved glass building – Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+Every system that decides “is this content harmful?” makes two kinds of mistakes. It removes things that were fine, and it misses things that weren’t. You can’t drive both to zero. Choosing which mistake you’d rather make is one of the most important decisions an integrity team takes.
+What are precision and recall in content moderation?
+Precision: of everything the system flagged, how much was actually violating? Low precision means innocent users get actioned.
+Recall: of everything that was actually violating, how much did the system catch? Low recall means harm stays up.
+Raise the threshold for flagging and precision goes up while recall goes down. Lower it and the reverse happens.
+How do you choose a moderation threshold?
+There is no universal setting. It depends on the cost of each error:
+Harm type
+Cost of a miss
+Cost of a false positive
+Usual bias
+Child safety, imminent violence
+Severe, possibly irreversible
+User annoyance, appeal
+Favour recall
+Spam
+Mild irritation
+Lost legitimate post
+Balanced
+Satire, political speech
+Low
+Censorship concerns, trust loss
+Favour precision
+The human review layer changes the maths
+Most teams don’t rely on a single automated decision. A common pattern:
+High-confidence violations: action automatically.
+Uncertain middle: send to human reviewers.
+High-confidence benign: leave alone.
+Now the question becomes how wide to make the middle band. Wider means better decisions but more review cost and slower action. This is where the work becomes an operations problem as much as a modelling one.
+Why is recall harder to measure than precision?
+Precision is easy to measure: sample what you flagged and check it. Recall is hard, because you need to find what you didn’t flag. That requires sampling the unflagged population, which is usually huge and mostly benign. Teams that only measure precision tend to drift towards under-enforcement without noticing.
+Practical advice
+Report precision and recall per harm category, never as one blended number.
+Track appeal overturn rates as a real-world check on precision.
+Revisit thresholds when content patterns change. A threshold tuned last year may be wrong today.
+In the next trust and safety post I’ll look at prevalence: the metric that tries to answer “how much harm do users actually see?”
+Views are my own and use public, general examples only.
+Frequently asked questions
+What is the difference between precision and recall?
+Precision: of everything the system flagged, how much was actually violating. Recall: of everything that was actually violating, how much the system caught.
+Why is recall hard to measure?
+You have to sample what the system didn’t flag, which is usually huge and mostly benign.
+[aria-label] Tags
+#trustandsafety
+#machinelearning
+#metrics
+#ai
+Share: LinkedIn X
+[aria-label] About the author
+[alt] Malav Naik
+Malav Naik builds data pipelines, GenAI tools and AI automation in Dublin, and writes about them here.
+He is an Escalation Operations Analyst – Platform Integrity at Accenture, for a global technology client.
+LinkedIn · GitHub · About
+Related posts
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+26 Oct 2026
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+26 Oct 2026
+What a Master's in Ireland Taught Me After Nine Years in Industry
+20 Oct 2026
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+MALAV NAIK
+== LINKS ==
+[canonical] https://malavnaik.com/blog/precision-recall-content-moderation/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/blog/series/trust-safety/
+/about/
+#what-are-precision-and-recall-in-content-moderation
+#how-do-you-choose-a-moderation-threshold
+#the-human-review-layer-changes-the-maths
+#why-is-recall-harder-to-measure-than-precision
+#practical-advice
+/blog/topics/#tag-trustandsafety
+/blog/topics/#tag-machinelearning
+/blog/topics/#tag-metrics
+/blog/topics/#tag-ai
+https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fprecision-recall-content-moderation%2F
+https://x.com/intent/post?url=https%3A%2F%2Fmalavnaik.com%2Fblog%2Fprecision-recall-content-moderation%2F&text=Precision+vs+Recall+in+Content+Moderation%3A+The+Trade-Off+Every+Integrity+Team+Faces
+/about/
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+/about/
+/blog/trust-safety-dashboard-public-data/
+/blog/dublin-bikes-data-pipeline/
+/blog/masters-in-ireland-after-industry/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

@@ -5,12 +5,14 @@ wide: true
 {% assign lab = site.data.automation %}
 
 <section class="hero" aria-labelledby="hero-title">
-  <div>
-    <p class="label">Data &amp; GenAI Engineer · ~10 years · Dublin</p>
+  <div class="sky" aria-hidden="true"><span class="stars"></span><span class="planet"></span><span class="rings"><i></i><i></i></span></div>
+  <div class="hero-inner">
+    <p class="label pill"><span class="dot" aria-hidden="true"></span>Data &amp; GenAI Engineer · ~10 years · Dublin</p>
+    <div class="wordmark" aria-hidden="true">MALAV NAIK</div>
     <h1 id="hero-title">I build data pipelines and GenAI systems, and prove they work.</h1>
     <p class="sub">About 10 years in data, from SSIS pipelines and an Azure SQL migration at S&amp;P Global Market Intelligence to dbt, DuckDB and LLM tools today. Every project here shows its code and measured results.</p>
 
-    <div class="ask card" role="region" aria-labelledby="ask-title">
+    <div class="ask palette" role="region" aria-labelledby="ask-title">
       <p class="label" id="ask-title">Ask about my work</p>
       <form id="ask-form">
         <label class="sr-only" for="ask-input">Your question</label>
@@ -39,16 +41,21 @@ wide: true
       </div>
     </div>
   </div>
+</section>
 
-  <figure class="card card-big photo-card" style="margin:0">
-    <img src="{{ '/images/malav-naik-portrait.jpg' | relative_url }}" alt="Malav Naik in a navy suit outside the Convention Centre Dublin" width="480" height="480" fetchpriority="high">
-    <dl class="readout">
-      <dt>name</dt><dd>Malav Naik</dd>
-      <dt>based</dt><dd>Dublin, Ireland</dd>
-      <dt>focus</dt><dd>data pipelines · GenAI · AI automation</dd>
-      <dt>pipeline</dt><dd data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></dd>
-    </dl>
-  </figure>
+{% capture signals %}
+  <li><span class="k">pipeline</span> <span data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></span></li>
+  <li><b class="v-violet">0.957</b> <span class="k">ROC-AUC, content moderation model</span></li>
+  <li><b>14</b> <span class="k">automatic data tests on every run</span></li>
+  <li><b>€0</b> <span class="k">monthly cost</span></li>
+  <li><span class="k">Ask the EU Digital Services Act</span> <b class="v-sky">84% top-3 hit rate</b></li>
+  {% if lab %}<li><span class="k">blog bot</span> <b class="v-ember">{{ lab.posts_published }}</b> <span class="k">posts published</span></li>
+  <li><b class="v-ember">{{ lab.posts_queued }}</b> <span class="k">queued</span></li>{% endif %}
+  {% for post in site.posts limit: 1 %}<li><span class="k">{{ post.date | date: "%-d %b %Y" }}</span> <b>{{ post.title }}</b></li>{% endfor %}
+{% endcapture %}
+<section class="ticker" aria-labelledby="ticker-title">
+  <p class="ticker-label" id="ticker-title"><span class="dot" aria-hidden="true"></span>Live signals</p>
+  <div class="ticker-view"><div class="ticker-track"><ul>{{ signals }}</ul><ul aria-hidden="true">{{ signals }}</ul></div></div>
 </section>
 
 <ul class="metrics" aria-label="Key numbers">
@@ -60,7 +67,7 @@ wide: true
 
 <section class="section" aria-labelledby="featured-title">
   <p class="label"><b>01</b> / Featured project</p>
-  <article class="card card-big">
+  <article class="card card-big featured">
     <div class="featured-top">
       <h2 id="featured-title"><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}" style="color:inherit;text-decoration:none">Dublin bikes + weather data pipeline</a></h2>
       <span class="badge" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">running every 15 minutes</span></span>
@@ -131,6 +138,7 @@ wide: true
 <section class="section" id="toolkit" aria-labelledby="toolkit-title">
   <p class="label"><b>03</b> / Toolkit</p>
   <h2 id="toolkit-title">Tools I've used in real projects</h2>
+  <div class="toolkit">
   <div class="tabs">
     <div class="tablist" role="tablist" aria-label="Toolkit areas">
       {% for area in site.data.toolkit %}<button type="button" role="tab" id="tab-{{ area.id }}" aria-controls="panel-{{ area.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}><span class="mono">0{{ forloop.index }}</span>{{ area.name }}</button>
@@ -144,13 +152,24 @@ wide: true
       {% endfor %}
     </div>
   </div>
+  {% include constellation.html %}
+  </div>
 </section>
 
 {% include product-card.html %}
 
-<section class="section" id="journey" aria-labelledby="journey-title">
+<section class="section journey-section" id="journey" aria-labelledby="journey-title">
   <p class="label"><b>04</b> / From Surat to Dublin</p>
   <h2 id="journey-title">Ten years, two countries, one thread: data</h2>
+  <figure class="photo-card">
+    <img src="{{ '/images/malav-naik-portrait.jpg' | relative_url }}" alt="Malav Naik in a navy suit outside the Convention Centre Dublin" width="480" height="480" loading="lazy" decoding="async">
+    <dl class="readout">
+      <dt>name</dt><dd>Malav Naik</dd>
+      <dt>based</dt><dd>Dublin, Ireland</dd>
+      <dt>focus</dt><dd>data pipelines · GenAI · AI automation</dd>
+      <dt>pipeline</dt><dd data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></dd>
+    </dl>
+  </figure>
   {% include journey.html %}
 </section>
 
@@ -158,8 +177,8 @@ wide: true
   <p class="label"><b>05</b> / Writing &amp; Automation Lab</p>
   <div class="section-head"><h2 id="writing-title">Latest writing</h2><a href="{{ '/writing/' | relative_url }}">All posts →</a></div>
   {% if lab %}<p class="botline"><span class="dot" style="background:var(--live)" aria-hidden="true"></span>blog bot · <b>{{ lab.posts_published }}</b> posts published ·{% for p in lab.platforms %} {{ p[0] }} <b>{{ p[1] }}</b>{% unless forloop.last %} ·{% endunless %}{% endfor %} · <b>{{ lab.posts_queued }}</b> queued · updated {{ lab.updated | date: "%-d %b %Y" }}</p>{% endif %}
-  <ul class="post-list">
-    {% for post in site.posts limit: 3 %}<li><a href="{{ post.url | relative_url }}"><span class="pd">{{ post.date | date: "%-d %b %Y" }}</span><span class="pt">{{ post.title }}</span></a></li>
+  <ul class="post-list post-cards">
+    {% for post in site.posts limit: 3 %}<li data-series="{{ post.series }}"><a href="{{ post.url | relative_url }}"><span class="pd">{{ post.date | date: "%-d %b %Y" }}</span><span class="pt">{{ post.title }}</span></a></li>
     {% endfor %}
   </ul>
 </section>

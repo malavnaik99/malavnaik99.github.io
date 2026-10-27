@@ -1,0 +1,71 @@
+== TEXT ==
+Career – blog series | Malav Naik
+[meta description] Malav Naik’s posts on moving from India to Dublin, an MSc after years in industry, and building a data career in Ireland.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Writing · Series
+Career
+From India to Dublin, an MSc after years in industry, and building a data career in Ireland.
+Posts in this series
+Career
+What a Master's in Ireland Taught Me After Nine Years in Industry
+20 Oct 2026 · 2 min read
+Going back to university as an experienced data professional: what was worth it, what surprised me, and advice for anyone considering it.
+Career
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+15 Oct 2026 · 2 min read
+A decade of data work across India and Ireland, what changed along the way, and where I'm heading next.
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/blog/series/career/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/writing/
+/blog/series/career/
+/blog/masters-in-ireland-after-industry/
+/blog/series/career/
+/blog/from-surat-to-dublin/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml

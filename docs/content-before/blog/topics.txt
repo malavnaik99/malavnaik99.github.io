@@ -1,0 +1,138 @@
+== TEXT ==
+Blog topics | Malav Naik
+[meta description] Malav Naik’s blog posts grouped by series and by tag.
+[title] Malav Naik
+Skip to content
+Malav Naik
+[aria-label] Main
+Work
+Toolkit
+Journey
+Writing
+Résumé
+[aria-label] Search (Ctrl+K)
+[aria-label] Switch between dark and light theme
+Résumé
+Menu
+Blog topics
+Series
+Trust safety
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+Data engineering
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+Career
+What a Master's in Ireland Taught Me After Nine Years in Industry
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+Tags
+#ai
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+#azure
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+#career
+What a Master's in Ireland Taught Me After Nine Years in Industry
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+#cloud
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+#data
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+#dataengineering
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+#datascience
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+What a Master's in Ireland Taught Me After Nine Years in Industry
+#dbt
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+#dublin
+From Surat to Dublin: 10 Years in Data, and Why I'm Just Getting Started
+#duckdb
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+#education
+What a Master's in Ireland Taught Me After Nine Years in Industry
+#ireland
+What a Master's in Ireland Taught Me After Nine Years in Industry
+#machinelearning
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+#metrics
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+#portfolio
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+#python
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+I Built a Tested Data Pipeline for Dublin Bikes, for €0
+#sql
+Migrating On-Prem SQL Server to Azure SQL PaaS: How We Cut Infrastructure Costs by 25%
+#trustandsafety
+What 1.8 Million Comments Taught Me About Fair Content Moderation
+Precision vs Recall in Content Moderation: The Trade-Off Every Integrity Team Faces
+Contact
+malavnaikie@gmail.com
+LinkedIn
+GitHub
+DEV
+Medium
+Hugging Face
+Kaggle
+X
+Reddit
+MSc thesis
+About
+Now
+RSS
+© 2026 Malav Naik
+== LINKS ==
+[canonical] https://malavnaik.com/blog/topics/
+#main
+/
+/work/
+/#toolkit
+/#journey
+/writing/
+/resume/
+/resume/
+/blog/trust-safety-dashboard-public-data/
+/blog/precision-recall-content-moderation/
+/blog/dublin-bikes-data-pipeline/
+/blog/azure-sql-migration-25-percent/
+/blog/masters-in-ireland-after-industry/
+/blog/from-surat-to-dublin/
+/blog/precision-recall-content-moderation/
+/blog/from-surat-to-dublin/
+/blog/azure-sql-migration-25-percent/
+/blog/masters-in-ireland-after-industry/
+/blog/from-surat-to-dublin/
+/blog/azure-sql-migration-25-percent/
+/blog/from-surat-to-dublin/
+/blog/dublin-bikes-data-pipeline/
+/blog/azure-sql-migration-25-percent/
+/blog/trust-safety-dashboard-public-data/
+/blog/masters-in-ireland-after-industry/
+/blog/dublin-bikes-data-pipeline/
+/blog/from-surat-to-dublin/
+/blog/dublin-bikes-data-pipeline/
+/blog/masters-in-ireland-after-industry/
+/blog/masters-in-ireland-after-industry/
+/blog/precision-recall-content-moderation/
+/blog/precision-recall-content-moderation/
+/blog/trust-safety-dashboard-public-data/
+/blog/trust-safety-dashboard-public-data/
+/blog/dublin-bikes-data-pipeline/
+/blog/azure-sql-migration-25-percent/
+/blog/trust-safety-dashboard-public-data/
+/blog/precision-recall-content-moderation/
+mailto:malavnaikie@gmail.com
+https://www.linkedin.com/in/malav-naik
+https://github.com/malavnaik99
+https://dev.to/malavnaik_0381711024683d4
+https://medium.com/@malavnaik206
+https://huggingface.co/Malavnaik
+https://www.kaggle.com/malavnaik
+https://x.com/malavnaik99
+https://www.reddit.com/user/malavnaik
+https://norma.ncirl.ie/9439/
+/about/
+/now/
+/feed.xml
