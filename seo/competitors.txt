@@ -1,0 +1,5 @@
+# Sites that rank well for each target query (web search, 2026-10-27). One site per query.
+# The best-ranked non-academic, non-aggregator result was picked: arXiv papers and SEO-spam pages were skipped.
+motherduck.com          # "dbt duckdb data pipeline tutorial": https://motherduck.com/blog/duckdb-python-e2e-data-engineering-project-part-1
+logora.com              # "content moderation precision recall": https://www.logora.com/blog/policy-to-prompt-ai-moderation-framework
+digitalpolicyalert.org  # "EU Digital Services Act search": https://clairk.digitalpolicyalert.org/documents/eu-digital-services-act
