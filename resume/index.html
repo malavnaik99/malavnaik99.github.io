@@ -1,0 +1,81 @@
+---
+layout: default
+title: Résumé
+description: Résumé of Malav Naik – Data Engineer, GenAI & AI Automation in Dublin, Ireland.
+---
+{%- comment -%}
+Irish CV layout. Experience/Education come from _data/journey.yml, projects from the _projects collection (same order as /work/)
+and skills from _data/toolkit.yml, so this page can't drift from the home page. The client is never named.
+The PDF is printed from this page (A4): resume/malav-naik-resume.pdf.
+{%- endcomment -%}
+{%- assign linkedin = site.profiles | where: "name", "LinkedIn" | first -%}
+{%- assign github = site.profiles | where: "name", "GitHub" | first -%}
+<div class="cv">
+<header class="cv-head">
+  <h1>Malav Naik</h1>
+  <p class="cv-contact"><a href="mailto:malavnaikie@gmail.com">malavnaikie@gmail.com</a> | Dublin, Ireland | <a href="{{ linkedin.url }}">LinkedIn</a> | <a href="{{ github.url }}">GitHub</a></p>
+  <p class="cv-contact">Visa Status: Stamp 1G — Eligible to work full-time until Dec 2027</p>
+  <p class="noprint"><a class="btn small" href="{{ '/resume/malav-naik-resume.pdf' | relative_url }}">Download as PDF</a></p>
+</header>
+
+<section aria-labelledby="cv-profile">
+  <h2 id="cv-profile">Profile</h2>
+  <p>Data professional in Dublin with about 10 years of experience in data across India and Ireland. Core stack spans SQL, SQL Server, SSIS, Azure SQL, Python, dbt, DuckDB and Power BI, including an on-premise SQL Server to Azure SQL migration that cut infrastructure costs by about 25%. Works closely with business users and non-technical stakeholders, defining KPIs and building dashboards and reports for them. Builds GenAI and AI automation systems with retrieval-augmented generation, knowledge graphs and large language models, from an MSc thesis on personalised learning to a fairness-checked content moderation model (ROC-AUC 0.957). Has handled problems ranging from multi-million-record financial data pipelines and public open data to platform integrity escalations for a global technology client.</p>
+</section>
+
+<section aria-labelledby="cv-experience">
+  <h2 id="cv-experience">Experience</h2>
+  {%- assign jobs = site.data.journey | where: "type", "job" | reverse %}
+  {% for j in jobs %}<article class="cv-role">
+    <div class="cv-line"><h3>{{ j.title | escape }}</h3><p class="cv-dates"><time datetime="{{ j.start.iso }}">{{ j.start.label }}</time> – {% if j.end %}<time datetime="{{ j.end.iso }}">{{ j.end.label }}</time>{% else %}Present{% endif %}</p></div>
+    <p class="cv-org">{{ j.org_line | escape }}</p>
+    <ul>{% for b in j.bullets %}<li>{{ b | escape }}</li>{% endfor %}</ul>
+  </article>
+  {% endfor %}
+</section>
+
+<section aria-labelledby="cv-projects">
+  <h2 id="cv-projects">Key projects</h2>
+  <ul class="cv-projects">
+    {%- assign projects = site.projects | sort: "order" %}
+    {% for p in projects %}{% assign a = p.approach | strip %}{% assign last = a | slice: -1 %}<li><a href="{{ p.url | relative_url }}"><strong>{{ p.title }}:</strong></a> {{ a }}{% unless last == "." %}.{% endunless %} {{ p.result }}{% if p.tech %} Stack: {{ p.tech | join: ", " }}.{% endif %}</li>
+    {% endfor %}<li><strong>Hybrid Data Warehouse &amp; Visualisation Application (MSc):</strong> Built ETL across SQL Server, PostgreSQL and MongoDB over multi-source datasets with millions of records, with dashboards for non-technical stakeholders.</li>
+  </ul>
+  <p>All projects, with code and sources for every number: <a href="{{ '/work/' | absolute_url }}">{{ '/work/' | absolute_url | remove: 'https://' }}</a></p>
+</section>
+
+<section aria-labelledby="cv-skills">
+  <h2 id="cv-skills">Skills</h2>
+  <ul>
+    {% for area in site.data.toolkit %}<li><strong>{{ area.name }}:</strong> {{ area.tools | join: ", " }}</li>
+    {% endfor %}<li><strong>Cloud:</strong> Azure PaaS Databases, Azure SQL MI, AWS QuickSight, AWS Glue</li>
+    <li><strong>Operations:</strong> Platform Integrity Analysis, Escalation Decision Frameworks, Cross-Functional Workflow Orchestration, Incident Classification, SLA Management, Process Gap Analysis, Compliance Documentation</li>
+  </ul>
+</section>
+
+<section aria-labelledby="cv-education">
+  <h2 id="cv-education">Education</h2>
+  {%- assign msc = site.data.journey | where: "type", "study" | first %}
+  <article class="cv-role">
+    <div class="cv-line"><h3>{{ msc.title }}</h3><p class="cv-dates"><time datetime="{{ msc.start.iso }}">{{ msc.start.label }}</time> – <time datetime="{{ msc.end.iso }}">{{ msc.end.label }}</time></p></div>
+    <p class="cv-org">{{ msc.org_line }}</p>
+    <ul>
+      <li><strong>Modules:</strong> Data Mining, Machine Learning, Data Visualization, Optimization, Deep Learning, Generative AI</li>
+      <li><strong>Dissertation:</strong> <a href="https://norma.ncirl.ie/9439/"><cite>Enhanced Personalized Learning Experiences by Leveraging Knowledge Graphs and Prompt Engineering</cite></a></li>
+    </ul>
+  </article>
+  <article class="cv-role">
+    <div class="cv-line"><h3>Bachelor of Computer Applications</h3><p class="cv-dates"><time datetime="2015">2015</time></p></div>
+    <p class="cv-org">Veer Narmad South Gujarat University, Gujarat, India</p>
+  </article>
+</section>
+
+<section aria-labelledby="cv-certs">
+  <h2 id="cv-certs">Certifications</h2>
+  <ul>
+    <li>Build Your Generative AI Productivity Skills with Microsoft and LinkedIn</li>
+    <li>Google Analytics Certification</li>
+    <li>LLM Tech Essentials (Levels 1–3)</li>
+  </ul>
+</section>
+</div>

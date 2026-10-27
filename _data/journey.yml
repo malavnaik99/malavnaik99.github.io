@@ -1,0 +1,50 @@
+# Journey cards (home and About) and the résumé's Experience/Education read this one list, so they can't drift apart.
+# Real job titles only (docs/METRIC_SOURCES.md). start/end/org_line are used by the résumé only:
+# month dates come from Malav's CV details (the site shows years), and the client is never named.
+- type: job
+  when: "2015 – 2019"
+  title: Data Analyst
+  where: Bright Info Solutions, Ahmedabad
+  text: Pulled data with SQL, cleaned it in Excel and Python, and built weekly reports.
+  start: { label: Oct 2015, iso: 2015-10 }
+  end: { label: Jan 2019, iso: 2019-01 }
+  org_line: Bright Info Solutions, Ahmedabad, India
+  bullets:
+    - Pulled data with SQL, cleaned it in Excel and Python, and built weekly reports.
+    - Built dashboards and automated scorecards, defining KPIs alongside business users.
+    - Carried out exploratory data analysis.
+- type: job
+  when: "2019 – 2024"
+  title: Data Analyst & ETL Developer
+  where: S&P Global Market Intelligence
+  text: SSIS pipelines over multi-million-record financial datasets, and an Azure SQL migration that cut infrastructure costs by about 25%.
+  start: { label: Feb 2019, iso: 2019-02 }
+  end: { label: Aug 2024, iso: 2024-08 }
+  org_line: S&P Global Market Intelligence, India
+  bullets:
+    - Built SSIS pipelines over multi-million-record financial datasets.
+    - Designed data models for analytics.
+    - Helped migrate on-premise SQL Server databases to Azure SQL Managed Instance, cutting infrastructure costs by about 25%.
+    - Supported and troubleshot SQL Server and Azure SQL databases, monitoring data quality and performance.
+    - Built Power BI dashboards for non-technical users.
+- type: study
+  when: "2024 – 2025"
+  title: MSc Data Analytics
+  where: National College of Ireland, Dublin
+  text: Thesis on knowledge graphs and prompt engineering for personalised learning.
+  start: { label: Sept 2024, iso: 2024-09 }
+  end: { label: Sept 2025, iso: 2025-09 }
+  org_line: National College of Ireland, Dublin, Ireland
+- type: job
+  when: "2026 – now"
+  title: Escalation Operations Analyst
+  where: Accenture, Dublin
+  text: Platform integrity work for a global technology client, analysing complex escalations with AI-assisted tools.
+  start: { label: Mar 2026, iso: 2026-03 }
+  org_line: Accenture – for a global technology client (Technology & Platform Operations, platform integrity), Dublin, Ireland
+  bullets:
+    - Analyse complex escalations with AI-assisted tools every day, including LLM-driven case analysis and automated classification.
+    - Apply decision-tree logic to classify and resolve cases across 15+ categories.
+    - Coordinate 30+ concurrent cases across 6 business functions.
+    - Run process-gap analysis across 3 global operations centres.
+    - Keep audit-standard documentation.

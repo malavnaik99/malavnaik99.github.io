@@ -399,8 +399,8 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .lab { margin-top: 2rem; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
-@page { margin: 12mm 14mm; }
-@media print { .site-header, .site-footer, .noprint { display: none; } body { font-size: 10pt; line-height: 1.45; background: #fff; color: #000; } .prose { max-width: none; } a { color: inherit; } }
+@page { size: A4; margin: 12mm 14mm; }
+@media print { .site-header, .site-footer, .noprint, .skip { display: none !important; } .page { padding-top: 0; } body { font-size: 10pt; line-height: 1.45; background: #fff; color: #000; } .prose { max-width: none; } a { color: inherit; } }
 
 /* Writing list */
 .writing-list .pdesc { display: block; color: var(--muted); font-size: .95rem; margin: .3rem 0 .5rem; }
@@ -503,3 +503,23 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .prose details.deep { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 1.1rem; margin: 1rem 0 1.75rem; }
 .prose details.deep > summary { cursor: pointer; padding: .8rem 0; font-weight: 600; color: var(--accent); }
 .prose details.deep[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
+
+/* Résumé (Irish CV layout): caps section headings with a thin rule, title and dates on one line. */
+.cv h1 { text-transform: uppercase; letter-spacing: .06em; font-size: clamp(1.9rem, 5vw, 2.4rem); margin: 0 0 .4rem; }
+.cv-contact { margin: 0 0 .2rem; font-size: .95rem; color: var(--sub); }
+.cv-head .noprint { margin-top: 1rem; }
+.cv h2 { text-transform: uppercase; letter-spacing: .1em; font-size: .95rem; margin: 2rem 0 .8rem; padding-bottom: .35rem; border-bottom: 1px solid var(--text); }
+.cv-role { margin: 0 0 1.1rem; }
+.cv-line { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 1rem; }
+.cv h3 { margin: 0; font-size: 1.05rem; }
+.cv-dates { margin: 0; font-size: .92rem; color: var(--sub); white-space: nowrap; }
+.cv-org { margin: .1rem 0 .4rem; font-style: italic; color: var(--sub); }
+.cv ul { margin: .3rem 0 0; padding-left: 1.2rem; } .cv li { margin: 0 0 .3rem; }
+.cv-projects a strong { color: var(--text); }
+@media (max-width: 560px) { .cv-line { flex-direction: column; } }
+@media print {
+  .cv { font-size: 10pt; line-height: 1.4; } .cv * { color: #000 !important; }
+  .cv h1 { font-size: 20pt; } .cv h2 { font-size: 10.5pt; margin: 12pt 0 6pt; border-color: #000; break-after: avoid; }
+  .cv-contact, .cv-dates, .cv-org { color: #000; } .cv h3 { font-size: 10.5pt; }
+  .cv-role, .cv li { break-inside: avoid; } .cv a, .cv-projects a strong { color: #000; text-decoration: none; }
+}
