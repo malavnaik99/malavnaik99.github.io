@@ -8,7 +8,7 @@ wide: true
   <div class="sky" aria-hidden="true"><span class="stars"></span><span class="planet"></span><span class="rings"><i></i><i></i></span></div>
   <div class="hero-inner">
     <p class="label pill"><span class="dot" aria-hidden="true"></span>Data &amp; GenAI Engineer · ~10 years · Dublin</p>
-    <div class="wordmark" aria-hidden="true">MALAV NAIK</div>
+    <div class="wordmark notranslate" translate="no" aria-hidden="true">MALAV NAIK</div>
     <h1 id="hero-title">I build data pipelines and GenAI systems, and prove they work.</h1>
     <p class="sub">About 10 years in data, from SSIS pipelines and an Azure SQL migration at S&amp;P Global Market Intelligence to dbt, DuckDB and LLM tools today. Every project here shows its code and measured results.</p>
 

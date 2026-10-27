@@ -159,6 +159,7 @@ main { display: block; }
 .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: var(--glass); border: 1px solid var(--glass-line); font: 400 .8125rem/1.4 var(--font); color: var(--sub); letter-spacing: 0; text-transform: none; }
 .pill .dot { width: 7px; height: 7px; margin: 0; background: var(--live); box-shadow: 0 0 10px var(--live); }
 .wordmark { font: 900 clamp(48px, 13.5vw, 168px)/.86 var(--font-head); letter-spacing: -.06em; white-space: nowrap; color: var(--text); user-select: none; }
+.wordmark:lang(gu), .footer-wordmark:lang(gu) { letter-spacing: 0; line-height: 1.15; }
 @supports ((-webkit-background-clip: text) or (background-clip: text)) { .wordmark { background: var(--wordmark); -webkit-background-clip: text; background-clip: text; color: transparent; } }
 .hero h1 { position: relative; font-size: clamp(1.6rem, 3.4vw, 2.5rem); line-height: 1.15; letter-spacing: -.03em; max-width: 24ch; }
 .decode { position: absolute; inset: 0; color: var(--text); }

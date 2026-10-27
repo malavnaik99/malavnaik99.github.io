@@ -18,6 +18,8 @@
     langBtn.textContent = "English"; langBtn.lang = "en"; langBtn.hreflang = "en"; langBtn.title = "Back to the English page";
     langBtn.href = original;
     langBtn.addEventListener("click", function (e) { e.preventDefault(); location.href = original; });
+    // Google spells the big wordmarks wrongly, so they skip translation and get Malav's own spelling.
+    $$(".wordmark, .footer-wordmark").forEach(function (w) { w.textContent = "માલવ નાઈક"; w.lang = "gu"; });
   }
 
   var menuBtn = $(".menu-btn"), nav = $("#site-nav");
