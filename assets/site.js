@@ -11,6 +11,15 @@
     try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
   });
 
+  // Gujarati button: on Google Translate's copy of the site it becomes "English" and goes back to the same page on malavnaik.com.
+  var langBtn = $(".lang-btn");
+  if (langBtn && /\.translate\.goog$/.test(location.hostname)) {
+    var original = "https://malavnaik.com" + location.pathname + location.hash;
+    langBtn.textContent = "English"; langBtn.lang = "en"; langBtn.hreflang = "en"; langBtn.title = "Back to the English page";
+    langBtn.href = original;
+    langBtn.addEventListener("click", function (e) { e.preventDefault(); location.href = original; });
+  }
+
   var menuBtn = $(".menu-btn"), nav = $("#site-nav");
   if (menuBtn && nav) menuBtn.addEventListener("click", function () {
     menuBtn.setAttribute("aria-expanded", nav.classList.toggle("open"));
