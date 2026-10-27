@@ -1,0 +1,30 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 520" role="img" aria-labelledby="lock-queue-n-t lock-queue-n-d">
+<title id="lock-queue-n-t">How one ALTER TABLE can block every query</title>
+<desc id="lock-queue-n-d">A long-running report query holds a read lock on a table. An ALTER TABLE needs an exclusive lock, so it waits for the report to finish. Every new query on that table, such as login, submit and status checks, queues behind the waiting ALTER TABLE and is blocked, even though the ALTER has not started yet. The fix: set lock_timeout to a few seconds, so the ALTER gives up, the queue drains, and the migration retries later.</desc>
+<defs><marker id="lock-queue-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-n" x="16" y="12" width="328" height="70" rx="12"/>
+<text x="180" y="42.5" class="b" text-anchor="middle">Nightly report</text>
+<text x="180" y="61.5" class="sm" text-anchor="middle">long SELECT, holds a lock</text>
+<line class="ln" x1="180" y1="121" x2="180" y2="83" marker-end="url(#lock-queue-n-ah)"/>
+<text x="192" y="107" class="sm">waits</text>
+<rect class="k-warn" x="16" y="122" width="328" height="70" rx="12"/>
+<text x="180" y="152.5" class="b" text-anchor="middle">ALTER TABLE</text>
+<text x="180" y="171.5" class="sm" text-anchor="middle">waits for exclusive lock</text>
+<g class="ic ic-warn" transform="translate(340 126)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<line class="ln" x1="180" y1="231" x2="180" y2="193" marker-end="url(#lock-queue-n-ah)"/>
+<text x="192" y="217" class="sm">queued behind it</text>
+<rect class="k-bad" x="16" y="232" width="328" height="44" rx="12"/>
+<text x="180" y="259" class="b" text-anchor="middle">Login query</text>
+<g class="ic ic-bad" transform="translate(340 236)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<rect class="k-bad" x="16" y="284" width="328" height="44" rx="12"/>
+<text x="180" y="311" class="b" text-anchor="middle">Submit query</text>
+<g class="ic ic-bad" transform="translate(340 288)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<rect class="k-bad" x="16" y="336" width="328" height="44" rx="12"/>
+<text x="180" y="363" class="b" text-anchor="middle">Status query</text>
+<g class="ic ic-bad" transform="translate(340 340)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<rect class="k-ok" x="16" y="400" width="328" height="108" rx="12"/>
+<g class="ic ic-ok" transform="translate(38 424)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="58" y="429" class="b">Fix: lock_timeout = &#x27;3s&#x27;</text>
+<text x="36" y="458" class="sm">The ALTER gives up after 3 s,</text>
+<text x="36" y="480" class="sm">the queue drains, retry later.</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 712" role="img" aria-labelledby="restore-options-n-t restore-options-n-d">
+<title id="restore-options-n-t">Full restore versus surgical repair</title>
+<desc id="restore-options-n-d">Before: the database holds good data, rows damaged by the migration, and new data written since. A full restore over production keeps only the good data from before the migration: the damaged rows and all new data are lost, so real work must be redone. A surgical repair restores a copy alongside production and copies back only the damaged rows: good data stays, damaged rows are repaired, and new data is kept. It is slower and needs care.</desc>
+<defs><marker id="restore-options-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-n" x="16" y="12" width="328" height="336" rx="14" fill-opacity="0"/>
+<text x="180" y="44" class="hd" text-anchor="middle">Full restore</text>
+<text x="180" y="66" class="sm" text-anchor="middle">restore over production</text>
+<text x="36" y="98" class="sm">Before</text>
+<rect class="k-n" x="36" y="108" width="116.96" height="40" rx="8"/>
+<text x="94.48" y="133" class="sm" text-anchor="middle">Good data</text>
+<rect class="k-bad" x="156.96" y="108" width="79.52" height="40" rx="8"/>
+<text x="196.72" y="133" class="sm" text-anchor="middle">Damaged</text>
+<rect class="k-user" x="240.48" y="108" width="79.52" height="40" rx="8"/>
+<text x="280.24" y="133" class="sm" text-anchor="middle">New data</text>
+<line class="ln" x1="180" y1="154" x2="180" y2="182" marker-end="url(#restore-options-n-ah)"/>
+<text x="36" y="198" class="sm">After</text>
+<rect class="k-n" x="36" y="208" width="116.96" height="40" rx="8"/>
+<text x="94.48" y="233" class="sm" text-anchor="middle">Good data</text>
+<rect class="k-lost" x="156.96" y="208" width="79.52" height="40" rx="8"/>
+<text x="196.72" y="233" class="sm" text-anchor="middle">Lost</text>
+<rect class="k-lost" x="240.48" y="208" width="79.52" height="40" rx="8"/>
+<text x="280.24" y="233" class="sm" text-anchor="middle">Lost</text>
+<rect class="k-bad" x="36" y="272" width="288" height="58" rx="12"/>
+<text x="180" y="296.5" class="b" text-anchor="middle">Real work lost</text>
+<text x="180" y="315.5" class="sm" text-anchor="middle">users must redo it</text>
+<g class="ic ic-bad" transform="translate(320 276)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<rect class="k-n" x="16" y="364" width="328" height="336" rx="14" fill-opacity="0"/>
+<text x="180" y="396" class="hd" text-anchor="middle">Surgical repair</text>
+<text x="180" y="418" class="sm" text-anchor="middle">restore alongside, copy back</text>
+<text x="36" y="450" class="sm">Before</text>
+<rect class="k-n" x="36" y="460" width="116.96" height="40" rx="8"/>
+<text x="94.48" y="485" class="sm" text-anchor="middle">Good data</text>
+<rect class="k-bad" x="156.96" y="460" width="79.52" height="40" rx="8"/>
+<text x="196.72" y="485" class="sm" text-anchor="middle">Damaged</text>
+<rect class="k-user" x="240.48" y="460" width="79.52" height="40" rx="8"/>
+<text x="280.24" y="485" class="sm" text-anchor="middle">New data</text>
+<line class="ln" x1="180" y1="506" x2="180" y2="534" marker-end="url(#restore-options-n-ah)"/>
+<text x="36" y="550" class="sm">After</text>
+<rect class="k-n" x="36" y="560" width="116.96" height="40" rx="8"/>
+<text x="94.48" y="585" class="sm" text-anchor="middle">Good data</text>
+<rect class="k-ok" x="156.96" y="560" width="79.52" height="40" rx="8"/>
+<text x="196.72" y="585" class="sm" text-anchor="middle">Repaired</text>
+<rect class="k-user" x="240.48" y="560" width="79.52" height="40" rx="8"/>
+<text x="280.24" y="585" class="sm" text-anchor="middle">Kept</text>
+<rect class="k-ok" x="36" y="624" width="288" height="58" rx="12"/>
+<text x="180" y="648.5" class="b" text-anchor="middle">Every good write kept</text>
+<text x="180" y="667.5" class="sm" text-anchor="middle">slower, needs care</text>
+<g class="ic ic-ok" transform="translate(320 628)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+</svg>

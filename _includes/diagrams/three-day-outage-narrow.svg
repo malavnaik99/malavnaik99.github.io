@@ -1,0 +1,67 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 914" role="img" aria-labelledby="three-day-outage-n-t three-day-outage-n-d">
+<title id="three-day-outage-n-t">A hypothetical three-day outage (illustrative, not based on any real organisation)</title>
+<desc id="three-day-outage-n-d">An illustrative timeline only, not the real events at any organisation. Four swimlanes over three days. Day 1: the deploy finishes but the MFA smoke test fails; the migration runs four times longer than planned; an emergency change is raised; users see the holding page all evening. Day 2: engineering waits on the SMS vendor; data checks find bad rows and the team must choose restore or fix forward; each fix needs approval; users wait for updates. Day 3: a fix-forward is deployed, bad rows are reconciled, security signs off, and the site reopens in phases. The planned window was 3 hours; the actual outage was about 3 days.</desc>
+<defs><marker id="three-day-outage-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-warn" x="16" y="8" width="328" height="58" rx="10"/>
+<g class="ic ic-warn" transform="translate(38 37)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="58" y="33" class="b">Illustrative example</text>
+<text x="58" y="54" class="sm">not a real timeline</text>
+<rect class="k-ok" x="16" y="82" width="30" height="14" rx="5"/>
+<text x="54" y="94" class="sm">Planned: 3 hours</text>
+<rect class="k-bad" x="16" y="104" width="328" height="14" rx="5"/>
+<text x="16" y="140" class="sm">Actual: about 3 days</text>
+<text x="16" y="186" class="hd">Day 1</text>
+<text x="16" y="220" class="sm">Engineering</text>
+<rect class="k-ok" x="110" y="200" width="234" height="30" rx="10"/>
+<g class="ic ic-ok" transform="translate(126 215)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="142" y="220" class="sm">Deploy finishes</text>
+<rect class="k-bad" x="110" y="236" width="234" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(126 251)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="142" y="256" class="sm">MFA smoke test fails</text>
+<text x="16" y="300" class="sm">Data</text>
+<rect class="k-warn" x="110" y="280" width="234" height="30" rx="10"/>
+<g class="ic ic-warn" transform="translate(126 295)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="142" y="300" class="sm">Migration runs 4× long</text>
+<text x="16" y="344" class="sm">Approvals</text>
+<rect class="k-n" x="110" y="324" width="234" height="30" rx="10"/>
+<text x="122" y="344" class="sm">Emergency change raised</text>
+<text x="16" y="388" class="sm">Users</text>
+<rect class="k-user" x="110" y="368" width="234" height="30" rx="10"/>
+<text x="122" y="388" class="sm">Holding page all evening</text>
+<text x="16" y="446" class="hd">Day 2</text>
+<text x="16" y="480" class="sm">Engineering</text>
+<rect class="k-warn" x="110" y="460" width="234" height="30" rx="10"/>
+<g class="ic ic-warn" transform="translate(126 475)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="142" y="480" class="sm">Waiting on SMS vendor</text>
+<text x="16" y="524" class="sm">Data</text>
+<rect class="k-bad" x="110" y="504" width="234" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(126 519)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="142" y="524" class="sm">Checks find bad rows</text>
+<rect class="k-warn" x="110" y="540" width="234" height="30" rx="10"/>
+<g class="ic ic-warn" transform="translate(126 555)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="142" y="560" class="sm">Restore or fix forward?</text>
+<text x="16" y="604" class="sm">Approvals</text>
+<rect class="k-warn" x="110" y="584" width="234" height="30" rx="10"/>
+<g class="ic ic-warn" transform="translate(126 599)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="142" y="604" class="sm">Each fix needs approval</text>
+<text x="16" y="648" class="sm">Users</text>
+<rect class="k-user" x="110" y="628" width="234" height="30" rx="10"/>
+<text x="122" y="648" class="sm">Users wait for updates</text>
+<text x="16" y="706" class="hd">Day 3</text>
+<text x="16" y="740" class="sm">Engineering</text>
+<rect class="k-ok" x="110" y="720" width="234" height="30" rx="10"/>
+<g class="ic ic-ok" transform="translate(126 735)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="142" y="740" class="sm">Fix-forward deployed</text>
+<text x="16" y="784" class="sm">Data</text>
+<rect class="k-ok" x="110" y="764" width="234" height="30" rx="10"/>
+<g class="ic ic-ok" transform="translate(126 779)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="142" y="784" class="sm">Bad rows reconciled</text>
+<text x="16" y="828" class="sm">Approvals</text>
+<rect class="k-warn" x="110" y="808" width="234" height="30" rx="10"/>
+<g class="ic ic-warn" transform="translate(126 823)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="142" y="828" class="sm">Security sign-off</text>
+<text x="16" y="872" class="sm">Users</text>
+<rect class="k-ok" x="110" y="852" width="234" height="30" rx="10"/>
+<g class="ic ic-ok" transform="translate(126 867)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="142" y="872" class="sm">Phased reopen</text>
+</svg>

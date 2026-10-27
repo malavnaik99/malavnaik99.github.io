@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200 | at_least: 1 %}
+{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200 | at_least: 1 %}{% if page.minutes %}{% assign minutes = page.minutes %}{% endif %}
 {% assign series = site.data.series | where: "id", page.series | first %}
 {% assign updated = page.last_modified_at | default: page.date %}
 <article>

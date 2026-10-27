@@ -1,0 +1,45 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 760" role="img" aria-labelledby="side-effects-n-t side-effects-n-d">
+<title id="side-effects-n-t">Side effects a restore can&#x27;t undo, and the outbox pattern</title>
+<desc id="side-effects-n-d">A database restore can&#x27;t undo emails already sent, cards already charged, SMS codes delivered, or records sent to other systems. The fix: the web app saves the application and an outbox entry in one database transaction. An outbox worker then sends emails and SMS once, and calls the payment provider with an idempotency key so retries never double-charge. After a restore, compare the outbox and the provider&#x27;s records, then fix the gaps.</desc>
+<defs><marker id="side-effects-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<text x="16" y="22" class="b">A restore can&#x27;t undo these:</text>
+<rect class="k-bad" x="16" y="36" width="328" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(32 51)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="48" y="56" class="sm">Emails already sent</text>
+<rect class="k-bad" x="16" y="74" width="328" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(32 89)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="48" y="94" class="sm">Cards already charged</text>
+<rect class="k-bad" x="16" y="112" width="328" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(32 127)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="48" y="132" class="sm">SMS codes delivered</text>
+<rect class="k-bad" x="16" y="150" width="328" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(32 165)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="48" y="170" class="sm">Records sent to others</text>
+<text x="16" y="218" class="b">The fix: the outbox</text>
+<rect class="k-user" x="90" y="234" width="180" height="46" rx="12"/>
+<text x="180" y="262" class="b" text-anchor="middle">Web app</text>
+<line class="ln" x1="180" y1="281" x2="180" y2="303" marker-end="url(#side-effects-n-ah)"/>
+<rect class="k-ok" x="16" y="304" width="328" height="160" rx="14"/>
+<text x="180" y="328" class="sm" text-anchor="middle">one database transaction</text>
+<rect class="k-n" x="32" y="340" width="296" height="50" rx="12"/>
+<text x="180" y="370" class="b" text-anchor="middle">Application saved</text>
+<rect class="k-n" x="32" y="400" width="296" height="50" rx="12"/>
+<text x="180" y="430" class="b" text-anchor="middle">Outbox: send email</text>
+<line class="ln" x1="180" y1="465" x2="180" y2="487" marker-end="url(#side-effects-n-ah)"/>
+<rect class="k-n" x="80" y="488" width="200" height="60" rx="12"/>
+<text x="180" y="513.5" class="b" text-anchor="middle">Outbox worker</text>
+<text x="180" y="532.5" class="sm" text-anchor="middle">sends, marks done</text>
+<path class="ln" d="M150 549 L94 583" marker-end="url(#side-effects-n-ah)"/>
+<path class="ln" d="M210 549 L266 583" marker-end="url(#side-effects-n-ah)"/>
+<rect class="k-user" x="16" y="584" width="156" height="60" rx="12"/>
+<text x="94" y="609.5" class="b" text-anchor="middle">Email / SMS</text>
+<text x="94" y="628.5" class="sm" text-anchor="middle">sent once</text>
+<rect class="k-user" x="188" y="584" width="156" height="60" rx="12"/>
+<text x="266" y="609.5" class="b" text-anchor="middle">Payments</text>
+<text x="266" y="628.5" class="sm" text-anchor="middle">retry-safe key</text>
+<rect class="k-ok" x="16" y="664" width="328" height="84" rx="12"/>
+<g class="ic ic-ok" transform="translate(38 690)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="58" y="695" class="b">After a restore:</text>
+<text x="36" y="722" class="sm">compare outbox and provider</text>
+<text x="36" y="742" class="sm">records, then fix the gaps.</text>
+</svg>

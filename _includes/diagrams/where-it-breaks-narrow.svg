@@ -1,0 +1,81 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 1010" role="img" aria-labelledby="where-it-breaks-n-t where-it-breaks-n-d">
+<title id="where-it-breaks-n-t">Where a maintenance window breaks</title>
+<desc id="where-it-breaks-n-d">The same eight-step timeline with six failure points pinned to the steps they hit. Deploy: config drift, such as an expired certificate or secret (warning). Migrations: a migration that is far slower at production scale (warning) and discovered data corruption (failure). Smoke tests: MFA codes don&#x27;t arrive (failure) and a broken payment or SMS integration (failure). Reopen: a security finding that must be fixed first (failure), so reopening is blocked. Every fix also needs a change approval, a vendor ticket and a sign-off.</desc>
+<defs><marker id="where-it-breaks-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-user" x="16" y="12" width="210" height="46" rx="12"/>
+<text x="121" y="40" class="b" text-anchor="middle">Announce</text>
+<rect class="k-n" x="16" y="72" width="210" height="46" rx="12"/>
+<text x="121" y="100" class="b" text-anchor="middle">Freeze changes</text>
+<line class="ln" x1="121" y1="59" x2="121" y2="71" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-user" x="16" y="132" width="210" height="46" rx="12"/>
+<text x="121" y="160" class="b" text-anchor="middle">Holding page on</text>
+<line class="ln" x1="121" y1="119" x2="121" y2="131" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-n" x="16" y="192" width="210" height="46" rx="12"/>
+<text x="121" y="220" class="b" text-anchor="middle">Backup &amp; snapshot</text>
+<line class="ln" x1="121" y1="179" x2="121" y2="191" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-n" x="16" y="252" width="210" height="46" rx="12"/>
+<text x="121" y="280" class="b" text-anchor="middle">Deploy new version</text>
+<circle class="k-warn num" cx="254" cy="275" r="13"/>
+<text x="254" y="280" class="sm" text-anchor="middle">1</text>
+<line class="ln" x1="121" y1="239" x2="121" y2="251" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-n" x="16" y="312" width="210" height="46" rx="12"/>
+<text x="121" y="340" class="b" text-anchor="middle">Run migrations</text>
+<circle class="k-warn num" cx="254" cy="335" r="13"/>
+<text x="254" y="340" class="sm" text-anchor="middle">2</text>
+<circle class="k-bad num" cx="286" cy="335" r="13"/>
+<text x="286" y="340" class="sm" text-anchor="middle">3</text>
+<line class="ln" x1="121" y1="299" x2="121" y2="311" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-n" x="16" y="372" width="210" height="46" rx="12"/>
+<text x="121" y="400" class="b" text-anchor="middle">Smoke tests</text>
+<circle class="k-bad num" cx="254" cy="395" r="13"/>
+<text x="254" y="400" class="sm" text-anchor="middle">4</text>
+<circle class="k-bad num" cx="286" cy="395" r="13"/>
+<text x="286" y="400" class="sm" text-anchor="middle">5</text>
+<line class="ln" x1="121" y1="359" x2="121" y2="371" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-bad" x="16" y="432" width="210" height="46" rx="12"/>
+<text x="121" y="460" class="b" text-anchor="middle">Reopen blocked</text>
+<g class="ic ic-bad" transform="translate(222 436)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<circle class="k-bad num" cx="254" cy="455" r="13"/>
+<text x="254" y="460" class="sm" text-anchor="middle">6</text>
+<line class="ln" x1="121" y1="419" x2="121" y2="431" marker-end="url(#where-it-breaks-n-ah)"/>
+<rect class="k-warn" x="16" y="500" width="328" height="62" rx="12"/>
+<circle class="k-warn num" cx="40" cy="531" r="13"/>
+<text x="40" y="536" class="sm" text-anchor="middle">1</text>
+<g class="ic ic-warn" transform="translate(322 531)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="64" y="526" class="b">Config drift</text>
+<text x="64" y="547" class="sm">Expired certificate or secret</text>
+<rect class="k-warn" x="16" y="572" width="328" height="62" rx="12"/>
+<circle class="k-warn num" cx="40" cy="603" r="13"/>
+<text x="40" y="608" class="sm" text-anchor="middle">2</text>
+<g class="ic ic-warn" transform="translate(322 603)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="64" y="598" class="b">Slow migration</text>
+<text x="64" y="619" class="sm">Hours, not minutes, at scale</text>
+<rect class="k-bad" x="16" y="644" width="328" height="62" rx="12"/>
+<circle class="k-bad num" cx="40" cy="675" r="13"/>
+<text x="40" y="680" class="sm" text-anchor="middle">3</text>
+<g class="ic ic-bad" transform="translate(322 675)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="64" y="670" class="b">Data corruption</text>
+<text x="64" y="691" class="sm">Bad rows stop the migration</text>
+<rect class="k-bad" x="16" y="716" width="328" height="62" rx="12"/>
+<circle class="k-bad num" cx="40" cy="747" r="13"/>
+<text x="40" y="752" class="sm" text-anchor="middle">4</text>
+<g class="ic ic-bad" transform="translate(322 747)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="64" y="742" class="b">Failed smoke test</text>
+<text x="64" y="763" class="sm">MFA codes don&#x27;t arrive</text>
+<rect class="k-bad" x="16" y="788" width="328" height="62" rx="12"/>
+<circle class="k-bad num" cx="40" cy="819" r="13"/>
+<text x="40" y="824" class="sm" text-anchor="middle">5</text>
+<g class="ic ic-bad" transform="translate(322 819)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="64" y="814" class="b">Broken integration</text>
+<text x="64" y="835" class="sm">Payment or SMS calls fail</text>
+<rect class="k-bad" x="16" y="860" width="328" height="62" rx="12"/>
+<circle class="k-bad num" cx="40" cy="891" r="13"/>
+<text x="40" y="896" class="sm" text-anchor="middle">6</text>
+<g class="ic ic-bad" transform="translate(322 891)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="64" y="886" class="b">Security finding</text>
+<text x="64" y="907" class="sm">Must be fixed before reopen</text>
+<rect class="k-warn" x="16" y="936" width="328" height="62" rx="12"/>
+<g class="ic ic-warn" transform="translate(40 967)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="60" y="962" class="b">Each fix waits for approval,</text>
+<text x="60" y="983" class="sm">a vendor ticket and sign-off</text>
+</svg>

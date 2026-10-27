@@ -1,0 +1,44 @@
+<svg class="dg dg-wide" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 384" role="img" aria-labelledby="side-effects-w-t side-effects-w-d">
+<title id="side-effects-w-t">Side effects a restore can&#x27;t undo, and the outbox pattern</title>
+<desc id="side-effects-w-d">A database restore can&#x27;t undo emails already sent, cards already charged, SMS codes delivered, or records sent to other systems. The fix: the web app saves the application and an outbox entry in one database transaction. An outbox worker then sends emails and SMS once, and calls the payment provider with an idempotency key so retries never double-charge. After a restore, compare the outbox and the provider&#x27;s records, then fix the gaps.</desc>
+<defs><marker id="side-effects-w-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<text x="16" y="22" class="b">A restore can&#x27;t undo these:</text>
+<rect class="k-bad" x="16" y="36" width="220" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(32 51)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="48" y="56" class="sm">Emails already sent</text>
+<rect class="k-bad" x="252" y="36" width="220" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(268 51)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="284" y="56" class="sm">Cards already charged</text>
+<rect class="k-bad" x="488" y="36" width="220" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(504 51)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="520" y="56" class="sm">SMS codes delivered</text>
+<rect class="k-bad" x="724" y="36" width="220" height="30" rx="10"/>
+<g class="ic ic-bad" transform="translate(740 51)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="756" y="56" class="sm">Records sent to others</text>
+<text x="16" y="104" class="b">The fix: record every side effect in the database first</text>
+<rect class="k-user" x="16" y="178" width="120" height="60" rx="12"/>
+<text x="76" y="213" class="b" text-anchor="middle">Web app</text>
+<line class="ln" x1="137" y1="208" x2="169" y2="208" marker-end="url(#side-effects-w-ah)"/>
+<rect class="k-ok" x="170" y="124" width="280" height="160" rx="14"/>
+<text x="310" y="148" class="sm" text-anchor="middle">one database transaction</text>
+<rect class="k-n" x="186" y="160" width="248" height="50" rx="12"/>
+<text x="310" y="190" class="b" text-anchor="middle">Application saved</text>
+<rect class="k-n" x="186" y="220" width="248" height="50" rx="12"/>
+<text x="310" y="250" class="b" text-anchor="middle">Outbox: send email</text>
+<line class="ln" x1="451" y1="208" x2="489" y2="208" marker-end="url(#side-effects-w-ah)"/>
+<rect class="k-n" x="490" y="176" width="160" height="64" rx="12"/>
+<text x="570" y="203.5" class="b" text-anchor="middle">Outbox worker</text>
+<text x="570" y="222.5" class="sm" text-anchor="middle">sends, marks done</text>
+<path class="ln" d="M651 196 C 680 196, 680 158, 709 158" marker-end="url(#side-effects-w-ah)"/>
+<path class="ln" d="M651 222 C 680 222, 680 258, 709 258" marker-end="url(#side-effects-w-ah)"/>
+<rect class="k-user" x="710" y="128" width="234" height="60" rx="12"/>
+<text x="827" y="153.5" class="b" text-anchor="middle">Email / SMS</text>
+<text x="827" y="172.5" class="sm" text-anchor="middle">sent once, traceable</text>
+<rect class="k-user" x="710" y="228" width="234" height="60" rx="12"/>
+<text x="827" y="253.5" class="b" text-anchor="middle">Payments</text>
+<text x="827" y="272.5" class="sm" text-anchor="middle">retry-safe: no double charge</text>
+<rect class="k-ok" x="16" y="304" width="928" height="64" rx="12"/>
+<g class="ic ic-ok" transform="translate(46 336)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="72" y="331" class="b">After a restore: compare the outbox with the provider&#x27;s records</text>
+<text x="72" y="353" class="sm">Payments with no matching application are refunded or re-created, not guessed.</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 796" role="img" aria-labelledby="expand-contract-n-t expand-contract-n-d">
+<title id="expand-contract-n-t">Expand and contract: one risky change split into three safe releases</title>
+<desc id="expand-contract-n-d">Release 1, expand: add the new mobile_e164 column as nullable, write both columns, backfill in batches; rollback is a code rollback. Release 2, migrate: read mobile_e164, still write both, check there are zero mismatches; rollback is still a code rollback. Release 3, contract: take a fresh, tested backup, stop writing phone, then drop it; this is the only point of no return.</desc>
+<defs><marker id="expand-contract-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-n" x="16" y="12" width="328" height="236" rx="14"/>
+<text x="180" y="44" class="hd" text-anchor="middle">Release 1 · Expand</text>
+<text x="36" y="78">• Add mobile_e164 (nullable)</text>
+<text x="36" y="104">• Write both columns</text>
+<text x="36" y="130">• Backfill in batches</text>
+<rect class="k-n" x="36" y="152" width="80" height="30" rx="8"/>
+<text x="76" y="172" class="sm" text-anchor="middle">phone</text>
+<rect class="k-ok" x="124" y="152" width="154" height="30" rx="8"/>
+<text x="201" y="172" class="sm" text-anchor="middle">mobile_e164 (new)</text>
+<rect class="k-ok" x="36" y="198" width="288" height="34" rx="10"/>
+<g class="ic ic-ok" transform="translate(56 215)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="76" y="220" class="b">Rollback: code only</text>
+<rect class="k-n" x="16" y="278" width="328" height="236" rx="14"/>
+<text x="180" y="310" class="hd" text-anchor="middle">Release 2 · Migrate</text>
+<text x="36" y="344">• Read mobile_e164</text>
+<text x="36" y="370">• Still write both</text>
+<text x="36" y="396">• Check: 0 mismatches</text>
+<rect class="k-n" x="36" y="418" width="80" height="30" rx="8"/>
+<text x="76" y="438" class="sm" text-anchor="middle">phone</text>
+<rect class="k-ok" x="124" y="418" width="154" height="30" rx="8"/>
+<text x="201" y="438" class="sm" text-anchor="middle">mobile_e164</text>
+<rect class="k-ok" x="36" y="464" width="288" height="34" rx="10"/>
+<g class="ic ic-ok" transform="translate(56 481)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="76" y="486" class="b">Rollback: code only</text>
+<line class="ln" x1="180" y1="249" x2="180" y2="276" marker-end="url(#expand-contract-n-ah)"/>
+<rect class="k-n" x="16" y="544" width="328" height="236" rx="14"/>
+<text x="180" y="576" class="hd" text-anchor="middle">Release 3 · Contract</text>
+<text x="36" y="610">• Fresh, tested backup</text>
+<text x="36" y="636">• Stop writing phone</text>
+<text x="36" y="662">• Drop phone</text>
+<rect class="k-lost" x="36" y="684" width="80" height="30" rx="8"/>
+<text x="76" y="704" class="sm" text-anchor="middle">phone</text>
+<rect class="k-ok" x="124" y="684" width="154" height="30" rx="8"/>
+<text x="201" y="704" class="sm" text-anchor="middle">mobile_e164</text>
+<rect class="k-warn" x="36" y="730" width="288" height="34" rx="10"/>
+<g class="ic ic-warn" transform="translate(56 747)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="76" y="752" class="b">Point of no return</text>
+<line class="ln" x1="180" y1="515" x2="180" y2="542" marker-end="url(#expand-contract-n-ah)"/>
+</svg>

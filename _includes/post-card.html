@@ -1,4 +1,4 @@
-{% assign p = include.post %}{% assign s = site.data.series | where: "id", p.series | first %}{% assign minutes = p.content | number_of_words | divided_by: 200 | at_least: 1 %}
+{% assign p = include.post %}{% assign s = site.data.series | where: "id", p.series | first %}{% assign minutes = p.content | number_of_words | divided_by: 200 | at_least: 1 %}{% if p.minutes %}{% assign minutes = p.minutes %}{% endif %}
 <li class="card"{% if p.series %} data-series="{{ p.series }}"{% endif %}>
   {% if s %}<a class="tag" href="{{ '/blog/series/' | append: s.id | append: '/' | relative_url }}">{{ s.name }}</a>{% endif %}
   <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>

@@ -1,0 +1,45 @@
+<svg class="dg dg-narrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 836" role="img" aria-labelledby="big-bang-vs-blue-green-n-t big-bang-vs-blue-green-n-d">
+<title id="big-bang-vs-blue-green-n-t">Big-bang deployment versus blue-green deployment</title>
+<desc id="big-bang-vs-blue-green-n-d">Left, big-bang: users reach one environment, which goes offline while the new version is deployed, so they see a holding page; rollback means redeploying the old version and possibly restoring data. Right, blue-green: users go through a router. Blue runs the live version, green runs the new version, and both share one database, so the schema must work for both. Going live means switching the router from blue to green; rollback means flipping the switch back, in seconds.</desc>
+<defs><marker id="big-bang-vs-blue-green-n-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-n" x="16" y="12" width="328" height="400" rx="14" fill-opacity="0"/>
+<text x="180" y="46" class="hd" text-anchor="middle">Big-bang</text>
+<text x="180" y="68" class="sm" text-anchor="middle">one environment</text>
+<rect class="k-user" x="100" y="88" width="160" height="44" rx="12"/>
+<text x="180" y="115" class="b" text-anchor="middle">Users</text>
+<line class="ln" x1="180" y1="132" x2="180" y2="163" marker-end="url(#big-bang-vs-blue-green-n-ah)"/>
+<rect class="k-warn" x="60" y="164" width="240" height="58" rx="12"/>
+<text x="180" y="188.5" class="b" text-anchor="middle">Holding page</text>
+<text x="180" y="207.5" class="sm" text-anchor="middle">users wait</text>
+<g class="ic ic-warn" transform="translate(296 168)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<line class="ln dash" x1="180.0" y1="222" x2="180.0" y2="252"/>
+<rect class="k-bad" x="60" y="252" width="240" height="58" rx="12"/>
+<text x="180" y="276.5" class="b" text-anchor="middle">App: v1 → v2</text>
+<text x="180" y="295.5" class="sm" text-anchor="middle">offline during deploy</text>
+<g class="ic ic-bad" transform="translate(296 256)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="180" y="352" class="b" text-anchor="middle">Rollback: redeploy v1,</text>
+<text x="180" y="374" class="sm" text-anchor="middle">maybe restore data (hours)</text>
+<rect class="k-n" x="16" y="424" width="328" height="400" rx="14" fill-opacity="0"/>
+<text x="180" y="458" class="hd" text-anchor="middle">Blue-green</text>
+<text x="180" y="480" class="sm" text-anchor="middle">two environments</text>
+<rect class="k-user" x="100" y="500" width="160" height="44" rx="12"/>
+<text x="180" y="527" class="b" text-anchor="middle">Users</text>
+<line class="ln" x1="180" y1="544" x2="180" y2="563" marker-end="url(#big-bang-vs-blue-green-n-ah)"/>
+<rect class="k-user" x="110" y="564" width="140" height="40" rx="12"/>
+<text x="180" y="589" class="b" text-anchor="middle">Router</text>
+<path class="flow to-blue" d="M160.0 604 L100.0 643" marker-end="url(#big-bang-vs-blue-green-n-ah)"/>
+<path class="flow to-green" d="M200.0 604 L260.0 643" marker-end="url(#big-bang-vs-blue-green-n-ah)"/>
+<rect class="k-user" x="30" y="644" width="140" height="58" rx="12"/>
+<text x="100" y="668.5" class="b" text-anchor="middle">Blue: v1</text>
+<text x="100" y="687.5" class="sm" text-anchor="middle">live now</text>
+<rect class="k-ok" x="190" y="644" width="140" height="58" rx="12"/>
+<text x="260" y="668.5" class="b" text-anchor="middle">Green: v2</text>
+<text x="260" y="687.5" class="sm" text-anchor="middle">tested, ready</text>
+<g class="ic ic-ok" transform="translate(326 648)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<line class="ln" x1="100.0" y1="702" x2="150.0" y2="724"/>
+<line class="ln" x1="260.0" y1="702" x2="210.0" y2="724"/>
+<path class="k-n" d="M90 729 v28 a90 9 0 0 0 180 0 v-28 a90 9 0 0 0 -180 0 a90 9 0 0 0 180 0"/>
+<text x="180" y="758" class="b" text-anchor="middle">Shared database</text>
+<text x="180" y="796" class="b" text-anchor="middle">Rollback: flip the switch back</text>
+<text x="180" y="816" class="sm" text-anchor="middle">seconds, if the schema suits both</text>
+</svg>

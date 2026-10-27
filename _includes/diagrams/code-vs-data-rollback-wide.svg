@@ -1,0 +1,43 @@
+<svg class="dg dg-wide" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="code-vs-data-rollback-w-t code-vs-data-rollback-w-d">
+<title id="code-vs-data-rollback-w-t">Rolling back code versus rolling back data</title>
+<desc id="code-vs-data-rollback-w-d">Left, rolling back code: minutes, redeploy the old version, data untouched, low risk. Right, rolling back data: hours to days, restore a backup, recent writes are lost, then reconcile by hand. Below, a timeline: last backup, then the failure, then restore complete. The span from the last backup to the failure is data lost, measured by the RPO. The span from the failure to restore complete is downtime, measured by the RTO.</desc>
+<defs><marker id="code-vs-data-rollback-w-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-ok" x="16" y="12" width="456" height="188" rx="12"/>
+<g class="ic ic-ok" transform="translate(42 39)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="62" y="45" class="hd">Rolling back code</text>
+<text x="38" y="86" class="sm">Time</text>
+<text x="98" y="86">Minutes</text>
+<text x="38" y="120" class="sm">How</text>
+<text x="98" y="120">Redeploy the old version</text>
+<text x="38" y="154" class="sm">Data</text>
+<text x="98" y="154">Untouched</text>
+<text x="38" y="188" class="sm">Risk</text>
+<text x="98" y="188">Low</text>
+<rect class="k-warn" x="488" y="12" width="456" height="188" rx="12"/>
+<g class="ic ic-warn" transform="translate(514 39)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="534" y="45" class="hd">Rolling back data</text>
+<text x="510" y="86" class="sm">Time</text>
+<text x="570" y="86">Hours to days</text>
+<text x="510" y="120" class="sm">How</text>
+<text x="570" y="120">Restore a backup</text>
+<text x="510" y="154" class="sm">Cost</text>
+<text x="570" y="154">Recent writes are lost</text>
+<text x="510" y="188" class="sm">Then</text>
+<text x="570" y="188">Reconcile by hand</text>
+<text x="16" y="248" class="hd">What a restore costs: RPO and RTO</text>
+<rect class="k-bad" x="120" y="296" width="360" height="26" rx="8"/>
+<text x="300" y="314" class="b" text-anchor="middle">Data lost  (RPO)</text>
+<rect class="k-warn" x="480" y="296" width="360" height="26" rx="8"/>
+<text x="660" y="314" class="b" text-anchor="middle">Site down  (RTO)</text>
+<line class="axis" x1="40" y1="330" x2="920" y2="330"/>
+<circle class="k-ok num" cx="120" cy="330" r="8"/>
+<text x="120" y="360" class="b" text-anchor="middle">Last backup</text>
+<text x="120" y="380" class="sm" text-anchor="middle">e.g. 02:00</text>
+<circle class="k-bad num" cx="480" cy="330" r="8"/>
+<text x="480" y="360" class="b" text-anchor="middle">Failure</text>
+<text x="480" y="380" class="sm" text-anchor="middle">e.g. 20:00</text>
+<circle class="k-ok num" cx="840" cy="330" r="8"/>
+<text x="840" y="360" class="b" text-anchor="middle">Restore complete</text>
+<text x="840" y="380" class="sm" text-anchor="middle">e.g. +18 hours</text>
+<text x="480" y="404" class="sm" text-anchor="middle">Writes between the backup and the failure are gone unless you can replay them.</text>
+</svg>

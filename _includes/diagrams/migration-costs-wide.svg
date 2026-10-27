@@ -1,0 +1,36 @@
+<svg class="dg dg-wide" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 262" role="img" aria-labelledby="migration-costs-w-t migration-costs-w-d">
+<title id="migration-costs-w-t">Why a migration that took seconds in testing takes most of an hour in production</title>
+<desc id="migration-costs-w-d">Two bars: on a 50,000-row test copy a conversion takes about 25 seconds; on 5 million production rows the same script takes about 42 minutes, a hundred times longer. Then four hidden costs: rewriting rows copies the whole table, building indexes reads and sorts it all, writing the transaction log makes replicas fall behind, and waiting for locks makes every query queue.</desc>
+<defs><marker id="migration-costs-w-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<text x="16" y="31" class="sm">Test copy · 50,000 rows</text>
+<rect class="k-ok" x="260" y="14" width="8" height="24" rx="6"/>
+<text x="280" y="32" class="b">25 s</text>
+<text x="16" y="75" class="sm">Production · 5,000,000 rows</text>
+<rect class="k-warn" x="260" y="58" width="560" height="24" rx="6"/>
+<text x="832" y="76" class="b">≈ 42 min</text>
+<text x="16" y="124" class="b">Same script, 100× the rows, 100× the time. Then four hidden costs:</text>
+<rect class="k-warn" x="16" y="140" width="220" height="106" rx="12"/>
+<text x="126" y="188.5" class="b" text-anchor="middle">Rewrite rows</text>
+<text x="126" y="207.5" class="sm" text-anchor="middle">copies the whole table</text>
+<g class="ic ic-warn" transform="translate(232 144)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<circle class="k-warn num" cx="40" cy="166" r="13"/>
+<text x="40" y="171" class="sm" text-anchor="middle">1</text>
+<rect class="k-warn" x="252" y="140" width="220" height="106" rx="12"/>
+<text x="362" y="188.5" class="b" text-anchor="middle">Build indexes</text>
+<text x="362" y="207.5" class="sm" text-anchor="middle">reads and sorts it all</text>
+<g class="ic ic-warn" transform="translate(468 144)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<circle class="k-warn num" cx="276" cy="166" r="13"/>
+<text x="276" y="171" class="sm" text-anchor="middle">2</text>
+<rect class="k-warn" x="488" y="140" width="220" height="106" rx="12"/>
+<text x="598" y="188.5" class="b" text-anchor="middle">Write the log</text>
+<text x="598" y="207.5" class="sm" text-anchor="middle">replicas fall behind</text>
+<g class="ic ic-warn" transform="translate(704 144)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<circle class="k-warn num" cx="512" cy="166" r="13"/>
+<text x="512" y="171" class="sm" text-anchor="middle">3</text>
+<rect class="k-warn" x="724" y="140" width="220" height="106" rx="12"/>
+<text x="834" y="188.5" class="b" text-anchor="middle">Wait for locks</text>
+<text x="834" y="207.5" class="sm" text-anchor="middle">every query queues</text>
+<g class="ic ic-warn" transform="translate(940 144)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<circle class="k-warn num" cx="748" cy="166" r="13"/>
+<text x="748" y="171" class="sm" text-anchor="middle">4</text>
+</svg>

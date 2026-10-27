@@ -1,0 +1,47 @@
+<svg class="dg dg-wide" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="rollback-decision-tree-w-t rollback-decision-tree-w-d">
+<title id="rollback-decision-tree-w-t">Rollback decision tree</title>
+<desc id="rollback-decision-tree-w-d">Start: the deployment fails. Question 1: did the schema change? If no, roll back the code (low risk). If yes, question 2: is the new schema backward compatible? If yes, roll back the code (low risk). If no, question 3: can we fix forward safely? If yes, fix forward (medium risk). If no, restore from backup and reconcile (high risk).</desc>
+<defs><marker id="rollback-decision-tree-w-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 10 5 0 10z"/></marker></defs>
+<rect class="k-bad" x="80" y="12" width="240" height="48" rx="12"/>
+<text x="200" y="41" class="b" text-anchor="middle">Deployment fails</text>
+<g class="ic ic-bad" transform="translate(316 16)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<line class="ln" x1="200" y1="60" x2="200" y2="81" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<path class="k-n" d="M200 82 L330 140.0 L200 198 L70 140.0Z"/>
+<text x="200" y="135.5" class="b" text-anchor="middle">Did the</text>
+<text x="200" y="154.5" class="b" text-anchor="middle">schema change?</text>
+<line class="ln" x1="330" y1="140" x2="419" y2="140" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<text x="375" y="132" class="sm" text-anchor="middle">No</text>
+<rect class="k-ok" x="420" y="108" width="240" height="64" rx="12"/>
+<text x="540" y="135.5" class="b" text-anchor="middle">Roll back code</text>
+<text x="540" y="154.5" class="sm" text-anchor="middle">Low risk</text>
+<g class="ic ic-ok" transform="translate(656 112)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="212" y="215" class="sm">Yes</text>
+<line class="ln" x1="200" y1="198" x2="200" y2="219" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<path class="k-n" d="M200 220 L330 278.0 L200 336 L70 278.0Z"/>
+<text x="200" y="273.5" class="b" text-anchor="middle">Backward</text>
+<text x="200" y="292.5" class="b" text-anchor="middle">compatible?</text>
+<line class="ln" x1="330" y1="278" x2="419" y2="278" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<text x="375" y="270" class="sm" text-anchor="middle">Yes</text>
+<rect class="k-ok" x="420" y="246" width="240" height="64" rx="12"/>
+<text x="540" y="273.5" class="b" text-anchor="middle">Roll back code</text>
+<text x="540" y="292.5" class="sm" text-anchor="middle">Low risk</text>
+<g class="ic ic-ok" transform="translate(656 250)"><circle r="10"/><path class="gl" d="M-4.5 .5 -1.5 3.5 4.5-3"/></g>
+<text x="212" y="353" class="sm">No</text>
+<line class="ln" x1="200" y1="336" x2="200" y2="357" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<path class="k-n" d="M200 358 L330 416.0 L200 474 L70 416.0Z"/>
+<text x="200" y="411.5" class="b" text-anchor="middle">Can we fix</text>
+<text x="200" y="430.5" class="b" text-anchor="middle">forward safely?</text>
+<line class="ln" x1="330" y1="416" x2="419" y2="416" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<text x="375" y="408" class="sm" text-anchor="middle">Yes</text>
+<rect class="k-warn" x="420" y="384" width="240" height="64" rx="12"/>
+<text x="540" y="411.5" class="b" text-anchor="middle">Fix forward</text>
+<text x="540" y="430.5" class="sm" text-anchor="middle">Medium risk</text>
+<g class="ic ic-warn" transform="translate(656 388)"><circle r="10"/><path class="gl" d="M0-5V1"/><circle class="gd" cx="0" cy="4.6" r="1.4"/></g>
+<text x="212" y="491" class="sm">No</text>
+<line class="ln" x1="200" y1="474" x2="200" y2="495" marker-end="url(#rollback-decision-tree-w-ah)"/>
+<rect class="k-bad" x="74" y="496" width="252" height="64" rx="12"/>
+<text x="200" y="523.5" class="b" text-anchor="middle">Restore backup</text>
+<text x="200" y="542.5" class="b" text-anchor="middle">+ reconcile</text>
+<g class="ic ic-bad" transform="translate(322 500)"><circle r="10"/><path class="gl" d="M-3.5-3.5 3.5 3.5M3.5-3.5-3.5 3.5"/></g>
+<text x="200" y="580" class="sm" text-anchor="middle">High risk: data loss</text>
+</svg>

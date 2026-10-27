@@ -24,6 +24,9 @@
   --font-head: "Inter Tight", "Inter Tight Fallback", Inter, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, Menlo, Consolas, monospace;
   --max: 1180px; --pad: 24px;
+  /* Diagram palette: slate = step, green = healthy, amber = slow/degraded, red = failed, blue = users/traffic */
+  --dg-n: #7C869C; --dg-n-bg: #151821; --dg-ok: #34D399; --dg-ok-bg: #0F2A22; --dg-warn: #FBBF24; --dg-warn-bg: #2E2410;
+  --dg-bad: #F87171; --dg-bad-bg: #331617; --dg-user: #60A5FA; --dg-user-bg: #102341;
 }
 :root[data-theme="light"] {
   color-scheme: light;
@@ -39,6 +42,8 @@
   --v-violet: #6D28D9; --v-sky: #0369A1; --v-ember: #B93D0B;
   --g1: linear-gradient(180deg, #0B0D1A, #3654F8); --g2: linear-gradient(180deg, #4C1D95, #7C3AED);
   --g3: linear-gradient(180deg, #1E3A8A, #2563EB); --g4: linear-gradient(180deg, #9A3412, #C2410C);
+  --dg-n: #64748B; --dg-n-bg: #F1F4F9; --dg-ok: #047857; --dg-ok-bg: #E3F7EE; --dg-warn: #B45309; --dg-warn-bg: #FEF3DA;
+  --dg-bad: #B91C1C; --dg-bad-bg: #FDE8E8; --dg-user: #1D4ED8; --dg-user-bg: #E2EAFE;
 }
 /* No JavaScript at all: follow the system setting. */
 @media (prefers-color-scheme: light) { :root:not([data-theme]) {
@@ -55,6 +60,8 @@
   --v-violet: #6D28D9; --v-sky: #0369A1; --v-ember: #B93D0B;
   --g1: linear-gradient(180deg, #0B0D1A, #3654F8); --g2: linear-gradient(180deg, #4C1D95, #7C3AED);
   --g3: linear-gradient(180deg, #1E3A8A, #2563EB); --g4: linear-gradient(180deg, #9A3412, #C2410C);
+  --dg-n: #64748B; --dg-n-bg: #F1F4F9; --dg-ok: #047857; --dg-ok-bg: #E3F7EE; --dg-warn: #B45309; --dg-warn-bg: #FEF3DA;
+  --dg-bad: #B91C1C; --dg-bad-bg: #FDE8E8; --dg-user: #1D4ED8; --dg-user-bg: #E2EAFE;
 } }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -460,3 +467,39 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .sql-out:empty { display: none; }
 .sql-out table { display: table; width: 100%; margin: 0; font: 400 .8rem var(--font-mono); }
 .sql-out th { position: sticky; top: 0; background: var(--card); }
+
+/* Post diagrams (_includes/diagrams/): wider than the text column on desktop; a vertical layout below 640px. */
+.prose .fig { position: relative; left: 50%; transform: translateX(-50%); width: min(960px, calc(100vw - 2 * var(--pad))); margin: 2rem 0; }
+.fig-sm { max-width: 720px; }
+.fig figcaption { max-width: 680px; margin: .8rem auto 0; font-size: .9rem; color: var(--muted); }
+.dg { display: block; width: 100%; height: auto; margin: 0 auto; font-family: var(--font); }
+.dg-narrow { display: none; max-width: 420px; }
+@media (max-width: 640px) { .dg-wide { display: none; } .dg-narrow { display: block; } }
+.dg text { fill: var(--text); font-size: 15px; } .dg-narrow text { font-size: 16px; }
+.dg .b { font-weight: 600; } .dg .hd { font: 700 16px var(--font-head); } .dg-narrow .hd { font-size: 17px; }
+.dg .sm { font-size: 14px; fill: var(--sub); } .dg-narrow .sm { font-size: 15px; }
+.dg [class^="k-"], .dg .lane { stroke-width: 1.5; }
+.dg .k-n { fill: var(--dg-n-bg); stroke: var(--dg-n); } .dg .k-ok { fill: var(--dg-ok-bg); stroke: var(--dg-ok); }
+.dg .k-warn { fill: var(--dg-warn-bg); stroke: var(--dg-warn); } .dg .k-bad { fill: var(--dg-bad-bg); stroke: var(--dg-bad); }
+.dg .k-user { fill: var(--dg-user-bg); stroke: var(--dg-user); }
+.dg .lane { fill: none; stroke: var(--line); }
+.dg .ic-ok circle { fill: var(--dg-ok); } .dg .ic-warn circle { fill: var(--dg-warn); } .dg .ic-bad circle { fill: var(--dg-bad); }
+.dg .gl { fill: none; stroke: var(--card); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; } .dg .gd { fill: var(--card); }
+.dg .ln, .dg .flow { fill: none; stroke: var(--dg-n); stroke-width: 1.5; } .dg .ah { fill: var(--dg-n); }
+.dg .dash { stroke-dasharray: 4 4; } .dg .axis { stroke: var(--dg-n); stroke-width: 2; }
+.dg .br { fill: none; stroke: var(--dg-n); stroke-width: 1.5; } .dg .br-ok { fill: none; stroke: var(--dg-ok); stroke-width: 2; }
+/* Blue-green: traffic goes to blue, then the router switches to green and back. Static (blue live) with reduced motion. */
+.dg .flow { stroke-width: 2.5; stroke-dasharray: 6 5; }
+.dg .to-blue { stroke: var(--dg-user); } .dg .to-green { stroke: var(--dg-ok); opacity: .25; }
+@media (prefers-reduced-motion: no-preference) {
+  .dg .flow { animation: dg-flow 1s linear infinite; }
+  .dg .to-blue { animation: dg-flow 1s linear infinite, dg-live 8s step-end infinite; }
+  .dg .to-green { animation: dg-flow 1s linear infinite, dg-live 8s step-end infinite reverse; }
+}
+@keyframes dg-flow { to { stroke-dashoffset: -11; } }
+@keyframes dg-live { 0% { opacity: 1; } 50% { opacity: .25; } }
+.dg .k-lost { fill: none; stroke: var(--dg-bad); stroke-dasharray: 5 4; }
+/* Collapsible "Deep dive" boxes in posts: the technical detail, closed by default so the post stays skimmable. */
+.prose details.deep { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 1.1rem; margin: 1rem 0 1.75rem; }
+.prose details.deep > summary { cursor: pointer; padding: .8rem 0; font-weight: 600; color: var(--accent); }
+.prose details.deep[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
