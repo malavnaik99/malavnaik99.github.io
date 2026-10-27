@@ -98,7 +98,7 @@ description: "Malav Naik, data engineer in Dublin: tested data pipelines with db
   <h2 id="more-title" class="sr-only">More projects</h2>
   <div class="rows">
     <details class="row">
-      <summary><span class="n">01</span><span class="t">Content moderation classifier, with a fairness check</span><span class="m">ROC-AUC 0.957</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="n">01</span><span class="t">Content moderation classifier + fairness check</span><span class="m">ROC-AUC 0.957</span><span class="pm" aria-hidden="true"></span></summary>
       <div class="row-body"><div>
         <p>A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group, plus a demo that runs in your browser.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>scikit-learn</li><li>PyTorch</li><li>DistilBERT</li><li>ONNX</li><li>transformers.js</li></ul>

@@ -15,6 +15,7 @@ dataset:
   name: "Dublin bikes and weather: hourly star schema"
   description: "Every Dublinbikes station's bikes and free docks, collected every 15 minutes and joined with Met Éireann Dublin Airport weather, modelled with dbt and DuckDB into a tested star schema (fct_station_hour, dim_station, dim_hour) and published as Parquet."
   url: https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts
+  license: https://creativecommons.org/licenses/by/4.0/  # the dataset card's license (cc-by-4.0, set in transform.py of dublin-data-pipeline)
   place: "Dublin, Ireland"
   keywords: [Dublinbikes, bike sharing, weather, Dublin, GBFS, Met Éireann, dbt, DuckDB, Parquet]
   sources: [https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw]
@@ -95,7 +96,7 @@ An end-to-end pipeline that runs on free tiers only:
 The question needs weeks of data, across different weather, before any answer is honest. Once enough has built up, I'll publish an analysis notebook and write up what the data says.
 
 ## Data and credits
-- [Read the story: I Built a Tested Data Pipeline for Dublin Bikes, for €0]({{ '/blog/dublin-bikes-data-pipeline/' | relative_url }})
+- [Read the story: A Tested Dublin Bikes Data Pipeline, for €0]({{ '/blog/dublin-bikes-data-pipeline/' | relative_url }})
 - Bikes: Dublinbikes GBFS feed, Dublin City Council / JCDecaux, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - Weather: Source: Met Éireann, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - [Raw snapshots](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw) · [Modelled tables](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts) · [dbt docs](https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs) · [Code on GitHub](https://github.com/malavnaik99/dublin-data-pipeline)

@@ -1,8 +1,8 @@
 ---
 id: 43
-title: "What 1.8 Million Comments Taught Me About Fair Content Moderation"
+title: "Content Moderation Fairness on 1.8M Comments"
 slug: trust-safety-dashboard-public-data
-description: "I trained two content moderation models on 1.8 million public comments and measured them like a trust & safety team: thresholds, review queues, prevalence and fairness."
+description: "I trained two moderation models on 1.8 million public comments and measured them like a trust & safety team: thresholds, review queues, prevalence and fairness."
 series: trust-safety
 tags: [trustandsafety, datascience, portfolio, python]
 image: "/images/malav-naik-grand-canal-square-dublin.jpg"

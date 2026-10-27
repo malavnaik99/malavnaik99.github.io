@@ -1,5 +1,5 @@
 ---
-title: "Irish rents, 2008–2025: an open dataset, cleaned"
+title: "Irish rents 2008–2025: a cleaned open dataset"
 summary: "The official average rent of new tenancies in every Irish county, town and area since 2008, cleaned into one tidy, documented table and published on Kaggle and Hugging Face."
 problem: "Ireland's official rent table has 674,352 rows, codes repeated as labels and 70% empty cells."
 approach: "A reproducible Python cleaning pipeline with a Kaggle notebook that rebuilds the data from the official source."

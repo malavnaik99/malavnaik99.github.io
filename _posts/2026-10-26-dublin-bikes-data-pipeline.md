@@ -1,6 +1,6 @@
 ---
 id: 51
-title: "I Built a Tested Data Pipeline for Dublin Bikes, for €0"
+title: "A Tested Dublin Bikes Data Pipeline, for €0"
 slug: dublin-bikes-data-pipeline
 description: "How I collect every Dublinbikes station every 15 minutes, model it with dbt and DuckDB, test it daily and feed a live dashboard, using only free tiers."
 series: data-engineering

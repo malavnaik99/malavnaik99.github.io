@@ -1,9 +1,9 @@
 ---
 # One-off manual post (27 Oct 2026). It lives only here, not in the blog bot's blog/posts/, so the bot never queues,
 # counts or cross-posts it. Malav shares it on LinkedIn, DEV and Medium himself.
-title: "Why '2 Hours of Maintenance' Becomes 3 Days: The Engineering Behind Failed Deployments and Rollbacks"
+title: "Why '2 Hours of Maintenance' Becomes 3 Days"
 slug: maintenance-window-failed-deployment-rollback
-description: "What turns a short maintenance window into days? A visual guide to failed deployments, database migrations and rollback, with Employment Permits Online as a case study."
+description: "How a short maintenance window turns into days: a visual guide to failed deployments, migrations and rollback, with Employment Permits Online as a case study."
 series: data-engineering
 tags: [devops, deployment, rollback, incident-response, site-reliability, database-migration, data-engineering, cloud]
 image: "/images/malav-naik-black-kurta-festival-umbrellas.jpg"
