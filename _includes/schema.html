@@ -18,7 +18,7 @@
       ],
       "address": { "@type": "PostalAddress", "addressLocality": "Dublin", "addressCountry": "IE" },
       "knowsAbout": ["Data engineering", "SQL", "SQL Server", "SSIS (ETL)", "Azure SQL", "Data modelling", "dbt", "DuckDB", "Python", "Power BI", "Retrieval-augmented generation (RAG)", "Knowledge graphs", "Large language models (LLMs)", "Prompt engineering", "AI automation", "Trust and safety", "Platform integrity"],
-      "sameAs": {{ site.profiles | map: "url" | jsonify }}
+      "sameAs": {{ site.profiles | where_exp: "p", "p.name != 'MSc thesis'" | map: "url" | jsonify }}
     }{% if page.url == "/" %},
     {
       "@type": "WebSite",
@@ -53,6 +53,27 @@
         { "@type": "ListItem", "position": 2, "name": "Writing", "item": {{ "/writing/" | absolute_url | jsonify }} },
         { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ page_url | jsonify }} }
       ]
+    }{% endif %}{% if page.collection == "projects" %},
+    {
+      "@type": {% if page.code_url %}"SoftwareSourceCode"{% else %}"CreativeWork"{% endif %},
+      "name": {{ page.title | jsonify }},
+      "description": {{ page.description | jsonify }},
+      "url": {{ page_url | jsonify }},{% if page.code_url %}
+      "codeRepository": {{ page.code_url | jsonify }},{% endif %}{% if page.tech %}
+      "keywords": {{ page.tech | join: ", " | jsonify }},{% endif %}
+      "author": { "@id": {{ person_id | jsonify }}, "name": "Malav Naik" }
+    }{% endif %}{% if page.dataset %},
+    {
+      "@type": "Dataset",
+      "name": {{ page.dataset.name | jsonify }},
+      "description": {{ page.dataset.description | jsonify }},
+      "url": {{ page.dataset.url | jsonify }},
+      "sameAs": {{ page_url | jsonify }},
+      "keywords": {{ page.dataset.keywords | join: ", " | jsonify }},
+      "spatialCoverage": {{ page.dataset.place | jsonify }},
+      "isAccessibleForFree": true,
+      "creator": { "@id": {{ person_id | jsonify }}, "name": "Malav Naik" },
+      "isBasedOn": {{ page.dataset.sources | jsonify }}
     }{% endif %}
   ]
 }

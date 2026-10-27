@@ -2,7 +2,7 @@
 layout: default
 title: Contact
 permalink: /contact/
-description: How to contact Malav Naik, data engineer in Dublin, Ireland.
+description: "How to contact Malav Naik, data engineer in Dublin, Ireland, about data pipelines, GenAI, AI automation or trust & safety work."
 ---
 # Contact
 

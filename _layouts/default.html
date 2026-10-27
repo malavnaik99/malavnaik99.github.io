@@ -64,7 +64,7 @@
       <p class="label">Contact</p>
       <a class="email" href="mailto:malavnaikie@gmail.com">malavnaikie@gmail.com</a>
       <ul>{% for p in site.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>
-      <ul class="small"><li><a href="{{ '/about/' | relative_url }}">About</a></li><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
+      <ul class="small"><li><a href="{{ '/about/' | relative_url }}">About</a></li><li><a href="{{ '/contact/' | relative_url }}">Contact</a></li><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
       <svg class="footer-mark" viewBox="0 0 48 32" aria-hidden="true" focusable="false"><path d="M4 26 V6 L14 17 L24 6 V26 V6 L40 26 V6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="6" r="3.4" fill="#34D399"/></svg>
       <div class="footer-wordmark notranslate" translate="no" aria-hidden="true">MALAV NAIK</div>
     </div>

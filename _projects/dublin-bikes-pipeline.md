@@ -4,12 +4,20 @@ summary: "Collects every Dublinbikes station every 15 minutes, models it with db
 problem: "The Dublinbikes feed only shows right now; questions about weather and time of day need history that can be trusted."
 approach: "A collector every 15 minutes, then a daily dbt + DuckDB run into an incremental star schema with 14 automatic data tests and Telegram alerts."
 result: "Every station, every 15 minutes, modelled and tested into a live dashboard and public dataset, for €0."
-description: "A data engineering portfolio project by Malav Naik: a scheduled Python collector, dbt + DuckDB models with freshness and volume checks, and a live dashboard of Dublinbikes availability and weather."
+description: "A data engineering project by Malav Naik: a Python collector, a dbt + DuckDB star schema with freshness and volume tests, and a live Dublinbikes dashboard."
 order: 2
 featured: true
 sandbox: sql
 code_url: https://github.com/malavnaik99/dublin-data-pipeline
 tech: [Python, GitHub Actions, dbt, DuckDB, Parquet, Hugging Face Datasets, GBFS, Met Éireann]
+# Dataset JSON-LD (see _includes/schema.html); points at the modelled tables on Hugging Face.
+dataset:
+  name: "Dublin bikes and weather: hourly star schema"
+  description: "Every Dublinbikes station's bikes and free docks, collected every 15 minutes and joined with Met Éireann Dublin Airport weather, modelled with dbt and DuckDB into a tested star schema (fct_station_hour, dim_station, dim_hour) and published as Parquet."
+  url: https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts
+  place: "Dublin, Ireland"
+  keywords: [Dublinbikes, bike sharing, weather, Dublin, GBFS, Met Éireann, dbt, DuckDB, Parquet]
+  sources: [https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw]
 ---
 ## The problem
 Public city data is published live and then gone: the Dublinbikes feed only shows *right now*. To answer a question like **"how do weather and time of day change how many bikes are free?"** you need history, collected reliably and modelled so it can be trusted.
