@@ -14,6 +14,13 @@ linkedin_intro: "Live city data is gone as soon as it updates, so I built a smal
 x_post: "Live city data vanishes as it updates, so I built a pipeline that keeps it: every Dublinbikes station every 15 minutes plus the weather, modelled with dbt + DuckDB, tested every morning, with a live dashboard. Total cost: €0."
 reddit: {"community": "r/Dublin", "title": "I've been logging Dublinbikes availability every 15 minutes, with a free dashboard of when stations run empty", "text": "A hobby data project: every station every 15 minutes since mid-October, plus Met Éireann weather. The page shows average free bikes by hour of day and which stations are most often empty. It's only a few weeks of data so far. Which stations do you find hardest at rush hour?"}
 status: ready
+tldr: "A Python job on GitHub Actions saves every Dublinbikes station every 15 minutes, plus Met Éireann weather, as append-only Parquet on Hugging Face. Every morning dbt on DuckDB builds a tested star schema with 14 data checks and Telegram alerts, and a static dashboard reads the results. Total cost: €0, on free tiers only."
+faq:
+  - q: "Why use cron-job.org instead of GitHub's own scheduler?"
+    a: "GitHub's scheduler is unreliable for frequent jobs. The 15-minute schedule didn't fire once in its first hour, and a free external timer that calls GitHub's API fixed it."
+  - q: "What do the freshness and volume tests catch?"
+    a: "The real-world failures: a feed that goes quiet, or a collector that silently stops. Freshness checks the newest snapshot is under 2 hours old; volume checks that at least 75% of the expected snapshots arrived in the last 24 hours."
+last_modified_at: 2026-10-27
 ---
 
 ![Malav Naik leaning on a red pole by the water in Dublin Docklands – I Built a Tested Data Pipeline for Dublin Bikes, for €0](/images/malav-naik-dublin-docklands.jpg){: width="1440" height="1440"}
@@ -45,7 +52,7 @@ The fact table is **incremental**: each run only recomputes the last three hours
 
 DuckDB writes everything to a single file, so I store it in a second Hugging Face dataset between runs. That's how the incremental table "remembers" what it already built without a database server.
 
-## 3. Test: 14 checks, every run
+## 3. How do you test a data pipeline? 14 checks, every run
 
 dbt runs 14 data tests on every build:
 
@@ -63,7 +70,7 @@ The data also taught me something: one "station" in the feed is a placeholder th
 
 Each run publishes the tables as Parquet, a run log and a small `dashboard.json` summary. The [project page](https://malavnaik.com/projects/dublin-bikes-pipeline/) fetches that file in the browser and draws the chart. There's no server to keep running, and the dashboard updates as soon as the morning run finishes. The [dbt docs and lineage graph](https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs) are published as a free static page.
 
-## What it costs
+## How much does it cost to run?
 
 €0: public-repo GitHub Actions minutes, free Hugging Face datasets and a static Space, and one free cron-job.org job.
 

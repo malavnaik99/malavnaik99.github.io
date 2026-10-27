@@ -13,6 +13,13 @@ canonical_url: "https://malavnaik.com/blog/trust-safety-dashboard-public-data/"
 linkedin_intro: "I trained two content moderation models on 1.8 million public comments and checked them the way a trust & safety team would. The modern model was better on every measure, but harmless comments that simply mention some groups were still flagged up to about four times more often than average. Here is what I built, what I found, and a demo you can try in your browser."
 x_post: "I trained two content moderation models on 1.8M public comments and checked them like a trust & safety team would: review queues, prevalence and fairness by identity group. The fairness results surprised me."
 status: ready
+tldr: "I trained two content moderation models, a TF-IDF baseline and DistilBERT, on 1.8 million public comments and measured them like a trust and safety team. DistilBERT was better on every measure (ROC-AUC 0.957, about 20% less review work for the same coverage), but harmless comments that simply mention some groups were still flagged up to about four times more often than average."
+faq:
+  - q: "Which model worked better, the simple baseline or DistilBERT?"
+    a: "DistilBERT. On 180,488 unseen test comments it reached a ROC-AUC of 0.957 (baseline 0.941), auto-actioned 36.6% of toxic comments at 90% precision (baseline 30.9%) and sent 8.5% of comments to human review (baseline 10.7%)."
+  - q: "Why not count the model's flags to measure prevalence?"
+    a: "Counting flags said 11.7%. A random sample of 1,000 comments estimated 7.4% (95% interval 5.9–9.2%), and the true figure is 8.0%. The small sample wins."
+last_modified_at: 2026-10-27
 ---
 
 ![Malav Naik in a square with red poles and modern buildings – What 1.8 Million Comments Taught Me About Fair Content Moderation](/images/malav-naik-grand-canal-square-dublin.jpg){: width="1200" height="1599"}
@@ -40,7 +47,7 @@ Every number below comes from 180,488 test comments that neither model saw durin
 | Toxic comments auto-actioned at ≥ 90% precision | 30.9% | **36.6%** |
 | Comments sent to human review (to catch ~80% of toxic ones) | 10.7% | **8.5%** |
 
-## Thresholds are policy, not maths
+## How do you choose moderation thresholds?
 
 A model only gives scores. Someone has to decide where the lines go. I used two:
 
@@ -49,11 +56,11 @@ A model only gives scores. Someone has to decide where the lines go. I used two:
 
 With the modern model, that means about 3% of comments are actioned automatically and 8.5% go to reviewers. That's about 20% less review work than the baseline for the same coverage.
 
-## Don't count the model's flags
+## How do you measure how much toxic content there is?
 
 How much toxic content is there? Counting the model's flags would say 11.7%. A random sample of 1,000 comments, the way you'd do it with human reviewers, estimates **7.4%** (95% interval 5.9–9.2%), and the true figure is 8.0%. The small sample wins.
 
-## The fairness check
+## Are moderation models fair to every group?
 
 Here's the finding that matters most. Among **harmless** comments that simply mention a group, how many get wrongly flagged?
 
