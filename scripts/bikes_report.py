@@ -14,7 +14,9 @@ Needs: pip install duckdb matplotlib huggingface_hub
 import argparse
 import calendar
 import datetime as dt
+import glob
 import json
+import os
 import re
 from pathlib import Path
 
@@ -294,6 +296,10 @@ def main():
         end = min(end, a.end)
 
     raw, dims = fetch(start, end)
+    if not glob.glob(raw):
+        # ::error:: makes GitHub show the message on the run page, not only in the log.
+        raise SystemExit(f"{'::error::' if os.environ.get('GITHUB_ACTIONS') else ''}No bike snapshots on Hugging Face "
+                         f"for {start} to {end}. Choose a month the pipeline has data for (--month, or the workflow's month input).")
     con = duckdb.connect()
     con.sql(f"create view raw as select * from read_parquet('{raw}', hive_partitioning = false, union_by_name = true)")
     for t, f in dims.items():
