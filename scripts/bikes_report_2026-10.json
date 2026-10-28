@@ -1,0 +1,246 @@
+{
+  "month": "2026-10",
+  "period": {
+    "first_snapshot_utc": "2026-10-16T11:07:44+00:00",
+    "last_snapshot_utc": "2026-10-27T21:01:04+00:00",
+    "first_day": "2026-10-16",
+    "last_day": "2026-10-27",
+    "label": "16–27 October 2026"
+  },
+  "coverage": {
+    "snapshots": 1158,
+    "stations_in_feed": 115,
+    "stations_reported": 113
+  },
+  "estimated_pickups_total": 34327,
+  "estimated_pickups_per_day": 3008,
+  "busiest_hour": {
+    "local_hour": 8,
+    "label": "08:00–09:00",
+    "avg_estimated_pickups": 291
+  },
+  "by_local_hour": [
+    {
+      "local_hour": 0,
+      "avg_estimated_pickups": 33
+    },
+    {
+      "local_hour": 1,
+      "avg_estimated_pickups": 0
+    },
+    {
+      "local_hour": 2,
+      "avg_estimated_pickups": 0
+    },
+    {
+      "local_hour": 3,
+      "avg_estimated_pickups": 0
+    },
+    {
+      "local_hour": 4,
+      "avg_estimated_pickups": 0
+    },
+    {
+      "local_hour": 5,
+      "avg_estimated_pickups": 35
+    },
+    {
+      "local_hour": 6,
+      "avg_estimated_pickups": 110
+    },
+    {
+      "local_hour": 7,
+      "avg_estimated_pickups": 153
+    },
+    {
+      "local_hour": 8,
+      "avg_estimated_pickups": 291
+    },
+    {
+      "local_hour": 9,
+      "avg_estimated_pickups": 220
+    },
+    {
+      "local_hour": 10,
+      "avg_estimated_pickups": 164
+    },
+    {
+      "local_hour": 11,
+      "avg_estimated_pickups": 152
+    },
+    {
+      "local_hour": 12,
+      "avg_estimated_pickups": 154
+    },
+    {
+      "local_hour": 13,
+      "avg_estimated_pickups": 182
+    },
+    {
+      "local_hour": 14,
+      "avg_estimated_pickups": 156
+    },
+    {
+      "local_hour": 15,
+      "avg_estimated_pickups": 176
+    },
+    {
+      "local_hour": 16,
+      "avg_estimated_pickups": 222
+    },
+    {
+      "local_hour": 17,
+      "avg_estimated_pickups": 265
+    },
+    {
+      "local_hour": 18,
+      "avg_estimated_pickups": 185
+    },
+    {
+      "local_hour": 19,
+      "avg_estimated_pickups": 148
+    },
+    {
+      "local_hour": 20,
+      "avg_estimated_pickups": 104
+    },
+    {
+      "local_hour": 21,
+      "avg_estimated_pickups": 82
+    },
+    {
+      "local_hour": 22,
+      "avg_estimated_pickups": 87
+    },
+    {
+      "local_hour": 23,
+      "avg_estimated_pickups": 63
+    }
+  ],
+  "busiest_stations": [
+    {
+      "station": "Charlemont Place",
+      "estimated_pickups": 827,
+      "pct_docks_with_bike": 44.2
+    },
+    {
+      "station": "Grand Canal Dock",
+      "estimated_pickups": 736,
+      "pct_docks_with_bike": 38.1
+    },
+    {
+      "station": "Fownes Street Upper",
+      "estimated_pickups": 616,
+      "pct_docks_with_bike": 68.1
+    },
+    {
+      "station": "Princes Street / O'Connell Street",
+      "estimated_pickups": 615,
+      "pct_docks_with_bike": 62.1
+    },
+    {
+      "station": "Exchequer Street",
+      "estimated_pickups": 563,
+      "pct_docks_with_bike": 57.4
+    }
+  ],
+  "quietest_stations": [
+    {
+      "station": "Grangegorman Lower (Central)",
+      "estimated_pickups": 57,
+      "pct_docks_with_bike": 25.1
+    },
+    {
+      "station": "Merrion Square South",
+      "estimated_pickups": 85,
+      "pct_docks_with_bike": 6.0
+    },
+    {
+      "station": "Kilmainham Lane",
+      "estimated_pickups": 106,
+      "pct_docks_with_bike": 23.6
+    },
+    {
+      "station": "Fitzwilliam Square East",
+      "estimated_pickups": 107,
+      "pct_docks_with_bike": 4.8
+    },
+    {
+      "station": "Hardwicke Place",
+      "estimated_pickups": 108,
+      "pct_docks_with_bike": 7.8
+    }
+  ],
+  "fullest_stations": [
+    {
+      "station": "Talbot Street",
+      "estimated_pickups": 389,
+      "pct_docks_with_bike": 81.2
+    },
+    {
+      "station": "Dame Street",
+      "estimated_pickups": 279,
+      "pct_docks_with_bike": 80.0
+    },
+    {
+      "station": "Buckingham Street Lower",
+      "estimated_pickups": 221,
+      "pct_docks_with_bike": 79.4
+    },
+    {
+      "station": "Smithfield North",
+      "estimated_pickups": 285,
+      "pct_docks_with_bike": 74.5
+    },
+    {
+      "station": "Barrow Street",
+      "estimated_pickups": 536,
+      "pct_docks_with_bike": 73.4
+    }
+  ],
+  "emptiest_stations": [
+    {
+      "station": "Fitzwilliam Square East",
+      "estimated_pickups": 107,
+      "pct_docks_with_bike": 4.8
+    },
+    {
+      "station": "Merrion Square South",
+      "estimated_pickups": 85,
+      "pct_docks_with_bike": 6.0
+    },
+    {
+      "station": "Mountjoy Square East",
+      "estimated_pickups": 208,
+      "pct_docks_with_bike": 7.7
+    },
+    {
+      "station": "Hardwicke Place",
+      "estimated_pickups": 108,
+      "pct_docks_with_bike": 7.8
+    },
+    {
+      "station": "Hatch Street",
+      "estimated_pickups": 159,
+      "pct_docks_with_bike": 7.8
+    }
+  ],
+  "rain": {
+    "wet_hours": 55,
+    "dry_hours": 127,
+    "wet_avg_estimated_pickups_per_hour": 74,
+    "dry_avg_estimated_pickups_per_hour": 158,
+    "pct_change_vs_dry_same_hour": -44.2
+  },
+  "month_on_month": null,
+  "method": {
+    "estimated_pickups": "Sum of drops in available bikes between consecutive snapshots of a station (about 15 minutes apart, gaps over 30 minutes skipped). Includes bikes removed by rebalancing vans.",
+    "stations_excluded": "Stations with no capacity or that never had a bike in the period.",
+    "pct_docks_with_bike": "Average available bikes divided by station capacity.",
+    "rain": "Wet hour: at least 0.1 mm at Dublin Airport (Met Éireann). Dry hour: 0 mm. Trace hours (0.01 mm) and hours with no reading are left out. pct_change_vs_dry_same_hour compares rainy hours with the dry-hour average at the same hour of day, weekdays and weekends matched separately.",
+    "sources": [
+      "https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw",
+      "https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts"
+    ]
+  }
+}

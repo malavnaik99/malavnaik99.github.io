@@ -1,0 +1,48 @@
+# Builds last month's "Dublin Bikes in numbers" draft (JSON, chart, post in _drafts/) and opens a PR.
+# It never publishes: the post stays a draft until someone moves it to _posts/ and merges.
+name: Dublin Bikes monthly report
+
+on:
+  schedule:
+    - cron: "41 9 2 * *"   # 2nd of each month, 09:41 UTC, after the pipeline's morning dbt run
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "Month to report, YYYY-MM (default: last month)"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install duckdb matplotlib huggingface_hub pytz
+      - run: python scripts/bikes_report.py --self-test
+      - name: Build the report
+        env:
+          MONTH: ${{ inputs.month }}
+        run: |
+          month="${MONTH:-$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)}"
+          echo "MONTH=$month" >> "$GITHUB_ENV"
+          python scripts/bikes_report.py --month "$month"
+      - name: Open a PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="bikes-report-$MONTH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add "scripts/bikes_report_$MONTH.json" "images/bikes-report/$MONTH.png" "_drafts/dublin-bikes-in-numbers-$MONTH.md"
+          git commit -m "Dublin Bikes in numbers: $MONTH draft"
+          git push --force -u origin "$branch"
+          gh pr view "$branch" > /dev/null 2>&1 || gh pr create --base main --head "$branch" \
+            --title "Dublin Bikes in numbers: $MONTH (draft)" \
+            --body "Automated monthly report. Every number in the draft comes from \`scripts/bikes_report_$MONTH.json\`. The post is in \`_drafts/\`, so merging does not publish it."
