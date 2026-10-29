@@ -4,7 +4,7 @@ summary: "Type a question in plain English and get the articles of the EU Digita
 problem: "People ask about the EU Digital Services Act in everyday words, while the law uses its own terms across 93 articles."
 approach: "Split the official text into 482 chunks and compared keyword, semantic and hybrid search on 25 hand-written questions; the demo quotes the law only."
 result: "The right article is in the top 3 for 84% of test questions (72% in the free browser version)."
-description: "Semantic search over the EU Digital Services Act by Malav Naik: keyword, semantic and hybrid search compared on 25 hand-written test questions."
+description: "Semantic search over the EU Digital Services Act by Data & GenAI Engineer Malav Naik: keyword, semantic and hybrid search compared on 25 hand-written test questions."
 order: 3
 featured: true
 sandbox: dsa

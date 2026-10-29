@@ -10,8 +10,7 @@
       "alternateName": "Malav Hiteshbhai Naik",
       "url": {{ "/" | absolute_url | jsonify }},
       "image": {{ "/images/malav-naik-portrait.jpg" | absolute_url | jsonify }},
-      "jobTitle": "Data Engineer, GenAI & AI Automation",
-      "worksFor": { "@type": "Organization", "name": "Accenture" },
+      "jobTitle": {{ site.job_title | jsonify }},
       "alumniOf": [
         { "@type": "CollegeOrUniversity", "name": "National College of Ireland" },
         { "@type": "CollegeOrUniversity", "name": "Veer Narmad South Gujarat University" }

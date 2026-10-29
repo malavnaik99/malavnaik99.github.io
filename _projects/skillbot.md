@@ -4,7 +4,7 @@ summary: "My MSc project on personalised learning with large language models and
 problem: "Job ads and course catalogues live apart, so \"what do I need to learn for this job?\" is usually guesswork."
 approach: "MSc research on an LLM plus a knowledge graph, and a free in-browser rebuild that matches a job title to similar public job ads."
 result: "About 5 of 10 suggested skills appear in the real ad, in a leave-one-out test on 1,167 ads (48%)."
-description: "SkillBot by Malav Naik: MSc research combining an LLM and a knowledge graph for skill recommendations, plus a free in-browser skills explorer on job ads."
+description: "SkillBot by Data & GenAI Engineer Malav Naik: MSc research combining an LLM and a knowledge graph for skill recommendations, plus an in-browser skills explorer."
 order: 4
 featured: true
 code_url: https://github.com/malavnaik99/SkillBot-AI-Driven-Personalized-Learning-Platform
