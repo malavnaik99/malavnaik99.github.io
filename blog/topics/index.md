@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Blog topics
-description: "Blog posts by Malav Naik, a Data & GenAI Engineer, on data engineering, GenAI, trust & safety and careers, grouped by series and by tag."
+description: "Blog posts by Malav Naik, a Data, GenAI & AI Automation Engineer, on data engineering, GenAI, trust & safety and careers, grouped by series and by tag."
 ---
 # Blog topics
 

@@ -4,7 +4,7 @@ title: Work
 permalink: /work/
 redirect_from: /projects/
 wide: true
-description: Projects by Malav Naik, Data & GenAI Engineer: data engineering, GenAI and AI automation, each with the problem, approach, measured result, stack and code.
+description: Projects by Malav Naik, Data, GenAI & AI Automation Engineer: data engineering, GenAI and AI automation, each with the problem, approach, measured result, stack and code.
 ---
 <p class="label">Work</p>
 <h1>Projects, with the numbers to back them</h1>

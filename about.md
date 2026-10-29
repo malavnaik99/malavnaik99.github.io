@@ -2,11 +2,11 @@
 layout: default
 title: About
 permalink: /about/
-description: "About Malav Naik, a Data & GenAI Engineer in Dublin: 10 years in data across India and Ireland, MSc in Data Analytics from National College of Ireland."
+description: "About Malav Naik, a Data, GenAI & AI Automation Engineer in Dublin: 10 years in data across India and Ireland, MSc in Data Analytics from National College of Ireland."
 ---
 # About Malav Naik
 
-I'm Malav Naik, a Data & GenAI Engineer based in Dublin with about 10 years of experience across India and Ireland.
+I'm Malav Naik, a Data, GenAI & AI Automation Engineer based in Dublin with about 10 years of experience across India and Ireland.
 
 ## My story
 

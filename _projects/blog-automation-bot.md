@@ -4,7 +4,7 @@ summary: "Writes nothing until I approve on Telegram, then publishes each post t
 problem: "Cross-posting by hand to four sites is slow, but nothing should go public under my name without me seeing it first."
 approach: "A Python bot on GitHub Actions that previews each post on Telegram and publishes only after one tap."
 result: "Posts go to the blog, DEV and LinkedIn in about a minute of my time, on GitHub's free tier."
-description: "A Python bot by Data & GenAI Engineer Malav Naik that previews blog posts on Telegram and, after approval, publishes them to the blog, DEV and LinkedIn."
+description: "A Python bot by Data, GenAI & AI Automation Engineer Malav Naik that previews blog posts on Telegram and, after approval, publishes them to the blog, DEV and LinkedIn."
 order: 6
 featured: true
 sandbox: automation

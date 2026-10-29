@@ -1,6 +1,6 @@
 # malavnaik.com
 
-Source for **[malavnaik.com](https://malavnaik.com)**, the personal site and blog of Malav Naik, a Data & GenAI Engineer in Dublin, Ireland, working on data pipelines, GenAI and AI automation.
+Source for **[malavnaik.com](https://malavnaik.com)**, the personal site and blog of Malav Naik, a Data, GenAI & AI Automation Engineer in Dublin, Ireland, working on data pipelines, GenAI and AI automation.
 
 [![Home page of malavnaik.com](docs/screenshot.png)](https://malavnaik.com)
 

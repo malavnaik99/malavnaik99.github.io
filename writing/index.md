@@ -4,7 +4,7 @@ title: Writing
 permalink: /writing/
 redirect_from: /blog/
 wide: true
-description: Writing by Malav Naik, a Data & GenAI Engineer in Dublin, on data engineering, generative AI, trust & safety and building a data career.
+description: Writing by Malav Naik, a Data, GenAI & AI Automation Engineer in Dublin, on data engineering, generative AI, trust & safety and building a data career.
 ---
 <p class="label">Writing</p>
 <h1>Notes on data, GenAI and trust &amp; safety</h1>
