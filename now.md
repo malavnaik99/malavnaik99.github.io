@@ -2,7 +2,7 @@
 layout: default
 title: Now
 permalink: /now/
-description: "What Malav Naik, a Data & GenAI Engineer in Dublin, is building, writing and learning this month."
+description: "What Malav Naik, a Data, GenAI & AI Automation Engineer in Dublin, is building, writing and learning this month."
 ---
 # What I'm doing now
 

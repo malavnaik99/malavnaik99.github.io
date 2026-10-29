@@ -1,8 +1,8 @@
 # Every <title> is "<page> | title", the home page is "title | tagline", og:site_name is title.
-title: Malav Naik | Data & GenAI Engineer
+title: Malav Naik | Data, GenAI & AI Automation Engineer
 tagline: Dublin, Ireland
-job_title: Data & GenAI Engineer
-description: Malav Naik is a Data & GenAI Engineer in Dublin, Ireland, building data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
+job_title: Data, GenAI & AI Automation Engineer
+description: Malav Naik is a Data, GenAI & AI Automation Engineer in Dublin, Ireland, building data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
 # The site's address, with no baseurl. The custom domain is set in GitHub → Settings → Pages; CNAME records it in the repo too.
 url: https://malavnaik.com
 author: Malav Naik
@@ -24,7 +24,7 @@ defaults:
   # Default share image for every page; posts and pages with their own `image` keep theirs.
   - scope: { path: "" }
     values:
-      image: { path: /images/og-banner.png, width: 1200, height: 627, alt: "Malav Naik – Data Engineer, GenAI & AI Automation, Dublin, Ireland" }
+      image: { path: /images/og-banner.png, width: 1200, height: 627, alt: "Malav Naik | Data, GenAI & AI Automation Engineer | Dublin, Ireland" }
   - scope: { path: "", type: posts }
     values: { layout: post }
   - scope: { path: "", type: projects }

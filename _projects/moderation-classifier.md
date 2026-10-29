@@ -4,7 +4,7 @@ summary: "A toxicity classifier trained on 1.8 million public comments, with rev
 problem: "A single accuracy number can't say where to draw the line, how much lands on human reviewers, or whether a model is fair."
 approach: "Trained a TF-IDF baseline and DistilBERT on 1.8 million public comments, set two threshold policies, simulated a review queue and checked false-positive rates by identity group."
 result: "ROC-AUC 0.957; 36.6% of toxic comments auto-actioned at ≥ 90% precision; harmless comments wrongly flagged cut from 12.8% to 9.6%."
-description: "A DistilBERT content moderation classifier by Data & GenAI Engineer Malav Naik on Civil Comments, with threshold policies, a review queue and fairness checks."
+description: "A DistilBERT content moderation classifier by Data, GenAI & AI Automation Engineer Malav Naik on Civil Comments, with threshold policies, a review queue and fairness checks."
 order: 1
 featured: true
 sandbox: moderation

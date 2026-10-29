@@ -1,7 +1,7 @@
 ---
 layout: default
 wide: true
-description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data pipelines with dbt and DuckDB, GenAI and AI automation, and writing on data engineering and trust & safety."
+description: "Malav Naik, Data, GenAI & AI Automation Engineer in Dublin, Ireland: tested data pipelines with dbt and DuckDB, GenAI and AI automation, and writing on data engineering and trust & safety."
 ---
 {% assign lab = site.data.automation %}
 
