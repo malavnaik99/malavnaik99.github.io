@@ -1,14 +1,14 @@
 ---
 layout: default
 wide: true
-description: "Malav Naik, data engineer in Dublin: tested data pipelines with dbt and DuckDB, GenAI and AI automation, and writing on data engineering and trust & safety."
+description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data pipelines with dbt and DuckDB, GenAI and AI automation, and writing on data engineering and trust & safety."
 ---
 {% assign lab = site.data.automation %}
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="sky" aria-hidden="true"><span class="stars"></span><span class="planet"></span><span class="rings"><i></i><i></i></span></div>
   <div class="hero-inner">
-    <p class="label pill"><span class="dot" aria-hidden="true"></span>Data &amp; GenAI Engineer · ~10 years · Dublin</p>
+    <p class="label pill"><span class="dot" aria-hidden="true"></span>{{ site.job_title | escape }} · {{ site.tagline }}</p>
     <div class="wordmark notranslate" translate="no" aria-hidden="true">MALAV NAIK</div>
     <h1 id="hero-title">I build data pipelines and GenAI systems, and prove they work.</h1>
     <p class="sub">About 10 years in data, from SSIS pipelines and an Azure SQL migration at S&amp;P Global Market Intelligence to dbt, DuckDB and LLM tools today. Every project here shows its code and measured results.</p>

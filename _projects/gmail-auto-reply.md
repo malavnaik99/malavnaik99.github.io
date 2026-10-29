@@ -4,7 +4,7 @@ summary: "Claude drafts a reply to each new email; nothing is sent until I tap â
 problem: "Routine emails take time, but an AI that sends email on its own can misunderstand or be manipulated."
 approach: "Claude drafts a reply as a Gmail draft and sends it to Telegram with Send and Discard buttons."
 result: "A routine reply becomes one tap, and the AI never sends anything by itself."
-description: "A Python assistant by Malav Naik that uses Claude to draft Gmail replies, saves them as drafts and sends them only after approval on Telegram."
+description: "A Python assistant by Data & GenAI Engineer Malav Naik that uses Claude to draft Gmail replies and sends them only after approval on Telegram."
 order: 7
 featured: true
 code_url: https://github.com/malavnaik99/telegram-approval-bots

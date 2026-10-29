@@ -1,6 +1,8 @@
-title: Malav Naik
-tagline: Data Engineer, GenAI & AI Automation in Dublin
-description: Malav Naik is a data engineer in Dublin, Ireland, working on data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
+# Every <title> is "<page> | title", the home page is "title | tagline", og:site_name is title.
+title: Malav Naik | Data & GenAI Engineer
+tagline: Dublin, Ireland
+job_title: Data & GenAI Engineer
+description: Malav Naik is a Data & GenAI Engineer in Dublin, Ireland, building data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
 # The site's address, with no baseurl. The custom domain is set in GitHub → Settings → Pages; CNAME records it in the repo too.
 url: https://malavnaik.com
 author: Malav Naik

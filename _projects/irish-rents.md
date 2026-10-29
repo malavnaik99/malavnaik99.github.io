@@ -4,7 +4,7 @@ summary: "The official average rent of new tenancies in every Irish county, town
 problem: "Ireland's official rent table has 674,352 rows, codes repeated as labels and 70% empty cells."
 approach: "A reproducible Python cleaning pipeline with a Kaggle notebook that rebuilds the data from the official source."
 result: "201,912 rents for 437 places, 2008–2025, published on Kaggle and Hugging Face."
-description: "Malav Naik's cleaned open dataset of RTB average rents from the CSO, 2008–2025, with a reproducible cleaning notebook, on Kaggle and Hugging Face."
+description: "A cleaned open dataset of RTB average rents from the CSO, 2008–2025, by Data & GenAI Engineer Malav Naik, with a reproducible cleaning notebook."
 order: 5
 featured: true
 code_url: https://github.com/malavnaik99/irish-rents-dataset
