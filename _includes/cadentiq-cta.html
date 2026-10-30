@@ -1,0 +1,41 @@
+{%- comment -%}
+Featured product (Cadentiq). Copy and the Google Play switch live in _data/cadentiq.yml.
+Params: variant = card | compact | text | link, placement = utm_medium for tracking.
+Never phrase this as Malav's own app: it is a featured product only.
+{%- endcomment -%}
+{%- assign c = site.data.cadentiq -%}
+{%- assign play_url = "https://play.google.com/store/apps/details?id=" | append: c.play_id | append: "&referrer=utm_source%3Dmalavnaik%26utm_medium%3D" | append: include.placement | append: "%26utm_campaign%3Dfeatured" | escape -%}
+{%- assign site_url = c.site_url | append: "?utm_source=malavnaik&utm_medium=" | append: include.placement | append: "&utm_campaign=featured" | escape -%}
+{%- if c.play_live -%}{%- assign primary_url = play_url -%}{%- else -%}{%- assign primary_url = site_url -%}{%- endif -%}
+{%- capture new_tab -%}<span class="sr-only"> (opens in a new tab)</span>{%- endcapture -%}
+{%- capture ctas -%}
+  {%- if c.play_live -%}
+  <p class="actions cq-actions"><a class="cq-badge" href="{{ play_url }}" target="_blank" rel="noopener"><img src="{{ c.badge | relative_url }}" alt="Get it on Google Play" width="646" height="250" loading="lazy" decoding="async">{{ new_tab }}</a> <a href="{{ site_url }}" target="_blank" rel="noopener">Visit cadentiq.si{{ new_tab }}</a></p>
+  <p class="small muted cq-tm">Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  {%- else -%}
+  <p class="actions cq-actions"><a class="btn btn-accent" href="{{ site_url }}" target="_blank" rel="noopener">Coming soon to Google Play · Visit cadentiq.si{{ new_tab }}</a></p>
+  {%- endif -%}
+{%- endcapture -%}
+{%- if include.variant == "card" -%}
+<section class="section" aria-labelledby="cadentiq-title">
+  <p class="label">{{ c.label }}</p>
+  <div class="card card-big cq-card">
+    <img class="cq-shot" src="{{ c.screenshot | relative_url }}" alt="{{ c.screenshot_alt | escape }}" width="540" height="1212" loading="lazy" decoding="async">
+    <div>
+      <h2 id="cadentiq-title">{{ c.name }}</h2>
+      <p class="muted">{{ c.blurb }}</p>
+      {{ ctas }}
+    </div>
+  </div>
+</section>
+{%- elsif include.variant == "compact" -%}
+<aside class="card cq-compact" aria-label="{{ c.label }}">
+  <p class="label">{{ c.label }}</p>
+  <p><b>{{ c.name }}</b> · {{ c.tagline }}</p>
+  {{ ctas }}
+</aside>
+{%- elsif include.variant == "text" -%}
+Featured product I'm supporting: <a href="{{ primary_url }}" target="_blank" rel="noopener">{{ c.name }}{{ new_tab }}</a>, a habits, walks and focus app for Android.
+{%- elsif include.variant == "link" -%}
+<a href="{{ primary_url }}" target="_blank" rel="noopener">{% if c.play_live and include.placement == "ticker" %}{{ c.name }} · now on Google Play{% else %}Featured: {{ c.name }}{% endif %}&nbsp;<span aria-hidden="true">↗</span>{{ new_tab }}</a>
+{%- endif -%}
