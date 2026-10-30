@@ -52,11 +52,12 @@ description: "Malav Naik, Data, GenAI & AI Automation Engineer in Dublin, Irelan
   <li><span class="k">Ask the EU Digital Services Act</span> <b class="v-sky">84% top-3 hit rate</b></li>
   {% if lab %}<li><span class="k">blog bot</span> <b class="v-ember">{{ lab.posts_published }}</b> <span class="k">posts published</span></li>
   <li><b class="v-ember">{{ lab.posts_queued }}</b> <span class="k">queued</span></li>{% endif %}
+  <li>{% include cadentiq-cta.html variant="link" placement="ticker" %}</li>
   {% for post in site.posts limit: 1 %}<li><span class="k">{{ post.date | date: "%-d %b %Y" }}</span> <b>{{ post.title }}</b></li>{% endfor %}
 {% endcapture %}
 <section class="ticker" aria-labelledby="ticker-title">
   <p class="ticker-label" id="ticker-title"><span class="dot" aria-hidden="true"></span>Live signals</p>
-  <div class="ticker-view"><div class="ticker-track"><ul>{{ signals }}</ul><ul aria-hidden="true">{{ signals }}</ul></div></div>
+  <div class="ticker-view"><div class="ticker-track"><ul>{{ signals }}</ul><ul aria-hidden="true">{{ signals | replace: '<a ', '<a tabindex="-1" ' }}</ul></div></div>
 </section>
 
 <ul class="metrics" aria-label="Key numbers">
@@ -136,6 +137,8 @@ description: "Malav Naik, Data, GenAI & AI Automation Engineer in Dublin, Irelan
   <p style="margin-top:1.25rem"><a href="{{ '/work/' | relative_url }}">All projects →</a></p>
 </section>
 
+{% include cadentiq-cta.html variant="card" placement="home_card" %}
+
 <section class="section" id="toolkit" aria-labelledby="toolkit-title">
   <p class="label"><b>03</b> / Toolkit</p>
   <h2 id="toolkit-title">Tools I've used in real projects</h2>
@@ -156,8 +159,6 @@ description: "Malav Naik, Data, GenAI & AI Automation Engineer in Dublin, Irelan
   {% include constellation.html %}
   </div>
 </section>
-
-{% include product-card.html %}
 
 <section class="section journey-section" id="journey" aria-labelledby="journey-title">
   <p class="label"><b>04</b> / From Surat to Dublin</p>

@@ -1,0 +1,10 @@
+name: Cadentiq
+label: Featured product
+tagline: "Habits, walks, workouts and focus in one Android app."
+blurb: "Walks, workouts, a focus garden and one-tap reminders in one Android app, with Health Connect. Minimums and freezes carry you through bad days."
+site_url: https://cadentiq.si/
+play_id: com.cadentiq.app
+play_live: false   # I will flip to true when it's live on Google Play (~1 Nov 2026)
+screenshot: /images/cadentiq/today.webp
+screenshot_alt: "Cadentiq's Today screen with habits grouped into goals"
+badge: /images/cadentiq/google-play-badge.png

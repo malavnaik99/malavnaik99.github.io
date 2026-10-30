@@ -38,6 +38,7 @@ layout: default
   </p>
   {% include author-box.html %}
 </article>
+{% unless page.cadentiq_cta == false %}{% include cadentiq-cta.html variant="compact" placement="blog_footer" %}{% endunless %}
 {% comment %} Same series first, then the newest other posts; the loop below takes 3. {% endcomment %}
 {% assign same = site.posts | where: "series", page.series | where_exp: "p", "p.url != page.url" %}
 {% assign rest = site.posts | where_exp: "p", "p.series != page.series" %}
