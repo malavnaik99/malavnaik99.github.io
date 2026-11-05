@@ -3,11 +3,18 @@ layout: null
 sitemap: false
 permalink: /llms.txt
 ---
-# Malav Naik
+{%- assign id = site.data.identity -%}
+# {{ id.name }}
 
-> {{ site.job_title }} in {{ site.tagline }}.
+> {{ id.job_title }} in {{ id.location.city }}, {{ id.location.country }}. {{ id.open_to }}
 
-Malav Naik is a {{ site.job_title }} in Dublin with about 10 years of experience across India and Ireland. He builds data pipelines and AI automation with SQL, Python, Azure and large language models, holds an MSc in Data Analytics from National College of Ireland, and works as an Escalation Operations Analyst – Platform Integrity at Accenture, for a global technology client. He writes about data engineering, generative AI and trust & safety.
+{{ id.bio_long }}
+
+- Current role: {{ id.current_role.public_wording }}
+- Previously: {% for r in id.past_roles %}{{ r.title }} at {{ r.organization }} ({{ r.start }}–{{ r.end }}){% unless forloop.last %}; {% endunless %}{% endfor %}
+- Education: {% for e in id.education %}{{ e.degree }}, {{ e.institution }} ({{ e.year }}){% unless forloop.last %}; {% endunless %}{% endfor %}
+- Co-founder of [Cadentiq]({{ id.side_projects[0].url }}): {{ id.side_projects[0].description }}
+- Contact: {{ id.email }}
 
 ## Pages
 
@@ -20,3 +27,6 @@ Malav Naik is a {{ site.job_title }} in Dublin with about 10 years of experience
 {% for s in site.data.series %}
 - [{{ s.name }}]({{ '/blog/series/' | append: s.id | append: '/' | absolute_url }}): {{ s.description }}{% endfor %}
 
+## Profiles
+{% for p in id.profiles %}
+- [{{ p.name }}]({{ p.url }}){% endfor %}

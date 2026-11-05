@@ -8,8 +8,8 @@
   {% capture seo_tags %}{% seo %}{% endcapture %}{% assign seo_tags = seo_tags | split: '<script type="application/ld+json">' | first %}
   {%- comment -%} The plugin runs site.title through Markdown, which reads "A | B" as a table and drops the pipe (same filters as jekyll-seo-tag 2.8); put the real title back. {%- endcomment -%}
   {% assign mangled = site.title | markdownify | strip_html | normalize_whitespace | escape_once %}{% assign seo_title = site.title | escape_once %}{% assign seo_tags = seo_tags | replace: mangled, seo_title %}
-  {%- comment -%} The plugin gives the home page share titles without the tagline; use the full home title instead. {%- endcomment -%}
-  {% if page.url == "/" %}{% assign short = seo_title | prepend: 'title" content="' | append: '" />' %}{% assign full = site.title | append: " | " | append: site.tagline | escape_once | prepend: 'title" content="' | append: '" />' %}{% assign seo_tags = seo_tags | replace: short, full %}{% endif %}{{ seo_tags }}
+  {%- comment -%} When a page's title equals the site title (the home page), the plugin appends the description to <title>; drop it so the home title is exactly site.title. {%- endcomment -%}
+  {% if page.title == site.title %}{% assign before = seo_tags | split: "<title>" | first %}{% assign after = seo_tags | split: "</title>" | last %}{% assign seo_tags = before | append: "<title>" | append: seo_title | append: "</title>" | append: after %}{% endif %}{{ seo_tags }}
   <!-- Search Console code for the malavnaik.com property; the one in _config.yml is for the old github.io property. -->
   <meta name="google-site-verification" content="u0GXVjXGCfKV_599fhM71S3dI8h0X3AUgWg73udEDn0">
   {% if page.image_alt %}<meta property="og:image:alt" content="{{ page.image_alt | escape }}">{% endif %}
@@ -64,8 +64,8 @@
   <footer class="site-footer">
     <div class="container">
       <p class="label">Contact</p>
-      <a class="email" href="mailto:malavnaikie@gmail.com">malavnaikie@gmail.com</a>
-      <ul>{% for p in site.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>
+      <a class="email" href="mailto:{{ site.data.identity.email }}">{{ site.data.identity.email }}</a>
+      <ul>{% for p in site.data.identity.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>
       <ul class="small"><li><a href="{{ '/about/' | relative_url }}">About</a></li><li><a href="{{ '/contact/' | relative_url }}">Contact</a></li><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li>{% include cadentiq-cta.html variant="link" placement="site_footer" %}</li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
       <svg class="footer-mark" viewBox="0 0 48 32" aria-hidden="true" focusable="false"><path d="M4 26 V6 L14 17 L24 6 V26 V6 L40 26 V6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="6" r="3.4" fill="#34D399"/></svg>
       <div class="footer-wordmark notranslate" translate="no" aria-hidden="true">MALAV NAIK</div>

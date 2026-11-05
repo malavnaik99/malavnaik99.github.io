@@ -1,20 +1,21 @@
 ---
 layout: default
 title: Résumé
-description: Résumé of Malav Naik, Data, GenAI & AI Automation Engineer in Dublin, Ireland: experience, education, skills and projects.
+description: "Résumé of Malav Naik, Data & GenAI Engineer in Dublin, Ireland: experience, education, skills and projects."
 ---
 {%- comment -%}
 Irish CV layout. Experience/Education come from _data/journey.yml, projects from the _projects collection (same order as /work/)
 and skills from _data/toolkit.yml, so this page can't drift from the home page. The client is never named.
 The PDF is printed from this page (A4): resume/malav-naik-resume.pdf.
 {%- endcomment -%}
-{%- assign linkedin = site.profiles | where: "name", "LinkedIn" | first -%}
-{%- assign github = site.profiles | where: "name", "GitHub" | first -%}
+{%- assign linkedin = site.data.identity.profiles | where: "name", "LinkedIn" | first -%}
+{%- assign github = site.data.identity.profiles | where: "name", "GitHub" | first -%}
 <div class="cv">
 <header class="cv-head">
   <h1>Malav Naik</h1>
-  <p class="cv-contact"><a href="mailto:malavnaikie@gmail.com">malavnaikie@gmail.com</a> | Dublin, Ireland | <a href="{{ linkedin.url }}">LinkedIn</a> | <a href="{{ github.url }}">GitHub</a></p>
+  <p class="cv-contact"><a href="mailto:{{ site.data.identity.email }}">{{ site.data.identity.email }}</a> | Dublin, Ireland | <a href="{{ linkedin.url }}">LinkedIn</a> | <a href="{{ github.url }}">GitHub</a></p>
   <p class="cv-contact">Visa Status: Stamp 1G — Eligible to work full-time until Dec 2027</p>
+  <p class="cv-contact">{{ site.data.identity.open_to }}</p>
   <p class="noprint"><a class="btn small" href="{{ '/resume/malav-naik-resume.pdf' | relative_url }}">Download as PDF</a></p>
 </header>
 

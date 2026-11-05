@@ -1,11 +1,12 @@
-# Every <title> is "<page> | title", the home page is "title | tagline", og:site_name is title.
-title: Malav Naik | Data, GenAI & AI Automation Engineer
-tagline: Dublin, Ireland
-job_title: Data, GenAI & AI Automation Engineer
-description: Malav Naik is a Data, GenAI & AI Automation Engineer in Dublin, Ireland, building data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
+# Must match identity/identity.json (scripts/check_identity.py fails the deploy if not).
+# Every <title> is "<page> | title"; the home page is just the title.
+title: Malav Naik | Data & GenAI Engineer | Dublin, Ireland
+description: Malav Naik is a Data & GenAI Engineer in Dublin, Ireland, building data pipelines, GenAI and AI automation with SQL, Python, Azure and large language models, and writing about data engineering, GenAI and trust & safety.
 # The site's address, with no baseurl. The custom domain is set in GitHub → Settings → Pages; CNAME records it in the repo too.
 url: https://malavnaik.com
-author: Malav Naik
+author:
+  name: Malav Naik
+  twitter: malavnaik99
 permalink: /blog/:slug/
 plugins:
   - jekyll-seo-tag
@@ -24,34 +25,15 @@ defaults:
   # Default share image for every page; posts and pages with their own `image` keep theirs.
   - scope: { path: "" }
     values:
-      image: { path: /images/og-banner.png, width: 1200, height: 627, alt: "Malav Naik | Data, GenAI & AI Automation Engineer | Dublin, Ireland" }
+      image: { path: /images/og-banner.png, width: 1200, height: 627, alt: "Malav Naik | Data & GenAI Engineer | Dublin, Ireland" }
   - scope: { path: "", type: posts }
     values: { layout: post }
   - scope: { path: "", type: projects }
     values: { layout: project }
-social:
-  name: Malav Naik
-  links:
-    - https://www.linkedin.com/in/malav-naik
-    - https://github.com/malavnaik99
-    - https://dev.to/malavnaik_0381711024683d4
-    - https://medium.com/@malavnaik206
-    - https://huggingface.co/Malavnaik
-    - https://www.kaggle.com/malavnaik
-    - https://x.com/malavnaik99
-    - https://www.reddit.com/user/malavnaik
-    - https://norma.ncirl.ie/9439/
-# "Find me online" links. Only profiles Malav actually has.
-profiles:
-  - { name: LinkedIn, url: "https://www.linkedin.com/in/malav-naik" }
-  - { name: GitHub, url: "https://github.com/malavnaik99" }
-  - { name: DEV, url: "https://dev.to/malavnaik_0381711024683d4" }
-  - { name: Medium, url: "https://medium.com/@malavnaik206" }
-  - { name: Hugging Face, url: "https://huggingface.co/Malavnaik" }
-  - { name: Kaggle, url: "https://www.kaggle.com/malavnaik" }
-  - { name: X, url: "https://x.com/malavnaik99" }
-  - { name: Reddit, url: "https://www.reddit.com/user/malavnaik" }
-  - { name: MSc thesis, url: "https://norma.ncirl.ie/9439/" }
+twitter:
+  username: malavnaik99
+  card: summary_large_image
+# "Find me online" links live in identity/identity.json (profiles).
 # Filled in once Malav creates the accounts (public values, not secrets).
 goatcounter: "malavnaik"
 webmaster_verifications:

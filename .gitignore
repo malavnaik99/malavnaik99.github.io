@@ -19,3 +19,6 @@ node_modules/
 
 # Private SEO notes live in the malavnaik-seo repo
 seo/
+
+# Build-time copy of identity/identity.json (the real file)
+_data/identity.json

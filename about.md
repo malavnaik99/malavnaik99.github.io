@@ -2,11 +2,11 @@
 layout: default
 title: About
 permalink: /about/
-description: "About Malav Naik, a Data, GenAI & AI Automation Engineer in Dublin: 10 years in data across India and Ireland, MSc in Data Analytics from National College of Ireland."
+description: "About Malav Naik, a Data & GenAI Engineer in Dublin: 10 years in data across India and Ireland, MSc in Data Analytics from National College of Ireland."
 ---
 # About Malav Naik
 
-I'm Malav Naik, a Data, GenAI & AI Automation Engineer based in Dublin with about 10 years of experience across India and Ireland.
+I'm Malav Naik, a Data & GenAI Engineer based in Dublin with about 10 years of experience across India and Ireland.
 
 ## My story
 
@@ -16,7 +16,9 @@ From 2019 to 2024 I was a data analyst and ETL developer at S&P Global Market In
 
 In 2024 I moved to Dublin for an MSc in Data Analytics at National College of Ireland, where I worked on knowledge graphs, prompt engineering and retrieval-augmented generation.
 
-Today I work with Accenture for a global technology client on platform integrity, analysing complex escalations with AI-assisted tools.
+Today I work as an {{ site.data.identity.current_role.public_wording | replace: ".", "" }} on platform integrity, analysing complex escalations with AI-assisted tools.
+
+**{{ site.data.identity.open_to }}** Email me at [{{ site.data.identity.email }}](mailto:{{ site.data.identity.email }}).
 
 ## Journey
 
