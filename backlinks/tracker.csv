@@ -1,8 +1,8 @@
 platform,category,url_to_signup,my_profile_url,link_to_malavnaik_live,status,date_done,notes
-LinkedIn,Career profile,https://www.linkedin.com/,https://www.linkedin.com/in/malav-naik,no,todo,,Account exists. Add malavnaik.com as Website in Contact info + a Featured link. Strongest result for name searches.
+LinkedIn,Career profile,https://www.linkedin.com/,https://www.linkedin.com/in/malav-naik,yes,live,2026-11-05,"Account exists. Add malavnaik.com as Website in Contact info + a Featured link. Strongest result for name searches. Done 5 Nov: headline, website, Featured. Blocks automated checks: check by hand monthly."
 GitHub (profile + README),Developer profile,https://github.com/,https://github.com/malavnaik99,no,todo,,Account exists. Set Website field; create repo malavnaik99/malavnaik99 for the profile README. Link is nofollow (UNVERIFIED).
 GitHub (this repo website field),Developer profile,https://github.com/malavnaik99/malavnaik99.github.io,https://github.com/malavnaik99/malavnaik99.github.io,no,todo,,Repo About -> Website = https://malavnaik.com
-Hugging Face,Data & AI profile,https://huggingface.co/join,https://huggingface.co/Malavnaik,no,todo,,Account exists. Website field still points to malavnaik99.github.io and full name reads 'Malav naik'. Link is nofollow (checked 2026-11-05).
+Hugging Face,Data & AI profile,https://huggingface.co/join,https://huggingface.co/Malavnaik,yes,live,2026-11-05,"Website now https://malavnaik.com (checked 5 Nov, nofollow). Full name still showed ""Malav naik"" when checked."
 Kaggle,Data & AI profile,https://www.kaggle.com/account/login,https://www.kaggle.com/malavnaik,no,todo,,Account exists. Add website + bio. Link type UNVERIFIED.
 Peerlist (profile),Developer profile,https://peerlist.io/,,no,todo,,Free profile. Verify via workplace/education (free) to unlock Launchpad. Links reported nofollow (UNVERIFIED).
 DEV (dev.to),Writing profile,https://dev.to/enter,https://dev.to/malavnaik_0381711024683d4,no,todo,,Account exists (blog bot cross-posts here). Set Website URL + summary. Profile link type UNVERIFIED.
