@@ -22,3 +22,4 @@ seo/
 
 # Build-time copy of identity/identity.json (the real file)
 _data/identity.json
+__pycache__/
