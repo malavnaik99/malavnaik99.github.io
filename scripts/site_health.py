@@ -110,6 +110,7 @@ def check_links(report="lychee.json"):
     if not path.exists():
         return ["The link checker (lychee) didn't produce a report, so links weren't checked."]
     data = json.loads(path.read_text())
+    print(f"Link checker: {data.get('total', '?')} links found, {data.get('successful', '?')} OK, {data.get('excludes', '?')} skipped on purpose, {data.get('errors', '?')} broken.")
     problems = []
     for page, fails in (data.get("error_map") or data.get("fail_map") or {}).items():
         for f in fails:
