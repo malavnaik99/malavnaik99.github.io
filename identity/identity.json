@@ -1,0 +1,122 @@
+{
+  "_note": "Single source of truth for Malav Naik's public identity. Pages, structured data and profile texts copy from here. Never name the employer's client.",
+  "name": "Malav Naik",
+  "title": "Malav Naik | Data & GenAI Engineer | Dublin, Ireland",
+  "job_title": "Data & GenAI Engineer",
+  "email": "malav@malavnaik.com",
+  "site": "https://malavnaik.com",
+  "github": "https://github.com/malavnaik99",
+  "location": {
+    "city": "Dublin",
+    "country": "Ireland",
+    "country_code": "IE"
+  },
+  "current_role": {
+    "title": "Escalation Operations Analyst",
+    "organization": "Accenture",
+    "public_wording": "Escalation Operations Analyst at Accenture, working with a global technology client.",
+    "start": "2026-03"
+  },
+  "past_roles": [
+    {
+      "title": "Data Analyst & ETL Developer",
+      "organization": "S&P Global Market Intelligence",
+      "start": "2019",
+      "end": "2024"
+    },
+    {
+      "title": "Data Analyst",
+      "organization": "Bright Info Solutions",
+      "start": "2015",
+      "end": "2019"
+    }
+  ],
+  "education": [
+    {
+      "degree": "MSc Data Analytics",
+      "institution": "National College of Ireland",
+      "year": "2025"
+    },
+    {
+      "degree": "Bachelor of Computer Applications",
+      "institution": "Veer Narmad South Gujarat University",
+      "year": "2015"
+    }
+  ],
+  "side_projects": [
+    {
+      "name": "Cadentiq",
+      "url": "https://cadentiq.si",
+      "role": "Co-founder",
+      "description": "An Android daily-discipline app."
+    }
+  ],
+  "target_roles": [
+    "AI Engineer",
+    "Applied AI Engineer",
+    "Forward Deployed Engineer"
+  ],
+  "open_to": "Open to AI Engineer, Applied AI Engineer and Forward Deployed Engineer roles in Dublin.",
+  "bio_short": "Data & GenAI Engineer in Dublin. About 10 years in data: SQL and ETL pipelines, Azure SQL, dbt, and LLM tools that are tested and measured.",
+  "bio_medium": "Malav Naik is a Data & GenAI Engineer in Dublin, Ireland, with about 10 years in data. He built ETL pipelines at S&P Global Market Intelligence, holds an MSc in Data Analytics, and builds tested GenAI and AI automation tools. Open to AI Engineer roles.",
+  "bio_long": "Malav Naik is a Data & GenAI Engineer based in Dublin, Ireland, with about 10 years of experience in data. At S&P Global Market Intelligence (2019–2024) he built SSIS pipelines for financial data and helped migrate on-premise SQL Server to Azure SQL, cutting infrastructure costs by about 25%. He holds an MSc in Data Analytics from National College of Ireland, with a thesis on knowledge graphs and prompt engineering. He now works as an Escalation Operations Analyst at Accenture, with a global technology client. His public projects include a tested dbt and DuckDB data pipeline, a content moderation classifier with fairness checks, and LLM tools that act only after human approval. He is open to AI Engineer, Applied AI Engineer and Forward Deployed Engineer roles in Dublin.",
+  "skills": [
+    "SQL",
+    "SQL Server",
+    "SSIS (ETL)",
+    "Azure SQL",
+    "Data modelling",
+    "dbt",
+    "DuckDB",
+    "Python",
+    "pandas",
+    "Power BI",
+    "Large language models (LLMs)",
+    "Retrieval-augmented generation (RAG)",
+    "Knowledge graphs",
+    "Prompt engineering",
+    "Claude API",
+    "Hugging Face",
+    "scikit-learn",
+    "PyTorch",
+    "AI automation",
+    "AI engineering",
+    "LLM application development",
+    "GitHub Actions",
+    "Trust and safety analytics"
+  ],
+  "profiles": [
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/malav-naik"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/malavnaik99"
+    },
+    {
+      "name": "DEV",
+      "url": "https://dev.to/malavnaik_0381711024683d4"
+    },
+    {
+      "name": "Medium",
+      "url": "https://medium.com/@malavnaik206"
+    },
+    {
+      "name": "Hugging Face",
+      "url": "https://huggingface.co/Malavnaik"
+    },
+    {
+      "name": "Kaggle",
+      "url": "https://www.kaggle.com/malavnaik"
+    },
+    {
+      "name": "X",
+      "url": "https://x.com/malavnaik99"
+    },
+    {
+      "name": "Reddit",
+      "url": "https://www.reddit.com/user/malavnaik"
+    }
+  ]
+}
