@@ -29,7 +29,7 @@ All texts below are copied from `identity/identity.json`. If a fact changes, cha
 Data & GenAI Engineer in Dublin. About 10 years in data: SQL and ETL pipelines, Azure SQL, dbt, and LLM tools that are tested and measured.
 ```
 
-**Medium bio, first person** (249 characters; for "About" fields):
+**Medium bio, first person** (241 characters; for "About" fields):
 ```
 I'm Malav Naik, a Data & GenAI Engineer in Dublin with about 10 years in data. I built ETL pipelines at S&P Global Market Intelligence, hold an MSc in Data Analytics, and build tested GenAI and AI automation tools. Open to AI Engineer roles.
 ```
