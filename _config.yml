@@ -16,6 +16,7 @@ plugins:
 exclude:
   - README.md
   - CLAUDE.md
+  - backlinks/
   - docs/
   - seo/          # private SEO notes and outreach drafts, never published
 collections:

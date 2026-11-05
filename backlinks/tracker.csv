@@ -1,0 +1,22 @@
+platform,category,url_to_signup,my_profile_url,link_to_malavnaik_live,status,date_done,notes
+LinkedIn,Career profile,https://www.linkedin.com/,https://www.linkedin.com/in/malav-naik,no,todo,,Account exists. Add malavnaik.com as Website in Contact info + a Featured link. Strongest result for name searches.
+GitHub (profile + README),Developer profile,https://github.com/,https://github.com/malavnaik99,no,todo,,Account exists. Set Website field; create repo malavnaik99/malavnaik99 for the profile README. Link is nofollow (UNVERIFIED).
+GitHub (this repo website field),Developer profile,https://github.com/malavnaik99/malavnaik99.github.io,https://github.com/malavnaik99/malavnaik99.github.io,no,todo,,Repo About -> Website = https://malavnaik.com
+Hugging Face,Data & AI profile,https://huggingface.co/join,https://huggingface.co/Malavnaik,no,todo,,Account exists. Website field still points to malavnaik99.github.io and full name reads 'Malav naik'. Link is nofollow (checked 2026-11-05).
+Kaggle,Data & AI profile,https://www.kaggle.com/account/login,https://www.kaggle.com/malavnaik,no,todo,,Account exists. Add website + bio. Link type UNVERIFIED.
+Peerlist (profile),Developer profile,https://peerlist.io/,,no,todo,,Free profile. Verify via workplace/education (free) to unlock Launchpad. Links reported nofollow (UNVERIFIED).
+DEV (dev.to),Writing profile,https://dev.to/enter,https://dev.to/malavnaik_0381711024683d4,no,todo,,Account exists (blog bot cross-posts here). Set Website URL + summary. Profile link type UNVERIFIED.
+Medium,Writing profile,https://medium.com/m/signin,https://medium.com/@malavnaik206,no,todo,,Account exists. 160-char bio. Links reported nofollow (UNVERIFIED).
+Hashnode,Writing profile,https://hashnode.com/onboard,,no,todo,,Free plan still exists (one blog on a hashnode.dev address) after the June 2026 Pro launch. Link type UNVERIFIED.
+Stack Overflow,Q&A profile,https://stackoverflow.com/users/signup,,no,todo,,Free. Website field in profile. Profile links nofollow (UNVERIFIED). Only valuable if you answer questions.
+ORCID,Research identity,https://orcid.org/register,,no,todo,,Free researcher ID. Add your MSc thesis and malavnaik.com. Trusted by Google Scholar-type tools.
+Wellfound,Career profile,https://wellfound.com/candidates,,no,todo,,Free for job seekers (Wellfound help centre). Startup roles; set 'open to' roles.
+Gravatar,Identity profile,https://gravatar.com/,,no,todo,,Free public profile at gravatar.com/<name>. Sign up with malav@malavnaik.com so your photo follows that email.
+Contra,Career profile,https://contra.com/,,no,todo,,Free profile (Pro optional). Freelance-focused: lowest priority; skip if you don't want freelance work.
+about.me,Identity profile,https://about.me/,,no,todo,,Free plan still exists (about.me/yourname). Low value; do last.
+Indie Hackers,Community,https://www.indiehackers.com/,,no,todo,,Link from your Cadentiq presence. Free status UNVERIFIED.
+Reddit r/dataengineering,Community,https://www.reddit.com/r/dataengineering/,https://www.reddit.com/user/malavnaik,no,todo,,Not a backlink. Rules UNVERIFIED (third-party summary: self-promotion max once a month). Helpful comments only.
+Reddit r/datascience,Community,https://www.reddit.com/r/datascience/,https://www.reddit.com/user/malavnaik,no,todo,,Not a backlink. Career/portfolio questions go in the weekly 'Entering & Transitioning' thread; 9:1 self-promotion rule.
+Peerlist Launchpad,Launch,https://peerlist.io/launchpad,,no,todo,,Mondays only; verified profile needed. Launch projects (not the portfolio). First: Ask the DSA.
+Hacker News Show HN,Launch,https://news.ycombinator.com/submit,,no,todo,,Only for a finished thing people can try. Not the portfolio or blog posts. No draft yet.
+developer-portfolios (GitHub list),Portfolio list,https://github.com/emmabostian/developer-portfolios,,no,todo,,Phase 4: pull request adding one line. Claude prepares; you approve.
