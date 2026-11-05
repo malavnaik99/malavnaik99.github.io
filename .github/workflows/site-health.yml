@@ -39,10 +39,11 @@ jobs:
           format: json
           output: lychee.json
           jobSummary: false
-          # Sites that refuse automated visitors (403/429/999) are counted as working, to avoid false alarms.
+          # Sites that refuse automated visitors (403/429/999) or are briefly overloaded (502/503/504, e.g. GitHub
+          # slowing down robots) are counted as working, to avoid false alarms. Dead links (404, 410, no such site) still fail.
           args: >-
             --no-progress --max-retries 3 --timeout 30 --max-concurrency 8
-            --accept 200..=299,403,429,999
+            --accept 200..=299,403,429,502,503,504,999
             --exclude "translate\.goog" --exclude "linkedin\.com/sharing" --exclude "x\.com/intent"
             --exclude "/cdn-cgi/" --exclude "fonts\.(googleapis|gstatic)\.com" --exclude "gc\.zgo\.at"
             ${{ steps.pages.outputs.list }}

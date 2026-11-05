@@ -111,12 +111,16 @@ def check_links(report="lychee.json"):
         return ["The link checker (lychee) didn't produce a report, so links weren't checked."]
     data = json.loads(path.read_text())
     print(f"Link checker: {data.get('total', '?')} links found, {data.get('successful', '?')} OK, {data.get('excludes', '?')} skipped on purpose, {data.get('errors', '?')} broken.")
-    problems = []
+    broken = {}  # one line per broken link, listing the pages it's on
     for page, fails in (data.get("error_map") or data.get("fail_map") or {}).items():
         for f in fails:
             status = f.get("status", {})
-            problems.append(f"{f.get('url')} → {status.get('text') or status.get('code') or status} (on {page})")
-    return problems
+            reason = status.get("text") or status.get("code") or status
+            entry = broken.setdefault(f.get("url"), {"reason": reason, "pages": []})
+            if "cached" not in str(reason).lower():
+                entry["reason"] = reason
+            entry["pages"].append(page)
+    return [f"{url} → {b['reason']} (on {len(b['pages'])} page(s), e.g. {b['pages'][0]})" for url, b in broken.items()]
 
 
 def check_profiles():
