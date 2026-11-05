@@ -34,6 +34,7 @@ jobs:
 
       - name: Check every link on those pages (lychee)
         uses: lycheeverse/lychee-action@v2
+        continue-on-error: true  # if the link checker can't even start, the next step still runs and reports it as an issue
         with:
           fail: false
           format: json
