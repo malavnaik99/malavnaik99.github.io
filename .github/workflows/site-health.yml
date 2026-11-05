@@ -1,0 +1,58 @@
+# Weekly health check for malavnaik.com. Opens (or updates) one GitHub Issue per failing check, and closes it when
+# the check passes again. What each issue means and how to fix it: MAINTENANCE.md.
+name: Site health
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"          # Mondays 07:00
+      timezone: "Europe/Dublin"  # follows Irish summer/winter time
+  # After every push to main, once the new version has finished deploying (so the live site is checked, not the old one).
+  workflow_run:
+    workflows: ["Deploy site to Pages"]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:              # the "Run workflow" button
+  push:                           # TEST ONLY: remove after testing
+    branches: [claude/optimistic-noether-e9jv48]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: site-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: List the site's pages
+        id: pages
+        run: echo "list=$(python3 scripts/site_health.py --print-pages)" >> "$GITHUB_OUTPUT"
+
+      - name: Check every link on those pages (lychee)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: false
+          format: json
+          output: lychee.json
+          jobSummary: false
+          # Sites that refuse automated visitors (403/429/999) are counted as working, to avoid false alarms.
+          args: >-
+            --no-progress --max-retries 3 --timeout 30 --max-concurrency 8
+            --accept 200..=299,403,429,999
+            --exclude "translate\.goog" --exclude "linkedin\.com/sharing" --exclude "x\.com/intent"
+            --exclude "/cdn-cgi/" --exclude "fonts\.(googleapis|gstatic)\.com" --exclude "gc\.zgo\.at"
+            ${{ steps.pages.outputs.list }}
+
+      - name: Run the six checks and open, update or close issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SITE_HEALTH_FORCE_FAIL: "CNAME file changed"  # TEST ONLY: remove after testing
+        run: |
+          python3 scripts/site_health.py --self-test
+          python3 scripts/site_health.py
