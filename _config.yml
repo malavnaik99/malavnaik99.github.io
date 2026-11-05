@@ -15,6 +15,7 @@ plugins:
   - jekyll-redirect-from
 exclude:
   - README.md
+  - CLAUDE.md
   - docs/
   - seo/          # private SEO notes and outreach drafts, never published
 collections:
