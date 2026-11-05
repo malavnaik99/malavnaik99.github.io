@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: List the site's pages
         id: pages
@@ -52,7 +52,6 @@ jobs:
       - name: Run the six checks and open, update or close issues
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SITE_HEALTH_FORCE_FAIL: "CNAME file changed"  # TEST ONLY: remove after testing
         run: |
           python3 scripts/site_health.py --self-test
           python3 scripts/site_health.py
