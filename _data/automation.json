@@ -1,15 +1,15 @@
 {
- "posts_published": 8,
- "posts_queued": 45,
+ "posts_published": 9,
+ "posts_queued": 44,
  "platforms": {
-  "Blog": 8,
-  "DEV": 5,
-  "LinkedIn": 8,
-  "Medium": 3
+  "Blog": 9,
+  "DEV": 6,
+  "LinkedIn": 9,
+  "Medium": 5
  },
  "last_post": {
-  "title": "70% of Ireland's Rent Table Is Empty. Here's How I Cleaned It",
-  "url": "https://malavnaik.com/blog/cleaning-irish-rents-open-data/"
+  "title": "The Data Quality Checks That Catch Problems Before Your Users Do",
+  "url": "https://malavnaik.com/blog/data-quality-monitoring-checks/"
  },
- "updated": "2026-11-02"
+ "updated": "2026-11-09"
 }
