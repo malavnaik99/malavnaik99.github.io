@@ -1,0 +1,45 @@
+{%- comment -%} Cookie consent for Google Analytics. Nothing is set until "Accept"; the choice is kept in this browser.
+Any element with data-cookie-settings (the footer link) reopens the banner. {%- endcomment -%}
+<style>
+  .cookie-banner { position: fixed; z-index: 1000; left: 16px; right: 16px; bottom: 16px; max-width: 560px; margin: 0 auto; padding: 16px 18px; border: 1px solid var(--line, #D9DDF2); border-radius: 12px; background: var(--card, #fff); color: var(--text, #0B0D1A); box-shadow: 0 12px 40px rgba(0,0,0,.35); font: 400 .95rem/1.5 var(--font, system-ui, sans-serif); }
+  .cookie-banner[hidden] { display: none; }
+  .cookie-banner p { margin: 0 0 12px; }
+  .cookie-banner .cookie-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cookie-banner button { flex: 1 1 120px; min-height: 44px; padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--accent, #2F4BEA); background: var(--accent, #2F4BEA); color: var(--on-accent, #fff); font: 600 .95rem var(--font, system-ui, sans-serif); cursor: pointer; }
+  .cookie-banner button:focus-visible { outline: 2px solid var(--text, #0B0D1A); outline-offset: 2px; }
+  .link-btn { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; min-height: 32px; }
+  .link-btn:hover { color: var(--text); }
+  @media print { .cookie-banner { display: none !important; } }
+</style>
+<div class="cookie-banner" id="cookie-banner" role="region" aria-label="Cookie choice" hidden>
+  <p>I'd like to use Google Analytics cookies to see which pages people read. Nothing is stored unless you accept, and you can change your mind any time with "Cookie settings" in the site footer.</p>
+  <div class="cookie-actions">
+    <button type="button" data-cookie-choice="granted">Accept</button>
+    <button type="button" data-cookie-choice="denied">Reject</button>
+  </div>
+</div>
+<script>
+(function () {
+  var banner = document.getElementById("cookie-banner"), choice = null;
+  try { choice = localStorage.getItem("cookie-consent"); } catch (e) {}
+  if (choice !== "granted" && choice !== "denied") banner.hidden = false;
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-cookie-choice], [data-cookie-settings]");
+    if (!t) return;
+    if (t.hasAttribute("data-cookie-settings")) { banner.hidden = false; banner.querySelector("button").focus(); return; }
+    var v = t.getAttribute("data-cookie-choice");
+    try { localStorage.setItem("cookie-consent", v); } catch (e) {}
+    banner.hidden = true;
+    if (v === "granted") { window["ga-disable-G-SYLBWXTBRG"] = false; loadGoogleAnalytics(); return; }
+    // Rejected (maybe after accepting earlier): stop Analytics and delete its cookies.
+    window["ga-disable-G-SYLBWXTBRG"] = true;
+    document.cookie.split(";").forEach(function (c) {
+      var name = c.split("=")[0].trim();
+      if (name.indexOf("_ga") !== 0) return;
+      [location.hostname, "." + location.hostname.replace(/^www\./, "")].forEach(function (d) {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=" + d;
+      });
+    });
+  });
+})();
+</script>

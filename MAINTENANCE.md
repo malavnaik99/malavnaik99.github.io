@@ -39,5 +39,6 @@ This is temporary: the next change to `main` publishes the newest version again.
 ## Where things live (for Claude or a developer)
 - Identity (name, title, email, bios, profiles): `identity/identity.json`, the single source of truth. `scripts/check_identity.py` stops a deploy that drifts from it.
 - Page head, previews, structured data: `_layouts/default.html`, `_includes/schema.html`, `_config.yml`
+- Google Analytics + cookie banner: `_includes/google-analytics.html` (ID G-SYLBWXTBRG) and `_includes/cookie-banner.html`, included in `_layouts/default.html` and `permits-2025/index.html`. Analytics only loads after a visitor clicks Accept, so its numbers only count people who accepted.
 - Health check: `.github/workflows/site-health.yml` + `scripts/site_health.py` (`python3 scripts/site_health.py` runs it locally)
 - Backlinks: `backlinks/README.md` (kit), `backlinks/tracker.csv`, `backlinks/ROUTINE.md`

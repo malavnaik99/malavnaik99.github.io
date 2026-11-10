@@ -25,6 +25,7 @@ The site has:
 | AI and answer engines | [`llms.txt`](llms.txt), a [`robots.txt`](robots.txt) that welcomes search and AI crawlers, and an optional TL;DR and FAQ on each post |
 | Indexing | IndexNow, so Bing and other engines learn about each new post as soon as it is published |
 | Analytics | [GoatCounter](https://www.goatcounter.com/): privacy-friendly and cookie-free |
+| Google Analytics | GA4 (`G-SYLBWXTBRG`), loaded only after a visitor clicks Accept in the cookie banner ([`_includes/google-analytics.html`](_includes/google-analytics.html), [`_includes/cookie-banner.html`](_includes/cookie-banner.html)) |
 
 Every build also checks that each image has alt text. The deploy fails if one doesn't.
 

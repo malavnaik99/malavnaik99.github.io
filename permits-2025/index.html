@@ -4,15 +4,7 @@ layout: null
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SYLBWXTBRG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SYLBWXTBRG');
-</script>
+{% include google-analytics.html %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employment Permits 2025 Dashboard, Ireland | {{ site.title | escape }}</title>
@@ -281,5 +273,6 @@ layout: null
         searchInput.addEventListener('input', (e) => renderTable(e.target.value));
         renderTable();
     </script>
+  {% include cookie-banner.html %}
 </body>
 </html>

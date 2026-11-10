@@ -1,15 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SYLBWXTBRG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SYLBWXTBRG');
-</script>
+{% include google-analytics.html %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>(function(d){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";d.dataset.theme=t;d.classList.add("js")})(document.documentElement)</script>
@@ -75,12 +67,13 @@
       <p class="label">Contact</p>
       <a class="email" href="mailto:{{ site.data.identity.email }}">{{ site.data.identity.email }}</a>
       <ul>{% for p in site.data.identity.profiles %}<li><a href="{{ p.url }}" rel="me">{{ p.name }}</a></li>{% endfor %}</ul>
-      <ul class="small"><li><a href="{{ '/about/' | relative_url }}">About</a></li><li><a href="{{ '/contact/' | relative_url }}">Contact</a></li><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li>{% include cadentiq-cta.html variant="link" placement="site_footer" %}</li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
+      <ul class="small"><li><a href="{{ '/about/' | relative_url }}">About</a></li><li><a href="{{ '/contact/' | relative_url }}">Contact</a></li><li><a href="{{ '/now/' | relative_url }}">Now</a></li><li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li><li>{% include cadentiq-cta.html variant="link" placement="site_footer" %}</li><li class="no-js-hide"><button class="link-btn" type="button" data-cookie-settings>Cookie settings</button></li><li>© {{ site.time | date: "%Y" }} Malav Naik</li></ul>
       <svg class="footer-mark" viewBox="0 0 48 32" aria-hidden="true" focusable="false"><path d="M4 26 V6 L14 17 L24 6 V26 V6 L40 26 V6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="6" r="3.4" fill="#34D399"/></svg>
       <div class="footer-wordmark notranslate" translate="no" aria-hidden="true">MALAV NAIK</div>
     </div>
   </footer>
   <script src="{{ '/assets/site.js' | relative_url }}" defer></script>
   {% if site.goatcounter != "" %}<script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
+  {% include cookie-banner.html %}
 </body>
 </html>
