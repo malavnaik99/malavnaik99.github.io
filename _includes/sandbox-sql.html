@@ -9,7 +9,7 @@
       <li><code>dim_hour</code>: hour_utc, hour_local, local_date, local_hour, weekday, is_weekend, temperature_c, rainfall_mm, wind_kmh, humidity_pct, weather_description</li>
     </ul>
   </details>
-  <p class="small muted" style="margin:.75rem 0 .4rem">Example queries:</p>
+  <p class="small muted" style="margin:.75rem 0 .4rem">Example queries (they leave out STATION118, a placeholder station with no data, and one station listed with 0 docks):</p>
   <div class="examples-sql">
     <button type="button" class="btn small" data-sql="empty">Which stations are most often empty?</button>
     <button type="button" class="btn small" data-sql="hours">Bikes by hour: weekdays vs weekends</button>
@@ -17,17 +17,18 @@
   </div>
 <pre hidden data-sql-text="empty"><code>select s.station_name, round(avg(f.share_empty) * 100, 1) as pct_time_empty, s.capacity
 from fct_station_hour f join dim_station s using (station_id)
-where s.capacity &gt; 0
+where s.capacity &gt; 0 and s.station_name &lt;&gt; 'STATION118'
 group by all order by pct_time_empty desc limit 10</code></pre>
 <pre hidden data-sql-text="hours"><code>select h.local_hour, h.is_weekend, round(avg(f.avg_bikes), 1) as avg_bikes_per_station
-from fct_station_hour f join dim_hour h using (hour_utc)
+from fct_station_hour f join dim_hour h using (hour_utc) join dim_station s using (station_id)
+where s.capacity &gt; 0 and s.station_name &lt;&gt; 'STATION118'
 group by all order by h.is_weekend, h.local_hour</code></pre>
 <pre hidden data-sql-text="rain"><code>select case when h.rainfall_mm > 0 then 'raining' else 'dry' end as weather,
        count(*) as station_hours,
        round(avg(1 - f.avg_bikes / s.capacity) * 100, 1) as pct_docks_without_bike
 from fct_station_hour f
 join dim_hour h using (hour_utc) join dim_station s using (station_id)
-where s.capacity > 0 and h.rainfall_mm is not null and h.local_hour between 7 and 21
+where s.capacity > 0 and s.station_name <> 'STATION118' and h.rainfall_mm is not null and h.local_hour between 7 and 21
 group by all</code></pre>
   <div class="island" data-island="sql" data-src="{{ '/assets/data/dublin-bikes/' | relative_url }}">
     <button class="btn btn-accent" type="button" data-island-load>Open the SQL console</button>
