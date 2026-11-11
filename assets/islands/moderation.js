@@ -1,13 +1,16 @@
 // Moderation threshold sandbox: loaded only when a visitor opens it. Reads the precomputed sweep (real test-set results).
+// Two forms: the full sandbox builds its own markup; the compact home-page demo (_includes/hero-demo.html) is already in
+// the page, so only its numbers are filled in (no layout shift). A group row with data-g="all" shows the all-groups rate.
 (function () {
   var pct = function (x) { return (x * 100).toFixed(1) + "%"; };
   var nice = function (g) { return g.replace(/_/g, " ").replace("homosexual gay or lesbian", "gay or lesbian").replace("psychiatric or mental illness", "psychiatric or mental illness"); };
   window.islands = window.islands || {};
   window.islands.moderation = function (box) {
-    box.innerHTML = '<p class="small muted">Loading saved results…</p>';
+    var built = !!box.querySelector("input[type=range]");
+    if (!built) box.innerHTML = '<p class="small muted">Loading saved results…</p>';
     fetch(box.dataset.src).then(function (r) { return r.json(); }).then(function (d) {
       var s = d.sweep;
-      box.innerHTML =
+      if (!built) box.innerHTML =
         '<label class="slider"><span>Flag a comment when its toxicity score is at least <b class="mono" data-t></b></span>' +
         '<input type="range" min="0" max="' + (s.length - 1) + '" step="1"></label>' +
         '<p class="small muted presets">Jump to the two saved policies: <button type="button" class="btn small" data-go="0.22">send to review (0.22)</button> <button type="button" class="btn small" data-go="0.82">auto-action (0.82)</button></p>' +
@@ -20,7 +23,8 @@
         '<p class="small muted">Across all identity-labelled harmless comments: <b class="mono" data-all></b> (the thin line on each bar). Groups with at least 200 harmless test comments.</p>' +
         '<ul class="groups"></ul>';
       var input = box.querySelector("input"), ul = box.querySelector(".groups");
-      d.groups.forEach(function (g) {
+      input.max = s.length - 1; input.disabled = false;
+      if (!ul.children.length) d.groups.forEach(function (g) {
         var li = document.createElement("li");
         li.innerHTML = '<span class="g"></span><span class="bar"><i></i><em class="avg"></em></span><span class="v mono"></span>';
         li.firstChild.textContent = nice(g); li.dataset.g = g; ul.appendChild(li);
@@ -33,12 +37,15 @@
           box.querySelector('[data-v="' + k + '"]').textContent = pct(r[k]);
           box.querySelector('[data-b="' + k + '"]').style.width = (r[k] * 100) + "%";
         });
-        box.querySelector("[data-per1000]").textContent = Math.round(r.flagged * 1000);
-        box.querySelector("[data-all]").textContent = pct(r.fpr_all);
-        d.groups.forEach(function (g) { max = Math.max(max, r.fpr[g]); });
+        var per1000 = box.querySelector("[data-per1000]"), all = box.querySelector("[data-all]");
+        if (per1000) per1000.textContent = Math.round(r.flagged * 1000);
+        if (all) all.textContent = pct(r.fpr_all);
+        var rate = function (li) { return li.dataset.g === "all" ? r.fpr_all : r.fpr[li.dataset.g]; };
+        // Bars are scaled to the largest rate on show, so small rates at strict thresholds stay visible.
+        Array.prototype.forEach.call(ul.children, function (li) { max = Math.max(max, rate(li)); });
         max = Math.max(max, r.fpr_all, 0.01);
         Array.prototype.forEach.call(ul.children, function (li) {
-          var v = r.fpr[li.dataset.g];
+          var v = rate(li);
           li.querySelector("i").style.width = (v / max * 100) + "%";
           li.querySelector(".avg").style.left = (r.fpr_all / max * 100) + "%";
           li.querySelector(".v").textContent = pct(v);

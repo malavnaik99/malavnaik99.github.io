@@ -1,0 +1,27 @@
+{%- comment -%}
+Compact moderation threshold demo for the home hero. The markup is here so nothing moves when it loads;
+assets/islands/moderation.js fills in the numbers from assets/data/moderation-sweep.json (real test-set results).
+Groups: the four with the highest wrongly-flagged rate at the 0.22 review threshold (black, white, gay or lesbian, muslim).
+{%- endcomment -%}
+<section class="hero-demo" aria-labelledby="demo-title">
+  <p class="label">Try it · Content moderation classifier</p>
+  <h2 id="demo-title">Where should a moderation model draw the line?</h2>
+  <div class="island" data-island="moderation" data-src="{{ '/assets/data/moderation-sweep.json' | relative_url }}">
+    <label class="slider"><span>Flag a comment when its toxicity score is at least <b class="mono" data-t>0.22</b></span><input type="range" min="0" max="96" step="1" value="20" disabled></label>
+    <div class="meters">
+      <div class="meter"><span class="k">Precision</span><span class="v mono" data-v="precision">–</span><span class="bar"><i data-b="precision"></i></span></div>
+      <div class="meter"><span class="k">Recall</span><span class="v mono" data-v="recall">–</span><span class="bar"><i data-b="recall"></i></span></div>
+      <div class="meter"><span class="k">Flagged</span><span class="v mono" data-v="flagged">–</span><span class="bar"><i data-b="flagged"></i></span></div>
+    </div>
+    <p class="small muted demo-key">Precision: flagged comments that really are toxic. Recall: toxic comments that get caught. Flagged: share of all comments.</p>
+    <p class="groups-title">Harmless comments wrongly flagged, by group mentioned</p>
+    <ul class="groups">
+      <li data-g="all"><span class="g">All groups</span><span class="bar"><i></i><em class="avg"></em></span><span class="v mono">–</span></li>
+      <li data-g="black"><span class="g">black</span><span class="bar"><i></i><em class="avg"></em></span><span class="v mono">–</span></li>
+      <li data-g="white"><span class="g">white</span><span class="bar"><i></i><em class="avg"></em></span><span class="v mono">–</span></li>
+      <li data-g="homosexual_gay_or_lesbian"><span class="g">gay or lesbian</span><span class="bar"><i></i><em class="avg"></em></span><span class="v mono">–</span></li>
+      <li data-g="muslim"><span class="g">muslim</span><span class="bar"><i></i><em class="avg"></em></span><span class="v mono">–</span></li>
+    </ul>
+  </div>
+  <p class="small muted demo-foot">Real results for 180,488 held-out test comments. <a href="{{ '/projects/moderation-classifier/' | relative_url }}#sandbox-moderation">Open the full sandbox →</a></p>
+</section>
