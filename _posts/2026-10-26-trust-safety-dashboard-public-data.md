@@ -41,7 +41,7 @@ The [Civil Comments](https://www.kaggle.com/competitions/jigsaw-unintended-bias-
 
 Every number below comes from 180,488 test comments that neither model saw during training.
 
-| | Simple baseline | DistilBERT |
+| Measure | Simple baseline | DistilBERT |
 |---|---|---|
 | Ranking quality (ROC-AUC, 1 = perfect) | 0.941 | **0.957** |
 | Toxic comments auto-actioned at ≥ 90% precision | 30.9% | **36.6%** |

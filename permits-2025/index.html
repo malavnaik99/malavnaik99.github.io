@@ -1,285 +1,146 @@
 ---
-layout: null
+layout: default
+title: "Employment Permits 2025 Dashboard, Ireland"
+description: "Explore employment permits issued to companies in Ireland in 2025 by sector, employer and month. Built by Malav Naik, Data & GenAI Engineer in Dublin."
+wide: true
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SYLBWXTBRG"></script>
+{%- comment -%} Figures come from permits-issued-to-companies-2025.xlsx (the official dataset, in this repo). Chart.js is a pinned copy in assets/vendor. {%- endcomment -%}
+<p class="eyebrow"><a href="{{ '/work/' | relative_url }}">Work</a> / <a href="{{ '/projects/permits-2025/' | relative_url }}">Case study</a></p>
+<h1>Employment permits issued to companies in Ireland, 2025</h1>
+<p class="lead" style="max-width:46rem">Which sectors and employers sponsor work permits, and when hiring peaks. Built from the official <em>Permits Issued to Companies – 2025</em> dataset (<a href="{{ '/permits-issued-to-companies-2025.xlsx' | relative_url }}">download the spreadsheet</a>).</p>
+
+<ul class="permit-kpis" aria-label="Key figures">
+  <li class="card"><span class="k">Total permits</span><span class="num">31,044</span><span class="small muted">January to December 2025</span></li>
+  <li class="card"><span class="k">Top sector</span><span class="num">Technology</span><span class="small muted">52.8% of all permits</span></li>
+  <li class="card"><span class="k">Peak month</span><span class="num">January</span><span class="small muted">3,798 permits</span></li>
+  <li class="card"><span class="k">Top employer</span><span class="num">Google Ireland</span><span class="small muted">368 permits</span></li>
+</ul>
+
+<div class="permit-charts">
+  <section class="card" aria-labelledby="month-title">
+    <h2 id="month-title">Permits issued per month</h2>
+    <div class="chart-box"><canvas id="velocityChart" role="img" aria-label="Bar chart of permits issued per month in 2025: January 3,798, February 2,994, March 3,191, April 1,668, May 1,820, June 1,684, July 2,180, August 2,661, September 2,627, October 3,092, November 2,889, December 2,440."></canvas></div>
+  </section>
+  <section class="card" aria-labelledby="sector-title">
+    <h2 id="sector-title">Permits by sector</h2>
+    <div class="chart-box"><canvas id="sectorChart" role="img" aria-label="Pie chart of permits by sector: Technology 16,389, Healthcare 6,906, Hospitality 1,765, Engineering and logistics 443, Professional services 353, Other 5,188."></canvas></div>
+  </section>
+</div>
+
+<section class="card permit-table" aria-labelledby="employers-title">
+  <div class="permit-table-head">
+    <div>
+      <h2 id="employers-title">25 large sponsoring employers</h2>
+      <p class="small muted">A selection of the employers with the most permits in 2025. The full list of every company is in the spreadsheet above.</p>
+    </div>
+    <label class="permit-filter"><span class="small muted">Filter by company or sector</span><input type="search" id="dbSearch" autocomplete="off"></label>
+  </div>
+  <table tabindex="0" aria-labelledby="employers-title">
+    <thead><tr><th scope="col">Company</th><th scope="col">Sector</th><th scope="col">Compared with the top employer</th><th scope="col" class="r">Permits</th></tr></thead>
+    <tbody id="dataTable"></tbody>
+  </table>
+  <p class="small muted" id="tableStatus" role="status"></p>
+</section>
+
+<p style="margin-top:2rem"><a href="{{ '/projects/permits-2025/' | relative_url }}">How I built this dashboard →</a></p>
+
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+document.addEventListener("DOMContentLoaded", function () {
+  var data = {
+    monthly: [3798, 2994, 3191, 1668, 1820, 1684, 2180, 2661, 2627, 3092, 2889, 2440],
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    sectors: { "Technology": 16389, "Healthcare": 6906, "Hospitality": 1765, "Eng & Logistics": 443, "Professional": 353, "Other": 5188 },
+    companies: [
+      { name: "Google Ireland Limited", sector: "Technology", total: 368 },
+      { name: "Ernst & Young (EY)", sector: "Professional", total: 278 },
+      { name: "University Limerick Hospitals", sector: "Healthcare", total: 251 },
+      { name: "Amazon Development Centre", sector: "Technology", total: 245 },
+      { name: "Redwood Extended Care Facility", sector: "Healthcare", total: 237 },
+      { name: "Accenture Limited", sector: "Technology", total: 195 },
+      { name: "Tata Consultancy Services", sector: "Technology", total: 153 },
+      { name: "Cork University Hospital", sector: "Healthcare", total: 146 },
+      { name: "WuXi Biologics Ireland", sector: "Technology", total: 130 },
+      { name: "Mowlam Healthcare Services", sector: "Healthcare", total: 129 },
+      { name: "Amazon Web Services EMEA", sector: "Technology", total: 125 },
+      { name: "Resilience Healthcare", sector: "Healthcare", total: 117 },
+      { name: "Dawn Meats Ireland", sector: "Other", total: 111 },
+      { name: "Monaghan Mushrooms", sector: "Other", total: 111 },
+      { name: "Cognizant Technology", sector: "Technology", total: 103 },
+      { name: "Deloitte Ireland", sector: "Technology", total: 99 },
+      { name: "University Hospital Kerry", sector: "Healthcare", total: 97 },
+      { name: "Meta Platforms Ireland", sector: "Technology", total: 83 },
+      { name: "SFDC (Salesforce) Ireland", sector: "Technology", total: 83 },
+      { name: "Children's Health Ireland", sector: "Healthcare", total: 82 },
+      { name: "Intel Ireland Limited", sector: "Technology", total: 74 },
+      { name: "InisCare Limited", sector: "Healthcare", total: 73 },
+      { name: "Tusla - Child & Family", sector: "Other", total: 64 },
+      { name: "Analog Devices", sector: "Technology", total: 77 },
+      { name: "Galway University Hospital", sector: "Healthcare", total: 72 }
+    ].sort(function (a, b) { return b.total - a.total; })
+  };
+  var top = data.companies[0].total;
 
-  gtag('config', 'G-SYLBWXTBRG');
+  // Table: built with textContent, so no company name is ever read as HTML.
+  var body = document.getElementById("dataTable"), status = document.getElementById("tableStatus");
+  function renderTable(filter) {
+    var f = filter.trim().toLowerCase(), shown = 0;
+    body.innerHTML = "";
+    data.companies.forEach(function (c) {
+      if (f && c.name.toLowerCase().indexOf(f) < 0 && c.sector.toLowerCase().indexOf(f) < 0) return;
+      shown++;
+      var tr = document.createElement("tr"), pct = Math.round(c.total / top * 100);
+      tr.innerHTML = '<td class="co"></td><td><span class="badge"></span></td><td><span class="share"><span class="bar"><i></i></span><span class="mono small"></span></span></td><td class="r mono"></td>';
+      tr.children[0].textContent = c.name;
+      tr.children[1].firstChild.textContent = c.sector;
+      tr.querySelector("i").style.width = pct + "%";
+      tr.querySelector(".share .mono").textContent = pct + "%";
+      tr.children[3].textContent = c.total;
+      body.appendChild(tr);
+    });
+    status.textContent = f ? shown + " of " + data.companies.length + " employers match." : "";
+  }
+  document.getElementById("dbSearch").addEventListener("input", function (e) { renderTable(e.target.value); });
+  renderTable("");
+
+  // Chart.js (about 200 KB) loads only when the charts come into view, so the text and table show first on phones.
+  var charts = document.querySelector(".permit-charts"), chartsLoaded = false;
+  function loadCharts() {
+    if (chartsLoaded) return;
+    chartsLoaded = true;
+    var sc = document.createElement("script");
+    sc.src = "{{ '/assets/vendor/chart-4.4.1.umd.js' | relative_url }}";
+    sc.onload = drawCharts;
+    document.head.appendChild(sc);
+  }
+  if (window.IntersectionObserver) new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { o.disconnect(); loadCharts(); } }, { rootMargin: "200px 0px" }).observe(charts);
+  else loadCharts();
+
+  // Charts take their colours from the site's theme and redraw when the visitor switches theme.
+  function drawCharts() {
+    var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+    var velocity = new Chart(document.getElementById("velocityChart"), {
+      type: "bar",
+      data: { labels: data.months, datasets: [{ label: "Permits", data: data.monthly, borderRadius: 6 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
+    });
+    var sector = new Chart(document.getElementById("sectorChart"), {
+      type: "pie",
+      data: { labels: Object.keys(data.sectors), datasets: [{ data: Object.values(data.sectors), borderWidth: 2 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom", labels: { boxWidth: 10, padding: 15 } } } }
+    });
+    function paint() {
+      Chart.defaults.color = css("--muted");
+      Chart.defaults.borderColor = css("--line");
+      Chart.defaults.font.family = css("--font");
+      velocity.data.datasets[0].backgroundColor = css("--accent");
+      sector.data.datasets[0].backgroundColor = ["--accent", "--dg-ok", "--dg-warn", "--dg-user", "--dg-bad", "--dg-n"].map(css);
+      sector.data.datasets[0].borderColor = css("--card");
+      ["x", "y"].forEach(function (a) { velocity.options.scales[a].ticks.color = css("--muted"); velocity.options.scales[a].grid.color = css("--line"); });
+      sector.options.plugins.legend.labels.color = css("--muted");
+      velocity.update(); sector.update();
+    }
+    paint();
+    new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  }
+});
 </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employment Permits 2025 Dashboard, Ireland | {{ site.title | escape }}</title>
-    <meta name="author" content="Malav Naik">
-    <meta name="description" content="Explore employment permits issued to companies in Ireland in 2025 by sector, employer and month. Built by Malav Naik, Data &amp; GenAI Engineer in Dublin.">
-    <link rel="canonical" href="https://malavnaik.com/permits-2025/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ site.title | escape }}">
-    <meta property="og:title" content="Employment Permits 2025 Dashboard, Ireland">
-    <meta property="og:description" content="Explore employment permits issued to companies in Ireland in 2025 by sector, employer and month. Built by Malav Naik, Data &amp; GenAI Engineer in Dublin.">
-    <meta property="og:url" content="https://malavnaik.com/permits-2025/">
-    <meta property="og:image" content="https://malavnaik.com/images/og-banner.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        .glass-card { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; transition: transform 0.2s; }
-        .glass-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .chart-container { position: relative; height: 280px; width: 100%; }
-    </style>
-{% include schema.html %}
-</head>
-<body class="text-slate-900">
-
-    <!-- Navbar -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="bg-indigo-600 p-1.5 rounded-lg text-white">
-                    <i class="fas fa-passport"></i>
-                </div>
-                <h1 class="font-bold text-xl tracking-tight">Permit<span class="text-indigo-600">Sync</span> 2025</h1>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">V2.4 REAL-DATA</span>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl mx-auto px-4 py-8">
-        
-        <!-- Key Metrics -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="glass-card p-6">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Total Permits</span>
-                    <i class="fas fa-globe text-indigo-500"></i>
-                </div>
-                <div class="text-3xl font-extrabold">31,044</div>
-                <div class="text-xs text-green-600 mt-2 font-semibold">
-                    <i class="fas fa-check-circle mr-1"></i> Verified Dataset
-                </div>
-            </div>
-
-            <div class="glass-card p-6">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Top Sector</span>
-                    <i class="fas fa-microchip text-blue-500"></i>
-                </div>
-                <div class="text-3xl font-extrabold text-blue-600">Technology</div>
-                <div class="text-xs text-slate-500 mt-2">52.8% of total volume</div>
-            </div>
-
-            <div class="glass-card p-6">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Peak Month</span>
-                    <i class="fas fa-calendar-alt text-orange-500"></i>
-                </div>
-                <div class="text-3xl font-extrabold">January</div>
-                <div class="text-xs text-slate-500 mt-2">3,798 applications</div>
-            </div>
-
-            <div class="glass-card p-6">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-slate-500 text-sm font-medium uppercase tracking-wider">Top Employer</span>
-                    <i class="fas fa-building text-purple-500"></i>
-                </div>
-                <div class="text-xl font-extrabold truncate">Google Ireland</div>
-                <div class="text-xs text-slate-500 mt-2">368 Permits Issued</div>
-            </div>
-        </div>
-
-        <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            <div class="lg:col-span-2 glass-card p-6">
-                <h3 class="font-bold text-slate-800 mb-6">Yearly Issuance Velocity</h3>
-                <div class="chart-container">
-                    <canvas id="velocityChart"></canvas>
-                </div>
-            </div>
-            <div class="glass-card p-6">
-                <h3 class="font-bold text-slate-800 mb-6">Market Share by Sector</h3>
-                <div class="chart-container">
-                    <canvas id="sectorChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Interactive Explorer -->
-        <div class="glass-card shadow-sm overflow-hidden">
-            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <h3 class="font-bold text-lg">Top 50 Employers Database</h3>
-                    <p class="text-sm text-slate-500">Real-time search through the 2025 verified company list</p>
-                </div>
-                <div class="relative w-full md:w-96">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="dbSearch" placeholder="Filter by company name or sector..." 
-                           class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                </div>
-            </div>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-widest">
-                        <tr>
-                            <th class="px-6 py-4">Company Name</th>
-                            <th class="px-6 py-4">Categorized Sector</th>
-                            <th class="px-6 py-4">Impact Score</th>
-                            <th class="px-6 py-4 text-right">Total Permits</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTable" class="divide-y divide-slate-100 text-sm">
-                        <!-- JS injected data -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        // DATA VERIFIED FROM CSV ANALYSIS
-        const data = {
-            monthly: [3798, 2994, 3191, 1668, 1820, 1684, 2180, 2661, 2627, 3092, 2889, 2440],
-            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            sectors: {
-                "Technology": 16389,
-                "Healthcare": 6906,
-                "Hospitality": 1765,
-                "Eng & Logistics": 443,
-                "Professional": 353,
-                "Other": 5188
-            },
-            companies: [
-                { name: "Google Ireland Limited", sector: "Technology", total: 368 },
-                { name: "Ernst & Young (EY)", sector: "Professional", total: 278 },
-                { name: "University Limerick Hospitals", sector: "Healthcare", total: 251 },
-                { name: "Amazon Development Centre", sector: "Technology", total: 245 },
-                { name: "Redwood Extended Care Facility", sector: "Healthcare", total: 237 },
-                { name: "Accenture Limited", sector: "Technology", total: 195 },
-                { name: "Tata Consultancy Services", sector: "Technology", total: 153 },
-                { name: "Cork University Hospital", sector: "Healthcare", total: 146 },
-                { name: "WuXi Biologics Ireland", sector: "Technology", total: 130 },
-                { name: "Mowlam Healthcare Services", sector: "Healthcare", total: 129 },
-                { name: "Amazon Web Services EMEA", sector: "Technology", total: 125 },
-                { name: "Resilience Healthcare", sector: "Healthcare", total: 117 },
-                { name: "Dawn Meats Ireland", sector: "Other", total: 111 },
-                { name: "Monaghan Mushrooms", sector: "Other", total: 111 },
-                { name: "Cognizant Technology", sector: "Technology", total: 103 },
-                { name: "Deloitte Ireland", sector: "Technology", total: 99 },
-                { name: "University Hospital Kerry", sector: "Healthcare", total: 97 },
-                { name: "Meta Platforms Ireland", sector: "Technology", total: 83 },
-                { name: "SFDC (Salesforce) Ireland", sector: "Technology", total: 83 },
-                { name: "Children's Health Ireland", sector: "Healthcare", total: 82 },
-                { name: "Intel Ireland Limited", sector: "Technology", total: 74 },
-                { name: "InisCare Limited", sector: "Healthcare", total: 73 },
-                { name: "Tusla - Child & Family", sector: "Other", total: 64 },
-                { name: "Analog Devices", sector: "Technology", total: 77 },
-                { name: "Galway University Hospital", sector: "Healthcare", total: 72 }
-            ]
-        };
-
-        // Charts Initialization
-        const ctxVelocity = document.getElementById('velocityChart').getContext('2d');
-        new Chart(ctxVelocity, {
-            type: 'bar',
-            data: {
-                labels: data.months,
-                datasets: [{
-                    label: 'Monthly Permits',
-                    data: data.monthly,
-                    backgroundColor: 'rgba(79, 70, 229, 0.8)',
-                    borderRadius: 6,
-                    hoverBackgroundColor: '#4f46e5'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
-                    x: { grid: { display: false } }
-                }
-            }
-        });
-
-        const ctxSector = document.getElementById('sectorChart').getContext('2d');
-        new Chart(ctxSector, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(data.sectors),
-                datasets: [{
-                    data: Object.values(data.sectors),
-                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#94a3b8'],
-                    borderWidth: 2,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { boxWidth: 10, padding: 15 } }
-                }
-            }
-        });
-
-        // Table Render
-        const tableBody = document.getElementById('dataTable');
-        const searchInput = document.getElementById('dbSearch');
-
-        function renderTable(filter = "") {
-            tableBody.innerHTML = "";
-            const filtered = data.companies.filter(c => 
-                c.name.toLowerCase().includes(filter.toLowerCase()) || 
-                c.sector.toLowerCase().includes(filter.toLowerCase())
-            );
-
-            filtered.forEach(c => {
-                const sectorStyles = {
-                    "Technology": "bg-blue-50 text-blue-600 border-blue-100",
-                    "Healthcare": "bg-green-50 text-green-600 border-green-100",
-                    "Professional": "bg-purple-50 text-purple-600 border-purple-100",
-                    "Other": "bg-slate-50 text-slate-600 border-slate-100"
-                }[c.sector] || "bg-slate-50 text-slate-600";
-
-                const progress = (c.total / 368) * 100;
-
-                const row = `
-                    <tr class="hover:bg-slate-50/80 transition-all">
-                        <td class="px-6 py-4 font-semibold text-slate-900">${c.name}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded-md text-xs font-bold border ${sectorStyles}">
-                                ${c.sector}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-indigo-500 h-full" style="width: ${progress}%"></div>
-                                </div>
-                                <span class="text-[10px] text-slate-400 font-bold">${Math.round(progress)}%</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 text-right font-mono font-bold text-indigo-600">${c.total}</td>
-                    </tr>
-                `;
-                tableBody.insertAdjacentHTML('beforeend', row);
-            });
-        }
-
-        searchInput.addEventListener('input', (e) => renderTable(e.target.value));
-        renderTable();
-    </script>
-</body>
-</html>

@@ -61,7 +61,7 @@ document.getElementById('load-demo').onclick = function () {
 ## Results
 How often the right article was found, on the 25 test questions (searching the 482 article chunks). Keyword = BM25:
 
-| | Keyword | Semantic | Hybrid |
+| Measure | Keyword | Semantic | Hybrid |
 |---|---|---|---|
 | Ranked first | 48% | 52% | **56%** |
 | In top 3 | 68% | **84%** | 80% |

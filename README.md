@@ -18,8 +18,8 @@ The site has:
 | Hosting | GitHub Pages, built and deployed by a GitHub Actions workflow ([`static.yml`](.github/workflows/static.yml)) |
 | Domain | `malavnaik.com` with Cloudflare DNS and HTTPS |
 | Front end | Semantic HTML, one stylesheet with design tokens ([`assets/site.css`](assets/site.css)), dark and light themes, and a small vanilla JavaScript file ([`assets/site.js`](assets/site.js)) |
-| Interactive sandboxes | "Islands" that load only on click ([`assets/islands/`](assets/islands)): a moderation threshold explorer, a keyword-vs-vector search comparison, and an in-browser SQL console (DuckDB-WASM in a Web Worker) |
-| Search | Ctrl+K over a build-time index ([`search.json`](search.json)) |
+| Interactive sandboxes | "Islands" that load only when they scroll into view ([`assets/islands/`](assets/islands)): a moderation threshold explorer, a keyword-vs-vector search comparison, and an in-browser SQL console (DuckDB-WASM in a Web Worker) |
+| Search | Ctrl+K and the home page "Ask about my work" box, over a build-time index ([`search.json`](search.json)) |
 | SEO | `jekyll-seo-tag` (titles, Open Graph and Twitter cards), `jekyll-sitemap`, `jekyll-feed` (RSS) |
 | Structured data | schema.org JSON-LD for Person, WebSite, BlogPosting and BreadcrumbList ([`_includes/schema.html`](_includes/schema.html)) |
 | AI and answer engines | [`llms.txt`](llms.txt), a [`robots.txt`](robots.txt) that welcomes search and AI crawlers, and an optional TL;DR and FAQ on each post |
@@ -61,7 +61,7 @@ work/, writing/ the Work and Writing index pages (old /projects/ and /blog/ redi
 blog/           tags and series hub pages
 assets/         stylesheet, site JavaScript, sandbox islands and their data
 images/         photos and the social share image
-permits-2025/   the Employment Permits 2025 dashboard (Chart.js)
+permits-2025/   the Employment Permits 2025 dashboard (Chart.js, pinned copy in assets/vendor/)
 docs/           README assets (not published)
 ```
 
