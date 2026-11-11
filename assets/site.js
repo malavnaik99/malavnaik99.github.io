@@ -1,4 +1,4 @@
-// Theme, menu, tabs, ask-chips, copy buttons, blog filter and the live pipeline readout.
+// Theme, menu, tabs, the Ask box, copy buttons, blog filter, sandbox islands and the live pipeline readout.
 // Vanilla JS; every word of content is already in the HTML, so the site works without it.
 (function () {
   var root = document.documentElement;
@@ -181,27 +181,6 @@
   if (searchBtn) searchBtn.addEventListener("click", openSearch);
   document.addEventListener("keydown", function (e) {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openSearch(); }
-  });
-
-  // Hero: the h1 "decodes" under an aria-hidden copy (the real text stays in the page), and a spotlight follows the mouse on desktop.
-  var hero = $(".hero"), h1 = hero && $("h1", hero);
-  var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (h1 && !still) {
-    var line = h1.textContent, pool = "01#$%&ABCDEF<>/{}", tick = 0;
-    var over = document.createElement("span");
-    over.className = "decode"; over.setAttribute("aria-hidden", "true");
-    h1.appendChild(over); h1.classList.add("decoding");
-    var timer = setInterval(function () {
-      var upto = Math.floor(Math.min(1, ++tick / 36) * line.length), out = "";
-      for (var i = 0; i < line.length; i++) out += i < upto || line[i] === " " ? line[i] : pool[(i * 7 + tick * 3) % pool.length];
-      over.textContent = out;
-      if (upto >= line.length) { clearInterval(timer); h1.classList.remove("decoding"); over.remove(); }
-    }, 45);
-  }
-  if (hero && !still && matchMedia("(pointer: fine) and (min-width: 761px)").matches) hero.addEventListener("pointermove", function (e) {
-    var r = hero.getBoundingClientRect();
-    hero.style.setProperty("--mx", (e.clientX - r.left) / r.width * 100 + "%");
-    hero.style.setProperty("--my", (e.clientY - r.top) / r.height * 100 + "%");
   });
 
   // Live signals ticker: a tap or click pauses and resumes it (hover pauses it too, in CSS).
