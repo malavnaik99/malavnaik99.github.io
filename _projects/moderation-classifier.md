@@ -68,7 +68,7 @@ document.getElementById('load-demo').onclick = function () {
 ## Results
 On 180,488 held-out test comments (8.0% toxic):
 
-| | Simple baseline | DistilBERT |
+| Measure | Simple baseline | DistilBERT |
 |---|---|---|
 | How well it ranks comments (ROC-AUC, 1 = perfect) | 0.941 | **0.957** |
 | Toxic comments auto-actioned at ≥ 90% precision | 30.9% | **36.6%** |

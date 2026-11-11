@@ -39,7 +39,7 @@ Before building the demo, I wrote **25 questions in everyday language**, each wi
 - **Semantic search:** a small open model (`all-MiniLM-L6-v2`) turns text into vectors, so it can match meaning, not just exact words.
 - **Hybrid:** both rankings combined.
 
-| | Keyword | Semantic | Hybrid |
+| Measure | Keyword | Semantic | Hybrid |
 |---|---|---|---|
 | Right article ranked first | 48% | 52% | **56%** |
 | Right article in the top 3 | 68% | **84%** | 80% |
