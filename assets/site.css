@@ -165,6 +165,22 @@ main { display: block; }
 @media (max-width: 560px) { .hero-copy { gap: 16px; } .hero .sub { font-size: 1rem; } .hero .pill { font-size: .75rem; } .hero-inner { gap: 24px; } }
 @media (max-width: 420px) { .hero-demo .meter { grid-template-columns: 1fr; } .hero-demo .groups li { grid-template-columns: 6.6rem 1fr 3.4rem; } }
 
+/* Live signals ticker: the second list is an aria-hidden copy so the loop is seamless. Pauses on hover, focus or tap;
+   stands still and wraps for visitors who ask for reduced motion. */
+.ticker { display: flex; width: 100vw; margin-left: calc(50% - 50vw); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--glass); overflow: hidden; }
+.ticker-label { flex: none; position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 14px 18px; border-right: 1px solid var(--line); background: var(--bg); font: 500 .75rem/1.4 var(--font-mono); color: var(--live); text-transform: uppercase; letter-spacing: .04em; }
+.ticker-label .dot { width: 7px; height: 7px; margin: 0; background: var(--live); box-shadow: 0 0 10px var(--live); }
+.ticker-view { flex: 1; min-width: 0; overflow: hidden; }
+.ticker-track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+.ticker:hover .ticker-track, .ticker:focus-within .ticker-track, .ticker.paused .ticker-track { animation-play-state: paused; }
+.ticker ul { display: flex; margin: 0; padding: 14px 0; list-style: none; font: 400 .8125rem/1.4 var(--font-mono); white-space: nowrap; }
+.ticker li { padding: 0 26px; border-right: 1px solid var(--line); color: var(--muted); }
+.ticker b { font-weight: 500; color: var(--label); }
+.ticker [data-pipeline] .dot { margin: 0 .3rem 0 .2rem; } .ticker .status { color: var(--sub); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .ticker ul[aria-hidden] { display: none; } .ticker-track { width: auto; } .ticker ul { flex-wrap: wrap; white-space: normal; row-gap: 8px; } }
+@media (max-width: 760px) { .ticker-label { padding: 14px 12px; } }
+
 /* Proof strip: four standing facts, each a link to its project. Green appears only when the pipeline is really live. */
 .proof { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-block: 1px solid var(--line); }
 .proof li + li { border-left: 1px solid var(--line); }

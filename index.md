@@ -21,6 +21,22 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   </div>
 </section>
 
+{% capture signals %}
+  <li><span class="k">pipeline</span> <span data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></span></li>
+  <li><b>0.957</b> <span class="k">ROC-AUC, content moderation model</span></li>
+  <li><b>14</b> <span class="k">automatic data tests on every run</span></li>
+  <li><b>€0</b> <span class="k">monthly cost</span></li>
+  <li><span class="k">Ask the EU Digital Services Act</span> <b>84% top-3 hit rate</b></li>
+  {% if lab %}<li><span class="k">blog bot</span> <b>{{ lab.posts_published }}</b> <span class="k">posts published</span></li>
+  <li><b>{{ lab.posts_queued }}</b> <span class="k">queued</span></li>{% endif %}
+  <li>{% include cadentiq-cta.html variant="link" placement="ticker" %}</li>
+  {% for post in site.posts limit: 1 %}<li><span class="k">{{ post.date | date: "%-d %b %Y" }}</span> <b>{{ post.title }}</b></li>{% endfor %}
+{% endcapture %}
+<section class="ticker" aria-labelledby="ticker-title">
+  <p class="ticker-label" id="ticker-title"><span class="dot" aria-hidden="true"></span>Live signals</p>
+  <div class="ticker-view"><div class="ticker-track"><ul>{{ signals }}</ul><ul aria-hidden="true">{{ signals | replace: '<a ', '<a tabindex="-1" ' }}</ul></div></div>
+</section>
+
 {%- comment -%} Four standing facts; each figure is sourced in docs/METRIC_SOURCES.md and links to its project. {%- endcomment %}
 <ul class="proof" aria-label="Proof in numbers">
   <li><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}"><span class="num num-status" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></span><span class="what">Dublin bikes data pipeline</span></a></li>

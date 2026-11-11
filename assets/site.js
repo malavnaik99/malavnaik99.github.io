@@ -183,6 +183,10 @@
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openSearch(); }
   });
 
+  // Live signals ticker: a tap or click pauses and resumes it (hover pauses it too, in CSS).
+  var ticker = $(".ticker");
+  if (ticker) ticker.addEventListener("click", function () { ticker.classList.toggle("paused"); });
+
   // Live pipeline readout: the latest successful run of the public Dublin bikes collector on GitHub Actions.
   // Without an answer within 4 seconds, the page keeps saying "runs every 15 min" and claims nothing live.
   var live = $$("[data-pipeline]");
