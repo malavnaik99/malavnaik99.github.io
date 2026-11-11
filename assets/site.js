@@ -145,6 +145,17 @@
     });
   });
 
+  // Shareable sandbox links: a full sandbox (one inside a .sandbox-card) keeps its state in the page address
+  // (?t= threshold, ?q= question, ?sql= query), so "Copy link" reopens it exactly as it was. Only visitor actions write it.
+  window.sandboxState = {
+    get: function (k) { try { return new URLSearchParams(location.search).get(k); } catch (e) { return null; } },
+    set: function (k, v) { try { var u = new URL(location.href); u.searchParams.set(k, v); history.replaceState(history.state, "", u); } catch (e) {} },
+    link: function (card) {
+      var b = copyButton("Copy link to this view", function () { var u = new URL(location.href); u.hash = card.id; return u.href; }, "btn small share-link");
+      var p = document.createElement("p"); p.className = "share"; p.appendChild(b); return p;
+    }
+  };
+
   // Sandboxes are islands: each one's code loads when it comes into view (or its button is pressed), never before.
   // On the home page they sit in closed rows, so they open when the visitor expands the row.
   function openIsland(box) {

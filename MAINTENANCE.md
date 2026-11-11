@@ -26,6 +26,8 @@ updates it while the problem lasts, and closes it by itself once fixed. Issues: 
 | **No Site health run on a Monday** | GitHub pauses scheduled workflows in public repos after **60 days with no activity** | **Actions → Site health → Enable workflow**, then **Run workflow**. (The weekly blog bot normally keeps the repo active.) |
 | The **Employment Permits 2025** page shows no charts | Its chart library, a fixed copy at `assets/vendor/chart-4.4.1.umd.js`, was moved or deleted | Ask Claude: "The permits dashboard charts are missing; restore assets/vendor/chart-4.4.1.umd.js." The numbers and table still work without it. |
 | The **"Ask about my work"** box or **Ctrl+K search** finds nothing | `search.json` (the list of pages it searches) didn't build, or `assets/islands/search.js` broke | Open https://malavnaik.com/search.json: it should show a list of pages. If it doesn't, ask Claude with a screenshot. The three example questions keep working either way. |
+| A **project chart** on the home page or /work/ looks wrong or empty | The chart files in `_includes/charts/` don't match the data any more (someone changed a data file) | Ask Claude: "Run scripts/make_charts.py and check the project charts." It redraws them from the data files and checks them. |
+| A **shared Labs link** opens the sandbox at the default setting | The link lost its `?t=`, `?q=` or `?sql=` part (some apps cut it off), or the value isn't one the sandbox knows | Nothing is broken: the sandbox falls back to its default. Copy the link again with **Copy link to this view**. |
 | A shared link shows the **old preview image/title** on LinkedIn | LinkedIn cached the old preview | https://www.linkedin.com/post-inspector/ → paste the URL → **Inspect** (refreshes it). |
 
 ## Roll back a bad change
@@ -42,6 +44,9 @@ This is temporary: the next change to `main` publishes the newest version again.
 - Identity (name, title, email, bios, profiles): `identity/identity.json`, the single source of truth. `scripts/check_identity.py` stops a deploy that drifts from it.
 - Page head, previews, structured data: `_layouts/default.html`, `_includes/schema.html`, `_config.yml`
 - Sandboxes and search: `assets/islands/` (one file each, loaded only when needed), data in `assets/data/`. Ctrl+K and the home "Ask" box both use `search.js` over `search.json`.
+- Project rows (home page and /work/): `_includes/project-row.html`; each project's row text, headline number, chart and "Try it" link are in its `_projects/*.md` front matter (`home: true` puts it on the home page). Charts: `_includes/charts/`, drawn by `scripts/make_charts.py` (automation bars are drawn at build time from `_data/automation.json`).
+- Labs (/labs/): the three sandboxes on one page. Each keeps its state in the address (`?t=` threshold, `?q=` question, `?sql=` query) via `window.sandboxState` in `assets/site.js`.
+- Menu: Work, Labs, Writing, About (+ Résumé), set in `_layouts/default.html`. Toolkit and Journey are sections of the home page (`/#toolkit`, `/#journey`).
 - Permits dashboard: `permits-2025/index.html` (figures from `permits-issued-to-companies-2025.xlsx`); its chart library is the pinned copy in `assets/vendor/`.
 - Health check: `.github/workflows/site-health.yml` + `scripts/site_health.py` (`python3 scripts/site_health.py` runs it locally)
 - Backlinks: `backlinks/README.md` (kit), `backlinks/tracker.csv`, `backlinks/ROUTINE.md`

@@ -30,8 +30,11 @@
           ol.parentNode.querySelector("h4").setAttribute("data-verdict", hit ? "found it in the top 3" : "missed it");
         });
       }
-      sel.addEventListener("change", function () { show(+sel.value); });
-      show(0);
+      var card = box.closest(".sandbox-card"), st = card && window.sandboxState; // shareable question (?q=, 1-based)
+      var q = st ? parseInt(st.get("q"), 10) : NaN, first = q >= 1 && q <= d.examples.length ? q - 1 : 0;
+      sel.addEventListener("change", function () { show(+sel.value); if (st) st.set("q", +sel.value + 1); });
+      sel.value = first; show(first);
+      if (st) box.appendChild(st.link(card));
     }).catch(function () { box.innerHTML = '<p class="small muted">The saved results could not be loaded. Please try again later.</p>'; });
   };
 })();

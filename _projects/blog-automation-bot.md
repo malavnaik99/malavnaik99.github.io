@@ -6,6 +6,13 @@ approach: "A Python bot on GitHub Actions that previews each post on Telegram an
 result: "Posts go to the blog, DEV and LinkedIn in about a minute of my time, on GitHub's free tier."
 description: "A Python bot by Data & GenAI Engineer Malav Naik that previews blog posts on Telegram and, after approval, publishes them to the blog, DEV and LinkedIn."
 order: 6
+# Project row (home page and /work/)
+oneline: "Writes nothing until I approve on Telegram, then publishes each post to my blog, DEV and LinkedIn."
+headline_lab: "posts_published"
+headline_label: "posts published, each approved on Telegram"
+chart: "automation"
+try_url: "/projects/blog-automation-bot/#sandbox-automation"
+try_label: "Watch the flow"
 featured: true
 sandbox: automation
 code_url: https://github.com/malavnaik99/telegram-approval-bots

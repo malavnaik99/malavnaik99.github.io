@@ -6,6 +6,13 @@ approach: "Trained a TF-IDF baseline and DistilBERT on 1.8 million public commen
 result: "ROC-AUC 0.957; 36.6% of toxic comments auto-actioned at ≥ 90% precision; harmless comments wrongly flagged cut from 12.8% to 9.6%."
 description: "A DistilBERT content moderation classifier by Data & GenAI Engineer Malav Naik on Civil Comments, with threshold policies, a review queue and fairness checks."
 order: 1
+# Project row (home page and /work/)
+oneline: "A toxicity classifier trained on 1.8 million public comments, with review thresholds and a fairness check by identity group."
+headline: "0.957"
+headline_label: "ROC-AUC on 180,488 held-out comments"
+chart: "moderation"
+try_url: "/labs/#sandbox-moderation"
+home: true
 featured: true
 sandbox: moderation
 code_url: https://github.com/malavnaik99/moderation-classifier

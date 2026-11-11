@@ -6,6 +6,13 @@ approach: "Split the official text into 482 chunks and compared keyword, semanti
 result: "The right article is in the top 3 for 84% of test questions (72% in the free browser version)."
 description: "Semantic search over the EU Digital Services Act by Data & GenAI Engineer Malav Naik: keyword, semantic and hybrid search compared on 25 hand-written test questions."
 order: 3
+# Project row (home page and /work/)
+oneline: "Ask a question in plain English and get the articles of the EU Digital Services Act that answer it, quoted and linked."
+headline: "84%"
+headline_label: "of test questions with the right article in the top 3"
+chart: "dsa"
+try_url: "/labs/#sandbox-dsa"
+home: true
 featured: true
 sandbox: dsa
 code_url: https://github.com/malavnaik99/eu-dsa-search

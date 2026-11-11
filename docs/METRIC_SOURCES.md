@@ -5,17 +5,19 @@ Every metric shown on malavnaik.com must trace to a source below. If a number ca
 | Shown | Where it appears | Source |
 |---|---|---|
 | ~10 years in data | Hero paragraph, Ask answer | About page ("about 10 years of experience across India and Ireland"); résumé dates 2015 to today |
-| 0.957 ROC-AUC | Proof strip, Ask answer, project row 01 | Moderation classifier page, Results table: DistilBERT ROC-AUC 0.957 on 180,488 held-out comments ([Kaggle notebook](https://www.kaggle.com/code/malavnaik/moderation-classifier-civil-comments), final run v10) |
-| 1.8 million comments | Ask answer, project row 01 | Moderation classifier page: Civil Comments data, 1.8 million comments (CC0) |
-| 15 min refresh / collection interval | Proof strip ("runs every 15 min"), featured card, readout | Dublin bikes page: "a Python job on GitHub Actions, started every 15 minutes" (`ingest.yml`, nudged by cron-job.org every 15 minutes) |
-| €0 a month | Featured card, Ask answer | Dublin bikes page: "Cost: €0" (GitHub Actions on a public repo, Hugging Face free datasets) |
-| 14 automatic data tests | Proof strip, featured card, pipeline diagram, Ask answer | Dublin bikes page, step 3: "14 automatic data tests run every time" (dbt tests in `dublin-data-pipeline`) |
+| 0.957 ROC-AUC | Proof strip, ticker, Ask answer, project row (home and /work/) | Moderation classifier page, Results table: DistilBERT ROC-AUC 0.957 on 180,488 held-out comments ([Kaggle notebook](https://www.kaggle.com/code/malavnaik/moderation-classifier-civil-comments), final run v10) |
+| 1.8 million comments | Ask answer, project row summary | Moderation classifier page: Civil Comments data, 1.8 million comments (CC0) |
+| 15 min refresh / collection interval | Proof strip ("runs every 15 min"), ticker, project row summary, readout | Dublin bikes page: "a Python job on GitHub Actions, started every 15 minutes" (`ingest.yml`, nudged by cron-job.org every 15 minutes) |
+| €0 a month | Ticker, project row summary, Ask answer | Dublin bikes page: "Cost: €0" (GitHub Actions on a public repo, Hugging Face free datasets) |
+| 14 automatic data tests | Proof strip, ticker, project row (headline number), pipeline diagram, Ask answer | Dublin bikes page, step 3: "14 automatic data tests run every time" (dbt tests in `dublin-data-pipeline`) |
 | Live "last run N min ago" | Proof strip, photo-card readout, featured badge | Fetched in the browser from the GitHub Actions API: the latest successful run of `ingest.yml` in the public repo `malavnaik99/dublin-data-pipeline`. Shown as live only if that run finished within the last 60 minutes; otherwise the page says "runs every 15 min" |
 | MSc Data Analytics, NCI | Journey | Résumé and About: MSc in Data Analytics, National College of Ireland, 2024–2025 |
-| 84% top-3 hit rate | Proof strip, project row 02 | Ask the DSA page, Results: semantic search had the right article in the top 3 for 84% of the 25 test questions |
-| 48% skill match | Project row 03 | SkillBot page, Results: 48% of the 10 suggested skills were in the real ad (leave-one-out over 1,167 ads) |
-| N posts published, platform counts, queued | Project row 04, bot status line | `_data/automation.json`, written by the blog bot after each post |
+| 84% top-3 hit rate | Proof strip, ticker, project row (headline number) | Ask the DSA page, Results: semantic search had the right article in the top 3 for 84% of the 25 test questions |
+| 48% skill match | Project row (headline number and chart: 4.8 of 10) | SkillBot page, Results: 48% of the 10 suggested skills were in the real ad (leave-one-out over 1,167 ads) |
+| N posts published, platform counts, queued | Ticker, /work/ project row (headline number and posts-per-platform bars), bot status line | `_data/automation.json`, written by the blog bot after each post |
 | ~25% lower infrastructure cost | Ask answer, journey |
+| Project row charts | Home and /work/ project rows | Drawn by `scripts/make_charts.py` from: `assets/data/dublin-bikes/*.parquet` (average bikes per station by local hour, weekdays vs weekends, without STATION118 and the 0-dock station), `assets/data/moderation-sweep.json` (precision against recall, 0.22 and 0.82 marked), `assets/data/dsa-examples.json` (keyword 17 / 25, vector 21 / 25, recomputed and checked) and the 48% above (4.8 of 10). The automation bars come from `_data/automation.json` at every build. `python3 scripts/make_charts.py --check` says whether the drawn charts still match the data |
+| Other projects' headline numbers | /work/ project rows | Each project page's own result: 201,912 rents for 437 places (Irish rents page), 31,044 permits (the official 2025 spreadsheet in this repo), "1 tap" (Gmail auto-reply page: a routine reply becomes one tap) |
 | Precision, recall, share flagged and wrongly-flagged rates at each threshold | Home hero demo (all groups plus black, white, gay or lesbian, muslim), moderation sandbox | `assets/data/moderation-sweep.json` (see Sandboxes below). The hero's four groups are the four with the highest wrongly-flagged rate at the 0.22 review threshold | Résumé and post 03: the Azure SQL migration at S&P Global Market Intelligence cut infrastructure costs by about 25% |
 
 ## Sandboxes

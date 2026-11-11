@@ -73,78 +73,19 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   </div>
 </div>
 
-<section class="section" aria-labelledby="featured-title">
-  <p class="label"><b>01</b> / Featured project</p>
-  <article class="card card-big featured">
-    <div class="featured-top">
-      <h2 id="featured-title"><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}" style="color:inherit;text-decoration:none">Dublin bikes + weather data pipeline</a></h2>
-      <span><span class="try">Try it: SQL console</span> <span class="badge" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">running every 15 minutes</span></span></span>
-    </div>
-    <p class="muted" style="max-width:46rem">Collects every Dublinbikes station every 15 minutes, models it with dbt and DuckDB into a tested star schema, and feeds a live dashboard, on free tiers only.</p>
-    <ul class="stats">
-      <li><span class="num">15 min</span><span class="what">collection interval</span></li>
-      <li><span class="num">14</span><span class="what">automatic data tests on every run</span></li>
-      <li><span class="num">€0</span><span class="what">monthly cost</span></li>
-    </ul>
-    <ol class="flow" aria-label="How the pipeline works">
-      <li><b>Source</b><span>Dublinbikes + Met Éireann</span></li>
-      <li><b>DuckDB staging</b><span>types, time zones, de-duplication</span></li>
-      <li><b>dbt marts</b><span>star schema · 14 tests</span></li>
-      <li><b>Parquet on Hugging Face</b><span>public dataset</span></li>
-      <li><b>Dashboard + SQL console</b><span>in your browser</span></li>
-    </ol>
-    <p class="actions">
-      <a class="btn btn-accent" href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}#sql">Run SQL in your browser</a>
-      <a class="btn" href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}">Case study</a>
-    </p>
-  </article>
-</section>
-
-<section class="section" aria-labelledby="more-title">
-  <p class="label"><b>02</b> / More projects</p>
-  <h2 id="more-title" class="sr-only">More projects</h2>
-  <div class="rows">
-    <details class="row">
-      <summary><span class="n">01<span class="try">Try it</span></span><span class="t">Content moderation classifier + fairness check</span><span class="m">ROC-AUC 0.957</span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="row-body"><div>
-        <p>A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group, plus a demo that runs in your browser.</p>
-        <ul class="chips" aria-label="Stack"><li>Python</li><li>scikit-learn</li><li>PyTorch</li><li>DistilBERT</li><li>ONNX</li><li>transformers.js</li></ul>
-        {% include sandbox-moderation.html %}
-        <p class="small"><a href="{{ '/projects/moderation-classifier/' | relative_url }}">Read the case study</a></p>
-      </div></div>
-    </details>
-    <details class="row">
-      <summary><span class="n">02<span class="try">Try it</span></span><span class="t">Ask the EU Digital Services Act</span><span class="m">84% top-3 hit rate</span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="row-body"><div>
-        <p>Type a question in plain English and get the articles of the EU Digital Services Act that answer it, quoted and linked. Tested on 25 questions: semantic search put the right article in the top 3 for 84% of them.</p>
-        <ul class="chips" aria-label="Stack"><li>Python</li><li>BM25</li><li>sentence-transformers</li><li>transformers.js</li><li>Hugging Face</li></ul>
-        {% include sandbox-dsa.html %}
-        <p class="small"><a href="{{ '/projects/ask-the-dsa/' | relative_url }}">Read the case study</a></p>
-      </div></div>
-    </details>
-    <details class="row">
-      <summary><span class="n">03<span class="try">Try it</span></span><span class="t">SkillBot: from job title to the skills it needs</span><span class="m">48% skill match</span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="row-body"><div>
-        <p>My MSc project on personalised learning with LLMs and knowledge graphs, plus a free, tested rebuild: type a job title and see the skills real job ads ask for. In a leave-one-out test on 1,167 ads, 48% of suggested skills were in the real ad.</p>
-        <ul class="chips" aria-label="Stack"><li>Python</li><li>Knowledge graphs</li><li>sentence-transformers</li><li>transformers.js</li></ul>
-        <div class="sandbox"><p class="label">Sandbox</p><p class="small"><a class="btn small" href="https://huggingface.co/spaces/Malavnaik/skillbot-skills-explorer">Open the skills explorer</a> <a href="{{ '/projects/skillbot/' | relative_url }}">Case study</a></p></div>
-      </div></div>
-    </details>
-    <details class="row">
-      <summary><span class="n">04<span class="try">Walk-through</span></span><span class="t">Automation Lab: blog publishing with Telegram approval</span><span class="m">{{ lab.posts_published }} posts published</span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="row-body"><div>
-        <p>A bot that writes nothing until I approve on Telegram, then publishes each post to this site, DEV and LinkedIn, running for free on GitHub Actions.</p>
-        <ul class="chips" aria-label="Stack"><li>Python</li><li>GitHub Actions</li><li>Telegram Bot API</li><li>DEV API</li><li>LinkedIn API</li></ul>
-        {% include sandbox-automation.html %}
-        <p class="small"><a href="{{ '/projects/blog-automation-bot/' | relative_url }}">Read the case study</a></p>
-      </div></div>
-    </details>
-  </div>
-  <p style="margin-top:1.25rem"><a href="{{ '/work/' | relative_url }}">All projects →</a></p>
+<section class="section" id="work" aria-labelledby="work-title">
+  <p class="label"><b>01</b> / Selected work</p>
+  <div class="section-head"><h2 id="work-title">Projects, each with its own numbers</h2><a href="{{ '/work/' | relative_url }}">All projects →</a></div>
+  <ol class="prows">
+    {%- assign projects = site.projects | where: "home", true | sort: "order" -%}
+    {%- for p in projects %}
+    {% capture n %}{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% endcapture %}{% include project-row.html project=p n=n %}
+    {%- endfor %}
+  </ol>
 </section>
 
 <section class="section" id="toolkit" aria-labelledby="toolkit-title">
-  <p class="label"><b>03</b> / Toolkit</p>
+  <p class="label"><b>02</b> / Toolkit</p>
   <h2 id="toolkit-title">Tools I've used in real projects</h2>
   <div class="toolkit">
   <div class="tabs">
@@ -165,7 +106,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
 </section>
 
 <section class="section journey-section" id="journey" aria-labelledby="journey-title">
-  <p class="label"><b>04</b> / From Surat to Dublin</p>
+  <p class="label"><b>03</b> / From Surat to Dublin</p>
   <h2 id="journey-title">Ten years, two countries, one thread: data</h2>
   <figure class="photo-card">
     <img src="{{ '/images/malav-naik-portrait.jpg' | relative_url }}" alt="Malav Naik in a navy suit outside the Convention Centre Dublin" width="480" height="480" loading="lazy" decoding="async">
@@ -180,7 +121,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
 </section>
 
 <section class="section" aria-labelledby="writing-title">
-  <p class="label"><b>05</b> / Writing &amp; Automation Lab</p>
+  <p class="label"><b>04</b> / Writing &amp; Automation Lab</p>
   <div class="section-head"><h2 id="writing-title">Latest writing</h2><a href="{{ '/writing/' | relative_url }}">All posts →</a></div>
   {% if lab %}<p class="botline"><span class="dot" style="background:var(--live)" aria-hidden="true"></span>blog bot · <b>{{ lab.posts_published }}</b> posts published ·{% for p in lab.platforms %} {{ p[0] }} <b>{{ p[1] }}</b>{% unless forloop.last %} ·{% endunless %}{% endfor %} · <b>{{ lab.posts_queued }}</b> queued · updated {{ lab.updated | date: "%-d %b %Y" }}</p>{% endif %}
   <ul class="post-list post-cards">

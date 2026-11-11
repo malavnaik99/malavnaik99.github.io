@@ -6,6 +6,12 @@ approach: "A reproducible Python cleaning pipeline with a Kaggle notebook that r
 result: "201,912 rents for 437 places, 2008–2025, published on Kaggle and Hugging Face."
 description: "A cleaned open dataset of RTB average rents from the CSO, 2008–2025, by Data & GenAI Engineer Malav Naik, with a reproducible cleaning notebook."
 order: 5
+# Project row (home page and /work/)
+oneline: "The official average rent of new tenancies in every Irish county, town and area since 2008, as one tidy table."
+headline: "201,912"
+headline_label: "rents for 437 places, 2008–2025"
+try_url: "https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb"
+try_label: "Get the data"
 featured: true
 code_url: https://github.com/malavnaik99/irish-rents-dataset
 demo_url: https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
