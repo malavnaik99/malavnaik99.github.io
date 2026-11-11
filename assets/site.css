@@ -438,6 +438,8 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .permit-table .share .bar { display: inline-block; width: 4rem; height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
 .permit-table .share i { display: block; height: 100%; background: var(--accent); }
 @media (max-width: 860px) { .permit-charts { grid-template-columns: minmax(0, 1fr); } }
+/* Phones: the comparison bar repeats the Permits number, so drop that column and keep the table readable. */
+@media (max-width: 560px) { .permit-table th:nth-child(3), .permit-table td:nth-child(3) { display: none; } .permit-table th, .permit-table td { padding: .55rem .4rem; } }
 
 /* Search dialog (Ctrl+K) */
 .search-dialog { width: min(640px, calc(100vw - 32px)); max-height: 70vh; margin: 12vh auto auto; padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--text); }
