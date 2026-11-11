@@ -44,7 +44,6 @@ wide: true
 
 <p style="margin-top:2rem"><a href="{{ '/projects/permits-2025/' | relative_url }}">How I built this dashboard →</a></p>
 
-<script src="{{ '/assets/vendor/chart-4.4.1.umd.js' | relative_url }}" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   var data = {
@@ -103,31 +102,45 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("dbSearch").addEventListener("input", function (e) { renderTable(e.target.value); });
   renderTable("");
 
-  if (!window.Chart) return;
-  // Charts take their colours from the site's theme and redraw when the visitor switches theme.
-  var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
-  var velocity = new Chart(document.getElementById("velocityChart"), {
-    type: "bar",
-    data: { labels: data.months, datasets: [{ label: "Permits", data: data.monthly, borderRadius: 6 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
-  });
-  var sector = new Chart(document.getElementById("sectorChart"), {
-    type: "pie",
-    data: { labels: Object.keys(data.sectors), datasets: [{ data: Object.values(data.sectors), borderWidth: 2 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom", labels: { boxWidth: 10, padding: 15 } } } }
-  });
-  function paint() {
-    Chart.defaults.color = css("--muted");
-    Chart.defaults.borderColor = css("--line");
-    Chart.defaults.font.family = css("--font");
-    velocity.data.datasets[0].backgroundColor = css("--accent");
-    sector.data.datasets[0].backgroundColor = ["--accent", "--dg-ok", "--dg-warn", "--dg-user", "--dg-bad", "--dg-n"].map(css);
-    sector.data.datasets[0].borderColor = css("--card");
-    ["x", "y"].forEach(function (a) { velocity.options.scales[a].ticks.color = css("--muted"); velocity.options.scales[a].grid.color = css("--line"); });
-    sector.options.plugins.legend.labels.color = css("--muted");
-    velocity.update(); sector.update();
+  // Chart.js (about 200 KB) loads only when the charts come into view, so the text and table show first on phones.
+  var charts = document.querySelector(".permit-charts"), chartsLoaded = false;
+  function loadCharts() {
+    if (chartsLoaded) return;
+    chartsLoaded = true;
+    var sc = document.createElement("script");
+    sc.src = "{{ '/assets/vendor/chart-4.4.1.umd.js' | relative_url }}";
+    sc.onload = drawCharts;
+    document.head.appendChild(sc);
   }
-  paint();
-  new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.IntersectionObserver) new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { o.disconnect(); loadCharts(); } }, { rootMargin: "200px 0px" }).observe(charts);
+  else loadCharts();
+
+  // Charts take their colours from the site's theme and redraw when the visitor switches theme.
+  function drawCharts() {
+    var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+    var velocity = new Chart(document.getElementById("velocityChart"), {
+      type: "bar",
+      data: { labels: data.months, datasets: [{ label: "Permits", data: data.monthly, borderRadius: 6 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
+    });
+    var sector = new Chart(document.getElementById("sectorChart"), {
+      type: "pie",
+      data: { labels: Object.keys(data.sectors), datasets: [{ data: Object.values(data.sectors), borderWidth: 2 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom", labels: { boxWidth: 10, padding: 15 } } } }
+    });
+    function paint() {
+      Chart.defaults.color = css("--muted");
+      Chart.defaults.borderColor = css("--line");
+      Chart.defaults.font.family = css("--font");
+      velocity.data.datasets[0].backgroundColor = css("--accent");
+      sector.data.datasets[0].backgroundColor = ["--accent", "--dg-ok", "--dg-warn", "--dg-user", "--dg-bad", "--dg-n"].map(css);
+      sector.data.datasets[0].borderColor = css("--card");
+      ["x", "y"].forEach(function (a) { velocity.options.scales[a].ticks.color = css("--muted"); velocity.options.scales[a].grid.color = css("--line"); });
+      sector.options.plugins.legend.labels.color = css("--muted");
+      velocity.update(); sector.update();
+    }
+    paint();
+    new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  }
 });
 </script>
