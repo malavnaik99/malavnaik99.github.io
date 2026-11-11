@@ -22,6 +22,8 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
         <input id="ask-input" type="text" placeholder="e.g. How do you test a data pipeline?" autocomplete="off">
         <button class="btn btn-accent" type="submit">Ask</button>
       </form>
+      <p class="ask-status small" id="ask-status" role="status"></p>
+      <ul class="ask-results" id="ask-results" aria-label="Pages that match your question"></ul>
       <ul class="examples" aria-label="Example questions">
         <li><button type="button" data-answer="ans-1" aria-expanded="false" aria-controls="ans-1">What's your strongest project?</button></li>
         <li><button type="button" data-answer="ans-2" aria-expanded="false" aria-controls="ans-2">How do you build data pipelines?</button></li>
@@ -38,9 +40,6 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
       <div class="answer" id="ans-3" hidden>
         <p>About 10 years in data: Data Analyst at Bright Info Solutions, then Data Analyst &amp; ETL Developer at S&amp;P Global Market Intelligence, where an Azure SQL migration cut infrastructure costs by about 25%. Then an MSc in Data Analytics at National College of Ireland, and now platform integrity work at Accenture for a global technology client.</p>
         <p class="source">source: <a href="{{ '/about/' | relative_url }}">/about/</a></p>
-      </div>
-      <div class="answer" id="ask-soon" hidden>
-        <p>Coming soon: free-text answers are still being built. Try one of the example questions for now.</p>
       </div>
     </div>
   </div>
@@ -74,7 +73,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   <article class="card card-big featured">
     <div class="featured-top">
       <h2 id="featured-title"><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}" style="color:inherit;text-decoration:none">Dublin bikes + weather data pipeline</a></h2>
-      <span class="badge" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">running every 15 minutes</span></span>
+      <span><span class="try">Try it: SQL console</span> <span class="badge" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">running every 15 minutes</span></span></span>
     </div>
     <p class="muted" style="max-width:46rem">Collects every Dublinbikes station every 15 minutes, models it with dbt and DuckDB into a tested star schema, and feeds a live dashboard, on free tiers only.</p>
     <ul class="stats">
@@ -101,7 +100,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   <h2 id="more-title" class="sr-only">More projects</h2>
   <div class="rows">
     <details class="row">
-      <summary><span class="n">01</span><span class="t">Content moderation classifier + fairness check</span><span class="m">ROC-AUC 0.957</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="n">01<span class="try">Try it</span></span><span class="t">Content moderation classifier + fairness check</span><span class="m">ROC-AUC 0.957</span><span class="pm" aria-hidden="true"></span></summary>
       <div class="row-body"><div>
         <p>A toxicity classifier trained on 1.8 million public comments, with review-queue thresholds, a prevalence estimate and a fairness check by identity group, plus a demo that runs in your browser.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>scikit-learn</li><li>PyTorch</li><li>DistilBERT</li><li>ONNX</li><li>transformers.js</li></ul>
@@ -110,7 +109,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
       </div></div>
     </details>
     <details class="row">
-      <summary><span class="n">02</span><span class="t">Ask the EU Digital Services Act</span><span class="m">84% top-3 hit rate</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="n">02<span class="try">Try it</span></span><span class="t">Ask the EU Digital Services Act</span><span class="m">84% top-3 hit rate</span><span class="pm" aria-hidden="true"></span></summary>
       <div class="row-body"><div>
         <p>Type a question in plain English and get the articles of the EU Digital Services Act that answer it, quoted and linked. Tested on 25 questions: semantic search put the right article in the top 3 for 84% of them.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>BM25</li><li>sentence-transformers</li><li>transformers.js</li><li>Hugging Face</li></ul>
@@ -119,7 +118,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
       </div></div>
     </details>
     <details class="row">
-      <summary><span class="n">03</span><span class="t">SkillBot: from job title to the skills it needs</span><span class="m">48% skill match</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="n">03<span class="try">Try it</span></span><span class="t">SkillBot: from job title to the skills it needs</span><span class="m">48% skill match</span><span class="pm" aria-hidden="true"></span></summary>
       <div class="row-body"><div>
         <p>My MSc project on personalised learning with LLMs and knowledge graphs, plus a free, tested rebuild: type a job title and see the skills real job ads ask for. In a leave-one-out test on 1,167 ads, 48% of suggested skills were in the real ad.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>Knowledge graphs</li><li>sentence-transformers</li><li>transformers.js</li></ul>
@@ -127,7 +126,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
       </div></div>
     </details>
     <details class="row">
-      <summary><span class="n">04</span><span class="t">Automation Lab: blog publishing with Telegram approval</span><span class="m">{{ lab.posts_published }} posts published</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="n">04<span class="try">Walk-through</span></span><span class="t">Automation Lab: blog publishing with Telegram approval</span><span class="m">{{ lab.posts_published }} posts published</span><span class="pm" aria-hidden="true"></span></summary>
       <div class="row-body"><div>
         <p>A bot that writes nothing until I approve on Telegram, then publishes each post to this site, DEV and LinkedIn, running for free on GitHub Actions.</p>
         <ul class="chips" aria-label="Stack"><li>Python</li><li>GitHub Actions</li><li>Telegram Bot API</li><li>DEV API</li><li>LinkedIn API</li></ul>

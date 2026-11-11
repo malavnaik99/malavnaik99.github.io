@@ -185,6 +185,13 @@ main { display: block; }
 .palette .examples button:hover, .palette .examples button[aria-expanded="true"] { background: var(--soft); color: var(--text); }
 .palette .answer { margin: 0 6px 6px; padding: 12px 14px; border: 1px solid rgba(91,124,255,.28); border-radius: 10px; background: var(--soft); font-size: .875rem; }
 .palette .answer .source { color: var(--label); }
+.palette .ask-status { margin: 0; padding: 10px 16px 0; color: var(--sub); } .palette .ask-status:empty { padding: 0; }
+.palette .ask-results { margin: 0; padding: 6px; list-style: none; border-bottom: 1px solid var(--line); } .palette .ask-results:empty { display: none; }
+.palette .ask-results a { display: flex; flex-direction: column; min-height: 44px; padding: 8px 10px; border-radius: 10px; color: var(--text); text-decoration: none; }
+.palette .ask-results a:hover { background: var(--soft); }
+.palette .ask-results .sk { font: 400 .72rem var(--font-mono); color: var(--muted); }
+.palette .ask-results .st { font-weight: 600; }
+.palette .ask-results .sd { font-size: .85rem; color: var(--sub); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 
 /* Live signals ticker: the second list is an aria-hidden copy so the loop is seamless. */
 .ticker { display: flex; width: 100vw; margin-left: calc(50% - 50vw); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--glass); overflow: hidden; }
@@ -266,6 +273,9 @@ main { display: block; }
 .row .m { grid-area: m; font: 800 1.15rem/1.2 var(--font-head); color: #FFFFFF; padding-top: .75rem; border-top: 1px solid rgba(255,255,255,.2); }
 .row .pm { grid-area: pm; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.16); font: 400 1.1rem/1 var(--font-mono); color: #FFFFFF; }
 .row .pm::before { content: "+"; } .row[open] .pm::before { content: "−"; }
+/* Which projects have something to use (sandbox or hosted demo) and which are a walk-through. */
+.try { display: inline-block; margin-left: .6rem; padding: .1rem .55rem; border: 1px solid rgba(255,255,255,.55); border-radius: 99px; font: 500 .72rem/1.5 var(--font-mono); color: #FFFFFF; vertical-align: middle; }
+.featured .try { margin-left: 0; }
 .row[open] summary { min-height: 0; grid-template-columns: 1fr auto; grid-template-areas: "n pm" "t t" "m m"; }
 .row-body { padding: 24px clamp(20px, 3vw, 32px) 28px; }
 .sandbox { border: 1px dashed var(--line); border-radius: 12px; padding: 1rem 1.1rem; margin-top: 1rem; }

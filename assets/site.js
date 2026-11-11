@@ -63,8 +63,17 @@
     });
   });
 
-  // "Ask about my work": example chips reveal their pre-written answer; free text isn't live yet.
-  var chips = $$("[data-answer]");
+  // Search island (search.js): loaded once, on first use by the Ctrl+K dialog or the "Ask" box.
+  var searchScript;
+  function withSearch(cb) {
+    if (window.siteSearch) return cb();
+    if (!searchScript) { searchScript = document.createElement("script"); searchScript.src = "/assets/islands/search.js"; document.head.appendChild(searchScript); }
+    searchScript.addEventListener("load", cb);
+  }
+
+  // "Ask about my work": example chips reveal their pre-written answer; typed questions search the site, results right under the box.
+  var chips = $$("[data-answer]"), askInput = $("#ask-input"), askList = $("#ask-results"), askStatus = $("#ask-status");
+  function clearAsk() { if (askList) { askList.innerHTML = ""; askStatus.textContent = ""; } }
   chips.forEach(function (chip) {
     chip.addEventListener("click", function () {
       chips.forEach(function (c) {
@@ -72,15 +81,32 @@
         c.setAttribute("aria-expanded", on);
         document.getElementById(c.dataset.answer).hidden = !on;
       });
-      var soon = $("#ask-soon"); if (soon) soon.hidden = true;
+      clearAsk();
     });
   });
-  var askForm = $("#ask-form");
-  if (askForm) askForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+  function ask() {
     chips.forEach(function (c) { c.setAttribute("aria-expanded", false); document.getElementById(c.dataset.answer).hidden = true; });
-    $("#ask-soon").hidden = false;
-  });
+    if (!askInput.value.trim()) return clearAsk();
+    withSearch(function () {
+      window.siteSearch.load().then(function () {
+        var q = askInput.value.trim(), hits = q ? window.siteSearch.find(q, 5) : [];
+        askList.innerHTML = "";
+        hits.forEach(function (it) {
+          var li = document.createElement("li"), a = document.createElement("a");
+          a.href = it.u;
+          a.innerHTML = '<span class="sk"></span><span class="st"></span><span class="sd"></span>';
+          a.children[0].textContent = it.k; a.children[1].textContent = it.t; a.children[2].textContent = it.d || "";
+          li.appendChild(a); askList.appendChild(li);
+        });
+        askStatus.textContent = !q ? "" : hits.length ? hits.length + (hits.length === 1 ? " page matches" : " pages match") + " your question:" : "Nothing matches those words yet. Try other words, or one of the example questions.";
+      }, function () { askStatus.textContent = "Search is unavailable right now. Try one of the example questions."; });
+    });
+  }
+  var askForm = $("#ask-form");
+  if (askForm && askList) {
+    askForm.addEventListener("submit", function (e) { e.preventDefault(); ask(); });
+    askInput.addEventListener("input", ask);
+  }
 
   // Copy buttons on code blocks, and "Copy link" on posts.
   function copyButton(label, getText, cls) {
@@ -119,30 +145,38 @@
     });
   });
 
-  // Sandboxes are islands: their code loads only when a visitor opens one.
-  $$("[data-island-load]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var box = btn.closest("[data-island]"), name = box.dataset.island;
-      btn.disabled = true;
-      var run = function () { window.islands[name](box); };
-      if (window.islands && window.islands[name]) return run();
-      var sc = document.createElement("script");
-      sc.src = "/assets/islands/" + name + ".js";
-      sc.onload = run;
-      document.head.appendChild(sc);
-    });
-  });
-
-  if (location.hash === "#sql") { var sqlBtn = $("#sql [data-island-load]"); if (sqlBtn) sqlBtn.click(); }
-
-  // Ctrl+K (or the search button) loads the search island on first use.
-  function openSearch() {
-    if (window.openSearch) return window.openSearch();
+  // Sandboxes are islands: each one's code loads when it comes into view (or its button is pressed), never before.
+  // On the home page they sit in closed rows, so they open when the visitor expands the row.
+  function openIsland(box) {
+    if (box.dataset.opened) return;
+    box.dataset.opened = "1";
+    var name = box.dataset.island, btn = $("[data-island-load]", box);
+    if (btn) btn.disabled = true;
+    var run = function () { window.islands[name](box); };
+    if (window.islands && window.islands[name]) return run();
     var sc = document.createElement("script");
-    sc.src = "/assets/islands/search.js";
-    sc.onload = function () { window.openSearch(); };
+    sc.src = "/assets/islands/" + name + ".js";
+    sc.onload = run;
     document.head.appendChild(sc);
   }
+  var islandBoxes = $$("[data-island]");
+  islandBoxes.forEach(function (box) {
+    var btn = $("[data-island-load]", box);
+    if (btn) btn.addEventListener("click", function () { openIsland(box); });
+  });
+  if (window.IntersectionObserver) {
+    var islandWatch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { islandWatch.unobserve(e.target); openIsland(e.target); } });
+    }, { rootMargin: "200px 0px" });
+    islandBoxes.forEach(function (box) { islandWatch.observe(box); });
+  }
+
+  // Scrollable tables in posts: make them reachable with the Tab key so keyboard users can scroll them.
+  // shortcut: checked once at load, not on resize; fine because tables only overflow on narrow screens, which rarely change width.
+  $$(".prose table").forEach(function (t) { if (t.scrollWidth > t.clientWidth) t.tabIndex = 0; });
+
+  // Ctrl+K (or the search button) opens the search dialog.
+  function openSearch() { withSearch(function () { window.siteSearch.open(); }); }
   var searchBtn = $(".search-btn");
   if (searchBtn) searchBtn.addEventListener("click", openSearch);
   document.addEventListener("keydown", function (e) {

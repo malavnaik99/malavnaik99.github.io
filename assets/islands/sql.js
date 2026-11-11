@@ -1,4 +1,5 @@
-// SQL console island: loads DuckDB-WASM (pinned, from jsDelivr) only when a visitor opens it. DuckDB runs in a Web Worker.
+// SQL console island: shows the console straight away, but loads DuckDB-WASM (pinned, from jsDelivr, about 10 MB) only when
+// the visitor uses the console, scrolls the page, or arrived via a #sql link. DuckDB runs in a Web Worker.
 (function () {
   var DUCKDB = "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.0/+esm";
   var TABLES = ["fct_station_hour", "dim_station", "dim_hour"];
@@ -6,10 +7,10 @@
   window.islands.sql = function (box) {
     var card = box.closest(".sandbox-card");
     box.innerHTML = '<label class="sr-only" for="sql-in">SQL query</label><textarea id="sql-in" class="sql-in" rows="5" spellcheck="false"></textarea>' +
-      '<p class="actions"><button class="btn btn-accent" type="button" data-run disabled>Run</button> <span class="small muted" data-status role="status">Loading DuckDB…</span></p>' +
+      '<p class="actions"><button class="btn btn-accent" type="button" data-run>Run</button> <span class="small muted" data-status role="status">DuckDB (about 10 MB) loads when you run a query or scroll.</span></p>' +
       '<div class="sql-out" data-out></div>';
     var input = box.querySelector("textarea"), run = box.querySelector("[data-run]"), status = box.querySelector("[data-status]"), out = box.querySelector("[data-out]");
-    var conn = null, pending = null;
+    var conn = null, started = false;
     function exampleSql(name) { return card.querySelector('[data-sql-text="' + name + '"] code').textContent; } // not the pre: it also holds the Copy button
     input.value = exampleSql("empty");
     function fmt(v, f) {
@@ -25,7 +26,7 @@
         status.textContent = "This console is read-only: one SELECT (or WITH / DESCRIBE / SUMMARIZE) at a time.";
         return;
       }
-      if (!conn) { pending = sql; return; }
+      if (!conn) { start(); return; } // runs when DuckDB is ready
       status.textContent = "Running…"; var t0 = performance.now();
       conn.query(sql).then(function (res) {
         var fields = res.schema.fields, rows = res.toArray().slice(0, 200);
@@ -46,25 +47,34 @@
     Array.prototype.forEach.call(card.querySelectorAll("[data-sql]"), function (b) {
       b.addEventListener("click", function () { input.value = exampleSql(b.dataset.sql); execute(); });
     });
-    import(DUCKDB).then(function (duckdb) {
-      return duckdb.selectBundle(duckdb.getJsDelivrBundles()).then(function (bundle) {
-        var url = URL.createObjectURL(new Blob(['importScripts("' + bundle.mainWorker + '");'], { type: "text/javascript" }));
-        var db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING), new Worker(url));
-        return db.instantiate(bundle.mainModule, bundle.pthreadWorker).then(function () {
-          URL.revokeObjectURL(url);
-          status.textContent = "Loading the sample tables…";
-          return Promise.all(TABLES.map(function (t) {
-            return fetch(box.dataset.src + t + ".parquet").then(function (r) { return r.arrayBuffer(); })
-              .then(function (buf) { return db.registerFileBuffer(t + ".parquet", new Uint8Array(buf)); });
-          }));
-        }).then(function () { return db.connect(); });
-      });
-    }).then(function (c) {
-      conn = c;
-      return Promise.all(TABLES.map(function (t) { return conn.query("create view " + t + " as select * from '" + t + ".parquet'"); }));
-    }).then(function () {
-      run.disabled = false; status.textContent = "Ready. Ctrl+Enter runs the query.";
-      execute(); if (pending) pending = null;
-    }).catch(function (e) { status.textContent = "DuckDB could not start in this browser: " + String(e.message || e).split("\n")[0]; });
+    function start() {
+      if (started) return;
+      started = true;
+      status.textContent = "Loading DuckDB…";
+      import(DUCKDB).then(function (duckdb) {
+        return duckdb.selectBundle(duckdb.getJsDelivrBundles()).then(function (bundle) {
+          var url = URL.createObjectURL(new Blob(['importScripts("' + bundle.mainWorker + '");'], { type: "text/javascript" }));
+          var db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING), new Worker(url));
+          return db.instantiate(bundle.mainModule, bundle.pthreadWorker).then(function () {
+            URL.revokeObjectURL(url);
+            status.textContent = "Loading the sample tables…";
+            return Promise.all(TABLES.map(function (t) {
+              return fetch(box.dataset.src + t + ".parquet").then(function (r) { return r.arrayBuffer(); })
+                .then(function (buf) { return db.registerFileBuffer(t + ".parquet", new Uint8Array(buf)); });
+            }));
+          }).then(function () { return db.connect(); });
+        });
+      }).then(function (c) {
+        conn = c;
+        return Promise.all(TABLES.map(function (t) { return conn.query("create view " + t + " as select * from '" + t + ".parquet'"); }));
+      }).then(function () {
+        status.textContent = "Ready. Ctrl+Enter runs the query.";
+        execute();
+      }).catch(function (e) { status.textContent = "DuckDB could not start in this browser: " + String(e.message || e).split("\n")[0]; });
+    }
+    if (location.hash === "#sql") start();
+    card.addEventListener("focusin", start);
+    card.addEventListener("pointerdown", start);
+    window.addEventListener("scroll", start, { once: true, passive: true });
   };
 })();
