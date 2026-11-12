@@ -10,7 +10,7 @@ Its format is the one the pipeline's "latest" file must use (see docs/pipeline-l
      "stations": [[name, lat, lon, capacity], ...], "bikes": [[bikes per hour, null if missing], ...]  (same order as stations)}
 STATION118 (a placeholder with no data) and stations with capacity 0 are left out.
 """
-import json, math, pathlib, re, sys, urllib.parse, urllib.request
+import json, math, pathlib, re, sys, urllib.error, urllib.parse, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SKY, RIVER = ROOT / "_data/sky.json", ROOT / "_data/sky_river.json"
@@ -68,17 +68,39 @@ def check_river(lines, stations, limit=200):
     return far if len(far) > len(quays) / 3 else []
 
 
-def river():
-    """The River Liffey through the station area, from OpenStreetMap (Overpass API); one polyline per OSM way."""
-    q = f'[out:json][timeout:60];way["waterway"="river"]["name"="River Liffey"]({",".join(map(str, BBOX))});out geom;'
-    req = urllib.request.Request("https://overpass-api.de/api/interpreter", data=urllib.parse.urlencode({"data": q}).encode(),
-                                 headers={"User-Agent": "malavnaik.com site build (make_sky.py)"})
-    d = json.load(urllib.request.urlopen(req, timeout=90))
-    return parse_overpass(d)
+def river_query():
+    """Overpass query for the Liffey's river lines in the station area. In OpenStreetMap a big river's name is often only on
+    its 'waterway' relation, not on each section, so this takes the named sections AND the sections of the named relation."""
+    box = ",".join(map(str, BBOX))
+    return (f'[out:json][timeout:120];rel["waterway"="river"]["name"~"Liffey"]({box})->.r;'
+            f'(way["waterway"="river"]["name"~"Liffey"]({box});way(r.r)["waterway"="river"]({box}););out geom;')
+
+
+def river(tries=4):
+    """The River Liffey through the station area, from OpenStreetMap (Overpass API); one polyline per OSM way.
+    Retries when the free public service is busy (HTTP 429/502/503/504, or a 'remark' saying it ran out of time)."""
+    import time
+    req = lambda: urllib.request.Request("https://overpass-api.de/api/interpreter", data=urllib.parse.urlencode({"data": river_query()}).encode(),
+                                         headers={"User-Agent": "malavnaik.com site build (make_sky.py)"})
+    for n in range(1, tries + 1):
+        try:
+            d = json.load(urllib.request.urlopen(req(), timeout=150))
+            if d.get("remark"):  # Overpass sends an empty answer plus a remark when it times out or runs short of memory
+                raise RuntimeError("OpenStreetMap's service said: " + d["remark"])
+            lines = parse_overpass(d)
+            print(f"try {n}: {len(d.get('elements', []))} OpenStreetMap elements, {len(lines)} river lines")
+            return lines
+        except (urllib.error.HTTPError, urllib.error.URLError, RuntimeError, TimeoutError) as e:
+            busy = not isinstance(e, urllib.error.HTTPError) or e.code in (429, 502, 503, 504)
+            print(f"try {n}: {e}")
+            if not busy or n == tries:
+                raise
+            time.sleep(30 * n)  # back off: the service is shared and free
 
 
 def parse_overpass(d):
-    return [[[round(g["lat"], 5), round(g["lon"], 5)] for g in el["geometry"]] for el in d.get("elements", []) if el.get("geometry")]
+    return [[[round(g["lat"], 5), round(g["lon"], 5)] for g in el["geometry"]] for el in d.get("elements", [])
+            if el.get("type", "way") == "way" and el.get("geometry")]
 
 
 def self_test():
@@ -90,6 +112,11 @@ def self_test():
     far = parse_overpass({"elements": [{"geometry": [{"lat": 53.3300, "lon": -6.3000}]}]})
     assert check_river(near, stations) == [], "a river beside the quay must pass"
     assert check_river(far, stations), "a river 3 km away must fail"
+    # Ways that come back for the named relation (no name tag of their own) count; the relation itself has no geometry here.
+    rel_answer = {"elements": [{"type": "relation", "id": 1}, {"type": "way", "geometry": [{"lat": 53.3459, "lon": -6.2700}, {"lat": 53.3458, "lon": -6.2650}]}]}
+    assert parse_overpass(rel_answer) == [[[53.3459, -6.27], [53.3458, -6.265]]]
+    q = river_query()
+    assert 'rel["waterway"="river"]["name"~"Liffey"]' in q and "way(r.r)" in q and q.count(",".join(map(str, BBOX))) == 3
     if SKY.exists():
         check_snapshot(json.loads(SKY.read_text()))
     print("Self-test passed.")
