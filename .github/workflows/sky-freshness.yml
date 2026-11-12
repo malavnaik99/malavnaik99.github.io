@@ -1,0 +1,28 @@
+# Hourly check that the live bike data behind the home page "sky" is under two hours old.
+# Opens (or updates) the issue "Site health: Bike sky data is old" when it isn't, and closes it when it recovers.
+# Does nothing until the live data is switched on in _data/sky_live.json. What to do: MAINTENANCE.md.
+name: Bike sky freshness
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # every hour at :17
+  workflow_dispatch:        # the "Run workflow" button
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: site-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check the bike sky data's age
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/site_health.py --only "Bike sky data is old"

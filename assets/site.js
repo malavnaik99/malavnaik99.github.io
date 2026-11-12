@@ -194,6 +194,18 @@
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openSearch(); }
   });
 
+  // Hero sky (assets/islands/sky.js, with its data about 25 KB): loads only once the page has loaded and painted.
+  var skyBar = $("[data-sky]");
+  if (skyBar && window.fetch) window.addEventListener("load", function () {
+    var go = function () {
+      var sc = document.createElement("script");
+      sc.src = "/assets/islands/sky.js";
+      sc.onload = function () { window.islands.sky(skyBar); };
+      document.head.appendChild(sc);
+    };
+    if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 300);
+  });
+
   // Live signals ticker: a tap or click pauses and resumes it (hover pauses it too, in CSS).
   var ticker = $(".ticker");
   if (ticker) ticker.addEventListener("click", function () { ticker.classList.toggle("paused"); });

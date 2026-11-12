@@ -19,6 +19,7 @@ The site has:
 | Domain | `malavnaik.com` with Cloudflare DNS and HTTPS |
 | Front end | Semantic HTML, one stylesheet with design tokens ([`assets/site.css`](assets/site.css)), dark and light themes, and a small vanilla JavaScript file ([`assets/site.js`](assets/site.js)) |
 | Interactive sandboxes | "Islands" that load only when they scroll into view ([`assets/islands/`](assets/islands)): a moderation threshold explorer, a keyword-vs-vector search comparison, and an in-browser SQL console (DuckDB-WASM in a Web Worker), together on [/labs/](labs/index.md) with shareable links |
+| Hero sky | Every Dublinbikes station drawn at its real position on a canvas behind the hero, with a 48-hour replay and a text summary ([`assets/islands/sky.js`](assets/islands/sky.js), data from [`scripts/make_sky.py`](scripts/make_sky.py)); loads after first paint |
 | Project rows | /work/: each project with its headline number and a small static SVG chart drawn from its own data ([`scripts/make_charts.py`](scripts/make_charts.py)) |
 | Search | Ctrl+K and the home page "Ask about my work" box, over a build-time index ([`search.json`](search.json)) |
 | SEO | `jekyll-seo-tag` (titles, Open Graph and Twitter cards), `jekyll-sitemap`, `jekyll-feed` (RSS) |

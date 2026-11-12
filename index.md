@@ -8,7 +8,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
 {% assign lab = site.data.automation %}
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="sky" aria-hidden="true"><span class="stars"></span></div>
+  <div class="sky" aria-hidden="true"><canvas class="sky-map" data-sky-map></canvas><p class="sky-tip" hidden></p></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <p class="label pill">{{ site.data.identity.job_title | escape }} · {{ site.data.identity.location.city }}, {{ site.data.identity.location.country }}</p>
@@ -19,6 +19,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
     </div>
     {% include hero-demo.html %}
   </div>
+  {% include sky-bar.html %}
 </section>
 
 {% capture signals %}

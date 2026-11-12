@@ -1,0 +1,20 @@
+{%- comment -%}
+Under the hero sky: the same information as the map, in words (built from the saved snapshot, _data/sky.json),
+plus Play / Pause and an hour slider that assets/islands/sky.js switches on once its data has loaded.
+{%- endcomment -%}
+{%- assign sky = site.data.sky -%}
+{%- assign h = sky.hours | size | minus: 1 -%}
+{%- assign total = 0 -%}{%- assign n = 0 -%}{%- assign n_empty = 0 -%}
+{%- for row in sky.bikes -%}{%- assign b = row[h] -%}{%- if b != nil -%}{%- assign total = total | plus: b -%}{%- assign n = n | plus: 1 -%}{%- if b == 0 -%}{%- assign n_empty = n_empty | plus: 1 -%}{%- endif -%}{%- endif -%}{%- endfor -%}
+{%- if total >= 1000 -%}{%- assign rest = total | modulo: 1000 | prepend: "00" | slice: -3, 3 -%}{%- capture total_txt -%}{{ total | divided_by: 1000 }},{{ rest }}{%- endcapture -%}{%- else -%}{%- assign total_txt = total -%}{%- endif -%}
+<div class="sky-bar" data-sky data-src="{{ '/assets/data/sky.json' | relative_url }}"{% if site.data.sky_live.url != "" %} data-live="{{ site.data.sky_live.url }}"{% endif %}>
+  <div class="sky-words">
+    <p class="sky-sum"><span class="dot" aria-hidden="true"></span><span data-sky-text>Dublinbikes, {{ sky.hours[h] | date: "%a %-d %b, %H:%M" }} (saved snapshot): {{ total_txt }} bikes at {{ n }} stations, {{ n_empty }} empty.</span></p>
+    <p class="sky-key">Behind this page: each light is a bike station at its real position in Dublin. Brighter means more bikes free; an amber ring means empty{% if site.data.sky_river %}; the faint line is the River Liffey{% endif %}.</p>
+  </div>
+  <div class="sky-ctl no-js-hide">
+    <button class="btn small" type="button" data-sky-play>Play the last 48 hours</button>
+    <label class="sky-range"><span class="sr-only">Hour shown on the map</span><input type="range" min="0" max="{{ h }}" step="1" value="{{ h }}" data-sky-hour disabled></label>
+    <span class="mono small sky-time" data-sky-time aria-hidden="true"></span>
+  </div>
+</div>

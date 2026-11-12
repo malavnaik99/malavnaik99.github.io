@@ -1,0 +1,4 @@
+{
+  "_note": "The hero sky's live data: the pipeline's small 'latest' file (format: docs/pipeline-latest-json.md). Empty url = not switched on yet; the page shows the saved snapshot in _data/sky.json and the hourly freshness check is skipped.",
+  "url": ""
+}
