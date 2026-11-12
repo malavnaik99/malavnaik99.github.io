@@ -166,7 +166,7 @@
     var run = function () { window.islands[name](box); };
     if (window.islands && window.islands[name]) return run();
     var sc = document.createElement("script");
-    sc.src = "/assets/islands/" + name + ".js";
+    sc.src = "/assets/islands/" + (box.dataset.islandFile || name) + ".js"; // data-island-file: an island kept in another island's file
     sc.onload = run;
     document.head.appendChild(sc);
   }
