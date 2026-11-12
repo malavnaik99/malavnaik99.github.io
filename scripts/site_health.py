@@ -1,6 +1,6 @@
 """Weekly health check for malavnaik.com (run by .github/workflows/site-health.yml).
 
-Runs six checks. For each failing check it opens one GitHub Issue titled "Site health: <check>" (or updates the
+Runs seven checks. For each failing check it opens one GitHub Issue titled "Site health: <check>" (or updates the
 one already open); when the check passes again it closes that issue. Without GITHUB_TOKEN it only prints results.
 
     python3 scripts/site_health.py                    # all checks
@@ -74,7 +74,7 @@ def site_pages():
     return [u for u in re.findall(r"<loc>(.*?)</loc>", body) if not u.lower().endswith(".pdf")]
 
 
-# ---------- the six checks: each returns a list of problems (empty = passed) ----------
+# ---------- the seven checks: each returns a list of problems (empty = passed) ----------
 
 def check_https():
     problems = []
@@ -165,6 +165,23 @@ def check_client():
     return problems
 
 
+def check_sky():
+    """The home page sky's live data (the pipeline's "latest" file) must be under two hours old. Skipped until switched on."""
+    url = json.loads((ROOT / "_data/sky_live.json").read_text()).get("url")
+    if not url:
+        check_sky.notes = ["Bike sky: live data is not switched on yet (_data/sky_live.json has no url), so the page shows the saved snapshot."]
+        return []
+    status, _, _, body = fetch(url)
+    if status != 200:
+        return [f"{url} answered {status} instead of 200 (OK)."]
+    try:
+        made = json.loads(body)["generated_utc"]
+        age = (datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(made.replace("Z", "+00:00"))).total_seconds() / 3600
+    except Exception as e:
+        return [f"{url} isn't the expected data file ({type(e).__name__}: {e})."]
+    return [] if age <= 2 else [f"The newest bike data was made at {made}, {age:.1f} hours ago; it should be under 2 hours."]
+
+
 CHECKS = [
     ("Site not loading", check_https,
      "malavnaik.com didn't load over HTTPS, or the http:// / www addresses don't forward to it.",
@@ -186,6 +203,10 @@ CHECKS = [
      "The `CNAME` file, which tells GitHub Pages to serve the site at malavnaik.com, is missing or changed.",
      "Someone edited or deleted it, or GitHub → Settings → Pages had its custom domain changed (GitHub rewrites this file).",
      "1. GitHub → **Settings → Pages** → *Custom domain*: type `malavnaik.com` → **Save**. GitHub recreates the file.\n2. Re-run this check. Don't change Cloudflare settings without asking Claude first."),
+    ("Bike sky data is old", check_sky,
+     "The live bike data behind the home page sky is more than two hours old, so visitors see the saved snapshot instead.",
+     "The Dublin bikes pipeline (malavnaik99/dublin-data-pipeline) stopped running or stopped publishing its small \"latest\" file.",
+     "1. Open the pipeline repo → **Actions**: is the latest run red, or missing?\n2. If it failed, ask Claude: \"The bike pipeline failed with this error: <paste it>\".\n3. Nothing on malavnaik.com is broken meanwhile: the sky shows the saved snapshot and says so.\n4. To stop these alerts for good, empty the `url` in `_data/sky_live.json`."),
     ("Employer's client named in the repo", check_client,
      "A file in this repo mentions the company your employer's client is, which your rules forbid anywhere.",
      "New text (a post, a page, notes or code) used the company's name instead of \"a global technology client\".",
@@ -225,9 +246,11 @@ def issue_body(what, cause, fix, problems, run_url):
             f"Run log: {run_url} · Full guide: {MAINT}")
 
 
-def main():
+def main(only=None):
     results = []
     for name, fn, what, cause, fix in CHECKS:
+        if only and name != only:
+            continue
         try:
             problems = fn()
         except Exception as e:  # a check that crashes counts as a failure, never a silent pass
@@ -236,7 +259,7 @@ def main():
             problems = problems + ["TEST: this failure was forced on purpose to test the alert. Ignore it."]
         results.append((name, what, cause, fix, problems))
         print(f"{'PASS' if not problems else 'FAIL'}  {name}" + "".join(f"\n      - {p}" for p in problems[:20]))
-    for note in getattr(check_profiles, "notes", []):
+    for note in getattr(check_profiles, "notes", []) + getattr(check_sky, "notes", []):
         print(f"NOTE  {note}")
 
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
@@ -270,12 +293,15 @@ def self_test():
     assert not is_client_word("meta") and not is_client_word("Metadata") and not is_client_word("Data")
     assert all(not is_client_word(w) for w in ["Google", "Accenture", "Anthropic", "OpenAI", "Airbnb"])
     assert check_cname() == [] and (ROOT / "backlinks/tracker.csv").exists()
+    assert any(n == "Bike sky data is old" for n, *_ in CHECKS)
     print("Self-test passed.")
 
 
 if __name__ == "__main__":
     if "--self-test" in sys.argv:
         self_test()
+    elif "--only" in sys.argv:  # one check by name, e.g. the hourly bike-sky check
+        sys.exit(main(only=sys.argv[sys.argv.index("--only") + 1]))
     elif "--print-pages" in sys.argv:
         print(" ".join(site_pages()))
     else:

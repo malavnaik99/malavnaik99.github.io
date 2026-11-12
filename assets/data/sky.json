@@ -1,0 +1,6 @@
+---
+layout: null
+sitemap: false
+---
+{%- comment -%} The hero sky's data: the saved snapshot (_data/sky.json, made by scripts/make_sky.py) and, once fetched, the River Liffey (_data/sky_river.json). {%- endcomment -%}
+{"snapshot":{{ site.data.sky | jsonify }},"river":{% if site.data.sky_river %}{{ site.data.sky_river.lines | jsonify }}{% else %}[]{% endif %}}
