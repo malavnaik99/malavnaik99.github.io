@@ -1,0 +1,14 @@
+{%- comment -%}
+The card behind one proof-strip number: where it comes from (dataset, file, test). Text: _data/receipts.json,
+copied from the Receipts table in docs/METRIC_SOURCES.md by scripts/make_receipts.py. Params: key, url (case study).
+{%- endcomment -%}
+{%- assign r = site.data.receipts[include.key] -%}
+<div class="receipt-card">
+  <p class="receipt-title">Where this comes from</p>
+  <dl>
+    <dt>Dataset</dt><dd>{{ r.dataset | markdownify | remove: "<p>" | remove: "</p>" | strip }}</dd>
+    <dt>File</dt><dd>{{ r.file | markdownify | remove: "<p>" | remove: "</p>" | strip }}</dd>
+    <dt>Test</dt><dd>{{ r.test | markdownify | remove: "<p>" | remove: "</p>" | strip }}</dd>
+  </dl>
+  <p class="receipt-more"><a href="{{ include.url | relative_url }}">Case study →</a></p>
+</div>

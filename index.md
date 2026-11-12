@@ -38,12 +38,12 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   <div class="ticker-view"><div class="ticker-track"><ul>{{ signals }}</ul><ul aria-hidden="true">{{ signals | replace: '<a ', '<a tabindex="-1" ' }}</ul></div></div>
 </section>
 
-{%- comment -%} Four standing facts; each figure is sourced in docs/METRIC_SOURCES.md and links to its project. {%- endcomment %}
+{%- comment -%} Four standing facts. Opening one shows its receipt (dataset, file, test) from the Receipts table in docs/METRIC_SOURCES.md. {%- endcomment %}
 <ul class="proof" aria-label="Proof in numbers">
-  <li><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}"><span class="num num-status" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></span><span class="what">Dublin bikes data pipeline</span></a></li>
-  <li><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}"><span class="num">14</span><span class="what">automatic data tests on every pipeline run</span></a></li>
-  <li><a href="{{ '/projects/moderation-classifier/' | relative_url }}"><span class="num">0.957</span><span class="what">ROC-AUC, content moderation model</span></a></li>
-  <li><a href="{{ '/projects/ask-the-dsa/' | relative_url }}"><span class="num">84%</span><span class="what">top-3 hit rate, Ask the EU Digital Services Act</span></a></li>
+  <li><details class="receipt"><summary><span class="num num-status" data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></span><span class="what">Dublin bikes data pipeline<span class="sr-only">: where this comes from</span></span></summary>{% include receipt.html key="pipeline" url="/projects/dublin-bikes-pipeline/" %}</details></li>
+  <li><details class="receipt"><summary><span class="num">14</span><span class="what">automatic data tests on every pipeline run<span class="sr-only">: where this comes from</span></span></summary>{% include receipt.html key="tests" url="/projects/dublin-bikes-pipeline/" %}</details></li>
+  <li><details class="receipt"><summary><span class="num">0.957</span><span class="what">ROC-AUC, content moderation model<span class="sr-only">: where this comes from</span></span></summary>{% include receipt.html key="rocauc" url="/projects/moderation-classifier/" %}</details></li>
+  <li><details class="receipt"><summary><span class="num">84%</span><span class="what">top-3 hit rate, Ask the EU Digital Services Act<span class="sr-only">: where this comes from</span></span></summary>{% include receipt.html key="dsa" url="/projects/ask-the-dsa/" %}</details></li>
 </ul>
 
 <div class="ask palette" id="ask" role="region" aria-labelledby="ask-title">

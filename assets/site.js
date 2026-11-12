@@ -206,6 +206,19 @@
     if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 300);
   });
 
+  // Receipt cards (proof strip): one open at a time; Esc closes it and puts focus back on its number; a click elsewhere closes it.
+  var receipts = $$("details.receipt");
+  receipts.forEach(function (d) {
+    d.addEventListener("toggle", function () { if (d.open) receipts.forEach(function (o) { if (o !== d) o.open = false; }); });
+  });
+  document.addEventListener("keydown", function (e) {
+    var open = e.key === "Escape" && document.activeElement && document.activeElement.closest && document.activeElement.closest("details.receipt[open]");
+    if (open) { open.open = false; open.querySelector("summary").focus(); }
+  });
+  document.addEventListener("click", function (e) {
+    receipts.forEach(function (d) { if (d.open && !d.contains(e.target)) d.open = false; });
+  });
+
   // Live signals ticker: a tap or click pauses and resumes it (hover pauses it too, in CSS).
   var ticker = $(".ticker");
   if (ticker) ticker.addEventListener("click", function () { ticker.classList.toggle("paused"); });
