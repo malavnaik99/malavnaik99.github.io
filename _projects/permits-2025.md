@@ -6,6 +6,12 @@ approach: "Cleaned the official 2025 permits dataset, grouped companies into sec
 result: "A searchable, serverless dashboard of permits by sector, month and employer."
 description: "An interactive dashboard by Data & GenAI Engineer Malav Naik analysing employment permits issued to companies in Ireland in 2025: sectors, top employers and monthly demand."
 order: 8
+# Project row (home page and /work/)
+oneline: "Which Irish sectors and employers sponsor work permits, and when: a dashboard of the official 2025 data."
+headline: "31,044"
+headline_label: "permits in the official 2025 data"
+try_url: "/permits-2025/"
+try_label: "Open the dashboard"
 featured: true
 demo_url: /permits-2025/
 code_url: https://github.com/malavnaik99/malavnaik99.github.io/tree/main/permits-2025

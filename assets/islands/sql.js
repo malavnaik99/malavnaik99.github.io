@@ -12,7 +12,9 @@
     var input = box.querySelector("textarea"), run = box.querySelector("[data-run]"), status = box.querySelector("[data-status]"), out = box.querySelector("[data-out]");
     var conn = null, started = false;
     function exampleSql(name) { return card.querySelector('[data-sql-text="' + name + '"] code').textContent; } // not the pre: it also holds the Copy button
-    input.value = exampleSql("empty");
+    var st = window.sandboxState, shared = st && st.get("sql"); // shareable query (?sql=)
+    input.value = shared || exampleSql("empty");
+    function userRun() { execute(); if (st) st.set("sql", input.value.trim()); }
     function fmt(v, f) {
       if (v === null || v === undefined) return "";
       if (typeof v === "bigint") return v.toString();
@@ -42,10 +44,10 @@
         status.textContent = res.numRows + " row" + (res.numRows === 1 ? "" : "s") + (res.numRows > 200 ? " (first 200 shown)" : "") + " · " + Math.round(performance.now() - t0) + " ms";
       }).catch(function (e) { status.textContent = "Error: " + String(e.message || e).split("\n")[0]; });
     }
-    run.addEventListener("click", execute);
-    input.addEventListener("keydown", function (e) { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") execute(); });
+    run.addEventListener("click", userRun);
+    input.addEventListener("keydown", function (e) { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") userRun(); });
     Array.prototype.forEach.call(card.querySelectorAll("[data-sql]"), function (b) {
-      b.addEventListener("click", function () { input.value = exampleSql(b.dataset.sql); execute(); });
+      b.addEventListener("click", function () { input.value = exampleSql(b.dataset.sql); userRun(); });
     });
     function start() {
       if (started) return;
@@ -72,7 +74,8 @@
         execute();
       }).catch(function (e) { status.textContent = "DuckDB could not start in this browser: " + String(e.message || e).split("\n")[0]; });
     }
-    if (location.hash === "#sql") start();
+    if (location.hash === "#sql" || shared) start(); // arrived by a link to the console: load DuckDB straight away
+    if (st) box.appendChild(st.link(card));
     card.addEventListener("focusin", start);
     card.addEventListener("pointerdown", start);
     window.addEventListener("scroll", start, { once: true, passive: true });

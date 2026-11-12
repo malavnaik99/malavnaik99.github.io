@@ -6,6 +6,10 @@ approach: "Claude drafts a reply as a Gmail draft and sends it to Telegram with 
 result: "A routine reply becomes one tap, and the AI never sends anything by itself."
 description: "A Python assistant by Data & GenAI Engineer Malav Naik that uses Claude to draft Gmail replies and sends them only after approval on Telegram."
 order: 7
+# Project row (home page and /work/)
+oneline: "Claude drafts a reply to each new email; nothing is sent until I tap ✅ on Telegram."
+headline: "1 tap"
+headline_label: "to approve a reply; the AI never sends by itself"
 featured: true
 code_url: https://github.com/malavnaik99/telegram-approval-bots
 tech: [Python, Claude API, Gmail API, Telegram Bot API, Prompt engineering]

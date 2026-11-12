@@ -6,6 +6,12 @@ approach: "A collector every 15 minutes, then a daily dbt + DuckDB run into an i
 result: "Every station, every 15 minutes, modelled and tested into a live dashboard and public dataset, for €0."
 description: "A data pipeline by Data & GenAI Engineer Malav Naik: a Python collector, a dbt + DuckDB star schema with freshness and volume tests, and a live Dublinbikes dashboard."
 order: 2
+# Project row (home page and /work/)
+oneline: "Collects every Dublinbikes station every 15 minutes and models it with dbt and DuckDB into a tested star schema, for €0."
+headline: "14"
+headline_label: "automatic data tests on every run"
+chart: "bikes"
+try_url: "/labs/#sql"
 featured: true
 sandbox: sql
 code_url: https://github.com/malavnaik99/dublin-data-pipeline

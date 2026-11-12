@@ -1,0 +1,25 @@
+{%- comment -%}
+One project row (home page and /work/): number, title, one-line summary, the project's headline number, a small chart
+from its own data (_includes/charts/), and Try it / Case study buttons. Fields live in each _projects/*.md front matter.
+Params: project, n (the row number), level (heading level, default 3).
+{%- endcomment -%}
+{%- assign p = include.project -%}
+{%- assign h = include.level | default: 3 -%}
+{%- if p.headline_lab -%}{%- assign headline = site.data.automation[p.headline_lab] -%}{%- else -%}{%- assign headline = p.headline -%}{%- endif -%}
+<li class="prow">
+  <span class="prow-n mono" aria-hidden="true">{{ include.n }}</span>
+  <div class="prow-main">
+    <h{{ h }} class="prow-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h{{ h }}>
+    <p class="prow-sum">{{ p.oneline | default: p.summary }}</p>
+    <p class="prow-actions">
+      {%- if p.try_url %}<a class="btn btn-accent small" href="{{ p.try_url | relative_url }}">{{ p.try_label | default: "Try it" }}<span class="sr-only">: {{ p.title }}</span></a> {% endif -%}
+      <a class="btn small" href="{{ p.url | relative_url }}">Case study<span class="sr-only">: {{ p.title }}</span></a>
+    </p>
+  </div>
+  {%- if headline %}
+  <p class="prow-num"><b>{{ headline }}</b><span>{{ p.headline_label }}</span></p>
+  {%- endif %}
+  {%- if p.chart %}
+  {% include charts/{{ p.chart }}.html %}
+  {%- endif %}
+</li>

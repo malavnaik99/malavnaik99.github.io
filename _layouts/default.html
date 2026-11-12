@@ -38,7 +38,8 @@
       <a class="brand" href="{{ '/' | relative_url }}"><span class="avatar"><img src="{{ '/images/malav-naik-avatar.jpg' | relative_url }}" alt="" width="36" height="36"></span><span class="brand-name">Malav Naik</span></a>
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
-        {% assign nav = "/work/|Work,/#toolkit|Toolkit,/#journey|Journey,/writing/|Writing" | split: "," %}
+        {%- comment -%} Toolkit and Journey stay on the home page (/#toolkit, /#journey still work); they are no longer menu items. {%- endcomment %}
+        {% assign nav = "/work/|Work,/labs/|Labs,/writing/|Writing,/about/|About" | split: "," %}
         {% for item in nav %}{% assign p = item | split: "|" %}{% assign cur = false %}
           {% if page.url == p[0] %}{% assign cur = true %}{% elsif p[0] == "/work/" and page.collection == "projects" %}{% assign cur = true %}{% elsif p[0] == "/writing/" and page.url contains "/blog/" %}{% assign cur = true %}{% endif %}
           <li><a href="{{ p[0] | relative_url }}"{% if cur %} aria-current="page"{% endif %}>{{ p[1] }}</a></li>

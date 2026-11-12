@@ -23,6 +23,7 @@
         '<p class="small muted">Across all identity-labelled harmless comments: <b class="mono" data-all></b> (the thin line on each bar). Groups with at least 200 harmless test comments.</p>' +
         '<ul class="groups"></ul>';
       var input = box.querySelector("input"), ul = box.querySelector(".groups");
+      var card = box.closest(".sandbox-card"), st = card && window.sandboxState; // full sandbox: shareable threshold (?t=)
       input.max = s.length - 1; input.disabled = false;
       if (!ul.children.length) d.groups.forEach(function (g) {
         var li = document.createElement("li");
@@ -51,10 +52,12 @@
           li.querySelector(".v").textContent = pct(v);
         });
       }
-      function goTo(t) { var i = s.findIndex(function (r) { return Math.abs(r.t - t) < 0.001; }); input.value = i; show(i); }
-      input.addEventListener("input", function () { show(+input.value); });
-      Array.prototype.forEach.call(box.querySelectorAll("[data-go]"), function (b) { b.addEventListener("click", function () { goTo(+b.dataset.go); }); });
-      goTo(0.22);
+      function goTo(t) { var i = s.findIndex(function (r) { return Math.abs(r.t - t) < 0.001; }); if (i < 0) return false; input.value = i; show(i); return true; }
+      function remember() { if (st) st.set("t", s[+input.value].t.toFixed(2)); }
+      input.addEventListener("input", function () { show(+input.value); remember(); });
+      Array.prototype.forEach.call(box.querySelectorAll("[data-go]"), function (b) { b.addEventListener("click", function () { goTo(+b.dataset.go); remember(); }); });
+      if (!(st && goTo(parseFloat(st.get("t"))))) goTo(0.22);
+      if (st) box.appendChild(st.link(card));
     }).catch(function () { box.innerHTML = '<p class="small muted">The saved results could not be loaded. Please try again later.</p>'; });
   };
 })();

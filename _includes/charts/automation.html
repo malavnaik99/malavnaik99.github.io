@@ -1,0 +1,14 @@
+{%- comment -%}
+Posts published per platform, from _data/automation.json (the blog bot updates it after every post), so this
+chart is drawn at every site build rather than by scripts/make_charts.py. A plain list with bars: readable without the bars.
+{%- endcomment -%}
+{%- assign lab = site.data.automation -%}
+{%- assign most = 0 -%}{%- for p in lab.platforms -%}{%- if p[1] > most -%}{%- assign most = p[1] -%}{%- endif -%}{%- endfor -%}
+<figure class="row-chart">
+<ul class="mini-bars" aria-label="Posts published per platform">
+{%- for p in lab.platforms %}
+  <li><span class="k">{{ p[0] }}</span><span class="bar" aria-hidden="true"><i style="width:{{ p[1] | times: 100.0 | divided_by: most | round: 1 }}%"></i></span><span class="v mono">{{ p[1] }}</span></li>
+{%- endfor %}
+</ul>
+<figcaption>Posts published per platform, updated {{ lab.updated | date: "%-d %b %Y" }}.</figcaption>
+</figure>

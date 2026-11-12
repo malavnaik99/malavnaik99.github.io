@@ -20,6 +20,7 @@ permalink: /llms.txt
 
 - [About]({{ '/about/' | absolute_url }}): his story, journey, skills, education and MSc thesis.
 - [Work]({{ '/work/' | absolute_url }}): {{ site.projects.size }} public projects, each with the problem, approach, measured result and code.
+- [Labs]({{ '/labs/' | absolute_url }}): three sandboxes that run in the browser (moderation threshold, keyword vs vector search over the EU Digital Services Act, SQL over the Dublin bikes tables), each with a shareable link.
 - [Writing]({{ '/writing/' | absolute_url }}): all blog posts, filterable by series.
 - [Résumé]({{ '/resume/' | absolute_url }}): experience, education and skills, with a PDF download.
 

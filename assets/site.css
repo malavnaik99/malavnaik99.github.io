@@ -215,20 +215,23 @@ main { display: block; }
 .palette .ask-results .st { font-weight: 600; }
 .palette .ask-results .sd { font-size: .85rem; color: var(--sub); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 
-/* Featured project: deep blue card, pipeline steps as glowing nodes on one line. */
-.featured-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; flex-wrap: wrap; }
+/* Shared bits: badges, step diagrams (automation sandbox) and button rows. */
 .badge { display: inline-flex; align-items: center; font: 500 .78rem var(--font-mono); border: 1px solid var(--line); border-radius: 99px; padding: .2rem .7rem; color: var(--muted); }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; padding: 0; list-style: none; }
-.stats .num { display: block; font: 500 1.4rem/1.2 var(--font-mono); }
-.stats .what { font-size: .85rem; color: var(--muted); }
 .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; list-style: none; margin: 0 0 1.5rem; padding: 0; counter-reset: step; }
 .flow li { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: .8rem .9rem; background: var(--bg); font-size: .88rem; line-height: 1.45; }
 .flow li::before { counter-increment: step; content: "0" counter(step); display: block; font: 500 .72rem var(--font-mono); color: var(--accent); margin-bottom: .3rem; }
 .flow li:not(:last-child)::after { content: "→"; position: absolute; right: -.62rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .8rem; }
 .flow b { display: block; font-weight: 600; }
 .flow span { color: var(--muted); font-size: .8rem; }
-@media (max-width: 860px) { .flow { grid-template-columns: 1fr; } .flow li:not(:last-child)::after { content: "↓"; right: auto; left: 1rem; top: auto; bottom: -.95rem; transform: none; } .stats { grid-template-columns: 1fr 1fr 1fr; } }
+@media (max-width: 860px) { .flow { grid-template-columns: 1fr; } .flow li:not(:last-child)::after { content: "↓"; right: auto; left: 1rem; top: auto; bottom: -.95rem; transform: none; } }
 .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; }
+
+/* Featured project and the mixed-colour project cards (home page), restored at Malav's request after Phase 2. */
+.featured-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; flex-wrap: wrap; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; padding: 0; list-style: none; }
+.stats .num { display: block; font: 500 1.4rem/1.2 var(--font-mono); }
+.stats .what { font-size: .85rem; color: var(--muted); }
+@media (max-width: 860px) { .stats { grid-template-columns: 1fr 1fr 1fr; } }
 .featured { --text: #FFFFFF; --muted: #C7D0F5; --line: rgba(255,255,255,.18); --live: #6EE7B7; --accent: #FFFFFF; --on-accent: #0B1650;
   position: relative; overflow: hidden; color: var(--text); border: 1px solid rgba(140,160,255,.35); border-radius: 28px; padding: clamp(1.5rem, 4vw, 3rem);
   background: radial-gradient(700px circle at 85% 0%, rgba(139,92,246,.35), transparent 60%), linear-gradient(160deg, #1D3BD6 0%, #0B1650 70%);
@@ -258,6 +261,11 @@ main { display: block; }
 .row summary { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr auto; grid-template-areas: "n pm" "t t" "m m"; gap: .75rem; min-height: 300px; padding: 22px; border-radius: 23px; cursor: pointer; list-style: none; color: #FFFFFF;
   background: var(--card-bg, linear-gradient(160deg, #1D3BD6 0%, #0B1650 70%)); }
 .row summary::-webkit-details-marker { display: none; }
+.row:nth-child(1) summary { --card-bg: linear-gradient(160deg, #6D28D9 0%, #2A0B5C 70%); }
+.row:nth-child(2) summary { --card-bg: linear-gradient(160deg, #0284C7 0%, #062C4A 70%); }
+.row:nth-child(4) summary { --card-bg: linear-gradient(160deg, #C2410C 0%, #4A1404 70%); }
+.row:nth-child(1) summary::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='192' font-family='monospace' font-size='12' fill='white'%3E%3Ctext x='0' y='14'%3E0F0F1/1/A %7BA%7BB%7DB%7DC%23 C%23D%24D%24E%25E %25F0F0/1/1 %7BA%7BA%3C/text%3E%3Ctext x='0' y='30'%3E%25E%25E0F0F1 /1/A%7BA%7BB%7D B%7DC%23C%23D%24D %24E%25E%25F0F0 /1/1%3C/text%3E%3Ctext x='0' y='46'%3E%24D%24D%25E%25E0 F0F1/1/A%7B A%7BB%7DB%7DC%23C %23D%24D%24E%25E%25 F0F0%3C/text%3E%3Ctext x='0' y='62'%3E%23C%23C%24D%24D%25 E%25E0F0F1/ 1/A%7BA%7BB%7DB %7DC%23C%23D%24D%24 E%25E%25%3C/text%3E%3Ctext x='0' y='78'%3E%7DB%7DB%23C%23C%24 D%24D%25E%25E0F 0F1/1/A%7BA %7BB%7DB%7DC%23C%23 D%24D%24%3C/text%3E%3Ctext x='0' y='94'%3E%7BA%7BA%7DB%7DB%23 C%23C%24D%24D%25E %25E0F0F1/1 /A%7BA%7BB%7DB%7D C%23C%23%3C/text%3E%3Ctext x='0' y='110'%3E/1/1%7BA%7BA%7D B%7DB%23C%23C%24D %24D%25E%25E0F0 F1/1/A%7BA%7B B%7DB%7D%3C/text%3E%3Ctext x='0' y='126'%3EF0F0/1/1%7B A%7BA%7DB%7DB%23C %23C%24D%24D%25E%25 E0F0F1/1/ A%7BA%7B%3C/text%3E%3Ctext x='0' y='142'%3EE%25E%25F0F0/ 1/1%7BA%7BA%7DB %7DB%23C%23C%24D%24 D%25E%25E0F0F 1/1/%3C/text%3E%3Ctext x='0' y='158'%3ED%24D%24E%25E%25F 0F0/1/1%7BA %7BA%7DB%7DB%23C%23 C%24D%24D%25E%25E 0F0F%3C/text%3E%3Ctext x='0' y='174'%3EC%23C%23D%24D%24E %25E%25F0F0/1 /1%7BA%7BA%7DB%7D B%23C%23C%24D%24D %25E%25E%3C/text%3E%3Ctext x='0' y='190'%3EB%7DB%7DC%23C%23D %24D%24E%25E%25F0 F0/1/1%7BA%7B A%7DB%7DB%23C%23C %24D%24D%3C/text%3E%3C/svg%3E") 0 0 / 360px 192px; opacity: .18; -webkit-mask-image: linear-gradient(180deg, #000, transparent 70%); mask-image: linear-gradient(180deg, #000, transparent 70%); animation: shimmer 3.5s ease-in-out infinite; }
+@keyframes shimmer { 0%, 100% { opacity: .1; } 50% { opacity: .24; } }
 .row summary > * { position: relative; }
 .row .n { grid-area: n; font: 500 .8rem var(--font-mono); color: rgba(255,255,255,.75); }
 .row .t { grid-area: t; align-self: end; font: 700 1.3rem/1.2 var(--font-head); letter-spacing: -.02em; }
@@ -272,6 +280,42 @@ main { display: block; }
 .sandbox { border: 1px dashed var(--line); border-radius: 12px; padding: 1rem 1.1rem; margin-top: 1rem; }
 @media (max-width: 1000px) { .rows { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .rows { grid-template-columns: minmax(0, 1fr); } .row summary { min-height: 220px; } }
+
+/* Project rows (/work/): number, title + summary + buttons, headline number, and a small chart from the
+   project's own data (_includes/charts/, drawn by scripts/make_charts.py). One accent colour; grey is the comparison. */
+.prows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.prow { display: grid; grid-template-columns: 3rem minmax(0, 1.5fr) minmax(0, .8fr) minmax(0, 1.1fr); gap: 1.25rem 1.75rem; align-items: center; padding: 1.6rem 0; border-bottom: 1px solid var(--line); }
+.prow-n { align-self: start; padding-top: .3rem; font-size: .85rem; color: var(--muted); }
+.prow-title { margin: 0 0 .35rem; font-size: 1.25rem; }
+.prow-title a { color: var(--text); text-decoration: none; } .prow-title a:hover { color: var(--accent); }
+.prow-sum { margin: 0 0 .9rem; color: var(--sub); font-size: .95rem; }
+.prow-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; }
+.prow-num { display: flex; flex-direction: column; gap: .25rem; margin: 0; }
+.prow-num b { font: 700 clamp(1.8rem, 3vw, 2.4rem)/1 var(--font-head); letter-spacing: -.03em; }
+.prow-num span { font-size: .85rem; color: var(--muted); }
+.row-chart { margin: 0; }
+.row-chart svg { display: block; width: 100%; height: auto; max-height: 132px; overflow: visible; }
+.row-chart figcaption { margin-top: .35rem; font-size: .78rem; color: var(--muted); }
+.ch-axis { stroke: var(--line); stroke-width: 1; }
+.ch-a { stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ch-m { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ch-af { fill: var(--accent); } .ch-mf { fill: var(--muted); }
+.ch-track { fill: var(--line); }
+.ch-box { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.ch-dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+.ch-t { fill: var(--sub); font: 400 11px var(--font-mono); } .ch-tm { fill: var(--muted); }
+.mini-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+.mini-bars li { display: grid; grid-template-columns: 4.5rem 1fr 2rem; gap: .6rem; align-items: center; font: 400 .8rem var(--font-mono); color: var(--sub); }
+.mini-bars .bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.mini-bars i { display: block; height: 100%; border-radius: 4px; background: var(--accent); }
+.mini-bars .v { text-align: right; }
+@media (max-width: 1000px) { .prow { grid-template-columns: 2.5rem minmax(0, 1fr) minmax(0, 1fr); } .prow-main { grid-column: 2 / -1; } .prow-num { grid-column: 2; } .row-chart { grid-column: 3; } }
+@media (max-width: 560px) {
+  .prow { grid-template-columns: minmax(0, 1fr); gap: .8rem; padding: 1.25rem 0; } .prow-n { display: none; }
+  .prow-main, .prow-num, .row-chart { grid-column: 1; } .prow-num { flex-direction: row; align-items: baseline; gap: .6rem; } .prow-num b { font-size: 1.6rem; }
+  .row-chart svg { max-height: 92px; } .row-chart figcaption { display: none; } /* the chart's own description stays for screen readers */
+  .prow { gap: .6rem; padding: 1rem 0; } .prow-sum { margin-bottom: .7rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+}
 
 /* Toolkit: same tabs, plus a decorative constellation of the open tab's tools. */
 .toolkit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
@@ -308,7 +352,7 @@ main { display: block; }
 .cq-compact p { margin: 0; } .cq-compact .cq-actions { margin-top: .75rem; } .cq-compact .cq-tm { margin-top: .5rem; }
 @media (max-width: 640px) { .cq-card { grid-template-columns: 1fr; } .cq-shot { max-width: 200px; } }
 
-/* Journey: the one light section, with the portrait and readout. */
+/* Journey steps (About page cards; on the home page they become a timeline, below). */
 .journey { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; list-style: none; padding: 0; margin: 0; }
 .journey .when { font: 500 .8rem var(--font-mono); color: var(--accent); }
 .journey h3 { margin: .4rem 0 .2rem; font-size: 1.05rem; }
@@ -316,21 +360,22 @@ main { display: block; }
 .journey p:last-child { margin: 0; font-size: .92rem; }
 @media (max-width: 960px) { .journey { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .journey { grid-template-columns: 1fr; } }
-.journey-section { --bg: #EEF0FB; --card: #FFFFFF; --line: #D9DDF2; --text: #0B0D1A; --muted: #4A5175; --sub: #3D4466; --label: #2F4BEA; --accent: #2F4BEA; --soft: rgba(47,75,234,.08); color-scheme: light;
-  width: 100vw; margin: clamp(88px, 10vw, 136px) 0 0 calc(50% - 50vw); padding: clamp(80px, 9vw, 128px) max(var(--pad), calc(50vw - var(--max) / 2 + var(--pad)));
-  background: var(--bg); color: var(--text); display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); grid-template-areas: "photo label" "photo title" "photo cards"; grid-template-rows: auto auto 1fr; column-gap: clamp(2rem, 5vw, 4rem); }
-:root[data-theme="light"] .journey-section { --bg: #FFFFFF; --card: #F6F7FD; border-block: 1px solid #D9DDF2; }
-@media (prefers-color-scheme: light) { :root:not([data-theme]) .journey-section { --bg: #FFFFFF; --card: #F6F7FD; border-block: 1px solid #D9DDF2; } }
+/* Story section (home): the same background as the rest of the page, the portrait (unchanged) beside one timeline of the four steps. */
+.journey-section { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); grid-template-areas: "photo label" "photo title" "photo cards"; grid-template-rows: auto auto 1fr; column-gap: clamp(2rem, 5vw, 4rem); }
 .journey-section > .label { grid-area: label; } .journey-section > h2 { grid-area: title; font-size: clamp(1.8rem, 3.6vw, 2.8rem); font-weight: 800; letter-spacing: -.04em; margin-bottom: 1.5rem; }
-.journey-section .journey { grid-area: cards; grid-template-columns: 1fr 1fr; align-self: start; }
-.journey-section .journey .card { border-radius: 18px; box-shadow: 0 20px 40px -32px rgba(27,42,140,.45); }
+.journey-section .journey { grid-area: cards; display: block; position: relative; align-self: start; padding-left: 1.75rem; }
+.journey-section .journey::before { content: ""; position: absolute; left: 5px; top: .6rem; bottom: .6rem; width: 2px; background: var(--line); }
+.journey-section .journey .card { position: relative; padding: 0 0 1.75rem; border: 0; border-radius: 0; background: none; }
+.journey-section .journey .card:last-child { padding-bottom: 0; }
+.journey-section .journey .card::before { content: ""; position: absolute; left: calc(-1.75rem + 1px); top: .3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); box-sizing: border-box; }
+.journey-section .journey .card:last-child::before { background: var(--accent); } /* the step that is "now" */
+.journey-section .journey .where { margin-bottom: .35rem; }
 .photo-card { grid-area: photo; position: relative; align-self: start; margin: 0; border-radius: 28px; overflow: hidden; background: #0B0D1A; box-shadow: 0 40px 80px -40px rgba(27,42,140,.55); }
 .photo-card img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .photo-card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 45%; background: linear-gradient(180deg, rgba(11,13,26,0), rgba(11,13,26,.78)); pointer-events: none; }
 .readout { position: absolute; z-index: 1; left: 14px; right: 14px; bottom: 14px; margin: 0; padding: .8rem 1rem; border-radius: 16px; background: rgba(11,13,26,.82); border: 1px solid rgba(255,255,255,.12); color: #FFFFFF; font: 400 .78rem/1.8 var(--font-mono); display: grid; grid-template-columns: auto 1fr; gap: 0 1rem; }
 .readout dt { color: #A9B8FF; } .readout dd { margin: 0; } .readout .status { color: #E9ECF5; } .readout .is-live .status { color: #34D399; } .readout .is-live .dot { background: #34D399; }
 @media (max-width: 860px) { .journey-section { grid-template-columns: minmax(0, 1fr); grid-template-areas: "label" "title" "photo" "cards"; } .photo-card { max-width: 420px; margin-bottom: 1.5rem; } }
-@media (max-width: 560px) { .journey-section .journey { grid-template-columns: 1fr; } }
 
 /* Writing: the bot line, then glass cards with a top border per series. */
 .botline { font: 400 .85rem/1.8 var(--font-mono); color: var(--muted); }
@@ -550,16 +595,27 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 
 /* Home page on phones: the same content, packed tighter so the page stays short (target: at most 7 screens at 390 px). */
 @media (max-width: 560px) {
-  .section { padding-top: 56px; }
+  .section { padding-top: 44px; }
+  .hero { padding-bottom: 28px; }
+  .palette { margin-top: 32px; }
+  .hero-demo .groups-title { font-size: .8rem; } .hero-demo h2 { font-size: 1.1rem; }
+  .botline { display: none; } /* the blog bot's numbers are in the Live signals ticker */
+  .journey-section > h2, .section-head h2 { font-size: 1.5rem; }
+  .proof a { padding: 14px 12px; } .proof .num:not(.num-status) { font-size: 1.5rem; }
+  .journey-section .journey .card { padding-bottom: 1.1rem; } .journey-section .photo-card { margin-bottom: 1.1rem; }
   .row summary { min-height: 128px; }
-  .toolkit .constellation { display: none; } /* decorative (aria-hidden); the tab lists hold the same tools */
-  .cq-card .cq-shot { display: none; }
-  .journey-section .journey { gap: 0; }
-  .journey-section .journey .card { padding: .9rem 0 .9rem 1rem; border: 0; border-left: 2px solid var(--line); border-radius: 0; background: none; box-shadow: none; }
-  .journey-section { margin-top: 56px; padding-block: 48px; }
-  .journey-section .journey .where { margin: 0; }
-  .journey-section .journey p:last-child:not(.where) { display: none; } /* the full text of each step is on the About page */
   .featured .flow { display: none; } /* the same five steps are drawn on the project page */
+  .cq-card .cq-shot { display: none; }
+  .post-cards li:nth-child(n+3) { display: none; } /* two latest posts on phones; all posts are one tap away */
+  .hero-demo .demo-key { display: none; } /* the full sandbox explains each measure */
+  .journey-section .journey p:last-child:not(.where) { display: none; } /* the full text of each step is on the About page */
   .post-cards { gap: 10px; }
   .post-cards a { gap: .3rem; padding: .9rem 1rem 1rem; }
 }
+
+/* Labs page (/labs/) and the "Copy link to this view" button every full sandbox gets. */
+.labs-index { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+.lab { padding-top: clamp(40px, 6vw, 72px); }
+.lab > h2 { margin-bottom: .3rem; }
+.lab > .muted { margin: 0; }
+.share { margin: 1rem 0 0; }
