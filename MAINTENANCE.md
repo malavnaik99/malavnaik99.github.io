@@ -44,7 +44,8 @@ This is temporary: the next change to `main` publishes the newest version again.
 - Identity (name, title, email, bios, profiles): `identity/identity.json`, the single source of truth. `scripts/check_identity.py` stops a deploy that drifts from it.
 - Page head, previews, structured data: `_layouts/default.html`, `_includes/schema.html`, `_config.yml`
 - Sandboxes and search: `assets/islands/` (one file each, loaded only when needed), data in `assets/data/`. Ctrl+K and the home "Ask" box both use `search.js` over `search.json`.
-- Project rows (home page and /work/): `_includes/project-row.html`; each project's row text, headline number, chart and "Try it" link are in its `_projects/*.md` front matter (`home: true` puts it on the home page). Charts: `_includes/charts/`, drawn by `scripts/make_charts.py` (automation bars are drawn at build time from `_data/automation.json`).
+- Home page projects: the featured Dublin bikes card and the four mixed-colour cards, written in `index.md`.
+- Project rows (/work/): `_includes/project-row.html`; each project's row text, headline number, chart and "Try it" link are in its `_projects/*.md` front matter. Charts: `_includes/charts/`, drawn by `scripts/make_charts.py` (automation bars are drawn at build time from `_data/automation.json`).
 - Labs (/labs/): the three sandboxes on one page. Each keeps its state in the address (`?t=` threshold, `?q=` question, `?sql=` query) via `window.sandboxState` in `assets/site.js`.
 - Menu: Work, Labs, Writing, About (+ Résumé), set in `_layouts/default.html`. Toolkit and Journey are sections of the home page (`/#toolkit`, `/#journey`).
 - Permits dashboard: `permits-2025/index.html` (figures from `permits-issued-to-companies-2025.xlsx`); its chart library is the pinned copy in `assets/vendor/`.

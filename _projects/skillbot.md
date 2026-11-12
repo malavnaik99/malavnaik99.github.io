@@ -12,7 +12,6 @@ headline: "48%"
 headline_label: "of suggested skills are in the real job ad"
 chart: "skillbot"
 try_url: "https://huggingface.co/spaces/Malavnaik/skillbot-skills-explorer"
-home: true
 featured: true
 code_url: https://github.com/malavnaik99/SkillBot-AI-Driven-Personalized-Learning-Platform
 demo_url: https://huggingface.co/spaces/Malavnaik/skillbot-skills-explorer

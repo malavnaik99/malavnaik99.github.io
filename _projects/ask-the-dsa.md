@@ -12,7 +12,6 @@ headline: "84%"
 headline_label: "of test questions with the right article in the top 3"
 chart: "dsa"
 try_url: "/labs/#sandbox-dsa"
-home: true
 featured: true
 sandbox: dsa
 code_url: https://github.com/malavnaik99/eu-dsa-search

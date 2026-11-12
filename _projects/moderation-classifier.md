@@ -12,7 +12,6 @@ headline: "0.957"
 headline_label: "ROC-AUC on 180,488 held-out comments"
 chart: "moderation"
 try_url: "/labs/#sandbox-moderation"
-home: true
 featured: true
 sandbox: moderation
 code_url: https://github.com/malavnaik99/moderation-classifier

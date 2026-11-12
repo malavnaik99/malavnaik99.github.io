@@ -12,7 +12,6 @@ headline: "14"
 headline_label: "automatic data tests on every run"
 chart: "bikes"
 try_url: "/labs/#sql"
-home: true
 featured: true
 sandbox: sql
 code_url: https://github.com/malavnaik99/dublin-data-pipeline
