@@ -10,7 +10,7 @@ plus Play / Pause and an hour slider that assets/islands/sky.js switches on once
 <div class="sky-bar" data-sky data-src="{{ '/assets/data/sky.json' | relative_url }}"{% if site.data.sky_live.url != "" %} data-live="{{ site.data.sky_live.url }}"{% endif %}>
   <div class="sky-words">
     <p class="sky-sum"><span class="dot" aria-hidden="true"></span><span data-sky-text>Dublinbikes, {{ sky.hours[h] | date: "%a %-d %b, %H:%M" }} (saved snapshot): {{ total_txt }} bikes at {{ n }} stations, {{ n_empty }} empty.</span></p>
-    <p class="sky-key">Behind this page: each light is a bike station at its real position in Dublin. Brighter means more bikes free; an amber ring means empty{% if site.data.sky_river %}; the faint line is the River Liffey{% endif %}.</p>
+    <p class="sky-key">Behind this page: each light is a bike station at its real position in Dublin. Brighter means more bikes free; an amber ring means empty{% if site.data.sky_river %}; the faint line is the River Liffey. River: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>{% endif %}.</p>
   </div>
   <div class="sky-ctl no-js-hide">
     <button class="btn small" type="button" data-sky-play>Play the last 48 hours</button>
