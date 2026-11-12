@@ -632,6 +632,15 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
   .post-cards a { gap: .3rem; padding: .9rem 1rem 1rem; }
 }
 
+/* Street map of the bike stations (Dublin bikes project page): Leaflet + OpenStreetMap; the height is reserved so nothing moves when it loads. */
+.station-map { min-height: clamp(320px, 55vw, 460px); }
+.station-map-view { height: clamp(320px, 55vw, 460px); border: 1px solid var(--line); border-radius: 14px; }
+.station-map-sum { margin: .6rem 0 .4rem; color: var(--sub); }
+.station-list summary { cursor: pointer; color: var(--accent); }
+.station-list table { width: 100%; max-height: 24rem; margin-top: .5rem; }
+.station-list td + td, .station-list th + th { text-align: right; }
+.leaflet-container { font: 400 .8rem var(--font); }
+
 /* Labs page (/labs/) and the "Copy link to this view" button every full sandbox gets. */
 .labs-index { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
 .lab { padding-top: clamp(40px, 6vw, 72px); }

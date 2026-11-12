@@ -2,6 +2,7 @@
 // with the River Liffey as the only landmark. Loaded by site.js only after the page has painted.
 // Data: /assets/data/sky.json (saved snapshot + river) or, when switched on in _data/sky_live.json, the pipeline's
 // "latest" file if it is under two hours old. The text summary under the map is the same information in words.
+// The same file holds the street map on the Dublin bikes project page (islands.stationmap), which shares the data loader.
 (function () {
   var MAX_AGE = 2 * 3600 * 1000, STEP_MS = 220;
   var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], DAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -19,6 +20,19 @@
     return DAY[day] + " " + (+m[3]) + " " + MON[+m[2] - 1] + ", " + m[4] + (i > 0 && hours[i] === hours[i - 1] ? " (again: clocks went back)" : "");
   }
   var num = function (n) { return n.toLocaleString("en-IE"); };
+  // The saved snapshot (+ river), or the pipeline's live file when it is under two hours old.
+  function load(src, live) {
+    var river = [];
+    return fetch(src).then(function (r) { return r.json(); }).then(function (j) {
+      river = j.river || [];
+      if (!live) return { data: j.snapshot, label: "saved snapshot" };
+      var ctl = new AbortController();
+      setTimeout(function () { ctl.abort(); }, 4000);
+      return fetch(live, { signal: ctl.signal }).then(function (r) { return r.ok ? r.json() : null; }).then(function (l) {
+        return valid(l) && Date.now() - Date.parse(l.generated_utc) < MAX_AGE ? { data: l, label: "live" } : { data: j.snapshot, label: "saved snapshot" };
+      }).catch(function () { return { data: j.snapshot, label: "saved snapshot" }; });
+    }).then(function (r) { return { d: clean(r.data), label: r.label, river: river }; });
+  }
 
   window.islands = window.islands || {};
   window.islands.sky = function (bar) {
@@ -28,17 +42,8 @@
     var ctx = canvas.getContext("2d"), d, river = [], label = "saved snapshot", hour = 0, timer = null, pts = [], dpr = 1;
     var playLabel = play.textContent;
 
-    fetch(bar.dataset.src).then(function (r) { return r.json(); }).then(function (j) {
-      river = j.river || [];
-      if (!bar.dataset.live) return j.snapshot;
-      var ctl = new AbortController();
-      setTimeout(function () { ctl.abort(); }, 4000);
-      return fetch(bar.dataset.live, { signal: ctl.signal }).then(function (r) { return r.ok ? r.json() : null; }).then(function (l) {
-        if (valid(l) && Date.now() - Date.parse(l.generated_utc) < MAX_AGE) { label = "live"; return l; }
-        return j.snapshot;
-      }).catch(function () { return j.snapshot; });
-    }).then(function (data) {
-      d = clean(data);
+    load(bar.dataset.src, bar.dataset.live).then(function (res) {
+      d = res.d; river = res.river; label = res.label;
       hero.classList.add("has-sky");
       if (label === "live") bar.classList.add("is-live");
       range.max = d.hours.length - 1; range.disabled = false;
@@ -114,5 +119,42 @@
     canvas.addEventListener("pointerleave", function () { tip.hidden = true; });
     if (window.ResizeObserver) new ResizeObserver(function () { if (d) { fit(); draw(); } }).observe(hero);
     new MutationObserver(function () { if (d) draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  };
+
+  // Street map (Dublin bikes project page): every station on OpenStreetMap, at the newest hour of data.
+  // Leaflet (pinned copy in assets/vendor) and the map pictures load only when the visitor reaches the map.
+  var VENDOR = "/assets/vendor/leaflet-1.9.4/";
+  function script(src) {
+    return new Promise(function (ok, fail) { var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
+  }
+  window.islands.stationmap = function (box) {
+    var link = document.createElement("link"); link.rel = "stylesheet"; link.href = VENDOR + "leaflet.css"; document.head.appendChild(link);
+    box.innerHTML = '<p class="small muted">Loading the map…</p>';
+    Promise.all([load(box.dataset.src, box.dataset.live), window.L ? null : script(VENDOR + "leaflet.js")]).then(function (r) {
+      var d = r[0].d, h = d.hours.length - 1, ink = getComputedStyle(document.documentElement);
+      var accent = ink.getPropertyValue("--accent").trim(), warn = ink.getPropertyValue("--dg-warn").trim();
+      box.innerHTML = '<div class="station-map-view" role="region" aria-label="Street map of Dublinbikes stations"></div><p class="small station-map-sum"></p>' +
+        '<details class="station-list"><summary>All stations as a list</summary><table><thead><tr><th scope="col">Station</th><th scope="col">Bikes</th><th scope="col">Docks</th></tr></thead><tbody></tbody></table></details>';
+      var map = L.map(box.firstChild, { scrollWheelZoom: false }), pts = [], total = 0, empty = 0, rows = [];
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
+      d.stations.forEach(function (s, i) {
+        var b = d.bikes[i][h];
+        if (b === null || b === undefined) return;
+        var f = Math.min(1, b / s[3]), tip = document.createElement("span"); // built with textContent: names come from the data, never read as HTML
+        tip.textContent = s[0] + ": " + b + " of " + s[3] + " bikes";
+        L.circleMarker([s[1], s[2]], b === 0 ? { radius: 7, color: warn, weight: 2.5, fillOpacity: 0 } : { radius: 4 + 5 * f, color: accent, weight: 1, fillColor: accent, fillOpacity: 0.25 + 0.6 * f })
+          .bindTooltip(tip).bindPopup(tip.cloneNode(true)).addTo(map);
+        pts.push([s[1], s[2]]); total += b; if (b === 0) empty++; rows.push([s[0], b, s[3]]);
+      });
+      map.fitBounds(pts, { padding: [16, 16] });
+      box.querySelector(".station-map-sum").textContent = "Dublinbikes, " + when(d.hours, h) + " (" + r[0].label + "): " + num(total) + " bikes at " + pts.length +
+        " stations, " + empty + " empty. Bigger, more solid circles have more bikes free; an amber ring means empty. Tap or point at a station for its numbers.";
+      var tb = box.querySelector("tbody");
+      rows.sort(function (a, b) { return a[0].localeCompare(b[0]); }).forEach(function (row) {
+        var tr = document.createElement("tr");
+        row.forEach(function (v) { var td = document.createElement("td"); td.textContent = v; tr.appendChild(td); });
+        tb.appendChild(tr);
+      });
+    }).catch(function () { box.innerHTML = '<p class="small muted">The map could not be loaded. Please try again later.</p>'; });
   };
 })();

@@ -98,6 +98,14 @@ An end-to-end pipeline that runs on free tiers only:
 })();
 </script>
 
+## Station map
+Every Dublinbikes station on a street map, at the newest hour of data. Bigger, more solid circles have more bikes free, and an amber ring means the station is empty. Tap or point at a station for its numbers; the full list is under the map.
+
+<div class="island station-map" data-island="stationmap" data-island-file="sky" data-src="{{ '/assets/data/sky.json' | relative_url }}"{% if site.data.sky_live.url != "" %} data-live="{{ site.data.sky_live.url }}"{% endif %}>
+  <button class="btn btn-accent" type="button" data-island-load>Load the map</button>
+</div>
+<p class="small muted">Map data and map images © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>. The map images load from OpenStreetMap's servers only when you reach this map. Map library: <a href="https://leafletjs.com">Leaflet</a>.</p>
+
 ## What's next
 The question needs weeks of data, across different weather, before any answer is honest. Once enough has built up, I'll publish an analysis notebook and write up what the data says.
 
