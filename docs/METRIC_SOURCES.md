@@ -21,6 +21,19 @@ Every metric shown on malavnaik.com must trace to a source below. If a number ca
 | Other projects' headline numbers | /work/ project rows | Each project page's own result: 201,912 rents for 437 places (Irish rents page), 31,044 permits (the official 2025 spreadsheet in this repo), "1 tap" (Gmail auto-reply page: a routine reply becomes one tap) |
 | Precision, recall, share flagged and wrongly-flagged rates at each threshold | Home hero demo (all groups plus black, white, gay or lesbian, muslim), moderation sandbox | `assets/data/moderation-sweep.json` (see Sandboxes below). The hero's four groups are the four with the highest wrongly-flagged rate at the 0.22 review threshold | Résumé and post 03: the Azure SQL migration at S&P Global Market Intelligence cut infrastructure costs by about 25% |
 
+## Receipts (the cards behind the four proof-strip numbers)
+
+`scripts/make_receipts.py` copies this table into `_data/receipts.json`, which the home page shows when a visitor opens one
+of the four numbers under the hero. The deploy stops if the two differ, so edit here, then run `python3 scripts/make_receipts.py`.
+Plain Markdown; links allowed; no "|" inside a cell.
+
+| Key | Shown | Dataset | File | Test |
+|---|---|---|---|---|
+| pipeline | Pipeline status | Dublinbikes station data and Met Éireann weather, collected every 15 minutes into the public [Hugging Face dataset](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts) | `ingest.yml` in the public repo [malavnaik99/dublin-data-pipeline](https://github.com/malavnaik99/dublin-data-pipeline); your browser asks the GitHub Actions API for its latest successful run | Says "live" only if that run finished in the last 60 minutes; otherwise it says "runs every 15 min" and claims nothing live |
+| tests | 14 | The Dublin bikes star schema: `fct_station_hour` with `dim_station` and `dim_hour`, built by dbt in DuckDB | The dbt tests in [malavnaik99/dublin-data-pipeline](https://github.com/malavnaik99/dublin-data-pipeline), described on the [case study](/projects/dublin-bikes-pipeline/), step 3 | 14 automatic tests on every run: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day); a failure sends a Telegram alert |
+| rocauc | 0.957 | Civil Comments (public, CC0): 180,488 held-out test comments, 8.0% toxic, which the model never saw in training | The [Kaggle notebook](https://www.kaggle.com/code/malavnaik/moderation-classifier-civil-comments), final run v10 (DistilBERT) | Re-scoring the same test comments for the threshold sweep reproduced ROC-AUC 0.9574 (`assets/data/moderation-sweep.json`) |
+| dsa | 84% | 25 test questions about the EU Digital Services Act, over the official text from [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2022/2065/oj/eng) | The evaluation in [malavnaik99/eu-dsa-search](https://github.com/malavnaik99/eu-dsa-search); its saved results are `assets/data/dsa-examples.json` | Vector search put the right article in the top 3 for 21 of 25 questions (84%); this site recounts it from the saved results every time the charts are drawn (`scripts/make_charts.py`) |
+
 ## Sandboxes
 
 | Sandbox | Data file | Source |
