@@ -27,7 +27,8 @@
   {% assign fonts = "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" %}
   <link rel="preload" as="style" href="{{ fonts }}" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="{{ fonts }}"></noscript>
-  <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+  {%- comment -%} ?v= is this build's time: after a deploy, browsers and Cloudflare fetch the new files instead of a cached older copy. {%- endcomment %}
+  <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   {% include schema.html %}
   <noscript><style>[role="tabpanel"][hidden]{display:block}</style></noscript>
 </head>
@@ -72,7 +73,7 @@
       <div class="footer-wordmark notranslate" translate="no" aria-hidden="true">MALAV NAIK</div>
     </div>
   </footer>
-  <script src="{{ '/assets/site.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/site.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   {% if site.goatcounter != "" %}<script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
 </body>
 </html>

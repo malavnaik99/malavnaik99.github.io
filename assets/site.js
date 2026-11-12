@@ -3,6 +3,9 @@
 (function () {
   var root = document.documentElement;
   var $ = function (s, el) { return (el || document).querySelector(s); };
+  // The build version the page loaded this script with (?v=...); added to island scripts so a deploy never mixes old and new code.
+  var V = (document.currentScript && document.currentScript.src.split("?")[1]) || "";
+  var island = function (file) { return "/assets/islands/" + file + ".js" + (V ? "?" + V : ""); };
   var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
 
   var themeBtn = $(".theme-btn");
@@ -67,7 +70,7 @@
   var searchScript;
   function withSearch(cb) {
     if (window.siteSearch) return cb();
-    if (!searchScript) { searchScript = document.createElement("script"); searchScript.src = "/assets/islands/search.js"; document.head.appendChild(searchScript); }
+    if (!searchScript) { searchScript = document.createElement("script"); searchScript.src = island("search"); document.head.appendChild(searchScript); }
     searchScript.addEventListener("load", cb);
   }
 
@@ -166,7 +169,7 @@
     var run = function () { window.islands[name](box); };
     if (window.islands && window.islands[name]) return run();
     var sc = document.createElement("script");
-    sc.src = "/assets/islands/" + (box.dataset.islandFile || name) + ".js"; // data-island-file: an island kept in another island's file
+    sc.src = island(box.dataset.islandFile || name); // data-island-file: an island kept in another island's file
     sc.onload = run;
     document.head.appendChild(sc);
   }
@@ -199,7 +202,7 @@
   if (skyBar && window.fetch) window.addEventListener("load", function () {
     var go = function () {
       var sc = document.createElement("script");
-      sc.src = "/assets/islands/sky.js";
+      sc.src = island("sky");
       sc.onload = function () { window.islands.sky(skyBar); };
       document.head.appendChild(sc);
     };
