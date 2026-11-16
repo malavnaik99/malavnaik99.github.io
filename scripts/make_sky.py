@@ -108,7 +108,6 @@ def river(tries=6, query=None):
 OUTLINE_BOX = (53.31, -6.38, 53.38, -6.15)
 OUTLINE_SELECT = {  # OpenStreetMap tags; "rel" also takes the member ways of a relation with those tags (often the only named record)
     "coast": ('["natural"="coastline"]', ""),
-    "liffey": ('["waterway"="river"]["name"~"Liffey"]', '["waterway"="river"]'),
     "grand_canal": ('["waterway"="canal"]["name"="Grand Canal"]', '["waterway"="canal"]'),
     "royal_canal": ('["waterway"="canal"]["name"="Royal Canal"]', '["waterway"="canal"]'),
     "phoenix_park": ('["leisure"="park"]["name"="Phoenix Park"]', ""),
@@ -143,6 +142,7 @@ def outlines():
         lines = [[[round(p[0], 4), round(p[1], 4)] for p in simplify(l)] for l in river(query=outline_query(sel, member))]
         out[name] = [l for l in lines if len(l) > 1]
         time.sleep(5)  # the service is shared and free
+    out["liffey"] = json.loads(RIVER.read_text())["lines"]  # already downloaded and checked (--river): not asked for again
     return out
 
 
@@ -156,7 +156,7 @@ def check_outlines(o, stations):
     named = {s[0]: s for s in stations}
     near = lambda pts, st, m: min(metres((st[1], st[2]), p) for p in pts) <= m
     pts = {k: [p for l in v for p in l] for k, v in o.items()}
-    bad = [f"{k}: nothing downloaded" for k in OUTLINE_SELECT if not pts.get(k)]
+    bad = [f"{k}: nothing downloaded" for k in list(OUTLINE_SELECT) + ["liffey"] if not pts.get(k)]
     if bad:
         return bad
     for st in ("Portobello Road", "Herbert Place", "Wilton Terrace"):
