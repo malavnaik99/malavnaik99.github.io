@@ -1,15 +1,15 @@
 {
- "posts_published": 9,
- "posts_queued": 44,
+ "posts_published": 10,
+ "posts_queued": 43,
  "platforms": {
-  "Blog": 9,
+  "Blog": 10,
   "DEV": 6,
-  "LinkedIn": 9,
+  "LinkedIn": 10,
   "Medium": 5
  },
  "last_post": {
-  "title": "The Data Quality Checks That Catch Problems Before Your Users Do",
-  "url": "https://malavnaik.com/blog/data-quality-monitoring-checks/"
+  "title": "Designing Decision Trees for Escalations: Classifying Messy Cases Consistently",
+  "url": "https://malavnaik.com/blog/decision-trees-for-escalations/"
  },
- "updated": "2026-11-09"
+ "updated": "2026-11-16"
 }
