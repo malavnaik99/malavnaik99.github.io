@@ -10,7 +10,7 @@ permissions:
 jobs:
   outlines:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
       - name: Download, simplify and check the outlines (refuses to save outlines that fail the checks)

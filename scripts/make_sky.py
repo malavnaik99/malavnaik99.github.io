@@ -77,12 +77,16 @@ def river_query():
             f'(way["waterway"="river"]["name"~"Liffey"]({box});way(r.r)["waterway"="river"]({box}););out geom;')
 
 
-def river(tries=4, query=None):
+# Public Overpass servers (free, shared, often busy): each retry asks the next one.
+SERVERS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
+
+
+def river(tries=6, query=None):
     """The River Liffey through the station area, from OpenStreetMap (Overpass API); one polyline per OSM way.
     Retries when the free public service is busy (HTTP 429/502/503/504, or a 'remark' saying it ran out of time)."""
     import time
     query = query or river_query()
-    req = lambda: urllib.request.Request("https://overpass-api.de/api/interpreter", data=urllib.parse.urlencode({"data": query}).encode(),
+    req = lambda: urllib.request.Request(SERVERS[n % len(SERVERS)], data=urllib.parse.urlencode({"data": query}).encode(),
                                          headers={"User-Agent": "malavnaik.com site build (make_sky.py)"})
     for n in range(1, tries + 1):
         try:
@@ -90,11 +94,11 @@ def river(tries=4, query=None):
             if d.get("remark"):  # Overpass sends an empty answer plus a remark when it times out or runs short of memory
                 raise RuntimeError("OpenStreetMap's service said: " + d["remark"])
             lines = parse_overpass(d)
-            print(f"try {n}: {len(d.get('elements', []))} OpenStreetMap elements, {len(lines)} lines")
+            print(f"try {n}: {len(d.get('elements', []))} OpenStreetMap elements, {len(lines)} lines", flush=True)
             return lines
-        except (urllib.error.HTTPError, urllib.error.URLError, RuntimeError, TimeoutError) as e:
+        except (urllib.error.HTTPError, urllib.error.URLError, RuntimeError, TimeoutError, json.JSONDecodeError) as e:
             busy = not isinstance(e, urllib.error.HTTPError) or e.code in (429, 502, 503, 504)
-            print(f"try {n}: {e}")
+            print(f"try {n} ({SERVERS[n % len(SERVERS)]}): {e}", flush=True)
             if not busy or n == tries:
                 raise
             time.sleep(30 * n)  # back off: the service is shared and free
