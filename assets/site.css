@@ -143,6 +143,8 @@ main { display: block; }
 .sky-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
 .sky-range input { width: clamp(140px, 20vw, 240px); height: 44px; accent-color: var(--accent); }
 .sky-time { min-width: 11ch; color: var(--sub); }
+/* Hero map place labels (assets/islands/hero-map.js). */
+.sky-place { position: absolute; transform: translate(-50%, -50%); color: var(--muted); font: 500 .68rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; opacity: .75; pointer-events: none; }
 .hero-inner { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
 .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .hero-copy > * { margin: 0; }

@@ -197,14 +197,15 @@
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openSearch(); }
   });
 
-  // Hero sky (assets/islands/sky.js, with its data about 25 KB): loads only once the page has loaded and painted.
+  // Hero map: hero-map.js (outlines, labels, explore mode) then sky.js (the stations, data about 25 KB), once the page has painted.
   var skyBar = $("[data-sky]");
   if (skyBar && window.fetch) window.addEventListener("load", function () {
+    var add = function (file, done) { var sc = document.createElement("script"); sc.src = island(file); sc.onload = done; document.head.appendChild(sc); return sc; };
     var go = function () {
-      var sc = document.createElement("script");
-      sc.src = island("sky");
-      sc.onload = function () { window.islands.sky(skyBar); };
-      document.head.appendChild(sc);
+      add("hero-map", function () {
+        var map = window.islands.heroMap(skyBar);
+        add("sky", function () { window.islands.sky(skyBar, map); }).onerror = function () { map.status(null); };
+      });
     };
     if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 300);
   });

@@ -147,7 +147,7 @@ def outlines():
 
 
 # Where each map label sits; the label's words are in index.md so Google Translate can translate them.
-LABELS = {"liffey": [53.3478, -6.2865], "phoenix_park": [53.3575, -6.3200], "docklands": [53.3497, -6.2400],
+LABELS = {"liffey": [53.3462, -6.3030], "phoenix_park": [53.3575, -6.3200], "docklands": [53.3497, -6.2400],
           "dublin_bay": [53.3360, -6.1850], "grand_canal": [53.3305, -6.2580]}
 
 

@@ -1,6 +1,7 @@
-// Hero sky: every Dublinbikes station as a light at its real position (brighter = more bikes free, amber ring = empty),
-// with the River Liffey as the only landmark. Loaded by site.js only after the page has painted.
-// Data: /assets/data/sky.json (saved snapshot + river) or, when switched on in _data/sky_live.json, the pipeline's
+// Hero sky: every Dublinbikes station as a light at its real position (brighter = more bikes free, amber ring = empty).
+// The map itself (projection, river, canals, coast, park, labels, explore mode) is assets/islands/hero-map.js; this file
+// adds the stations, the 48-hour replay and the tooltips. Loaded by site.js only after the page has painted.
+// Data: /assets/data/sky.json (saved snapshot) or, when switched on in _data/sky_live.json, the pipeline's
 // "latest" file if it is under two hours old. The text summary under the map is the same information in words.
 // The same file holds the street map on the Dublin bikes project page (islands.stationmap), which shares the data loader.
 (function () {
@@ -20,62 +21,43 @@
     return DAY[day] + " " + (+m[3]) + " " + MON[+m[2] - 1] + ", " + m[4] + (i > 0 && hours[i] === hours[i - 1] ? " (again: clocks went back)" : "");
   }
   var num = function (n) { return n.toLocaleString("en-IE"); };
-  // The saved snapshot (+ river), or the pipeline's live file when it is under two hours old.
+  // The saved snapshot, or the pipeline's live file when it is under two hours old.
   function load(src, live) {
-    var river = [];
     return fetch(src).then(function (r) { return r.json(); }).then(function (j) {
-      river = j.river || [];
       if (!live) return { data: j.snapshot, label: "saved snapshot" };
       var ctl = new AbortController();
       setTimeout(function () { ctl.abort(); }, 4000);
       return fetch(live, { signal: ctl.signal }).then(function (r) { return r.ok ? r.json() : null; }).then(function (l) {
         return valid(l) && Date.now() - Date.parse(l.generated_utc) < MAX_AGE ? { data: l, label: "live" } : { data: j.snapshot, label: "saved snapshot" };
       }).catch(function () { return { data: j.snapshot, label: "saved snapshot" }; });
-    }).then(function (r) { return { d: clean(r.data), label: r.label, river: river }; });
+    }).then(function (r) { return { d: clean(r.data), label: r.label }; });
   }
 
   window.islands = window.islands || {};
-  window.islands.sky = function (bar) {
+  window.islands.sky = function (bar, map) {
     var hero = bar.closest(".hero"), canvas = hero.querySelector("[data-sky-map]"), tip = hero.querySelector(".sky-tip");
-    var text = bar.querySelector("[data-sky-text]"), range = bar.querySelector("[data-sky-hour]"), play = bar.querySelector("[data-sky-play]"), time = bar.querySelector("[data-sky-time]");
+    var texts = hero.querySelectorAll("[data-sky-text]"), range = bar.querySelector("[data-sky-hour]"), play = bar.querySelector("[data-sky-play]"), time = bar.querySelector("[data-sky-time]");
     var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var ctx = canvas.getContext("2d"), d, river = [], label = "saved snapshot", hour = 0, timer = null, pts = [], dpr = 1;
+    var d, label = "saved snapshot", hour = 0, timer = null, pts = [], dpr = 1;
     var playLabel = play.textContent;
 
     load(bar.dataset.src, bar.dataset.live).then(function (res) {
-      d = res.d; river = res.river; label = res.label;
+      d = res.d; label = res.label;
       hero.classList.add("has-sky");
       if (label === "live") bar.classList.add("is-live");
+      map.status(label);
       range.max = d.hours.length - 1; range.disabled = false;
-      fit(); show(still ? d.hours.length - 1 : 0);
+      show(still ? d.hours.length - 1 : 0);
       if (!still) toggle(); // plays the last hours once, then stops on the newest; never starts by itself under reduced motion
-    }).catch(function () {}); // the sky stays dark and the summary text stays as it was built
+    }).catch(function () { map.status(null); }); // the map keeps its outlines and the summary text stays as it was built
 
     function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-    function fit() {
-      var r = hero.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
-      var la = d.stations.map(function (s) { return s[1]; }), lo = d.stations.map(function (s) { return s[2]; });
-      var minLa = Math.min.apply(0, la), maxLa = Math.max.apply(0, la), minLo = Math.min.apply(0, lo), maxLo = Math.max.apply(0, lo);
-      var k = Math.cos((minLa + maxLa) / 2 * Math.PI / 180), pad = 0.08;
-      var W = canvas.width, H = canvas.height, dx = (maxLo - minLo) * k, dy = maxLa - minLa;
-      var s = Math.min(W * (1 - 2 * pad) / dx, H * (1 - 2 * pad) / dy);
-      var ox = (W - dx * s) / 2, oy = (H - dy * s) / 2;
-      fit.xy = function (lat, lon) { return [ox + (lon - minLo) * k * s, oy + (maxLa - lat) * s]; };
-    }
-    function draw() {
-      var W = canvas.width, H = canvas.height, ink = css("--text"), empty = css("--dg-warn");
-      ctx.clearRect(0, 0, W, H);
-      ctx.globalAlpha = 1; ctx.lineWidth = 2 * dpr; ctx.strokeStyle = css("--line"); ctx.lineJoin = "round";
-      river.forEach(function (line) {
-        ctx.beginPath();
-        line.forEach(function (p, i) { var q = fit.xy(p[0], p[1]); if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); });
-        ctx.stroke();
-      });
-      pts = [];
+    // Drawn by hero-map.js on every redraw (resize, theme, explore), between the outlines and the fade under the text.
+    function stations(ctx) {
+      var ink = css("--text"), empty = css("--dg-warn");
+      dpr = map.dpr(); pts = [];
       d.stations.forEach(function (st, i) {
-        var b = d.bikes[i][hour], q = fit.xy(st[1], st[2]);
+        var b = d.bikes[i][hour], q = map.xy(st[1], st[2]);
         pts.push({ x: q[0], y: q[1], st: st, b: b });
         if (b === null || b === undefined) return;
         var f = Math.min(1, b / st[3]);
@@ -85,6 +67,7 @@
       });
       ctx.globalAlpha = 1;
     }
+    function draw() { map.layer(stations); }
     function summary(h) {
       var total = 0, n = 0, empty = 0;
       d.bikes.forEach(function (row) { var b = row[h]; if (b === null || b === undefined) return; total += b; n++; if (b === 0) empty++; });
@@ -93,7 +76,7 @@
     function show(h) {
       hour = h; range.value = h; draw();
       var s = summary(h);
-      text.textContent = s; range.setAttribute("aria-valuetext", s); time.textContent = when(d.hours, h);
+      [].forEach.call(texts, function (t) { t.textContent = s; }); range.setAttribute("aria-valuetext", s); time.textContent = when(d.hours, h);
     }
     function stop() { clearInterval(timer); timer = null; play.textContent = playLabel; }
     function toggle() {
@@ -117,8 +100,6 @@
     canvas.addEventListener("pointermove", point);
     canvas.addEventListener("pointerdown", point);
     canvas.addEventListener("pointerleave", function () { tip.hidden = true; });
-    if (window.ResizeObserver) new ResizeObserver(function () { if (d) { fit(); draw(); } }).observe(hero);
-    new MutationObserver(function () { if (d) draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   };
 
   // Street map (Dublin bikes project page): every station on OpenStreetMap, at the newest hour of data.
