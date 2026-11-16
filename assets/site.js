@@ -36,6 +36,10 @@
     menuBtn.setAttribute("aria-expanded", nav.classList.toggle("open"));
   });
 
+  // Everything below waits one turn, so the browser can lay out and paint the page in between: two short tasks
+  // instead of one long one keeps the page responsive while it loads (and Lighthouse's blocking time near zero).
+  setTimeout(rest, 0);
+  function rest() {
   // Toolkit constellation: label each node with the matching tool from its tab panel.
   $$(".constellation .area").forEach(function (g) {
     var tools = $$("#" + g.dataset.panel + " li");
@@ -214,9 +218,8 @@
       });
     };
     if (exploreBtn) exploreBtn.addEventListener("click", function () { if (!started) { openNow = true; go(); } });
-    window.addEventListener("load", function () {
-      setTimeout(function () { if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else go(); }, 2500);
-    });
+    var later = function () { setTimeout(function () { if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else go(); }, 2500); };
+    if (document.readyState === "complete") later(); else window.addEventListener("load", later);
   }
 
   // Receipt cards (proof strip): one open at a time; Esc closes it and puts focus back on its number; a click elsewhere closes it.
@@ -255,5 +258,6 @@
         });
       })
       .catch(function () {});
+  }
   }
 })();

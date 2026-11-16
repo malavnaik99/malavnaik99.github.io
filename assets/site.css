@@ -125,6 +125,9 @@ code, kbd, pre, .mono { font-family: var(--font-mono); }
 /* Sections */
 main { display: block; }
 .section { padding: clamp(88px, 10vw, 136px) 0 0; }
+/* Off-screen sections skip layout and paint until the visitor scrolls near them (they stay in the page for search engines
+   and screen readers); 900px is a size guess the browser replaces with the real one once it has drawn the section. */
+.section { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .section-head h2 { margin: 0; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.25rem 1.4rem; }
