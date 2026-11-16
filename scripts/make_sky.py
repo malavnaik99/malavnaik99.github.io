@@ -170,8 +170,19 @@ def check_outlines(o, stations):
 
 
 def parse_overpass(d):
-    return [[[round(g["lat"], 5), round(g["lon"], 5)] for g in el["geometry"]] for el in d.get("elements", [])
-            if el.get("type", "way") == "way" and el.get("geometry")]
+    """One polyline per OSM way. With "out geom(box)" points outside the box come back as null: the line is split there."""
+    lines = []
+    for el in d.get("elements", []):
+        if el.get("type", "way") != "way" or not el.get("geometry"):
+            continue
+        part = []
+        for g in el["geometry"] + [None]:
+            if g:
+                part.append([round(g["lat"], 5), round(g["lon"], 5)])
+            elif part:
+                lines.append(part) if len(part) > 1 else None
+                part = []
+    return lines
 
 
 def self_test():
@@ -180,12 +191,14 @@ def self_test():
     assert nice("NORTH CIRCULAR ROAD (O'CONNELL'S)") == "North Circular Road (O'Connell's)"
     stations = [["Ormond Quay Upper", 53.3461, -6.2679, 30], ["Merrion Square South", 53.3386, -6.2479, 40]]
     near = parse_overpass({"elements": [{"geometry": [{"lat": 53.3459, "lon": -6.2700}, {"lat": 53.3458, "lon": -6.2650}]}]})
-    far = parse_overpass({"elements": [{"geometry": [{"lat": 53.3300, "lon": -6.3000}]}]})
+    far = parse_overpass({"elements": [{"geometry": [{"lat": 53.3300, "lon": -6.3000}, {"lat": 53.3301, "lon": -6.3001}]}]})
     assert check_river(near, stations) == [], "a river beside the quay must pass"
     assert check_river(far, stations), "a river 3 km away must fail"
     # Ways that come back for the named relation (no name tag of their own) count; the relation itself has no geometry here.
     rel_answer = {"elements": [{"type": "relation", "id": 1}, {"type": "way", "geometry": [{"lat": 53.3459, "lon": -6.2700}, {"lat": 53.3458, "lon": -6.2650}]}]}
     assert parse_overpass(rel_answer) == [[[53.3459, -6.27], [53.3458, -6.265]]]
+    gap = {"elements": [{"type": "way", "geometry": [{"lat": 1, "lon": 1}, {"lat": 2, "lon": 2}, None, {"lat": 3, "lon": 3}, {"lat": 4, "lon": 4}]}]}
+    assert parse_overpass(gap) == [[[1, 1], [2, 2]], [[3, 3], [4, 4]]], "a way leaving the box is split, not broken"
     q = river_query()
     assert 'rel["waterway"="river"]["name"~"Liffey"]' in q and "way(r.r)" in q and q.count(",".join(map(str, BBOX))) == 3
     assert simplify([[53.0, -6.0], [53.0, -6.0001], [53.0, -6.0002]]) == [[53.0, -6.0], [53.0, -6.0002]], "a straight line keeps its ends only"
