@@ -4,7 +4,7 @@ name: Outlines download (one-off)
 on:
   push:
     branches: [claude/nifty-lamport-9v4vzh]
-    paths: [.github/workflows/outlines-once.yml]
+    paths: [.github/workflows/outlines-once.yml, scripts/make_sky.py]
 permissions:
   contents: read
 jobs:
