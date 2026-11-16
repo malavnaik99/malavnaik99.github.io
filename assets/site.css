@@ -143,10 +143,33 @@ main { display: block; }
 .sky-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
 .sky-range input { width: clamp(140px, 20vw, 240px); height: 44px; accent-color: var(--accent); }
 .sky-time { min-width: 11ch; color: var(--sub); }
-/* Hero map labels and top label (assets/islands/hero-map.js). */
+/* Hero map labels, top label and "Explore the live map" (assets/islands/hero-map.js). Resting: the map fades out under text. */
 .sky-head { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto clamp(14px, 2vw, 22px); align-items: center; gap: .5rem; color: var(--sub); font: 500 .78rem var(--font-mono); letter-spacing: .02em; }
 .js .sky-head.no-js-hide { display: flex !important; } /* a full-width row, not inline */
+.sky-explore .sky::after { display: none; }
 .sky-place { position: absolute; transform: translate(-50%, -50%); color: var(--muted); font: 500 .68rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; opacity: .75; pointer-events: none; }
+.sky-explore-btn { margin-left: .5rem; vertical-align: middle; }
+.hero-inner, .sky-head { transition: opacity .25s ease; }
+.hero.is-exploring .hero-inner, .hero.is-exploring .sky-head { opacity: 0; }
+html:has(.sky-explore[open]) { overflow: hidden; }
+.sky-explore { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); flex-direction: column; opacity: 1; transition: opacity .25s ease; }
+.sky-explore[open] { display: flex; }
+@starting-style { .sky-explore[open] { opacity: 0; } }
+.sky-explore::backdrop { background: var(--bg); }
+.sky-explore-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 16px var(--pad) 8px; border-bottom: 1px solid var(--line); }
+.sky-explore-words > * { margin: 0 0 .35rem; }
+.sky-explore h2 { font-size: 1.1rem; }
+.sky-nolive { color: var(--text); font-weight: 600; } .sky-nolive::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: .45rem; border-radius: 50%; background: var(--dg-warn); }
+.sky-legend { display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; padding: 0; list-style: none; color: var(--sub); }
+.sky-legend li { display: inline-flex; align-items: center; gap: .45rem; }
+.sky-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--text); }
+.sky-legend .k-few { width: 5px; height: 5px; opacity: .3; }
+.sky-legend .k-empty { width: 10px; height: 10px; background: none; border: 2px solid var(--dg-warn); }
+.sky-close { flex: none; min-height: 48px; min-width: 48px; padding: .6rem 1.2rem; font-size: 1rem; border-color: var(--muted); }
+.sky-explore-map { position: relative; flex: 1; min-height: 0; }
+.sky-explore .sky-place { opacity: 1; font-size: .74rem; }
+.sky-explore-credit { margin: 0; padding: 6px var(--pad) 10px; }
+@media (max-width: 560px) { .sky-explore-hint { display: none; } .sky-explore-top { padding-top: 12px; } .sky-explore h2 { font-size: 1rem; } .sky-explore-words .small { font-size: .8rem; line-height: 1.4; } .sky-legend { gap: .1rem .8rem; } .sky-close { min-height: 52px; padding: .6rem .9rem; } }
 .hero-inner { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
 .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .hero-copy > * { margin: 0; }

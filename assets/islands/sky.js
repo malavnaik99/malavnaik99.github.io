@@ -99,7 +99,7 @@
     }
     canvas.addEventListener("pointermove", point);
     canvas.addEventListener("pointerdown", point);
-    canvas.addEventListener("pointerleave", function () { tip.hidden = true; });
+    canvas.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") tip.hidden = true; }); // a lifted finger also "leaves": keep the tapped station's tip
   };
 
   // Street map (Dublin bikes project page): every station on OpenStreetMap, at the newest hour of data.

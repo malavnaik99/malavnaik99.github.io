@@ -1,4 +1,4 @@
-// Hero map: the base layer of the home page bike-station map.
+// Hero map: the base layer and "Explore the live map" mode for the home page bike-station map.
 //
 // What it does
 //   - Projects latitude/longitude onto the hero canvas. assets/islands/sky.js draws the Dublinbikes stations through the
@@ -7,8 +7,9 @@
 //     Phoenix Park boundary, and places the five place-name labels (their words are in index.md / _includes/sky-bar.html,
 //     so the Gujarati button's Google Translate copy translates them).
 //   - Resting hero: fades the map out under the headline column, the moderation card and the text strips, so no station
-//     sits behind text.
-//   - Works without station data: the outlines and labels still draw.
+//     sits behind text. Explore mode: moves the map into a full-screen <dialog> (Esc or "Close map" closes it and puts
+//     focus back on the button; the rest of the page is unreachable while it is open), with a legend and station tooltips.
+//   - Works without station data: the outlines and labels still draw and "Live data unavailable" shows in explore mode.
 //
 // Where the outline data came from
 //   assets/data/dublin-outlines.json, made once by `python3 scripts/make_sky.py --outlines` from OpenStreetMap
@@ -27,6 +28,7 @@
   window.islands.heroMap = function (bar) {
     var hero = bar.closest(".hero"), sky = hero.querySelector(".sky"), canvas = sky.querySelector("[data-sky-map]");
     var ctx = canvas.getContext("2d"), places = [].slice.call(sky.querySelectorAll("[data-place]"));
+    var dialog = hero.querySelector(".sky-explore"), openBtn = bar.querySelector("[data-explore-open]");
     var covers = [].slice.call(hero.querySelectorAll(".sky-head, .hero-copy, .hero-demo, .sky-bar"));
     var data = { lines: {}, labels: {} }, layer = null, dpr = 1, xy = null, holes = [], ink = "";
     var map = {
@@ -34,11 +36,12 @@
       dpr: function () { return dpr; },
       layer: function (fn) { layer = fn; render(); },
       render: render,
-      status: function () {} // "live", "saved snapshot" or null (no station data)
+      // "live", "saved snapshot" or null (no station data): anything but live shows the note in explore mode.
+      status: function (label) { dialog.querySelector("[data-sky-nolive]").hidden = label === "live"; }
     };
 
     function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-    function exploring() { return false; }
+    function exploring() { return dialog.open; }
     function fit() {
       var r = canvas.getBoundingClientRect();
       dpr = exploring() ? Math.min(window.devicePixelRatio || 1, 2) : 1; // resting: a faint background, so 1x is enough and a third of the pixel work
@@ -111,6 +114,22 @@
     function redraw() { queued = 0; fit(); ink = css("--muted"); holes = exploring() ? [] : clearAreas(); maskUnderText(); placeLabels(); render(); }
     var queued = 0;
     function later() { if (!queued) queued = requestAnimationFrame(redraw); } // many triggers in one frame: one redraw
+
+    // Explore mode: the same canvas moves into the dialog and back, so the stations, replay and tooltips carry on.
+    var home = sky.parentNode, next = sky.nextSibling, slot = dialog.querySelector("[data-sky-slot]");
+    openBtn.addEventListener("click", function () {
+      hero.classList.add("is-exploring");
+      slot.appendChild(sky);
+      dialog.showModal(); // modal: Esc closes it, focus stays inside, the rest of the page is inert
+      redraw();
+    });
+    dialog.querySelector("[data-explore-close]").addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("close", function () {
+      home.insertBefore(sky, next); // back exactly where it was
+      hero.classList.remove("is-exploring");
+      redraw();
+      openBtn.focus();
+    });
 
     if (window.ResizeObserver) { var ro = new ResizeObserver(later); [canvas].concat(covers).forEach(function (el) { ro.observe(el); }); } // text boxes too: fonts and the demo change their size
     else window.addEventListener("resize", later);
