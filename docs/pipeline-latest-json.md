@@ -1,8 +1,18 @@
 # The pipeline's "latest" file for the home page sky
 
-malavnaik.com's hero shows every Dublinbikes station as a light. Until the pipeline publishes the file below, it shows
-the saved snapshot in `_data/sky.json`. This is the change to make in **malavnaik99/dublin-data-pipeline**, written as a
-prompt to paste into a Claude Code session on that repo.
+malavnaik.com's hero shows every Dublinbikes station as a light.
+
+**Status: live since 16 Nov 2026.** The pipeline (**malavnaik99/dublin-data-pipeline**, `transform.py` → `sky()`) publishes
+the file below every hour, and `_data/sky_live.json` points at it:
+`https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts/resolve/main/sky/latest.json`
+(Hugging Face sends `Access-Control-Allow-Origin: https://malavnaik.com`, so the page can read it). If it is over two
+hours old, the page shows the saved snapshot in `_data/sky.json` instead. What to do when it breaks: `MAINTENANCE.md`.
+
+How it was built differs from the original request below in one way: STATION118 is dropped in `dim_station`, but stations
+reporting 0 docks are only left out of this file, not the marts. Parnell Square North's feed reports 0 docks, yet its bike
+counts are real, so the marts keep it.
+
+The prompt that set it up is kept below as the reference for the file's format.
 
 ---
 
@@ -35,6 +45,6 @@ prompt to paste into a Claude Code session on that repo.
 
 ---
 
-**After the pipeline publishes it (on malavnaik.com):** put that URL in `_data/sky_live.json` (`"url": "…"`), merge, and
-the sky switches to live data automatically whenever the file is under two hours old (otherwise it shows the snapshot and
-says "saved snapshot"). The hourly **Bike sky freshness** action then opens an issue if the file goes stale.
+**On malavnaik.com (done 16 Nov 2026):** the URL is in `_data/sky_live.json` (`"url": "…"`). The sky uses live data whenever
+the file is under two hours old (otherwise it shows the snapshot and says "saved snapshot"). The hourly **Bike sky
+freshness** action opens an issue if the file goes stale. Empty that `url` to switch live data off.
