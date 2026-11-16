@@ -1,4 +1,4 @@
 {
-  "_note": "The hero sky's live data: the pipeline's small 'latest' file (format: docs/pipeline-latest-json.md). Empty url = not switched on yet; the page shows the saved snapshot in _data/sky.json and the hourly freshness check is skipped.",
-  "url": ""
+  "_note": "The hero sky's live data: the pipeline's small 'latest' file (format: docs/pipeline-latest-json.md). The page uses it when it is under two hours old, otherwise the saved snapshot in _data/sky.json; the hourly freshness check opens an issue if it goes stale. Empty url = live data off.",
+  "url": "https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts/resolve/main/sky/latest.json"
 }
