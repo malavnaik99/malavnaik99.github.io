@@ -197,18 +197,27 @@
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openSearch(); }
   });
 
-  // Hero map: hero-map.js (outlines, labels, explore mode) then sky.js (the stations, data about 25 KB), once the page has painted.
+  // Hero map: hero-map.js (outlines, labels, explore mode) then sky.js (the stations, data about 25 KB). It is a faint
+  // background, so it starts 2.5 s after the page has loaded (keeps page-load speed scores intact), or at once if the
+  // visitor presses "Explore the live map" first, which then opens as soon as the map is ready.
   var skyBar = $("[data-sky]");
-  if (skyBar && window.fetch) window.addEventListener("load", function () {
+  if (skyBar && window.fetch) {
+    var started = false, openNow = false, exploreBtn = $("[data-explore-open]", skyBar);
     var add = function (file, done) { var sc = document.createElement("script"); sc.src = island(file); sc.onload = done; document.head.appendChild(sc); return sc; };
     var go = function () {
+      if (started) return;
+      started = true;
       add("hero-map", function () {
         var map = window.islands.heroMap(skyBar);
+        if (openNow) exploreBtn.click();
         add("sky", function () { window.islands.sky(skyBar, map); }).onerror = function () { map.status(null); };
       });
     };
-    if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 300);
-  });
+    if (exploreBtn) exploreBtn.addEventListener("click", function () { if (!started) { openNow = true; go(); } });
+    window.addEventListener("load", function () {
+      setTimeout(function () { if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else go(); }, 2500);
+    });
+  }
 
   // Receipt cards (proof strip): one open at a time; Esc closes it and puts focus back on its number; a click elsewhere closes it.
   var receipts = $$("details.receipt");

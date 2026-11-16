@@ -5,7 +5,7 @@
 // "latest" file if it is under two hours old. The text summary under the map is the same information in words.
 // The same file holds the street map on the Dublin bikes project page (islands.stationmap), which shares the data loader.
 (function () {
-  var MAX_AGE = 2 * 3600 * 1000, STEP_MS = 220;
+  var MAX_AGE = 2 * 3600 * 1000, STEP_MS = 220, REPLAY_AFTER_MS = 6000;
   var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], DAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   function valid(d) {
     return d && d.hours && d.stations && d.bikes && d.hours.length && d.bikes.length === d.stations.length;
@@ -47,8 +47,10 @@
       if (label === "live") bar.classList.add("is-live");
       map.status(label);
       range.max = d.hours.length - 1; range.disabled = false;
-      show(still ? d.hours.length - 1 : 0);
-      if (!still) toggle(); // plays the last hours once, then stops on the newest; never starts by itself under reduced motion
+      show(d.hours.length - 1); // the newest hour first
+      // Then the last 48 hours play once, after the page has settled (keeps page-load speed scores intact); not if the
+      // visitor has already used Play or the slider, and never by itself under reduced motion.
+      if (!still) setTimeout(function () { if (!touched) toggle(); }, REPLAY_AFTER_MS);
     }).catch(function () { map.status(null); }); // the map keeps its outlines and the summary text stays as it was built
 
     function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
@@ -85,8 +87,9 @@
       play.textContent = "Pause";
       timer = setInterval(function () { if (hour >= d.hours.length - 1) return stop(); show(hour + 1); }, STEP_MS);
     }
-    play.addEventListener("click", toggle);
-    range.addEventListener("input", function () { stop(); show(+range.value); });
+    var touched = false;
+    play.addEventListener("click", function () { touched = true; toggle(); });
+    range.addEventListener("input", function () { touched = true; stop(); show(+range.value); });
 
     // Pointing at a station (or tapping it) shows its name and "X of Y bikes".
     function point(e) {
