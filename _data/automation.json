@@ -1,15 +1,15 @@
 {
- "posts_published": 11,
- "posts_queued": 42,
+ "posts_published": 12,
+ "posts_queued": 41,
  "platforms": {
-  "Blog": 11,
+  "Blog": 12,
   "DEV": 7,
-  "LinkedIn": 11,
+  "LinkedIn": 12,
   "Medium": 5
  },
  "last_post": {
-  "title": "Five Years of SSIS Pipelines: What I'd Build Differently Today (and What Airflow Got Right)",
-  "url": "https://malavnaik.com/blog/ssis-vs-airflow/"
+  "title": "Prevalence: The Integrity Metric That Asks How Much Harm Users Actually See",
+  "url": "https://malavnaik.com/blog/prevalence-metric-trust-safety/"
  },
  "updated": "2026-11-16"
 }
