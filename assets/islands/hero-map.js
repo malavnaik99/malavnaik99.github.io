@@ -20,7 +20,7 @@
 // Loaded by assets/site.js after the page has painted; sky.js then adds the stations through map.layer().
 (function () {
   // The area to fit on screen: wide screens also show Dublin Bay and the edge of Phoenix Park; tall screens fit the stations.
-  var WIDE = [53.330, -6.330, 53.360, -6.198], TALL = [53.330, -6.311, 53.360, -6.230]; // south, west, north, east
+  var WIDE = [53.322, -6.330, 53.360, -6.180], TALL = [53.330, -6.311, 53.360, -6.230]; // south, west, north, east
   var PAD = 0.05, CLEAR = 14, FEATHER = 44; // fully clear this many px around text, then fade the map back over FEATHER px
   var STYLE = { coast: [1, 1], liffey: [2, 1.4], grand_canal: [1.4, 1], royal_canal: [1.4, 1], phoenix_park: [1, 1] }; // [line width, strength]
 

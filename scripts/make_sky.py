@@ -2,7 +2,7 @@
 
     python3 scripts/make_sky.py              # snapshot: _data/sky.json from assets/data/dublin-bikes/*.parquet (needs: pip install duckdb)
     python3 scripts/make_sky.py --river      # river: _data/sky_river.json, the River Liffey from OpenStreetMap (needs overpass-api.de)
-    python3 scripts/make_sky.py --outlines   # outlines: _data/sky_outlines.json, coast, canals, Phoenix Park from OpenStreetMap (needs overpass-api.de)
+    python3 scripts/make_sky.py --outlines   # outlines: assets/data/dublin-outlines.json, coast, canals, Phoenix Park from OpenStreetMap (needs overpass-api.de)
     python3 scripts/make_sky.py --self-test  # offline checks of the river test and the snapshot format
 
 _data/sky.json is also the saved fallback the page shows when there is no fresh live data, so the sky is never empty.
@@ -14,7 +14,7 @@ STATION118 (a placeholder with no data) and stations with capacity 0 are left ou
 import json, math, pathlib, re, sys, urllib.error, urllib.parse, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SKY, RIVER, OUTLINES = ROOT / "_data/sky.json", ROOT / "_data/sky_river.json", ROOT / "_data/sky_outlines.json"
+SKY, RIVER, OUTLINES = ROOT / "_data/sky.json", ROOT / "_data/sky_river.json", ROOT / "assets/data/dublin-outlines.json"
 HOURS = 48
 BBOX = (53.325, -6.33, 53.365, -6.21)  # south, west, north, east: the area the stations cover
 
@@ -147,8 +147,8 @@ def outlines():
 
 
 # Where each map label sits; the label's words are in index.md so Google Translate can translate them.
-LABELS = {"liffey": [53.3462, -6.3030], "phoenix_park": [53.3575, -6.3200], "docklands": [53.3497, -6.2400],
-          "dublin_bay": [53.3360, -6.1850], "grand_canal": [53.3305, -6.2580]}
+LABELS = {"liffey": [53.3446, -6.3030], "phoenix_park": [53.3575, -6.3200], "docklands": [53.3497, -6.2400],
+          "dublin_bay": [53.3270, -6.1920], "grand_canal": [53.3305, -6.2580]}
 
 
 def check_outlines(o, stations):
