@@ -1,15 +1,15 @@
 {
- "posts_published": 10,
- "posts_queued": 43,
+ "posts_published": 11,
+ "posts_queued": 42,
  "platforms": {
-  "Blog": 10,
-  "DEV": 6,
-  "LinkedIn": 10,
+  "Blog": 11,
+  "DEV": 7,
+  "LinkedIn": 11,
   "Medium": 5
  },
  "last_post": {
-  "title": "Designing Decision Trees for Escalations: Classifying Messy Cases Consistently",
-  "url": "https://malavnaik.com/blog/decision-trees-for-escalations/"
+  "title": "Five Years of SSIS Pipelines: What I'd Build Differently Today (and What Airflow Got Right)",
+  "url": "https://malavnaik.com/blog/ssis-vs-airflow/"
  },
  "updated": "2026-11-16"
 }
