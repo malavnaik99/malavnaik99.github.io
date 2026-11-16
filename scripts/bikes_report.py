@@ -88,6 +88,9 @@ def compute(con, month, start, end):
     rows = lambda order: [{"station": re.sub(r"'S\b", "'s", n.title()), "estimated_pickups": int(p), "pct_docks_with_bike": f}
                           for n, p, f in q(f"select station_name, pickups, pct_full from st order by {order}, station_name limit 5")]
 
+    if q("select count(*) from st where coalesce(trim(station_name), '') = ''")[0][0]:
+        raise SystemExit("Some stations have no name in dim_station on Hugging Face. Re-run once the pipeline has refreshed it.")
+
     con.sql("""create or replace table hours as
         select date_trunc('hour', t) as hour_utc, hour(timezone('Europe/Dublin', date_trunc('hour', t))) as local_hour,
                sum(pickups) as pickups

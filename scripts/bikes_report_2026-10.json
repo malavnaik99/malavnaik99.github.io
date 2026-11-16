@@ -124,7 +124,7 @@
       "pct_docks_with_bike": 46.2
     },
     {
-      "station": "",
+      "station": "Grand Canal Dock",
       "estimated_pickups": 1033,
       "pct_docks_with_bike": 40.0
     },
@@ -161,7 +161,7 @@
       "pct_docks_with_bike": 7.5
     },
     {
-      "station": "",
+      "station": "Fitzwilliam Square East",
       "estimated_pickups": 145,
       "pct_docks_with_bike": 4.5
     },
@@ -200,7 +200,7 @@
   ],
   "emptiest_stations": [
     {
-      "station": "",
+      "station": "Fitzwilliam Square East",
       "estimated_pickups": 145,
       "pct_docks_with_bike": 4.5
     },

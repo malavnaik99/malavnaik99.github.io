@@ -26,7 +26,7 @@ The busiest hour was **08:00–09:00**, with 317 estimated pickups on average ac
 Most estimated pickups:
 
 1. Charlemont Place: 1,180
-2. : 1,033
+2. Grand Canal Dock: 1,033
 3. Princes Street / O'Connell Street: 888
 4. Fownes Street Upper: 873
 5. Exchequer Street: 780
@@ -36,14 +36,14 @@ Fewest:
 1. Grangegorman Lower (Central): 72
 2. Hardwicke Place: 141
 3. Merrion Square South: 143
-4. : 145
+4. Fitzwilliam Square East: 145
 5. Kilmainham Lane: 150
 
 ## Where to find a bike
 
 Average share of docks holding a bike. Emptiest stations:
 
-1. : 4.5%
+1. Fitzwilliam Square East: 4.5%
 2. Hardwicke Place: 6.6%
 3. Merrion Square South: 7.5%
 4. Hatch Street: 8.5%
