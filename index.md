@@ -8,7 +8,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
 {% assign lab = site.data.automation %}
 
 <section class="hero" aria-labelledby="hero-title">
-  <p class="sky-head no-js-hide"><span class="dot" aria-hidden="true"></span>Live map · Dublin bike stations, right now</p>
+  <p class="sky-head no-js-hide"><span class="dot" aria-hidden="true"></span><a href="#live-map" class="sky-head-link" data-explore-open aria-haspopup="dialog">Live map</a> · Dublin bike stations, right now</p>
   <div class="sky" aria-hidden="true"><canvas class="sky-map" data-sky-map></canvas><p class="sky-tip" hidden></p>
     {%- comment -%} Map labels: placed by assets/islands/hero-map.js; words here so Google Translate translates them. {%- endcomment %}
     <span class="sky-place" data-place="liffey" hidden>Liffey</span><span class="sky-place" data-place="phoenix_park" hidden>Phoenix Park</span><span class="sky-place" data-place="docklands" hidden>Docklands</span><span class="sky-place" data-place="dublin_bay" hidden>Dublin Bay</span><span class="sky-place" data-place="grand_canal" hidden>Grand Canal</span></div>

@@ -1,7 +1,7 @@
 {%- comment -%}
 Under the hero map: the same information as the map, in words (built from the saved snapshot, _data/sky.json),
 plus Play / Pause and an hour slider that assets/islands/sky.js switches on once its data has loaded,
-and the "Explore the live map" button and its full-screen dialog (assets/islands/hero-map.js).
+and the "Explore the live map" button and its full-screen street-map dialog (assets/islands/hero-map.js).
 {%- endcomment -%}
 {%- assign sky = site.data.sky -%}
 {%- assign h = sky.hours | size | minus: 1 -%}
@@ -19,21 +19,22 @@ and the "Explore the live map" button and its full-screen dialog (assets/islands
     <span class="mono small sky-time" data-sky-time aria-hidden="true"></span>
   </div>
 </div>
-<dialog class="sky-explore" aria-labelledby="sky-explore-title">
+<dialog class="sky-explore" id="live-map" aria-labelledby="sky-explore-title">
   <div class="sky-explore-top">
     <div class="sky-explore-words">
       <h2 id="sky-explore-title">Live map · Dublin bike stations, right now</h2>
-      <p class="small" data-sky-text>Dublinbikes, {{ sky.hours[h] | date: "%a %-d %b, %H:%M" }} (saved snapshot): {{ total_txt }} bikes at {{ n }} stations, {{ n_empty }} empty.</p>
       <p class="small sky-nolive" data-sky-nolive hidden>Live data unavailable</p>
       <ul class="sky-legend small" aria-label="Map key">
-        <li><i class="k-many" aria-hidden="true"></i>Bright: many bikes free</li>
-        <li><i class="k-few" aria-hidden="true"></i>Dim: few bikes</li>
+        <li><i class="k-many" aria-hidden="true"></i>Big, solid circle: many bikes free</li>
+        <li><i class="k-few" aria-hidden="true"></i>Small, pale circle: few bikes</li>
         <li><i class="k-empty" aria-hidden="true"></i>Amber ring: empty</li>
       </ul>
-      <p class="small muted sky-explore-hint">Point at or tap a station to see its name and bikes available.</p>
+      <p class="small muted sky-explore-hint">Point at or tap a station to see its name and bikes available. The full list is under the map.</p>
     </div>
     <button class="btn sky-close" type="button" data-explore-close>Close map</button>
   </div>
+  <div class="sky-explore-body">
   <div class="sky-explore-map" data-sky-slot></div>
-  <p class="small muted sky-explore-credit">Map lines: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></p>
+  <p class="small muted sky-explore-credit">Map data and map images © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>. The map images load from OpenStreetMap's servers only when you open this map. Map library: <a href="https://leafletjs.com">Leaflet</a>.</p>
+  </div>
 </dialog>

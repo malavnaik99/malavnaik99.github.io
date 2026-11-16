@@ -1,4 +1,4 @@
-// Hero map: the base layer and "Explore the live map" mode for the home page bike-station map.
+// Hero map: the background map behind the home page hero, and "Explore the live map" (a full-screen street map).
 //
 // What it does
 //   - Projects latitude/longitude onto the hero canvas. assets/islands/sky.js draws the Dublinbikes stations through the
@@ -7,8 +7,11 @@
 //     Phoenix Park boundary, and places the five place-name labels (their words are in index.md / _includes/sky-bar.html,
 //     so the Gujarati button's Google Translate copy translates them).
 //   - Resting hero: fades the map out under the headline column, the moderation card and the text strips, so no station
-//     sits behind text. Explore mode: moves the map into a full-screen <dialog> (Esc or "Close map" closes it and puts
-//     focus back on the button; the rest of the page is unreachable while it is open), with a legend and station tooltips.
+//     sits behind text.
+//   - Explore mode ("Explore the live map", or the "Live map" link, address malavnaik.com/#live-map): a full-screen <dialog>
+//     with the same OpenStreetMap street map as the Dublin bikes project page (islands.stationmap in sky.js, Leaflet,
+//     built on first open). Esc or "Close map" closes it and puts focus back where it was; the rest of the page is
+//     unreachable while it is open. Its map images come from OpenStreetMap's servers, only once a visitor opens it.
 //   - Works without station data: the outlines and labels still draw and "Live data unavailable" shows in explore mode.
 //
 // Where the outline data came from
@@ -28,7 +31,7 @@
   window.islands.heroMap = function (bar) {
     var hero = bar.closest(".hero"), sky = hero.querySelector(".sky"), canvas = sky.querySelector("[data-sky-map]");
     var ctx = canvas.getContext("2d"), places = [].slice.call(sky.querySelectorAll("[data-place]"));
-    var dialog = hero.querySelector(".sky-explore"), openBtn = bar.querySelector("[data-explore-open]");
+    var dialog = hero.querySelector(".sky-explore"), openers = [].slice.call(hero.querySelectorAll("[data-explore-open]"));
     var covers = [].slice.call(hero.querySelectorAll(".sky-head, .hero-copy, .hero-demo, .sky-bar"));
     var data = { lines: {}, labels: {} }, layer = null, dpr = 1, xy = null, holes = [], ink = "";
     var map = {
@@ -41,10 +44,9 @@
     };
 
     function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-    function exploring() { return dialog.open; }
     function fit() {
       var r = canvas.getBoundingClientRect();
-      dpr = exploring() ? Math.min(window.devicePixelRatio || 1, 2) : 1; // resting: a faint background, so 1x is enough and a third of the pixel work
+      dpr = 1; // a faint background: 1x is enough, and a third of the pixel work of a sharp phone screen
       var w = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
       if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } // resizing a canvas is costly: only when needed
       var W = canvas.width, H = canvas.height, b = W >= H ? WIDE : TALL;
@@ -54,11 +56,11 @@
     }
     function render() {
       if (!canvas.width || !xy) return;
-      var W = canvas.width, H = canvas.height, open = exploring();
+      var W = canvas.width, H = canvas.height;
       ctx.clearRect(0, 0, W, H);
       ctx.globalCompositeOperation = "source-over"; ctx.lineJoin = ctx.lineCap = "round"; ctx.strokeStyle = ink;
       Object.keys(STYLE).forEach(function (name) {
-        ctx.lineWidth = STYLE[name][0] * dpr; ctx.globalAlpha = STYLE[name][1] * (open ? 0.45 : 0.28);
+        ctx.lineWidth = STYLE[name][0] * dpr; ctx.globalAlpha = STYLE[name][1] * 0.28;
         (data.lines[name] || []).forEach(function (line) {
           ctx.beginPath();
           line.forEach(function (p, i) { var q = xy(p[0], p[1]); if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); });
@@ -110,25 +112,35 @@
         el.style.left = x + "px"; el.style.top = y + "px";
       });
     }
-    // Size, text boxes and labels change only on resize, theme or explore; the replay redraws many times a second without them.
-    function redraw() { queued = 0; fit(); ink = css("--muted"); holes = exploring() ? [] : clearAreas(); maskUnderText(); placeLabels(); render(); }
+    // Size, text boxes and labels change only on resize or theme; the replay redraws many times a second without them.
+    function redraw() { queued = 0; fit(); ink = css("--muted"); holes = clearAreas(); maskUnderText(); placeLabels(); render(); }
     var queued = 0;
     function later() { if (!queued) queued = requestAnimationFrame(redraw); } // many triggers in one frame: one redraw
 
-    // Explore mode: the same canvas moves into the dialog and back, so the stations, replay and tooltips carry on.
-    var home = sky.parentNode, next = sky.nextSibling, slot = dialog.querySelector("[data-sky-slot]");
-    openBtn.addEventListener("click", function () {
-      hero.classList.add("is-exploring");
-      slot.appendChild(sky);
-      dialog.showModal(); // modal: Esc closes it, focus stays inside, the rest of the page is inert
-      redraw();
+    // Explore mode: the street map is built the first time the dialog opens (sky.js, which holds it, may still be loading).
+    var slot = dialog.querySelector("[data-sky-slot]"), opener = null, built = false;
+    function build() {
+      if (built) return;
+      if (!window.islands.stationmap) return setTimeout(build, 100);
+      built = true;
+      slot.dataset.src = bar.dataset.src;
+      if (bar.dataset.live) slot.dataset.live = bar.dataset.live;
+      window.islands.stationmap(slot);
+    }
+    openers.forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault(); // the "Live map" link: open here rather than jump to #live-map
+        opener = el;
+        hero.classList.add("is-exploring");
+        dialog.showModal(); // modal: Esc closes it, focus stays inside, the rest of the page is inert
+        build();
+      });
     });
     dialog.querySelector("[data-explore-close]").addEventListener("click", function () { dialog.close(); });
     dialog.addEventListener("close", function () {
-      home.insertBefore(sky, next); // back exactly where it was
       hero.classList.remove("is-exploring");
-      redraw();
-      openBtn.focus();
+      if (location.hash === "#live-map") history.replaceState(history.state, "", location.pathname + location.search);
+      (opener || openers[0]).focus();
     });
 
     if (window.ResizeObserver) { var ro = new ResizeObserver(later); [canvas].concat(covers).forEach(function (el) { ro.observe(el); }); } // text boxes too: fonts and the demo change their size

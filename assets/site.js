@@ -203,21 +203,25 @@
 
   // Hero map: hero-map.js (outlines, labels, explore mode) then sky.js (the stations, data about 25 KB). It is a faint
   // background, so it starts 2.5 s after the page has loaded (keeps page-load speed scores intact), or at once if the
-  // visitor presses "Explore the live map" first, which then opens as soon as the map is ready.
+  // visitor presses "Explore the live map" or the "Live map" link first, or arrives at malavnaik.com/#live-map: the
+  // street map then opens as soon as it is ready.
   var skyBar = $("[data-sky]");
   if (skyBar && window.fetch) {
-    var started = false, openNow = false, exploreBtn = $("[data-explore-open]", skyBar);
+    var started = false, openNow = null;
     var add = function (file, done) { var sc = document.createElement("script"); sc.src = island(file); sc.onload = done; document.head.appendChild(sc); return sc; };
     var go = function () {
       if (started) return;
       started = true;
       add("hero-map", function () {
         var map = window.islands.heroMap(skyBar);
-        if (openNow) exploreBtn.click();
+        if (openNow) openNow.click();
         add("sky", function () { window.islands.sky(skyBar, map); }).onerror = function () { map.status(null); };
       });
     };
-    if (exploreBtn) exploreBtn.addEventListener("click", function () { if (!started) { openNow = true; go(); } });
+    $$("[data-explore-open]").forEach(function (el) {
+      el.addEventListener("click", function (e) { if (!started) { e.preventDefault(); openNow = el; go(); } });
+    });
+    if (location.hash === "#live-map") { openNow = $("[data-explore-open]", skyBar); go(); }
     var later = function () { setTimeout(function () { if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else go(); }, 2500); };
     if (document.readyState === "complete") later(); else window.addEventListener("load", later);
   }
