@@ -104,7 +104,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   </article>
 </section>
 
-<section class="section" aria-labelledby="more-title">
+<section class="section" aria-labelledby="more-title" style="contain-intrinsic-size: auto 1400px">{%- comment -%} five project rows are taller than the default 900px estimate on phones {%- endcomment -%}
   <p class="label"><b>02</b> / More projects</p>
   <h2 id="more-title" class="sr-only">More projects</h2>
   <div class="rows">
