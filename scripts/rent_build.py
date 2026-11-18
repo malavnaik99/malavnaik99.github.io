@@ -1,14 +1,16 @@
 """Builds the data for the Irish Rent Reality Check (malavnaik.com/rent/).
 
 Downloads CSO table RIH02 (RTB average monthly rent of new tenancies, per half-year), cleans it the same way as
-github.com/malavnaik99/irish-rents-dataset/clean.py, checks it, and only then writes:
-  data/rent/rents.json   every place's rent per half-year, for "all bedrooms" and 1, 2, 3 and 4+ beds
+github.com/malavnaik99/irish-rents-dataset/clean.py, and CSO table DEA05 (median weekly earnings by county),
+checks both, and only then writes:
+  data/rent/rents.json   every place's rent per half-year, for "all bedrooms" and 1, 2, 3 and 4+ beds,
+                         plus each county's typical pay and estimated take-home pay ("income")
   data/rent/meta.json    source, licence, latest half-year and the date the data last changed
 
 If any check fails, nothing is written and the script exits with an error (the workflow then fails and opens an issue).
 
   python3 scripts/rent_build.py               download from the CSO and build
-  python3 scripts/rent_build.py --source F    build from a saved copy of the table (JSON-stat file)
+  python3 scripts/rent_build.py --source F --earnings G   build from saved copies of RIH02 and DEA05 (JSON-stat)
   python3 scripts/rent_build.py --self-test   quick checks of the code itself, no download
 """
 import argparse
@@ -20,7 +22,7 @@ import re
 import sys
 import urllib.request
 
-URL = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/RIH02/JSON-stat/2.0/en"
+API = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{}/JSON-stat/2.0/en"
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "rent")
 
 # Same county list as clean.py.
@@ -30,6 +32,53 @@ COUNTIES = {"Carlow", "Cavan", "Clare", "Cork", "Donegal", "Dublin", "Galway", "
 # Bedroom categories shown on the page. "1 to 2 bed" and "1 to 3 bed" are left out: they overlap the others.
 BEDS = {"All bedrooms": "all", "One bed": "1", "Two bed": "2", "Three bed": "3", "Four plus bed": "4"}
 DIMS = {"HalfYear", "Number of Bedrooms", "Property Type", "Location"}  # the columns we expect from the CSO
+
+# ---- Tax rates for a single PAYE employee. UPDATE ONCE A YEAR after the Budget (the build warns in January). ----
+# Checked Nov 2026 on revenue.ie (USC standard rates, Budget 2026 summary) and gov.ie (PRSI Class A rates).
+TAX = {
+    "year": 2026,
+    "band": 44_000, "low": 0.20, "high": 0.40,           # income tax: 20% up to the standard rate band, 40% above
+    "credits": 4_000,                                     # personal tax credit €2,000 + employee (PAYE) credit €2,000
+    "usc_exempt": 13_000,                                 # no USC at all if yearly income is €13,000 or less
+    "usc": [(12_012, 0.005), (28_700, 0.02), (70_044, 0.03), (None, 0.08)],  # (band ends at €, rate)
+    "prsi": 0.0435,                                       # Class A employee rate from 1 October 2026
+}
+
+
+def take_home_monthly(weekly):
+    """Estimated monthly take-home pay of a single PAYE employee earning `weekly` gross, at TAX rates."""
+    # shortcut: skips the PRSI credit for €352–€424 a week; fine while every county median is far above it.
+    check(weekly > 424, f"Weekly pay €{weekly} is in the PRSI-credit range; take_home_monthly() needs updating.")
+    year = weekly * 52
+    tax = max(0, min(year, TAX["band"]) * TAX["low"] + max(0, year - TAX["band"]) * TAX["high"] - TAX["credits"])
+    usc, start = 0, 0
+    if year > TAX["usc_exempt"]:
+        for end, rate in TAX["usc"]:
+            top = year if end is None else min(year, end)
+            usc += max(0, top - start) * rate
+            start = end or start
+    return (year - tax - usc - year * TAX["prsi"]) / 12
+
+
+def earnings_by_county(table, previous_meta=None):
+    """CSO DEA05: median weekly earnings, both sexes, 15+, latest year, for each county. Raises CheckFailed."""
+    names, rows = read_jsonstat(table)
+    check({"Statistic", "Year", "Sex", "County", "Age Group"} <= set(names), f"DEA05's columns changed: {names}.")
+    year = max(r["Year"] for r in rows if r["value"] not in (None, ""))
+    if previous_meta and previous_meta.get("earnings_year"):
+        check(year >= previous_meta["earnings_year"], f"The earnings year went backwards to {year}.")
+    pay = {r["County"].replace("Co. ", ""): float(r["value"]) for r in rows
+           if r["Year"] == year and r["Statistic"] == "Median Weekly Earnings" and r["Sex"] == "Both sexes"
+           and r["Age Group"] == "15 years and over" and r["value"] not in (None, "")}
+    check(COUNTIES <= set(pay), f"DEA05 has no {year} median pay for: {sorted(COUNTIES - set(pay))}.")
+    bad = {c: v for c, v in pay.items() if not 300 <= v <= 3000}
+    check(not bad, f"Median weekly pay outside €300–€3,000: {bad}.")
+    if datetime.date.today().year > TAX["year"]:
+        # GitHub shows this as a yellow warning; the refresh workflow turns it into an issue.
+        print(f"::warning::The tax rates in scripts/rent_build.py are for {TAX['year']}. Update TAX for "
+              f"{datetime.date.today().year} (see docs/rent-tool-runbook.md).")
+    counties = {c: {"weekly": round(pay[c], 2), "take_home": round(take_home_monthly(pay[c]))} for c in sorted(COUNTIES)}
+    return {"table": "DEA05", "year": year, "tax_year": TAX["year"], "counties": counties}
 
 
 class CheckFailed(Exception):
@@ -77,7 +126,7 @@ def slug(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
-def build(table, previous_meta=None):
+def build(table, earnings, previous_meta=None):
     """Clean and check the CSO table. Returns (rents, meta) or raises CheckFailed."""
     names, rows = read_jsonstat(table)
     check(DIMS <= set(names), f"The CSO table's columns changed. Expected {sorted(DIMS)}, got {names}.")
@@ -138,6 +187,7 @@ def build(table, previous_meta=None):
         "periods": periods,
         "places": sorted(places.values(), key=lambda p: (p["county"], p["level"] != "county", p["name"])),
         "rent": {pid: rent[pid] for pid in sorted(rent)},
+        "income": earnings_by_county(earnings, previous_meta),
     }
     meta = {
         "source": "CSO table RIH02, RTB Average Monthly Rent Report (Residential Tenancies Board)",
@@ -148,6 +198,10 @@ def build(table, previous_meta=None):
         "latest_period": latest,
         "rows": len(pub),
         "places": len(places),
+        "earnings_source": "CSO table DEA05, median weekly earnings by county (Distribution of Earnings by Gender and County)",
+        "earnings_url": "https://data.cso.ie/table/DEA05",
+        "earnings_year": out["income"]["year"],
+        "tax_year": TAX["year"],
     }
     return out, meta
 
@@ -186,25 +240,32 @@ def self_test():
          "value": {"1": 5, "2": 7}}
     _, rows = read_jsonstat(t)
     assert [(r["A"], r["B"], r["value"]) for r in rows] == [("X", "P", None), ("X", "Q", 5), ("Y", "P", 7), ("Y", "Q", None)]
+    # Hand-worked: €848.06 a week = €44,099.12 a year. Tax 8,800 + 99.12×40% − 4,000 = 4,839.65.
+    # USC 60.06 + 333.76 + 15,399.12×3% = 855.79. PRSI 1,918.31. Take-home 36,485.37 / 12 = 3,040.45.
+    assert round(take_home_monthly(848.06), 2) == 3040.45, take_home_monthly(848.06)
+    # €500 a week = €26,000: tax 5,200 − 4,000 = 1,200; USC 60.06 + 13,988×2% = 339.82; PRSI 1,131.
+    assert round(take_home_monthly(500), 2) == round((26000 - 1200 - 339.82 - 1131) / 12, 2)
     print("Self-test passed.")
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", help="saved JSON-stat copy of RIH02 instead of downloading")
+    ap.add_argument("--earnings", help="saved JSON-stat copy of DEA05 instead of downloading")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
         return self_test()
-    if a.source:
-        table = json.load(open(a.source, encoding="utf-8"))
-    else:
-        with urllib.request.urlopen(URL, timeout=300) as r:
-            table = json.load(r)
+    def load(path, code):
+        if path:
+            return json.load(open(path, encoding="utf-8"))
+        with urllib.request.urlopen(API.format(code), timeout=300) as r:
+            return json.load(r)
+    table, earnings = load(a.source, "RIH02"), load(a.earnings, "DEA05")
     meta_path = os.path.join(OUT, "meta.json")
     previous = json.load(open(meta_path)) if os.path.exists(meta_path) else None
     try:
-        out, meta = build(table, previous)
+        out, meta = build(table, earnings, previous)
     except CheckFailed as e:
         sys.exit(f"CHECK FAILED, nothing was published: {e}")
     write(out, meta)

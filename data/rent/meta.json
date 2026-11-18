@@ -7,5 +7,9 @@
  "latest_period": "2025H2",
  "rows": 201912,
  "places": 437,
+ "earnings_source": "CSO table DEA05, median weekly earnings by county (Distribution of Earnings by Gender and County)",
+ "earnings_url": "https://data.cso.ie/table/DEA05",
+ "earnings_year": "2025",
+ "tax_year": 2026,
  "last_updated": "2026-11-18"
 }

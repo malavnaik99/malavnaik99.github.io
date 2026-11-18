@@ -13,8 +13,8 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
 .rent-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1.5rem 0; }
 .rent-pick { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .8rem 1rem; }
 .rent-pick label, .rent-add label { display: flex; flex-direction: column; gap: .3rem; font-size: .875rem; color: var(--muted); }
-.rent-tool select { min-height: 44px; padding: .45rem .6rem; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 500 1rem/1.3 var(--font); width: 100%; }
-.rent-tool select:focus-visible, .rent-tool button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rent-tool select, .rent-tool input { min-height: 44px; padding: .45rem .6rem; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 500 1rem/1.3 var(--font); width: 100%; }
+.rent-tool select:focus-visible, .rent-tool input:focus-visible, .rent-tool button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .rent-card .k { font: 500 .78rem/1.4 var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
 .rent-card .big { font: 800 clamp(2.4rem, 7vw, 3.6rem)/1.05 var(--font-head); letter-spacing: -.03em; margin: .3rem 0; }
 .rent-card .big small { font-size: .4em; font-weight: 600; color: var(--muted); letter-spacing: 0; }
@@ -34,6 +34,14 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
 .rent-table table { border-collapse: collapse; font-size: .875rem; min-width: 18rem; }
 .rent-table th, .rent-table td { padding: .3rem .7rem; border-bottom: 1px solid var(--line); text-align: right; }
 .rent-table th:first-child, .rent-table td:first-child { text-align: left; }
+.rent-meter { height: 10px; border-radius: 999px; background: var(--soft); overflow: hidden; margin: .6rem 0 1rem; }
+.rent-meter i { display: block; height: 100%; background: var(--accent); border-radius: inherit; }
+.rent-meter.over i { background: var(--dg-warn); }
+.rent-mine { display: flex; flex-direction: column; gap: .3rem; font-size: .875rem; color: var(--muted); max-width: 20rem; }
+.rent-finder-list { list-style: none; margin: .8rem 0 0; padding: 0; max-height: 26rem; overflow-y: auto; border-top: 1px solid var(--line); }
+.rent-finder-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 1rem; padding: .55rem .2rem; border-bottom: 1px solid var(--line); }
+.rent-finder-list b { font: 700 1rem/1.3 var(--font-head); text-align: right; }
+.rent-finder-list span { grid-column: 1 / -1; font-size: .8rem; color: var(--muted); }
 @media (max-width: 560px) { .rent-changes { grid-template-columns: 1fr; } }
 </style>
 
@@ -69,6 +77,20 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
     <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays. Not adjusted for inflation.</p>
   </section>
 
+  <section class="card" aria-labelledby="afford-title">
+    <h2 id="afford-title">Can you afford it?</h2>
+    <p id="affordText" aria-live="polite"></p>
+    <div class="rent-meter" id="affordMeter" aria-hidden="true"><i></i></div>
+    <label class="rent-mine">Use my own take-home pay (€ a month, after tax)
+      <input type="number" id="myPay" inputmode="numeric" min="1" step="1" placeholder="e.g. 2800" autocomplete="off">
+    </label>
+    <p class="small muted">Your pay stays on your device: it is never sent anywhere or saved in the page link.</p>
+    <details>
+      <summary>How this is worked out</summary>
+      <p class="small" id="affordHow"></p>
+    </details>
+  </section>
+
   <section class="card" aria-labelledby="trend-title">
     <h2 id="trend-title">Rent over time</h2>
     <ul class="rent-chips" id="chips" aria-label="Areas on the chart"></ul>
@@ -82,9 +104,27 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
       <div id="trendTable"></div>
     </details>
   </section>
+
+  <section class="card" aria-labelledby="finder-title">
+    <h2 id="finder-title">Where can I afford?</h2>
+    <form class="rent-pick" onsubmit="return false">
+      <label>My budget (€ a month) <input type="number" id="budget" inputmode="numeric" min="1" step="50" placeholder="e.g. 1500" autocomplete="off"></label>
+      <label>Bedrooms
+        <select id="fbeds">
+          <option value="all">All homes</option>
+          <option value="1">1 bed</option>
+          <option value="2">2 beds</option>
+          <option value="3">3 beds</option>
+          <option value="4">4 or more beds</option>
+        </select>
+      </label>
+    </form>
+    <p id="finderCount" class="muted" role="status">Enter a budget to see the areas where the average new rent fits it.</p>
+    <ol class="rent-finder-list" id="finderList" aria-labelledby="finder-title"></ol>
+  </section>
 </div>
 
-<p class="small muted" id="rentSource">Source: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>, RTB Average Monthly Rent Report, © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<p class="small muted" id="rentSource">Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>, RTB Average Monthly Rent Report, and <a href="https://data.cso.ie/table/DEA05">CSO table DEA05</a>, Weekly Earnings by county, © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
 
 <script>
@@ -93,7 +133,7 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
   var MAX = 3;
   var eur = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
   var $ = function (id) { return document.getElementById(id); };
-  var D, byId = {}, chart, state = { area: "dublin", beds: "all", compare: [] };
+  var D, byId = {}, chart, state = { area: "dublin", beds: "all", compare: [], budget: "" };
 
   // "2025H2" -> "July–December 2025"
   function when(p) { return (p.slice(-1) === "1" ? "January–June " : "July–December ") + p.slice(0, 4); }
@@ -110,12 +150,15 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
     state.compare = (q.get("compare") || "").split(",").filter(function (id, i, a) {
       return byId[id] && id !== state.area && a.indexOf(id) === i;
     }).slice(0, MAX - 1);
+    var b = parseInt(q.get("budget"), 10);
+    if (b > 0 && b <= 20000) state.budget = String(b);
   }
   function writeUrl() {
     var q = new URLSearchParams();
     q.set("area", state.area);
     q.set("beds", state.beds);
     if (state.compare.length) q.set("compare", state.compare.join(","));
+    if (state.budget) q.set("budget", state.budget);  // the visitor's own pay is never put in the link
     history.replaceState(null, "", location.pathname + "?" + q.toString().replace(/%2C/g, ","));
   }
 
@@ -215,7 +258,9 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
     $("trend").setAttribute("aria-label", describe());
     if (!window.Chart) return;
     var data = { labels: D.periods.map(short), datasets: shown().map(function (id, k) {
-      return { label: label(byId[id]), data: series(id), borderColor: css(COLOURS[k]), backgroundColor: css(COLOURS[k]), borderDash: DASHES[k], borderWidth: k ? 2.5 : 3, pointRadius: 0, pointHoverRadius: 5, spanGaps: false };
+      return { label: label(byId[id]), data: series(id), borderColor: css(COLOURS[k]), backgroundColor: css(COLOURS[k]), borderDash: DASHES[k], borderWidth: k ? 2.5 : 3,
+        // a figure with gaps on both sides has no line to sit on, so draw it as a dot
+        pointRadius: function (c) { var d = c.dataset.data, i = c.dataIndex; return d[i] != null && d[i - 1] == null && d[i + 1] == null ? 3 : 0; }, pointHoverRadius: 5, spanGaps: false };
     }) };
     if (chart) { chart.data = data; chart.update(); return; }
     Chart.defaults.font.family = css("--font");
@@ -239,18 +284,63 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
     renderChips();
   }
 
+  // ---- Affordability: rent as a share of typical (or the visitor's own) take-home pay ----
+  function renderAfford() {
+    var s = series(state.area), i = lastIndex(s), c = byId[state.area].county, inc = D.income.counties[c];
+    var mine = parseFloat($("myPay").value), pay = mine > 0 ? mine : inc.take_home, meter = $("affordMeter");
+    $("affordHow").textContent = "Typical pay is the median weekly earnings of employees living in Co. " + c + " in " + D.income.year +
+      " (€" + inc.weekly.toFixed(2) + " a week, before tax), from CSO table DEA05. Half of employees earn more and half less; part-time jobs are included. " +
+      "Take-home pay is our estimate for a single person paying tax through PAYE, at " + D.income.tax_year + " rates: income tax 20% up to €44,000 and 40% above, " +
+      "minus €4,000 of tax credits; USC 0.5%, 2%, 3% and 8% bands; PRSI 4.35%. Your own situation (pension, partner, credits) will differ.";
+    if (i < 0) { $("affordText").textContent = "No average rent is published for this choice, so there is nothing to compare."; meter.hidden = true; return; }
+    var pct = Math.round(s[i] / pay * 100);
+    meter.hidden = false;
+    meter.classList.toggle("over", pct > 100);
+    meter.firstChild.style.width = Math.min(pct, 100) + "%";
+    $("affordText").textContent = eur.format(s[i]) + " is " + pct + "% of " + (mine > 0 ? "your take-home pay (" + eur.format(mine) + " a month)." :
+      "typical take-home pay in Co. " + c + " (about " + eur.format(inc.take_home) + " a month after tax, for one earner on the county's median pay).");
+  }
+
+  // ---- "Where can I afford?": areas whose latest average fits the budget, most expensive first ----
+  function renderFinder() {
+    var list = $("finderList"), budget = parseInt(state.budget, 10), P = D.periods, cutoff = P.length - 5;  // older than 2 years: left out
+    list.innerHTML = "";
+    if (!(budget > 0)) { $("finderCount").textContent = "Enter a budget to see the areas where the average new rent fits it."; return; }
+    var fits = [], old = 0;
+    D.places.forEach(function (p) {
+      var s = series(p.id), i = lastIndex(s);
+      if (i < 0 || s[i] > budget) return;
+      if (i < cutoff) { old++; return; }
+      fits.push({ p: p, rent: s[i], when: P[i] });
+    });
+    fits.sort(function (a, b) { return b.rent - a.rent || a.p.name.localeCompare(b.p.name); });
+    fits.forEach(function (f) {
+      var li = document.createElement("li"), a = document.createElement("a"), b = document.createElement("b"), sp = document.createElement("span");
+      a.href = "?area=" + f.p.id + "&beds=" + state.beds + "&budget=" + budget;
+      a.textContent = label(f.p);
+      b.textContent = eur.format(f.rent);
+      sp.textContent = (f.p.level === "county" ? "Whole county" : "Co. " + f.p.county) + " · " + when(f.when);
+      li.append(a, b, sp); list.appendChild(li);
+    });
+    $("finderCount").textContent = fits.length + (fits.length === 1 ? " area fits " : " areas fit ") + eur.format(budget) + " a month for " + BEDS[state.beds] +
+      (fits.length ? ", most expensive first." : ".") + (old ? " " + old + " more " + (old === 1 ? "area has" : "areas have") + " no figure since " + when(P[cutoff - 1]) + " and " + (old === 1 ? "is" : "are") + " left out." : "");
+  }
+
   function update() {
     $("county").value = byId[state.area].county;
     if (!$("area").querySelector('option[value="' + state.area + '"]')) fillAreas(byId[state.area].county);
     $("area").value = state.area;
-    $("beds").value = state.beds;
+    $("beds").value = $("fbeds").value = state.beds;
+    $("budget").value = state.budget;
     state.compare = state.compare.filter(function (id) { return id !== state.area; });
-    writeUrl(); renderCard(); renderChips(); renderTable(); renderChart();
+    writeUrl(); renderCard(); renderAfford(); renderChips(); renderTable(); renderChart(); renderFinder();
   }
 
   $("county").onchange = function () { var c = this.value; fillAreas(c); state.area = D.places.filter(function (p) { return p.county === c; })[0].id; update(); };
   $("area").onchange = function () { state.area = this.value; update(); };
-  $("beds").onchange = function () { state.beds = this.value; update(); };
+  $("beds").onchange = $("fbeds").onchange = function () { state.beds = this.value; update(); };
+  $("myPay").oninput = renderAfford;
+  $("budget").oninput = function () { var b = parseInt(this.value, 10); state.budget = b > 0 && b <= 20000 ? String(b) : ""; writeUrl(); renderFinder(); };
   $("addBtn").onclick = function () {
     var id = $("addArea").value;
     if (id !== state.area && state.compare.indexOf(id) < 0 && state.compare.length < MAX - 1) { state.compare.push(id); update(); }

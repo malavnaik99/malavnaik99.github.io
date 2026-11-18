@@ -65,6 +65,69 @@ Malav wants a free, shareable tool at `/rent/` that answers "what does renting c
    - compare 3 random areas against the CSO source;
    - give you a launch checklist.
 
+## Phase 4 detail: affordability and "Where can I afford?" (approved Phases 1–3 are done)
+
+### Earnings table: CSO DEA05, "Weekly Earnings" (Distribution of Earnings by Gender and County)
+- **Why this table:**
+  - It's the only CSO table I found with earnings for every one of the 26 counties.
+  - It's fresh: 2025 figures, updated 11 Nov 2026.
+  - It's built from Revenue payroll records, so it isn't a survey.
+- **What I use:** the median weekly earnings, both sexes, aged 15 and over.
+- **2025 values:** Ireland €759.21, Co. Dublin €848.06, Co. Cork €795.81, Co. Galway €764.59, Co. Leitrim €693.97.
+- **Why the median:** "median" means "typical", since half earn more and half less. It covers all employments, part-time included, which the page states clearly.
+- **Tables I ruled out:**
+  - NEA04 has regions only, not counties.
+  - EHQ03 is national only.
+  - Mean earnings are pulled up by high earners.
+- **Area to county:** each area uses its county's figure; Dublin districts use Co. Dublin.
+
+### Take-home pay (estimate for a single PAYE worker, 2026 rates)
+- **Steps:** gross yearly pay = weekly × 52; subtract income tax, USC and PRSI; divide by 12 to get monthly take-home.
+- **Rates used:**
+  - **Income tax:** 20% up to €44,000, 40% above. Credits are €4,000 (personal €2,000 + employee €2,000).
+  - **USC:** 0.5% up to €12,012, then 2% up to €28,700, then 3% up to €70,044, then 8%. No USC if income is €13,000 or less.
+  - **PRSI:** 4.35%, from 1 Oct 2026.
+- **Sources:** checked via [revenue.ie USC rates](https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx), the [Budget 2026 summary](https://www.revenue.ie/en/corporate/press-office/budget-information/current-year/budget-summary.pdf) and [gov.ie PRSI Class A rates](https://www.gov.ie/en/department-of-social-protection/publications/prsi-class-a-rates/).
+- **Where the rates live:** one clearly labelled block in `scripts/rent_build.py` (`TAX_2026`).
+- **Shortcut:** the PRSI low-pay credit (€352–€424 a week) is skipped, because every county median is above €600 a week. An assert in the code enforces that.
+- **When the rates go out of date:** on the first build in a new year (2027 rates are already announced), the script prints a GitHub warning. Phase 6 turns that warning into an Issue. The rent data still refreshes; the warning only means "update the tax block".
+- **Self-test:**
+  - a hand-worked example: Dublin median €848.06 a week → about €3,040 a month take-home;
+  - an under-€13,000 earner pays no USC.
+
+### Data
+- `rent_build.py` also downloads DEA05 (JSON-stat), using the same checks and failure rules as the rent table.
+- **Checks on DEA05:**
+  - all 26 counties are present;
+  - weekly earnings are between €300 and €3,000;
+  - the latest year doesn't go backwards.
+- **Output:** an `income` block is added to `rents.json`, so the page still loads one file and the "only write if changed" logic stays as it is. It holds the year, the table, the tax year, and for each county the gross weekly figure and the estimated monthly take-home. `meta.json` gains the earnings source.
+
+### Page (`rent/index.html`)
+- **New "Can you afford it?" card, under the rent card:**
+  - It says, for example: "€1,658 is 62% of typical take-home pay in Co. Galway (about €2,690 a month after tax)." It shows a bar that may run past 100%.
+  - **"Use my own take-home pay" box:** a number input that replaces the typical figure. It's **not saved in the link**, for privacy, and the page says so.
+  - **"How this is worked out" box:** names the CSO table, the year, the median, the tax rates and the fact that it covers part-time workers.
+  - I make no "affordable / unaffordable" judgment, since that would mean quoting a rule I can't verify.
+- **New "Where can I afford?" card:**
+  - **Inputs:** a budget in € a month, and bedrooms. This bedrooms control is linked to the main bedrooms picker (one choice, two controls).
+  - **List:** every area whose latest average fits the budget, with the area, its county, the rent and the half-year. It's sorted from the most expensive you can afford down, so the best-located options come first.
+  - **Each result:** links to that area in the tool.
+  - **Count:** a line such as "38 areas fit €1,500 for 2 beds" is announced to screen readers.
+  - **Old figures left out:** areas whose latest figure is more than 2 years old (before July–December 2023) are excluded, and the list says how many were left out.
+- **Address bar:** the budget is saved in the link (`&budget=1500`); income never is.
+
+### Verification
+- `--self-test`, then a full build from the CSO.
+- **Check against the raw DEA05 file:** the Dublin, Galway and Leitrim figures must match it.
+- **Playwright at phone and desktop sizes:**
+  - the affordability % for Galway City with 2 beds;
+  - a custom income changes the % and doesn't appear in the address;
+  - a finder budget of €1,500 for 2 beds gives a sorted list, all ≤ €1,500, with no old figures;
+  - the link `?budget=1500` reproduces the list;
+  - the keyboard reaches every new control;
+  - the cards don't run past the edge of a phone screen.
+
 ## Verification
 - `python3 scripts/rent_build.py --self-test`, plus a full run, compared with the totals your dataset already gives (201,912 rows on RIH02).
 - Preview locally with `jekyll build` and a local server, then use Playwright at 390 px and 1280 px to check: keyboard use, the address saving your view, PNG export, and the county pages.
