@@ -65,6 +65,18 @@
       "codeRepository": {{ page.code_url | jsonify }},{% endif %}{% if page.tech %}
       "keywords": {{ page.tech | join: ", " | jsonify }},{% endif %}
       "author": { "@id": {{ person_id | jsonify }}, "name": "Malav Naik" }
+    }{% endif %}{% if page.web_app %},
+    {
+      "@type": "WebApplication",
+      "name": {{ page.web_app.name | jsonify }},
+      "description": {{ page.description | jsonify }},
+      "url": {{ page_url | jsonify }},
+      "applicationCategory": {{ page.web_app.category | jsonify }},
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "creator": { "@id": {{ person_id | jsonify }}, "name": "Malav Naik" },
+      "isBasedOn": {{ page.web_app.sources | jsonify }}
     }{% endif %}{% if page.dataset %},
     {
       "@type": "Dataset",

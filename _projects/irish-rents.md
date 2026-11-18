@@ -10,13 +10,15 @@ order: 5
 oneline: "The official average rent of new tenancies in every Irish county, town and area since 2008, as one tidy table."
 headline: "201,912"
 headline_label: "rents for 437 places, 2008–2025"
-try_url: "https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb"
-try_label: "Get the data"
+try_url: "/rent/"
+try_label: "Try the rent tool"
 featured: true
 code_url: https://github.com/malavnaik99/irish-rents-dataset
 demo_url: https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
 tech: [Python, pandas, Kaggle, Hugging Face Datasets, GitHub Actions, CSO open data]
 ---
+**Try it:** the [Irish Rent Reality Check](/rent/) turns this data into a free tool: pick any area to see its rent, how it has changed, how much of typical pay it takes, and where your budget fits.
+
 ## The problem
 Ireland publishes excellent open data on rents. The Residential Tenancies Board (RTB) records the average rent of every new tenancy, and the Central Statistics Office (CSO) publishes it. But the raw table is hard to use: 674,352 rows, every category repeated as a code and a label, and **70% of the cells empty**.
 
@@ -83,6 +85,7 @@ Average monthly rent for a new tenancy, all homes:
 Source: CSO table [RIH02](https://data.cso.ie/table/RIH02), "RTB Average Monthly Rent Report", © Central Statistics Office and Residential Tenancies Board, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The cleaned dataset uses the same licence.
 
 ## Links
+- [Irish Rent Reality Check](/rent/): the free rent tool built on this data
 - [Dataset on Kaggle](https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb)
 - [Cleaning notebook on Kaggle](https://www.kaggle.com/code/malavnaik/cleaning-irish-rents-rtb)
 - [Dataset on Hugging Face](https://huggingface.co/datasets/Malavnaik/irish-rents-rtb)

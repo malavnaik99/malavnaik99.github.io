@@ -6,6 +6,7 @@ checks both, and only then writes:
   data/rent/rents.json   every place's rent per half-year, for "all bedrooms" and 1, 2, 3 and 4+ beds,
                          plus each county's typical pay and estimated take-home pay ("income")
   data/rent/meta.json    source, licence, latest half-year and the date the data last changed
+  rent/<county>/index.html  one page per county with key facts, for search engines (regenerated every run)
 
 If any check fails, nothing is written and the script exits with an error (the workflow then fails and opens an issue).
 
@@ -15,6 +16,7 @@ If any check fails, nothing is written and the script exits with an error (the w
 """
 import argparse
 import datetime
+import html
 import itertools
 import json
 import os
@@ -23,7 +25,8 @@ import sys
 import urllib.request
 
 API = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{}/JSON-stat/2.0/en"
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "rent")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+OUT = os.path.join(ROOT, "data", "rent")
 
 # Same county list as clean.py.
 COUNTIES = {"Carlow", "Cavan", "Clare", "Cork", "Donegal", "Dublin", "Galway", "Kerry", "Kildare", "Kilkenny",
@@ -224,6 +227,97 @@ def write(out, meta):
     return True
 
 
+# ---- County pages (/rent/galway/ etc.): written from the checked data, so they always match the tool ----
+def when(p):
+    return ("January–June " if p.endswith("1") else "July–December ") + p[:4]
+
+
+def ordinal(n):
+    return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+def change(s, i, years):
+    """'up €869 (67%)' between half-year i and the same half-year `years` earlier, or None if either is missing."""
+    j = i - 2 * years
+    if j < 0 or s[j] is None:
+        return None
+    d, pct = s[i] - s[j], round((s[i] / s[j] - 1) * 100)
+    return f"{'up' if d >= 0 else 'down'} €{abs(d):,} ({abs(pct)}%)"
+
+
+def county_page(c, out, meta, rank):
+    P, rent, inc = out["periods"], out["rent"], out["income"]["counties"][c]
+    cid, e = slug(c), html.escape
+    s = rent[cid]["all"]
+    i = max(k for k, v in enumerate(s) if v is not None)
+    now, ch1, ch10 = s[i], change(s, i, 1), change(s, i, 10)
+    pct = round(now / inc["take_home"] * 100)
+    facts = [f"The average monthly rent for a new tenancy in County {c} was <strong>€{now:,}</strong> in {when(P[i])}, for all homes."]
+    if ch1 and ch10:
+        facts.append(f"That is {ch1} on a year earlier, and {ch10} on ten years earlier.")
+    facts.append(f"{c} is the {'most' if rank == 1 else ordinal(rank) + ' most'} expensive of Ireland's 26 counties for new rents."
+                 f" On typical pay in Co. {c}, that rent takes about {pct}% of take-home pay.")
+    beds = "".join(
+        f"<tr><td>{label}</td><td>{'€{:,}'.format(v[-1]) if v and v[-1] is not None else '–'}</td></tr>"
+        for key, label in [("all", "All homes"), ("1", "1 bed"), ("2", "2 beds"), ("3", "3 beds"), ("4", "4+ beds")]
+        for v in [rent[cid].get(key)])
+    areas = []
+    for p in out["places"]:
+        a = rent[p["id"]].get("all", [])
+        k = max((k for k, v in enumerate(a) if v is not None), default=-1)
+        if p["county"] == c and p["level"] != "county" and k >= len(P) - 5:  # same 2-year rule as the finder
+            areas.append((a[k], p, P[k]))
+    rows = "".join(f'<tr><td><a href="/rent/?area={p["id"]}">{e(p["name"])}</a></td><td>€{v:,}</td><td>{when(w)}</td></tr>'
+                   for v, p, w in sorted(areas, key=lambda r: (-r[0], r[1]["name"])))
+    title = f"Rent in {c}: average €{now:,} a month ({P[i][:4]})"
+    desc = (f"The average new rent in County {c} is €{now:,} a month ({when(P[i])})"
+            + (f", {ch10.split(' ')[0]} {ch10.split('(')[1][:-1]} in 10 years" if ch10 else "")  # "up 100%"
+            + f". Rents for every town and area in {c}, by bedrooms, from official RTB data.")
+    return f"""---
+# Written by scripts/rent_build.py from data/rent/rents.json. Don't edit by hand: changes are overwritten on the next refresh.
+layout: default
+title: {json.dumps(title, ensure_ascii=False)}
+description: {json.dumps(desc, ensure_ascii=False)}
+rent_county: {json.dumps(c)}
+image: {{ path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent Reality Check at malavnaik.com/rent" }}
+---
+<p class="eyebrow"><a href="/rent/">Irish Rent Reality Check</a> / {e(c)}</p>
+<h1>Rent in {e(c)}</h1>
+<p class="lead" style="max-width:46rem">{' '.join(facts)}</p>
+<p><a class="btn btn-accent" href="/rent/?area={cid}">Explore {e(c)} in the rent tool</a></p>
+
+<section class="card" style="margin:1.5rem 0" aria-labelledby="beds-title">
+  <h2 id="beds-title">By number of bedrooms, {when(P[-1])}</h2>
+  <table><thead><tr><th scope="col">Bedrooms</th><th scope="col">Average monthly rent</th></tr></thead><tbody>{beds}</tbody></table>
+  <p class="small muted">– means the RTB published no average: too few new tenancies were registered.</p>
+</section>
+
+<section class="card" style="margin:1.5rem 0" aria-labelledby="areas-title">
+  <h2 id="areas-title">Towns and areas in {e(c)}, all homes</h2>
+  <div style="overflow-x:auto"><table><thead><tr><th scope="col">Area</th><th scope="col">Average monthly rent</th><th scope="col">Half-year</th></tr></thead><tbody>{rows}</tbody></table></div>
+  <p class="small muted">Most expensive first. Areas without a published figure since {when(P[-5])} are left out.</p>
+</section>
+
+<p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays, and not adjusted for inflation.
+Take-home pay: median weekly earnings in Co. {e(c)} ({out["income"]["year"]}, €{inc["weekly"]:,.2f} before tax, CSO table DEA05), estimated after tax for one PAYE earner at {out["income"]["tax_year"]} rates.
+Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Data last changed {meta["last_updated"]}.</p>
+"""
+
+
+def write_county_pages(out, meta):
+    """Write rent/<county>/index.html for all 26 counties. Same data in, same pages out, so git only sees real changes."""
+    P, rent = out["periods"], out["rent"]
+    latest = {c: rent[slug(c)]["all"][-1] for c in COUNTIES}  # build() checked every county has one
+    order = sorted(COUNTIES, key=lambda c: -latest[c])
+    for c in COUNTIES:
+        page = county_page(c, out, meta, order.index(c) + 1)
+        assert f"€{latest[c]:,}" in page, c
+        os.makedirs(os.path.join(ROOT, "rent", slug(c)), exist_ok=True)
+        with open(os.path.join(ROOT, "rent", slug(c), "index.html"), "w", encoding="utf-8") as f:
+            f.write(page)
+    print(f"Wrote {len(COUNTIES)} county pages in rent/ (latest {P[-1]}).")
+
+
 def self_test():
     assert county_of("Tullow, Carlow") == "Carlow" and county_of("Artane, Dublin 5") == "Dublin"
     assert county_of("Galway City") == "Galway" and county_of("Dublin 6W") == "Dublin"
@@ -245,6 +339,8 @@ def self_test():
     assert round(take_home_monthly(848.06), 2) == 3040.45, take_home_monthly(848.06)
     # €500 a week = €26,000: tax 5,200 − 4,000 = 1,200; USC 60.06 + 13,988×2% = 339.82; PRSI 1,131.
     assert round(take_home_monthly(500), 2) == round((26000 - 1200 - 339.82 - 1131) / 12, 2)
+    assert [ordinal(n) for n in (1, 2, 3, 4, 11, 12, 13, 21, 22)] == ["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd"]
+    assert change([100, None, 150], 2, 1) == "up €50 (50%)" and change([100, None, None, 150], 3, 1) is None
     print("Self-test passed.")
 
 
@@ -269,6 +365,7 @@ def main():
     except CheckFailed as e:
         sys.exit(f"CHECK FAILED, nothing was published: {e}")
     write(out, meta)
+    write_county_pages(out, json.load(open(meta_path)))
 
 
 if __name__ == "__main__":
