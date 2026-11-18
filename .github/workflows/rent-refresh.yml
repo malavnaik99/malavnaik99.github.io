@@ -1,0 +1,100 @@
+# Weekly refresh of the Irish Rent Reality Check (malavnaik.com/rent/). What to do when it breaks: docs/rent-tool-runbook.md.
+#
+# 1. Downloads the CSO rent table (RIH02) and earnings table (DEA05) and checks them (scripts/rent_build.py).
+# 2. If ANY check fails: nothing is saved, the live site keeps the old data, this run goes red (GitHub emails you)
+#    and an issue "Rent tool: weekly refresh failed" explains what broke. It closes itself after the next good run.
+# 3. If the data changed: commits it to main and starts "Deploy site to Pages" (a bot's push doesn't start it by itself).
+# 4. In a new year it also opens "Rent tool: update the tax rates" (the data still refreshes).
+name: Rent tool refresh
+
+on:
+  schedule:
+    - cron: "23 5 * * 3"   # Wednesdays 05:23 UTC. The CSO publishes twice a year, so weekly is plenty.
+  workflow_dispatch:        # the "Run workflow" button
+
+permissions:
+  contents: write   # commit the new data
+  issues: write     # open / close the alert issues
+  actions: write    # start the deploy workflow
+
+concurrency:
+  group: rent-refresh
+  cancel-in-progress: false
+
+env:
+  FAIL_TITLE: "Rent tool: weekly refresh failed"
+  TAX_TITLE: "Rent tool: update the tax rates"
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - name: Check the build script itself
+        run: python3 scripts/rent_build.py --self-test
+
+      - name: Download, check and build the rent data
+        shell: bash
+        run: python3 scripts/rent_build.py 2>&1 | tee build.log
+
+      - name: Publish if the data changed
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain data/rent rent)" ]; then echo "No new data. Nothing to publish."; exit 0; fi
+          latest=$(python3 -c "import json; print(json.load(open('data/rent/meta.json'))['latest_period'])")
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/rent rent
+          git commit -m "Rent tool: new CSO data (latest $latest)"
+          git push origin HEAD:main
+          gh workflow run static.yml --ref main
+          echo "Published new data (latest $latest) and started the deploy."
+
+      - name: Close the failure issue after a good run
+        shell: bash
+        run: |
+          for n in $(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq ".[] | select(.title == \"$FAIL_TITLE\") | .number"); do
+            gh issue close "$n" --comment "Fixed: the refresh ran successfully on $(date -u +%Y-%m-%d) ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."
+          done
+
+      - name: Ask for new tax rates in a new year
+        shell: bash
+        run: |
+          grep -q "::warning::" build.log || exit 0
+          open=$(gh issue list --state open --search "in:title \"$TAX_TITLE\"" --json title --jq "map(select(.title == \"$TAX_TITLE\")) | length")
+          [ "${open:-0}" != "0" ] && exit 0  # an issue is already open
+          gh issue create --title "$TAX_TITLE" --body "**What happened:** it's a new year, and the income tax, USC and PRSI rates in \`scripts/rent_build.py\` (the \`TAX\` block) are still last year's. The rent tool still works and its rents are up to date; only the \"Can you afford it?\" take-home pay estimate uses the old rates.
+
+          **How to fix it:** see \"Update the tax rates\" in \`docs/rent-tool-runbook.md\`, or open Claude Code on this repo and say: \"Update the TAX block in scripts/rent_build.py to this year's Irish tax rates, verified on revenue.ie and gov.ie.\"
+
+          This issue closes itself once the new rates are in. Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+      - name: Close the tax issue once the rates are current
+        shell: bash
+        run: |
+          [ -f build.log ] && grep -q "::warning::" build.log && exit 0
+          for n in $(gh issue list --state open --search "in:title \"$TAX_TITLE\"" --json number,title --jq ".[] | select(.title == \"$TAX_TITLE\") | .number"); do
+            gh issue close "$n" --comment "The tax rates are up to date now."
+          done
+
+      - name: Report the failure as an issue
+        if: failure()
+        shell: bash
+        run: |
+          run="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          { echo "**What happened:** the weekly rent data refresh failed on $(date -u +%Y-%m-%d). **The live site is fine:** it keeps showing the last good data. Nothing new was published."
+            echo
+            echo "**The reason, from the run** (look for \"CHECK FAILED\"):"
+            echo '```'
+            tail -n 15 build.log 2>/dev/null || echo "(no log: the run stopped before the download step; open the run link below)"
+            echo '```'
+            echo "**What to do:** follow \"The refresh failed\" in \`docs/rent-tool-runbook.md\`. Short version: if it was a network or CSO outage, wait a day and press **Actions → Rent tool refresh → Run workflow**. If a check failed, open Claude Code on this repo and paste this issue."
+            echo
+            echo "Run: $run. This issue closes itself after the next successful run."
+          } > issue.md
+          n=$(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq "map(select(.title == \"$FAIL_TITLE\")) | .[0].number // empty")
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file issue.md; else gh issue create --title "$FAIL_TITLE" --body-file issue.md; fi

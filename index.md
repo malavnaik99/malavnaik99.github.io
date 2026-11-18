@@ -104,7 +104,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
   </article>
 </section>
 
-<section class="section" aria-labelledby="more-title">
+<section class="section" aria-labelledby="more-title" style="contain-intrinsic-size: auto 1400px">{%- comment -%} five project rows are taller than the default 900px estimate on phones {%- endcomment -%}
   <p class="label"><b>02</b> / More projects</p>
   <h2 id="more-title" class="sr-only">More projects</h2>
   <div class="rows">
@@ -141,6 +141,14 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
         <ul class="chips" aria-label="Stack"><li>Python</li><li>GitHub Actions</li><li>Telegram Bot API</li><li>DEV API</li><li>LinkedIn API</li></ul>
         {% include sandbox-automation.html %}
         <p class="small"><a href="{{ '/projects/blog-automation-bot/' | relative_url }}">Read the case study</a></p>
+      </div></div>
+    </details>
+    <details class="row">
+      <summary><span class="n">05<span class="try">Try it</span></span><span class="t">Irish Rent Reality Check: what renting really costs, and where you can afford</span><span class="m">437 places since 2008</span><span class="pm" aria-hidden="true"></span></summary>
+      <div class="row-body"><div>
+        <p>A free tool built on my cleaned open dataset of official RTB rents: pick any county, town or Dublin district to see its average new rent, how it changed over 1, 5 and 10 years, how much of typical take-home pay it takes, and which areas fit your budget. The data refreshes itself every week and is checked before it goes live.</p>
+        <ul class="chips" aria-label="Stack"><li>Python</li><li>CSO open data API</li><li>GitHub Actions</li><li>Chart.js</li></ul>
+        <div class="sandbox"><p class="label">Sandbox</p><p class="small"><a class="btn small" href="{{ '/rent/' | relative_url }}">Open the rent tool</a> <a href="{{ '/projects/irish-rents/' | relative_url }}">Case study</a></p></div>
       </div></div>
     </details>
   </div>

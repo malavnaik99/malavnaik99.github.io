@@ -1,0 +1,479 @@
+---
+layout: default
+title: "Irish Rent Reality Check"
+description: "What does renting really cost where you live in Ireland? Average new-tenancy rents for every county, town and Dublin postal district, 2008 to today, from official RTB data. Free tool by Malav Naik."
+wide: true
+image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent Reality Check: average new rents in every Irish county, town and Dublin district, at malavnaik.com/rent" }
+# JSON-LD (see _includes/schema.html): the tool itself, and the data it is built on.
+web_app:
+  name: "Irish Rent Reality Check"
+  category: "ReferenceApplication"
+  sources: [https://data.cso.ie/table/RIH02, https://data.cso.ie/table/DEA05]
+dataset:
+  name: "Irish rents 2008–2025: average monthly rent of new tenancies (RTB, via the CSO)"
+  description: "The Residential Tenancies Board's average monthly rent for new tenancies in every Irish county, town, Dublin postal district and smaller area, every half-year since 2008, cleaned into one tidy table."
+  url: https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
+  license: https://creativecommons.org/licenses/by/4.0/
+  place: "Ireland"
+  keywords: [rent, Ireland, RTB, CSO, housing, Dublin, open data]
+  sources: [https://data.cso.ie/table/RIH02]
+---
+{%- comment -%}
+Irish Rent Reality Check. Data: /data/rent/rents.json and meta.json, built by scripts/rent_build.py from CSO table RIH02.
+Every view is saved in the address (?area=galway-city&beds=2&compare=cork,leitrim), so a copied link shows the same thing.
+Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place names are inserted as text, never as HTML.
+{%- endcomment -%}
+<style>
+.rent-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.rent-pick { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .8rem 1rem; }
+.rent-pick label, .rent-add label { display: flex; flex-direction: column; gap: .3rem; font-size: .875rem; color: var(--muted); }
+.rent-tool select, .rent-tool input { min-height: 44px; padding: .45rem .6rem; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 500 1rem/1.3 var(--font); width: 100%; }
+.rent-tool select:focus-visible, .rent-tool input:focus-visible, .rent-tool button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rent-card .k { font: 500 .78rem/1.4 var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+.rent-card .big { font: 800 clamp(2.4rem, 7vw, 3.6rem)/1.05 var(--font-head); letter-spacing: -.03em; margin: .3rem 0; }
+.rent-card .big small { font-size: .4em; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.rent-changes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; margin: 1rem 0 .4rem; padding: 0; list-style: none; }
+.rent-changes li { border: 1px solid var(--line); border-radius: 10px; padding: .6rem .7rem; }
+.rent-changes b { display: block; font: 700 1.15rem/1.25 var(--font-head); }
+.rent-changes span { display: block; font-size: .8rem; color: var(--muted); }
+.rent-note { border-left: 3px solid var(--dg-warn); padding-left: .7rem; }
+.rent-chart { position: relative; height: clamp(260px, 55vw, 400px); }
+.rent-add { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .6rem; margin: .8rem 0; }
+.rent-add label { flex: 1 1 14rem; min-width: 0; }
+.rent-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .8rem; padding: 0; list-style: none; }
+.rent-chips li { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--line); border-radius: 999px; padding: .2rem .3rem .2rem .7rem; font-size: .9rem; }
+.rent-chips i { width: 18px; height: 0; border-top: 3px solid; display: inline-block; }
+.rent-chips button { min-width: 36px; min-height: 36px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+.rent-table { overflow-x: auto; }
+.rent-table table { border-collapse: collapse; font-size: .875rem; min-width: 18rem; }
+.rent-table th, .rent-table td { padding: .3rem .7rem; border-bottom: 1px solid var(--line); text-align: right; }
+.rent-table th:first-child, .rent-table td:first-child { text-align: left; }
+.rent-meter { height: 10px; border-radius: 999px; background: var(--soft); overflow: hidden; margin: .6rem 0 1rem; }
+.rent-meter i { display: block; height: 100%; background: var(--accent); border-radius: inherit; }
+.rent-meter.over i { background: var(--dg-warn); }
+.rent-mine { display: flex; flex-direction: column; gap: .3rem; font-size: .875rem; color: var(--muted); max-width: 20rem; }
+.rent-share { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: .8rem; }
+.rent-about h2 { margin-top: 0; }
+.rent-about li { margin: .35rem 0; }
+.rent-counties { columns: 13rem; padding-left: 1.1rem; }
+.rent-finder-list { list-style: none; margin: .8rem 0 0; padding: 0; max-height: 26rem; overflow-y: auto; border-top: 1px solid var(--line); }
+.rent-finder-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 1rem; padding: .55rem .2rem; border-bottom: 1px solid var(--line); }
+.rent-finder-list b { font: 700 1rem/1.3 var(--font-head); text-align: right; }
+.rent-finder-list span { grid-column: 1 / -1; font-size: .8rem; color: var(--muted); }
+@media (max-width: 560px) { .rent-changes { grid-template-columns: 1fr; } }
+</style>
+
+<div class="rent-tool">
+<p class="eyebrow"><a href="{{ '/work/' | relative_url }}">Work</a> / <a href="{{ '/projects/irish-rents/' | relative_url }}">Irish rents dataset</a></p>
+<h1>Irish Rent Reality Check</h1>
+<p class="lead" style="max-width:46rem">What does renting really cost where you live? Pick an area to see the average monthly rent for a new tenancy, and how it has changed since 2008. Official RTB figures, published by the CSO.</p>
+
+<div class="rent-grid">
+  <section class="card" aria-labelledby="pick-title">
+    <h2 id="pick-title" class="sr-only">Choose an area</h2>
+    <form class="rent-pick" id="rentPick" onsubmit="return false">
+      <label>County <select id="county"></select></label>
+      <label>Area, town or Dublin district <select id="area"></select></label>
+      <label>Bedrooms
+        <select id="beds">
+          <option value="all">All homes</option>
+          <option value="1">1 bed</option>
+          <option value="2">2 beds</option>
+          <option value="3">3 beds</option>
+          <option value="4">4 or more beds</option>
+        </select>
+      </label>
+    </form>
+  </section>
+
+  <section class="card rent-card" aria-labelledby="card-title" aria-live="polite">
+    <h2 id="card-title" class="k">Average monthly rent, new tenancies</h2>
+    <p class="big" id="rentNow">Loading…</p>
+    <p class="muted" id="rentWhere"></p>
+    <ul class="rent-changes" id="rentChanges" aria-label="Change in average rent"></ul>
+    <p class="small rent-note" id="rentNote" hidden></p>
+    <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays. Not adjusted for inflation.</p>
+  </section>
+
+  <section class="card" aria-labelledby="afford-title">
+    <h2 id="afford-title">Can you afford it?</h2>
+    <p id="affordText" aria-live="polite"></p>
+    <div class="rent-meter" id="affordMeter" aria-hidden="true"><i></i></div>
+    <label class="rent-mine">Use my own take-home pay (€ a month, after tax)
+      <input type="number" id="myPay" inputmode="numeric" min="1" step="1" placeholder="e.g. 2800" autocomplete="off">
+    </label>
+    <p class="small muted">Your pay stays on your device: it is never sent anywhere or saved in the page link.</p>
+    <details>
+      <summary>How this is worked out</summary>
+      <p class="small" id="affordHow"></p>
+    </details>
+  </section>
+
+  <section class="card" aria-labelledby="trend-title">
+    <h2 id="trend-title">Rent over time</h2>
+    <ul class="rent-chips" id="chips" aria-label="Areas on the chart"></ul>
+    <div class="rent-chart"><canvas id="trend" role="img" aria-label="Line chart of average monthly rent over time."></canvas></div>
+    <div class="rent-add">
+      <label>Compare with another area (up to 3 in total) <select id="addArea"></select></label>
+      <button type="button" class="btn" id="addBtn">Add to chart</button>
+    </div>
+    <details class="rent-table">
+      <summary>Show the numbers in a table</summary>
+      <div id="trendTable"></div>
+    </details>
+    <div class="rent-share">
+      <button type="button" class="btn btn-accent" id="shareBtn">Download chart image</button>
+      <span class="small muted">A 1200×630 picture of this view, ready for LinkedIn, X or Reddit.</span>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="finder-title">
+    <h2 id="finder-title">Where can I afford?</h2>
+    <form class="rent-pick" onsubmit="return false">
+      <label>My budget (€ a month) <input type="number" id="budget" inputmode="numeric" min="1" step="50" placeholder="e.g. 1500" autocomplete="off"></label>
+      <label>Bedrooms
+        <select id="fbeds">
+          <option value="all">All homes</option>
+          <option value="1">1 bed</option>
+          <option value="2">2 beds</option>
+          <option value="3">3 beds</option>
+          <option value="4">4 or more beds</option>
+        </select>
+      </label>
+    </form>
+    <p id="finderCount" class="muted" role="status">Enter a budget to see the areas where the average new rent fits it.</p>
+    <ol class="rent-finder-list" id="finderList" aria-labelledby="finder-title"></ol>
+  </section>
+</div>
+
+<section class="card rent-about" aria-labelledby="counties-title" style="margin-bottom:1rem">
+  <h2 id="counties-title">Rent by county</h2>
+  <ul class="rent-counties">
+  {%- assign counties = site.pages | where_exp: "p", "p.rent_county" | sort: "rent_county" %}
+  {%- for c in counties %}
+    <li><a href="{{ c.url | relative_url }}">Rent in {{ c.rent_county }}</a></li>
+  {%- endfor %}
+  </ul>
+</section>
+
+<section class="card rent-about" aria-labelledby="about-title" style="margin-bottom:1rem">
+  <h2 id="about-title">About the data</h2>
+  <ul>
+    <li><strong>Rents</strong> are the Residential Tenancies Board's average monthly rent for <strong>new tenancies</strong> registered in each half-year, from <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>. They are not what every tenant pays: people in long-running tenancies usually pay less. They are not adjusted for inflation.</li>
+    <li><strong>Gaps are real.</strong> The RTB doesn't publish an average when too few new tenancies were registered, so some areas and bedroom counts have no figure for some half-years. Nothing is filled in or guessed.</li>
+    <li><strong>Pay</strong> is the median weekly earnings of employees in each county, from <a href="https://data.cso.ie/table/DEA05">CSO table DEA05</a>. Take-home pay is an estimate for one person on PAYE; see "How this is worked out" above.</li>
+    <li><strong>Latest rents:</strong> <span id="metaLatest">see the source table</span>. <strong>Data last changed:</strong> <span id="metaUpdated">see the source table</span>. The site checks the CSO for new figures every week.</li>
+    <li><strong>Licence:</strong> © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You're free to reuse these figures with credit.</li>
+    <li><strong>The full cleaned dataset</strong> (every property type and bedroom count): <a href="https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb">Kaggle</a> · <a href="https://huggingface.co/datasets/Malavnaik/irish-rents-rtb">Hugging Face</a> · <a href="{{ '/projects/irish-rents/' | relative_url }}">project write-up</a>.</li>
+  </ul>
+</section>
+
+<section class="card rent-about" aria-labelledby="built-title" style="margin-bottom:1rem">
+  <h2 id="built-title">How I built it</h2>
+  <ol>
+    <li><strong>Download.</strong> Every week, a free GitHub Actions job fetches two tables from the CSO's open data API: rents (RIH02) and earnings (DEA05).</li>
+    <li><strong>Clean.</strong> A Python script applies the same cleaning as my <a href="https://github.com/malavnaik99/irish-rents-dataset">published dataset</a>: readable columns, blank cells treated as "not published" (never zero), and every place matched to its county.</li>
+    <li><strong>Check.</strong> Before anything goes live it checks the columns, the row count, that every county has a latest figure and that every rent is between €50 and €20,000. If any check fails, the old data stays up and I get an alert.</li>
+    <li><strong>Publish.</strong> It writes one small data file (about 110 KB) and a page for each county. This page is plain HTML and JavaScript: no server, no database, no cookies.</li>
+  </ol>
+  <p class="small">Code: <a href="https://github.com/malavnaik99/malavnaik99.github.io/blob/main/scripts/rent_build.py">the build script</a> · <a href="https://github.com/malavnaik99/malavnaik99.github.io/blob/main/rent/index.html">this page</a>. Built by <a href="{{ '/about/' | relative_url }}">Malav Naik</a>, Data &amp; GenAI Engineer in Dublin.</p>
+</section>
+
+<p class="small muted" id="rentSource">Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>, RTB Average Monthly Rent Report, and <a href="https://data.cso.ie/table/DEA05">CSO table DEA05</a>, Weekly Earnings by county, © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+</div>
+
+<script>
+(function () {
+  var BEDS = { all: "all homes", "1": "1-bed homes", "2": "2-bed homes", "3": "3-bed homes", "4": "homes with 4+ beds" };
+  var MAX = 3;
+  var eur = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  var $ = function (id) { return document.getElementById(id); };
+  var D, byId = {}, chart, state = { area: "dublin", beds: "all", compare: [], budget: "" };
+
+  // "2025H2" -> "July–December 2025"
+  function when(p) { return (p.slice(-1) === "1" ? "January–June " : "July–December ") + p.slice(0, 4); }
+  function short(p) { return (p.slice(-1) === "1" ? "H1 " : "H2 ") + p.slice(0, 4); }
+  function series(id) { return (D.rent[id] || {})[state.beds] || []; }
+  function lastIndex(s) { for (var i = s.length - 1; i >= 0; i--) if (s[i] != null) return i; return -1; }
+  function label(p) { return p.level === "county" ? "Co. " + p.name : p.name; }
+
+  // ---- Address bar <-> state ----
+  function readUrl() {
+    var q = new URLSearchParams(location.search);
+    if (byId[q.get("area")]) state.area = q.get("area");
+    if (BEDS[q.get("beds")]) state.beds = q.get("beds");
+    state.compare = (q.get("compare") || "").split(",").filter(function (id, i, a) {
+      return byId[id] && id !== state.area && a.indexOf(id) === i;
+    }).slice(0, MAX - 1);
+    var b = parseInt(q.get("budget"), 10);
+    if (b > 0 && b <= 20000) state.budget = String(b);
+  }
+  function writeUrl() {
+    var q = new URLSearchParams();
+    q.set("area", state.area);
+    q.set("beds", state.beds);
+    if (state.compare.length) q.set("compare", state.compare.join(","));
+    if (state.budget) q.set("budget", state.budget);  // the visitor's own pay is never put in the link
+    history.replaceState(null, "", location.pathname + "?" + q.toString().replace(/%2C/g, ","));
+  }
+
+  // ---- Pickers ----
+  function fillCounties() {
+    D.places.filter(function (p) { return p.level === "county"; }).forEach(function (p) { $("county").add(new Option(p.name, p.county)); });
+  }
+  function fillAreas(county) {
+    var sel = $("area"); sel.innerHTML = "";
+    var groups = { county: null, town: "Towns, cities and Dublin districts", area: "Smaller areas" };
+    ["county", "town", "area"].forEach(function (lv) {
+      var list = D.places.filter(function (p) { return p.county === county && p.level === lv; });
+      if (!list.length) return;
+      var parent = sel;
+      if (groups[lv]) { parent = document.createElement("optgroup"); parent.label = groups[lv]; sel.appendChild(parent); }
+      list.forEach(function (p) { parent.appendChild(new Option(lv === "county" ? "All of County " + p.name : p.name, p.id)); });
+    });
+  }
+  function fillAdd() {
+    var sel = $("addArea"); sel.innerHTML = "";
+    var group = null;
+    D.places.forEach(function (p) {
+      if (!group || group.label !== "Co. " + p.county) { group = document.createElement("optgroup"); group.label = "Co. " + p.county; sel.appendChild(group); }
+      group.appendChild(new Option(p.level === "county" ? "All of County " + p.name : p.name, p.id));
+    });
+  }
+
+  // ---- Rent card ----
+  function renderCard() {
+    var p = byId[state.area], s = series(state.area), i = lastIndex(s), P = D.periods;
+    $("rentWhere").textContent = label(p) + ", " + BEDS[state.beds] + (i >= 0 ? ", " + when(P[i]) : "");
+    var note = $("rentNote"), ul = $("rentChanges");
+    ul.innerHTML = "";
+    if (i < 0) {
+      $("rentNow").textContent = "Not published";
+      note.hidden = false;
+      note.textContent = "The RTB has never published an average for " + BEDS[state.beds] + " here: too few new tenancies were registered. Try “All homes” or a bigger area.";
+      return;
+    }
+    $("rentNow").innerHTML = "";
+    $("rentNow").append(eur.format(s[i]), Object.assign(document.createElement("small"), { textContent: " a month" }));
+    [1, 5, 10].forEach(function (y) {
+      var j = i - 2 * y, li = document.createElement("li"), b = document.createElement("b"), sp = document.createElement("span");
+      if (j >= 0 && s[j] != null) {
+        var d = s[i] - s[j], pct = Math.round((s[i] / s[j] - 1) * 100);
+        b.textContent = (d >= 0 ? "+" : "−") + eur.format(Math.abs(d)) + " (" + (pct >= 0 ? "+" : "−") + Math.abs(pct) + "%)";
+        sp.textContent = "in " + y + (y === 1 ? " year" : " years") + ", from " + eur.format(s[j]) + " in " + short(P[j]);
+      } else {
+        b.textContent = "–";
+        sp.textContent = "in " + y + (y === 1 ? " year" : " years") + ": no figure published for " + (j >= 0 ? short(P[j]) : "then");
+      }
+      li.append(b, sp); ul.appendChild(li);
+    });
+    note.hidden = i === P.length - 1;
+    if (!note.hidden) note.textContent = "No average was published for " + when(P[P.length - 1]) + " here (too few new tenancies were registered), so this is the latest figure available, from " + when(P[i]) + ".";
+  }
+
+  // ---- Chart, chips and table ----
+  var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+  var COLOURS = ["--accent", "--dg-warn", "--dg-ok"], DASHES = [[], [8, 5], [2, 4]];
+  function shown() { return [state.area].concat(state.compare); }
+  function renderChips() {
+    var ul = $("chips"); ul.innerHTML = "";
+    shown().forEach(function (id, k) {
+      var li = document.createElement("li"), sw = document.createElement("i");
+      sw.style.borderColor = css(COLOURS[k]); sw.style.borderTopStyle = k === 0 ? "solid" : k === 1 ? "dashed" : "dotted";
+      li.append(sw, label(byId[id]));
+      if (k > 0) {
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = "×"; b.setAttribute("aria-label", "Remove " + label(byId[id]) + " from the chart");
+        b.onclick = function () { state.compare.splice(k - 1, 1); update(); $("addArea").focus(); };
+        li.appendChild(b);
+      }
+      ul.appendChild(li);
+    });
+    $("addBtn").disabled = state.compare.length >= MAX - 1;
+  }
+  function renderTable() {
+    var ids = shown(), t = document.createElement("table"), head = t.createTHead().insertRow(), body = t.createTBody();
+    ["Half-year"].concat(ids.map(function (id) { return label(byId[id]); })).forEach(function (h) {
+      var th = document.createElement("th"); th.scope = "col"; th.textContent = h; head.appendChild(th);
+    });
+    D.periods.forEach(function (p, i) {
+      var r = body.insertRow(); r.insertCell().textContent = short(p);
+      ids.forEach(function (id) { var v = series(id)[i]; r.insertCell().textContent = v == null ? "–" : eur.format(v); });
+    });
+    $("trendTable").innerHTML = ""; $("trendTable").appendChild(t);
+  }
+  function describe() {
+    // Text alternative for the chart: first and latest published figure for each area.
+    return "Line chart of average monthly rent for new tenancies, " + BEDS[state.beds] + ". " + shown().map(function (id) {
+      var s = series(id), i = lastIndex(s), f = s.findIndex(function (v) { return v != null; });
+      return i < 0 ? label(byId[id]) + ": no figures published." : label(byId[id]) + ": " + eur.format(s[f]) + " in " + short(D.periods[f]) + ", " + eur.format(s[i]) + " in " + short(D.periods[i]) + ".";
+    }).join(" ") + " The numbers are also in the table below the chart.";
+  }
+  function renderChart() {
+    $("trend").setAttribute("aria-label", describe());
+    if (!window.Chart) return;
+    var data = { labels: D.periods.map(short), datasets: shown().map(function (id, k) {
+      return { label: label(byId[id]), data: series(id), borderColor: css(COLOURS[k]), backgroundColor: css(COLOURS[k]), borderDash: DASHES[k], borderWidth: k ? 2.5 : 3,
+        // a figure with gaps on both sides has no line to sit on, so draw it as a dot
+        pointRadius: function (c) { var d = c.dataset.data, i = c.dataIndex; return d[i] != null && d[i - 1] == null && d[i + 1] == null ? 3 : 0; }, pointHoverRadius: 5, spanGaps: false };
+    }) };
+    if (chart) { chart.data = data; chart.update(); return; }
+    Chart.defaults.font.family = css("--font");
+    chart = new Chart($("trend"), { type: "line", data: data, options: {
+      responsive: true, maintainAspectRatio: false, animation: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return c.dataset.label + ": " + (c.parsed.y == null ? "not published" : eur.format(c.parsed.y)); } } } },
+      scales: { x: { ticks: { autoSkip: false, maxRotation: 0, callback: function (v, i) {
+                  // one label every 2 years (every 4 on phones), on the January–June point: "2008", "2010", ...
+                  var p = D.periods[i], step = this.chart.width < 600 ? 4 : 2;
+                  return p.slice(-1) === "1" && (p.slice(0, 4) - D.periods[0].slice(0, 4)) % step === 0 ? p.slice(0, 4) : null;
+                } }, grid: { display: false } },
+                y: { beginAtZero: true, ticks: { callback: function (v) { return eur.format(v); } } } }
+    } });
+    paint();
+  }
+  function paint() {
+    if (!chart) return;
+    ["x", "y"].forEach(function (a) { chart.options.scales[a].ticks.color = css("--muted"); chart.options.scales[a].grid.color = css("--line"); });
+    chart.data.datasets.forEach(function (d, k) { d.borderColor = d.backgroundColor = css(COLOURS[k]); });
+    chart.update();
+    renderChips();
+  }
+
+  // ---- Affordability: rent as a share of typical (or the visitor's own) take-home pay ----
+  function renderAfford() {
+    var s = series(state.area), i = lastIndex(s), c = byId[state.area].county, inc = D.income.counties[c];
+    var mine = parseFloat($("myPay").value), pay = mine > 0 ? mine : inc.take_home, meter = $("affordMeter");
+    $("affordHow").textContent = "Typical pay is the median weekly earnings of employees living in Co. " + c + " in " + D.income.year +
+      " (€" + inc.weekly.toFixed(2) + " a week, before tax), from CSO table DEA05. Half of employees earn more and half less; part-time jobs are included. " +
+      "Take-home pay is our estimate for a single person paying tax through PAYE, at " + D.income.tax_year + " rates: income tax 20% up to €44,000 and 40% above, " +
+      "minus €4,000 of tax credits; USC 0.5%, 2%, 3% and 8% bands; PRSI 4.35%. Your own situation (pension, partner, credits) will differ.";
+    if (i < 0) { $("affordText").textContent = "No average rent is published for this choice, so there is nothing to compare."; meter.hidden = true; return; }
+    var pct = Math.round(s[i] / pay * 100);
+    meter.hidden = false;
+    meter.classList.toggle("over", pct > 100);
+    meter.firstChild.style.width = Math.min(pct, 100) + "%";
+    $("affordText").textContent = eur.format(s[i]) + " is " + pct + "% of " + (mine > 0 ? "your take-home pay (" + eur.format(mine) + " a month)." :
+      "typical take-home pay in Co. " + c + " (about " + eur.format(inc.take_home) + " a month after tax, for one earner on the county's median pay).");
+  }
+
+  // ---- "Where can I afford?": areas whose latest average fits the budget, most expensive first ----
+  function renderFinder() {
+    var list = $("finderList"), budget = parseInt(state.budget, 10), P = D.periods, cutoff = P.length - 5;  // older than 2 years: left out
+    list.innerHTML = "";
+    if (!(budget > 0)) { $("finderCount").textContent = "Enter a budget to see the areas where the average new rent fits it."; return; }
+    var fits = [], old = 0;
+    D.places.forEach(function (p) {
+      var s = series(p.id), i = lastIndex(s);
+      if (i < 0 || s[i] > budget) return;
+      if (i < cutoff) { old++; return; }
+      fits.push({ p: p, rent: s[i], when: P[i] });
+    });
+    fits.sort(function (a, b) { return b.rent - a.rent || a.p.name.localeCompare(b.p.name); });
+    fits.forEach(function (f) {
+      var li = document.createElement("li"), a = document.createElement("a"), b = document.createElement("b"), sp = document.createElement("span");
+      a.href = "?area=" + f.p.id + "&beds=" + state.beds + "&budget=" + budget;
+      a.textContent = label(f.p);
+      b.textContent = eur.format(f.rent);
+      sp.textContent = (f.p.level === "county" ? "Whole county" : "Co. " + f.p.county) + " · " + when(f.when);
+      li.append(a, b, sp); list.appendChild(li);
+    });
+    $("finderCount").textContent = fits.length + (fits.length === 1 ? " area fits " : " areas fit ") + eur.format(budget) + " a month for " + BEDS[state.beds] +
+      (fits.length ? ", most expensive first." : ".") + (old ? " " + old + " more " + (old === 1 ? "area has" : "areas have") + " no figure since " + when(P[cutoff - 1]) + " and " + (old === 1 ? "is" : "are") + " left out." : "");
+  }
+
+  // ---- Share image: a 1200×630 PNG of the current view, drawn in fixed light colours so it looks the same everywhere ----
+  var INK = { bg: "#FFFFFF", text: "#0B0D1A", muted: "#4A5175", line: "#D9DDF2", accent: "#2F4BEA", lines: ["#2F4BEA", "#B45309", "#047857"] };
+  function fit(g, text, max) { while (g.measureText(text).width > max && text.length > 4) text = text.slice(0, -2) + "…"; return text; }
+  // opts: { title, big, sub, lines: [{ name, data }] }. Also used once to make the site's default share image (images/rent/og.png).
+  window.rentShareImage = function (opts) {
+    var c = document.createElement("canvas"), g = c.getContext("2d"), P = D.periods, X0 = 60, X1 = 1140, Y0 = 330, Y1 = 520;
+    c.width = 1200; c.height = 630;
+    g.fillStyle = INK.bg; g.fillRect(0, 0, 1200, 630);
+    g.fillStyle = INK.accent; g.font = "600 22px 'JetBrains Mono', monospace"; g.fillText("IRISH RENT REALITY CHECK", X0, 70);
+    g.fillStyle = INK.text; g.font = "700 38px 'Inter Tight', Inter, sans-serif"; g.fillText(fit(g, opts.title, 1080), X0, 122);
+    for (var size = 80; size > 40; size -= 4) { g.font = "800 " + size + "px 'Inter Tight', Inter, sans-serif"; if (g.measureText(opts.big).width <= 1080) break; }
+    g.fillText(fit(g, opts.big, 1080), X0, 210);  // shrink a long headline first; cut it only as a last resort
+    g.fillStyle = INK.muted; g.font = "500 26px Inter, sans-serif"; g.fillText(fit(g, opts.sub, 1080), X0, 256);
+    var all = [].concat.apply([], opts.lines.map(function (l) { return l.data; })).filter(function (v) { return v != null; });
+    var top = Math.ceil(Math.max.apply(null, all.concat([100])) / 500) * 500, x = function (i) { return X0 + 80 + (X1 - X0 - 80) * i / (P.length - 1); }, y = function (v) { return Y1 - (Y1 - Y0) * v / top; };
+    g.font = "500 18px Inter, sans-serif"; g.lineWidth = 1;
+    for (var v = 0; v <= top; v += top / 2) {  // three gridlines: €0, half, top
+      g.strokeStyle = INK.line; g.beginPath(); g.moveTo(X0 + 80, y(v)); g.lineTo(X1, y(v)); g.stroke();
+      g.fillStyle = INK.muted; g.fillText(eur.format(v), X0, y(v) + 6);
+    }
+    P.forEach(function (p, i) { if (p.slice(-1) === "1" && (p.slice(0, 4) - P[0].slice(0, 4)) % 4 === 0) g.fillText(p.slice(0, 4), x(i) - 20, Y1 + 28); });
+    opts.lines.forEach(function (l, k) {
+      g.strokeStyle = g.fillStyle = INK.lines[k]; g.lineWidth = k ? 4 : 5; g.setLineDash(k === 1 ? [14, 9] : k === 2 ? [3, 8] : []);
+      g.beginPath();
+      l.data.forEach(function (v, i) { if (v == null) return; (l.data[i - 1] == null ? g.moveTo : g.lineTo).call(g, x(i), y(v)); if (l.data[i - 1] == null && l.data[i + 1] == null) g.fillRect(x(i) - 4, y(v) - 4, 8, 8); });
+      g.stroke(); g.setLineDash([]);
+      if (opts.lines.length > 1) { g.font = "600 20px Inter, sans-serif"; g.fillRect(X0 + 70 + k * 300, 290, 26, 4); g.fillText(fit(g, l.name, 260), X0 + 104 + k * 300, 298); }
+    });
+    g.fillStyle = INK.accent; g.font = "700 28px 'Inter Tight', Inter, sans-serif"; g.fillText("malavnaik.com/rent", X0, 600);
+    g.fillStyle = INK.muted; g.font = "500 18px Inter, sans-serif"; g.textAlign = "right"; g.fillText("Source: CSO / RTB, new tenancies, CC BY 4.0", X1, 598);
+    return c;
+  };
+  function downloadShare() {
+    var s = series(state.area), i = lastIndex(s), P = D.periods, j = i - 20;
+    var change = i >= 0 && j >= 0 && s[j] != null ? " · " + (s[i] >= s[j] ? "up " : "down ") + Math.abs(Math.round((s[i] / s[j] - 1) * 100)) + "% in 10 years" : "";
+    var c = rentShareImage({
+      title: label(byId[state.area]) + ", " + BEDS[state.beds],
+      big: i < 0 ? "Not published" : eur.format(s[i]) + " a month",
+      sub: i < 0 ? "Too few new tenancies were registered here" : "Average rent for a new tenancy, " + when(P[i]) + change,
+      lines: shown().map(function (id) { return { name: label(byId[id]), data: series(id) }; })
+    });
+    c.toBlob(function (blob) {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "irish-rent-" + state.area + "-" + state.beds + ".png";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    }, "image/png");
+  }
+  $("shareBtn").onclick = function () {
+    // wait for the site's fonts, so the picture uses them rather than a fallback
+    Promise.all(["700 38px 'Inter Tight'", "500 26px Inter", "600 22px 'JetBrains Mono'"].map(function (f) { return document.fonts.load(f); }))
+      .then(downloadShare, downloadShare);
+  };
+
+  function update() {
+    $("county").value = byId[state.area].county;
+    if (!$("area").querySelector('option[value="' + state.area + '"]')) fillAreas(byId[state.area].county);
+    $("area").value = state.area;
+    $("beds").value = $("fbeds").value = state.beds;
+    $("budget").value = state.budget;
+    state.compare = state.compare.filter(function (id) { return id !== state.area; });
+    writeUrl(); renderCard(); renderAfford(); renderChips(); renderTable(); renderChart(); renderFinder();
+  }
+
+  $("county").onchange = function () { var c = this.value; fillAreas(c); state.area = D.places.filter(function (p) { return p.county === c; })[0].id; update(); };
+  $("area").onchange = function () { state.area = this.value; update(); };
+  $("beds").onchange = $("fbeds").onchange = function () { state.beds = this.value; update(); };
+  $("myPay").oninput = renderAfford;
+  $("budget").oninput = function () { var b = parseInt(this.value, 10); state.budget = b > 0 && b <= 20000 ? String(b) : ""; writeUrl(); renderFinder(); };
+  $("addBtn").onclick = function () {
+    var id = $("addArea").value;
+    if (id !== state.area && state.compare.indexOf(id) < 0 && state.compare.length < MAX - 1) { state.compare.push(id); update(); }
+  };
+
+  fetch("{{ '/data/rent/rents.json' | relative_url }}").then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  }).then(function (data) {
+    D = data;
+    D.places.forEach(function (p) { byId[p.id] = p; });
+    readUrl(); fillCounties(); fillAreas(byId[state.area].county); fillAdd(); update();
+    var sc = document.createElement("script");
+    sc.src = "{{ '/assets/vendor/chart-4.4.1.umd.js' | relative_url }}";
+    sc.onload = renderChart;
+    document.head.appendChild(sc);
+    new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    fetch("{{ '/data/rent/meta.json' | relative_url }}").then(function (r) { return r.json(); }).then(function (m) {
+      $("metaLatest").textContent = when(m.latest_period);
+      $("metaUpdated").textContent = new Date(m.last_updated + "T12:00:00").toLocaleDateString("en-IE", { day: "numeric", month: "long", year: "numeric" });
+    }).catch(function () {});
+  }).catch(function () {
+    $("rentNow").textContent = "Couldn't load the data";
+    $("rentWhere").textContent = "Please refresh the page. If it keeps happening, the data file may be missing.";
+  });
+})();
+</script>

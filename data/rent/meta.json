@@ -1,0 +1,15 @@
+{
+ "source": "CSO table RIH02, RTB Average Monthly Rent Report (Residential Tenancies Board)",
+ "source_url": "https://data.cso.ie/table/RIH02",
+ "licence": "CC BY 4.0",
+ "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+ "cso_updated": "2026-05-14",
+ "latest_period": "2025H2",
+ "rows": 201912,
+ "places": 437,
+ "earnings_source": "CSO table DEA05, median weekly earnings by county (Distribution of Earnings by Gender and County)",
+ "earnings_url": "https://data.cso.ie/table/DEA05",
+ "earnings_year": "2025",
+ "tax_year": 2026,
+ "last_updated": "2026-11-18"
+}
