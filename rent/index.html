@@ -1,0 +1,276 @@
+---
+layout: default
+title: "Irish Rent Reality Check"
+description: "What does renting really cost where you live in Ireland? Average new-tenancy rents for every county, town and Dublin postal district, 2008 to today, from official RTB data. Free tool by Malav Naik."
+wide: true
+---
+{%- comment -%}
+Irish Rent Reality Check. Data: /data/rent/rents.json and meta.json, built by scripts/rent_build.py from CSO table RIH02.
+Every view is saved in the address (?area=galway-city&beds=2&compare=cork,leitrim), so a copied link shows the same thing.
+Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place names are inserted as text, never as HTML.
+{%- endcomment -%}
+<style>
+.rent-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.rent-pick { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .8rem 1rem; }
+.rent-pick label, .rent-add label { display: flex; flex-direction: column; gap: .3rem; font-size: .875rem; color: var(--muted); }
+.rent-tool select { min-height: 44px; padding: .45rem .6rem; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 500 1rem/1.3 var(--font); width: 100%; }
+.rent-tool select:focus-visible, .rent-tool button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rent-card .k { font: 500 .78rem/1.4 var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+.rent-card .big { font: 800 clamp(2.4rem, 7vw, 3.6rem)/1.05 var(--font-head); letter-spacing: -.03em; margin: .3rem 0; }
+.rent-card .big small { font-size: .4em; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.rent-changes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; margin: 1rem 0 .4rem; padding: 0; list-style: none; }
+.rent-changes li { border: 1px solid var(--line); border-radius: 10px; padding: .6rem .7rem; }
+.rent-changes b { display: block; font: 700 1.15rem/1.25 var(--font-head); }
+.rent-changes span { display: block; font-size: .8rem; color: var(--muted); }
+.rent-note { border-left: 3px solid var(--dg-warn); padding-left: .7rem; }
+.rent-chart { position: relative; height: clamp(260px, 55vw, 400px); }
+.rent-add { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .6rem; margin: .8rem 0; }
+.rent-add label { flex: 1 1 14rem; min-width: 0; }
+.rent-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .8rem; padding: 0; list-style: none; }
+.rent-chips li { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--line); border-radius: 999px; padding: .2rem .3rem .2rem .7rem; font-size: .9rem; }
+.rent-chips i { width: 18px; height: 0; border-top: 3px solid; display: inline-block; }
+.rent-chips button { min-width: 36px; min-height: 36px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+.rent-table { overflow-x: auto; }
+.rent-table table { border-collapse: collapse; font-size: .875rem; min-width: 18rem; }
+.rent-table th, .rent-table td { padding: .3rem .7rem; border-bottom: 1px solid var(--line); text-align: right; }
+.rent-table th:first-child, .rent-table td:first-child { text-align: left; }
+@media (max-width: 560px) { .rent-changes { grid-template-columns: 1fr; } }
+</style>
+
+<div class="rent-tool">
+<p class="eyebrow"><a href="{{ '/work/' | relative_url }}">Work</a> / <a href="{{ '/projects/irish-rents/' | relative_url }}">Irish rents dataset</a></p>
+<h1>Irish Rent Reality Check</h1>
+<p class="lead" style="max-width:46rem">What does renting really cost where you live? Pick an area to see the average monthly rent for a new tenancy, and how it has changed since 2008. Official RTB figures, published by the CSO.</p>
+
+<div class="rent-grid">
+  <section class="card" aria-labelledby="pick-title">
+    <h2 id="pick-title" class="sr-only">Choose an area</h2>
+    <form class="rent-pick" id="rentPick" onsubmit="return false">
+      <label>County <select id="county"></select></label>
+      <label>Area, town or Dublin district <select id="area"></select></label>
+      <label>Bedrooms
+        <select id="beds">
+          <option value="all">All homes</option>
+          <option value="1">1 bed</option>
+          <option value="2">2 beds</option>
+          <option value="3">3 beds</option>
+          <option value="4">4 or more beds</option>
+        </select>
+      </label>
+    </form>
+  </section>
+
+  <section class="card rent-card" aria-labelledby="card-title" aria-live="polite">
+    <h2 id="card-title" class="k">Average monthly rent, new tenancies</h2>
+    <p class="big" id="rentNow">Loading…</p>
+    <p class="muted" id="rentWhere"></p>
+    <ul class="rent-changes" id="rentChanges" aria-label="Change in average rent"></ul>
+    <p class="small rent-note" id="rentNote" hidden></p>
+    <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays. Not adjusted for inflation.</p>
+  </section>
+
+  <section class="card" aria-labelledby="trend-title">
+    <h2 id="trend-title">Rent over time</h2>
+    <ul class="rent-chips" id="chips" aria-label="Areas on the chart"></ul>
+    <div class="rent-chart"><canvas id="trend" role="img" aria-label="Line chart of average monthly rent over time."></canvas></div>
+    <div class="rent-add">
+      <label>Compare with another area (up to 3 in total) <select id="addArea"></select></label>
+      <button type="button" class="btn" id="addBtn">Add to chart</button>
+    </div>
+    <details class="rent-table">
+      <summary>Show the numbers in a table</summary>
+      <div id="trendTable"></div>
+    </details>
+  </section>
+</div>
+
+<p class="small muted" id="rentSource">Source: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>, RTB Average Monthly Rent Report, © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+</div>
+
+<script>
+(function () {
+  var BEDS = { all: "all homes", "1": "1-bed homes", "2": "2-bed homes", "3": "3-bed homes", "4": "homes with 4+ beds" };
+  var MAX = 3;
+  var eur = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  var $ = function (id) { return document.getElementById(id); };
+  var D, byId = {}, chart, state = { area: "dublin", beds: "all", compare: [] };
+
+  // "2025H2" -> "July–December 2025"
+  function when(p) { return (p.slice(-1) === "1" ? "January–June " : "July–December ") + p.slice(0, 4); }
+  function short(p) { return (p.slice(-1) === "1" ? "H1 " : "H2 ") + p.slice(0, 4); }
+  function series(id) { return (D.rent[id] || {})[state.beds] || []; }
+  function lastIndex(s) { for (var i = s.length - 1; i >= 0; i--) if (s[i] != null) return i; return -1; }
+  function label(p) { return p.level === "county" ? "Co. " + p.name : p.name; }
+
+  // ---- Address bar <-> state ----
+  function readUrl() {
+    var q = new URLSearchParams(location.search);
+    if (byId[q.get("area")]) state.area = q.get("area");
+    if (BEDS[q.get("beds")]) state.beds = q.get("beds");
+    state.compare = (q.get("compare") || "").split(",").filter(function (id, i, a) {
+      return byId[id] && id !== state.area && a.indexOf(id) === i;
+    }).slice(0, MAX - 1);
+  }
+  function writeUrl() {
+    var q = new URLSearchParams();
+    q.set("area", state.area);
+    q.set("beds", state.beds);
+    if (state.compare.length) q.set("compare", state.compare.join(","));
+    history.replaceState(null, "", location.pathname + "?" + q.toString().replace(/%2C/g, ","));
+  }
+
+  // ---- Pickers ----
+  function fillCounties() {
+    D.places.filter(function (p) { return p.level === "county"; }).forEach(function (p) { $("county").add(new Option(p.name, p.county)); });
+  }
+  function fillAreas(county) {
+    var sel = $("area"); sel.innerHTML = "";
+    var groups = { county: null, town: "Towns, cities and Dublin districts", area: "Smaller areas" };
+    ["county", "town", "area"].forEach(function (lv) {
+      var list = D.places.filter(function (p) { return p.county === county && p.level === lv; });
+      if (!list.length) return;
+      var parent = sel;
+      if (groups[lv]) { parent = document.createElement("optgroup"); parent.label = groups[lv]; sel.appendChild(parent); }
+      list.forEach(function (p) { parent.appendChild(new Option(lv === "county" ? "All of County " + p.name : p.name, p.id)); });
+    });
+  }
+  function fillAdd() {
+    var sel = $("addArea"); sel.innerHTML = "";
+    var group = null;
+    D.places.forEach(function (p) {
+      if (!group || group.label !== "Co. " + p.county) { group = document.createElement("optgroup"); group.label = "Co. " + p.county; sel.appendChild(group); }
+      group.appendChild(new Option(p.level === "county" ? "All of County " + p.name : p.name, p.id));
+    });
+  }
+
+  // ---- Rent card ----
+  function renderCard() {
+    var p = byId[state.area], s = series(state.area), i = lastIndex(s), P = D.periods;
+    $("rentWhere").textContent = label(p) + ", " + BEDS[state.beds] + (i >= 0 ? ", " + when(P[i]) : "");
+    var note = $("rentNote"), ul = $("rentChanges");
+    ul.innerHTML = "";
+    if (i < 0) {
+      $("rentNow").textContent = "Not published";
+      note.hidden = false;
+      note.textContent = "The RTB has never published an average for " + BEDS[state.beds] + " here: too few new tenancies were registered. Try “All homes” or a bigger area.";
+      return;
+    }
+    $("rentNow").innerHTML = "";
+    $("rentNow").append(eur.format(s[i]), Object.assign(document.createElement("small"), { textContent: " a month" }));
+    [1, 5, 10].forEach(function (y) {
+      var j = i - 2 * y, li = document.createElement("li"), b = document.createElement("b"), sp = document.createElement("span");
+      if (j >= 0 && s[j] != null) {
+        var d = s[i] - s[j], pct = Math.round((s[i] / s[j] - 1) * 100);
+        b.textContent = (d >= 0 ? "+" : "−") + eur.format(Math.abs(d)) + " (" + (pct >= 0 ? "+" : "−") + Math.abs(pct) + "%)";
+        sp.textContent = "in " + y + (y === 1 ? " year" : " years") + ", from " + eur.format(s[j]) + " in " + short(P[j]);
+      } else {
+        b.textContent = "–";
+        sp.textContent = "in " + y + (y === 1 ? " year" : " years") + ": no figure published for " + (j >= 0 ? short(P[j]) : "then");
+      }
+      li.append(b, sp); ul.appendChild(li);
+    });
+    note.hidden = i === P.length - 1;
+    if (!note.hidden) note.textContent = "No average was published for " + when(P[P.length - 1]) + " here (too few new tenancies were registered), so this is the latest figure available, from " + when(P[i]) + ".";
+  }
+
+  // ---- Chart, chips and table ----
+  var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+  var COLOURS = ["--accent", "--dg-warn", "--dg-ok"], DASHES = [[], [8, 5], [2, 4]];
+  function shown() { return [state.area].concat(state.compare); }
+  function renderChips() {
+    var ul = $("chips"); ul.innerHTML = "";
+    shown().forEach(function (id, k) {
+      var li = document.createElement("li"), sw = document.createElement("i");
+      sw.style.borderColor = css(COLOURS[k]); sw.style.borderTopStyle = k === 0 ? "solid" : k === 1 ? "dashed" : "dotted";
+      li.append(sw, label(byId[id]));
+      if (k > 0) {
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = "×"; b.setAttribute("aria-label", "Remove " + label(byId[id]) + " from the chart");
+        b.onclick = function () { state.compare.splice(k - 1, 1); update(); $("addArea").focus(); };
+        li.appendChild(b);
+      }
+      ul.appendChild(li);
+    });
+    $("addBtn").disabled = state.compare.length >= MAX - 1;
+  }
+  function renderTable() {
+    var ids = shown(), t = document.createElement("table"), head = t.createTHead().insertRow(), body = t.createTBody();
+    ["Half-year"].concat(ids.map(function (id) { return label(byId[id]); })).forEach(function (h) {
+      var th = document.createElement("th"); th.scope = "col"; th.textContent = h; head.appendChild(th);
+    });
+    D.periods.forEach(function (p, i) {
+      var r = body.insertRow(); r.insertCell().textContent = short(p);
+      ids.forEach(function (id) { var v = series(id)[i]; r.insertCell().textContent = v == null ? "–" : eur.format(v); });
+    });
+    $("trendTable").innerHTML = ""; $("trendTable").appendChild(t);
+  }
+  function describe() {
+    // Text alternative for the chart: first and latest published figure for each area.
+    return "Line chart of average monthly rent for new tenancies, " + BEDS[state.beds] + ". " + shown().map(function (id) {
+      var s = series(id), i = lastIndex(s), f = s.findIndex(function (v) { return v != null; });
+      return i < 0 ? label(byId[id]) + ": no figures published." : label(byId[id]) + ": " + eur.format(s[f]) + " in " + short(D.periods[f]) + ", " + eur.format(s[i]) + " in " + short(D.periods[i]) + ".";
+    }).join(" ") + " The numbers are also in the table below the chart.";
+  }
+  function renderChart() {
+    $("trend").setAttribute("aria-label", describe());
+    if (!window.Chart) return;
+    var data = { labels: D.periods.map(short), datasets: shown().map(function (id, k) {
+      return { label: label(byId[id]), data: series(id), borderColor: css(COLOURS[k]), backgroundColor: css(COLOURS[k]), borderDash: DASHES[k], borderWidth: k ? 2.5 : 3, pointRadius: 0, pointHoverRadius: 5, spanGaps: false };
+    }) };
+    if (chart) { chart.data = data; chart.update(); return; }
+    Chart.defaults.font.family = css("--font");
+    chart = new Chart($("trend"), { type: "line", data: data, options: {
+      responsive: true, maintainAspectRatio: false, animation: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return c.dataset.label + ": " + (c.parsed.y == null ? "not published" : eur.format(c.parsed.y)); } } } },
+      scales: { x: { ticks: { autoSkip: false, maxRotation: 0, callback: function (v, i) {
+                  // one label every 2 years (every 4 on phones), on the January–June point: "2008", "2010", ...
+                  var p = D.periods[i], step = this.chart.width < 600 ? 4 : 2;
+                  return p.slice(-1) === "1" && (p.slice(0, 4) - D.periods[0].slice(0, 4)) % step === 0 ? p.slice(0, 4) : null;
+                } }, grid: { display: false } },
+                y: { beginAtZero: true, ticks: { callback: function (v) { return eur.format(v); } } } }
+    } });
+    paint();
+  }
+  function paint() {
+    if (!chart) return;
+    ["x", "y"].forEach(function (a) { chart.options.scales[a].ticks.color = css("--muted"); chart.options.scales[a].grid.color = css("--line"); });
+    chart.data.datasets.forEach(function (d, k) { d.borderColor = d.backgroundColor = css(COLOURS[k]); });
+    chart.update();
+    renderChips();
+  }
+
+  function update() {
+    $("county").value = byId[state.area].county;
+    if (!$("area").querySelector('option[value="' + state.area + '"]')) fillAreas(byId[state.area].county);
+    $("area").value = state.area;
+    $("beds").value = state.beds;
+    state.compare = state.compare.filter(function (id) { return id !== state.area; });
+    writeUrl(); renderCard(); renderChips(); renderTable(); renderChart();
+  }
+
+  $("county").onchange = function () { var c = this.value; fillAreas(c); state.area = D.places.filter(function (p) { return p.county === c; })[0].id; update(); };
+  $("area").onchange = function () { state.area = this.value; update(); };
+  $("beds").onchange = function () { state.beds = this.value; update(); };
+  $("addBtn").onclick = function () {
+    var id = $("addArea").value;
+    if (id !== state.area && state.compare.indexOf(id) < 0 && state.compare.length < MAX - 1) { state.compare.push(id); update(); }
+  };
+
+  fetch("{{ '/data/rent/rents.json' | relative_url }}").then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  }).then(function (data) {
+    D = data;
+    D.places.forEach(function (p) { byId[p.id] = p; });
+    readUrl(); fillCounties(); fillAreas(byId[state.area].county); fillAdd(); update();
+    var sc = document.createElement("script");
+    sc.src = "{{ '/assets/vendor/chart-4.4.1.umd.js' | relative_url }}";
+    sc.onload = renderChart;
+    document.head.appendChild(sc);
+    new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  }).catch(function () {
+    $("rentNow").textContent = "Couldn't load the data";
+    $("rentWhere").textContent = "Please refresh the page. If it keeps happening, the data file may be missing.";
+  });
+})();
+</script>
