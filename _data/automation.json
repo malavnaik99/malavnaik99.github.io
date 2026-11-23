@@ -1,15 +1,15 @@
 {
- "posts_published": 13,
- "posts_queued": 40,
+ "posts_published": 14,
+ "posts_queued": 39,
  "platforms": {
-  "Blog": 13,
-  "DEV": 8,
-  "LinkedIn": 13,
+  "Blog": 14,
+  "DEV": 9,
+  "LinkedIn": 14,
   "Medium": 5
  },
  "last_post": {
-  "title": "Measuring LLM Hallucinations: A Simple Evaluation Harness You Can Build in an Afternoon",
-  "url": "https://malavnaik.com/blog/measuring-llm-hallucinations/"
+  "title": "Designing Analytics-Ready Data Models: Star Schema Lessons from Financial Data",
+  "url": "https://malavnaik.com/blog/analytics-ready-data-models/"
  },
  "updated": "2026-11-23"
 }
