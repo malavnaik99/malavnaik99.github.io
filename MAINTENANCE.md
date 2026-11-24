@@ -42,6 +42,7 @@ updates it while the problem lasts, and closes it by itself once fixed. Issues: 
 | Issue **Rent tool: update the tax rates** | New year: the take-home pay estimate on /rent/ still uses last year's tax rates | `docs/rent-tool-runbook.md` → "Update the tax rates" (one message to Claude). |
 | /rent/ says **"Couldn't load the data"** | `data/rent/rents.json` is missing or broken | Roll back the last "Rent tool: new CSO data" commit (`docs/rent-tool-runbook.md` → "Roll back"). |
 | A **shared Labs link** opens the sandbox at the default setting | The link lost its `?t=`, `?q=` or `?sql=` part (some apps cut it off), or the value isn't one the sandbox knows | Nothing is broken: the sandbox falls back to its default. Copy the link again with **Copy link to this view**. |
+| A change was merged but the live site **still shows the old version** (even in a private window) | Cloudflare is still serving its saved copy of the page | Test with `?v=2` on the end of the address (e.g. `https://malavnaik.com/about/?v=2`): if that shows the change, the site is fine. To refresh it for everyone: **dash.cloudflare.com → malavnaik.com → Caching → Configuration → Purge Everything**. Safe: it only clears saved copies, no settings change. |
 | A shared link shows the **old preview image/title** on LinkedIn | LinkedIn cached the old preview | https://www.linkedin.com/post-inspector/ → paste the URL → **Inspect** (refreshes it). |
 
 ## Roll back a bad change
