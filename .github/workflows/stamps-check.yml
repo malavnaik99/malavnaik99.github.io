@@ -1,0 +1,84 @@
+# Keeps the Living in Ireland guide (malavnaik.com/living-in-ireland/) accurate. It never changes what the site shows.
+#
+# Weekly (Mondays): checks every official link in _data/stamps.yml. Gone or redirecting somewhere new → ONE issue
+#   "Living in Ireland: official links need attention" listing the affected stamp/topic rows; it closes itself when fixed.
+# Monthly (the 1st): fetches each official page, compares its main text (menus, footers and dates ignored) with last
+#   month's copy in data/stamps/snapshots/, and opens "Official page changed — re-check: Stamp <x> → <topic>" with a
+#   short diff for each changed page. Then saves the new copies for next month.
+# Pages that refuse automated checks go in "Living in Ireland: official pages could not be checked" (never silent).
+# If the job itself breaks, the run goes red (GitHub emails you) and "Living in Ireland check: failed" explains why.
+name: Living in Ireland checks
+
+on:
+  schedule:
+    - cron: "13 6 * * 1"   # Mondays 06:13 UTC: links
+    - cron: "43 6 1 * *"   # 1st of the month 06:43 UTC: page text
+  workflow_dispatch:
+    inputs:
+      check:
+        description: "links (weekly check) or content (monthly check)"
+        type: choice
+        options: [links, content]
+        default: links
+
+permissions:
+  contents: write  # save the monthly page copies
+  issues: write
+
+concurrency:
+  group: stamps-check
+  cancel-in-progress: false
+
+env:
+  FAIL_TITLE: "Living in Ireland check: failed"
+  GH_TOKEN: ${{ github.token }}
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - run: python3 -m pip install --quiet pyyaml
+      - run: python3 scripts/stamps_check.py --self-test
+      - name: Run the check
+        shell: bash
+        env:
+          CHECK: ${{ inputs.check || (github.event.schedule == '43 6 1 * *' && 'content' || 'links') }}
+        run: |
+          set -o pipefail
+          python3 scripts/stamps_check.py --$CHECK 2>&1 | tee check.log
+      - name: Save this month's page copies
+        shell: bash
+        run: |
+          [ -z "$(git status --porcelain data/stamps)" ] && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stamps
+          git commit -qm "Living in Ireland: this month's copies of the official pages"
+          git pull -q --rebase origin main
+          git push -q origin HEAD:main
+      - name: Close the failure issue after a good run
+        shell: bash
+        run: |
+          for n in $(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq ".[] | select(.title == \"$FAIL_TITLE\") | .number"); do
+            gh issue close "$n" --comment "Fixed: the check ran successfully on $(date -u +%Y-%m-%d)."
+          done
+      - name: Report the failure as an issue
+        if: failure()
+        shell: bash
+        run: |
+          { echo "**What happened:** the Living in Ireland check could not run on $(date -u +%Y-%m-%d). **The site is unaffected**, but official pages weren't checked this time."
+            echo
+            echo "**The last lines of the run:**"
+            echo '```'
+            tail -n 15 check.log 2>/dev/null || echo "(no log: it stopped before the check; open the run link below)"
+            echo '```'
+            echo "**What to do:** if the log says \"quote not found\" or \"wording rule\", someone edited \`_data/stamps.yml\` by hand: ask Claude to fix the row it names. Otherwise press **Actions → Living in Ireland checks → Run workflow** to try again, and if it fails again, open Claude Code on this repo and paste this issue."
+            echo
+            echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. This issue closes itself after the next good run."
+          } > fail.md
+          n=$(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq "map(select(.title == \"$FAIL_TITLE\")) | .[0].number // empty")
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file fail.md; else gh issue create --title "$FAIL_TITLE" --body-file fail.md; fi

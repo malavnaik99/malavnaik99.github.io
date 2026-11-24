@@ -1,0 +1,74 @@
+{%- comment -%}
+One /living-in-ireland/stamp-<x>/ page, built from _data/stamps.yml (page.stamp is the stamp id).
+A row's summary shows only when reviewed; otherwise just its official link. Wording: "may… check here", never "entitled".
+{%- endcomment -%}
+{%- assign D = site.data.stamps -%}
+{%- assign S = D.stamps | where: "id", page.stamp | first -%}
+{%- assign rows = D.rows | where: "stamp", page.stamp -%}
+{%- assign dates = rows | map: "last_verified" | sort -%}
+{%- assign modified = dates | last -%}
+{%- if page.stamp == "2" %}{% assign cdates = D.checklist | map: "last_verified" | sort %}{% if cdates.last > modified %}{% assign modified = cdates.last %}{% endif %}{% endif -%}
+<p class="eyebrow"><a href="{{ '/living-in-ireland/' | relative_url }}">Living in Ireland</a> / {{ S.name }}</p>
+<h1>{{ page.title }}</h1>
+<p class="lead">What {{ S.name }} lets you do in Ireland, topic by topic, and the official page to check for each. Whether you can get a payment or service usually depends on more than your stamp: for example your PRSI contributions, the Habitual Residence Condition, a means test, or the conditions of your permission.</p>
+{% include living-notice.html %}
+<nav aria-label="Topics on this page" class="small"><p>{% for t in D.topics %}<a href="#{{ t.id }}">{{ t.short }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}{% if page.stamp == "2" %} · <a href="#first-90-days">First 90 days</a>{% endif %} · <a href="#faq">FAQ</a></p></nav>
+
+{% for t in D.topics %}{% assign r = rows | where: "topic", t.id | first %}
+<section aria-labelledby="{{ t.id }}">
+  <h2 id="{{ t.id }}">{{ t.title }}</h2>
+  {% if r and r.reviewed %}<p>{{ r.summary }}</p>{% endif %}
+  {% if r and r.official_url != "" %}<p>{% if r.reviewed %}Check the official page{% else %}Official page to check{% endif %}: <a href="{{ r.official_url }}">{{ r.source_name }}</a>{% if r.reviewed %}<br><span class="small muted">Last verified: {{ r.last_verified | date: "%-d %B %Y" }}</span>{% endif %}</p>
+  {% else %}<p class="muted">Official source being added. Until then, the free services below can help with your situation.</p>{% endif %}
+</section>
+{% endfor %}
+
+{% if page.stamp == "2" %}
+<section aria-labelledby="first-90-days">
+  <h2 id="first-90-days">First 90 days for international students</h2>
+  <p>In this order. Each step links to the official page to check.</p>
+  <ol>{% for c in D.checklist %}
+    <li><strong>{{ c.stage }}: {{ c.step }}.</strong>
+      {% if c.reviewed %}{{ c.summary }}{% endif %}
+      {% if c.official_url != "" %}{% if c.reviewed %}Check:{% else %}Official page to check:{% endif %} <a href="{{ c.official_url }}">{{ c.source_name }}</a>{% else %}<span class="muted">Official source being added.</span>{% endif %}
+      {% if c.step contains "rental scams" %}Before paying anything, compare the rent with typical rents for the area in the <a href="{{ '/rent/' | relative_url }}">Irish Rent Reality Check</a>.{% endif %}
+    </li>{% endfor %}
+  </ol>
+</section>
+{% endif %}
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Frequently asked questions</h2>
+  {% for t in D.topics %}{% if t.q %}{% assign r = rows | where: "topic", t.id | first %}
+  <h3>{{ t.q | replace: "STAMP", S.name }}</h3>
+  <p>{% if r and r.reviewed %}{{ r.summary }}{% else %}{{ t.depends }}{% endif %} {% if r and r.official_url != "" %}Check the official page: <a href="{{ r.official_url }}">{{ r.source_name }}</a>.{% else %}Ask one of the free services below about your situation.{% endif %}</p>
+  {% endif %}{% endfor %}
+</section>
+
+{% include living-help.html %}
+<p class="small muted">Other stamps: {% for s in D.stamps %}{% unless s.id == page.stamp %}<a href="{{ '/living-in-ireland/stamp-' | append: s.id | append: '/' | relative_url }}">{{ s.name }}</a>{% unless forloop.last %} · {% endunless %}{% endunless %}{% endfor %}</p>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": {{ page.title | jsonify }},
+      "description": {{ page.description | jsonify }},
+      "url": {{ page.url | absolute_url | jsonify }},
+      "datePublished": {{ page.published | jsonify }},
+      "dateModified": {{ modified | default: page.published | jsonify }},
+      "author": { "@id": {{ "/#person" | absolute_url | jsonify }}, "name": "Malav Naik" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "FAQPage",
+      "url": {{ page.url | absolute_url | jsonify }},
+      "mainEntity": [{% assign first = true %}{% for t in D.topics %}{% if t.q %}{% assign r = rows | where: "topic", t.id | first %}{% capture a %}{% if r and r.reviewed %}{{ r.summary }}{% else %}{{ t.depends }}{% endif %}{% if r and r.official_url != "" %} Check the official page: {{ r.official_url }}{% else %} Ask a free service such as Citizens Information about your situation.{% endif %}{% endcapture %}{% unless first %},{% endunless %}{% assign first = false %}
+        { "@type": "Question", "name": {{ t.q | replace: "STAMP", S.name | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ a | strip | jsonify }} } }{% endif %}{% endfor %}
+      ]
+    }
+  ]
+}
+</script>

@@ -1,0 +1,5 @@
+{%- comment -%} Sets stamps_live: true once Malav has reviewed at least one row (for include.stamp, or for any stamp).
+Until then the Living in Ireland pages exist but are hidden from Google, the sitemap, llms.txt and the Ireland Guides page. {%- endcomment -%}
+{%- assign stamps_reviewed = site.data.stamps.rows | where: "reviewed", true -%}
+{%- if include.stamp -%}{%- assign stamps_reviewed = stamps_reviewed | where: "stamp", include.stamp -%}{%- endif -%}
+{%- if stamps_reviewed.size > 0 -%}{%- assign stamps_live = true -%}{%- else -%}{%- assign stamps_live = false -%}{%- endif -%}

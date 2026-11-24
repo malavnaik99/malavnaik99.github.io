@@ -1,0 +1,684 @@
+# Living in Ireland: the single source of truth for /living-in-ireland/ and every /living-in-ireland/stamp-<x>/ page.
+#
+# One row per stamp × topic. A row's summary appears on the site ONLY when `reviewed: true` (Malav has checked it
+# against the official page). Unreviewed rows show just the official link, or "official source being added".
+# Every quote must appear word for word on the official page: scripts/stamps_check.py --self-test checks this
+# against the saved copy in data/stamps/snapshots/ and the deploy stops if one doesn't.
+#
+# To mark a row checked:   python3 scripts/stamps_check.py --verify 4/work      (sets reviewed: true and today's date)
+# To refresh the review list for Malav:   python3 scripts/stamps_check.py --review
+#
+# Wording rule: "you may be eligible if… check here", never "you are entitled to" (the self-test enforces it).
+
+stamps:
+  - { id: "0", name: "Stamp 0" }
+  - { id: "1", name: "Stamp 1" }
+  - { id: "1g", name: "Stamp 1G" }
+  - { id: "2", name: "Stamp 2" }
+  - { id: "2a", name: "Stamp 2A" }
+  - { id: "3", name: "Stamp 3" }
+  - { id: "4", name: "Stamp 4" }
+  - { id: "5", name: "Stamp 5" }
+  - { id: "6", name: "Stamp 6" }
+
+# `short` is the table column heading; `q` is the FAQ question (STAMP is replaced by e.g. "Stamp 4"; topics without
+# a `q` get no FAQ entry); `depends` is what the answer depends on, shown when the row isn't reviewed yet (taken from
+# the brief: eligibility usually depends on more than the stamp).
+topics:
+  - id: allows
+    title: "What this stamp allows"
+    short: "Allows"
+  - id: work
+    title: "Working rights"
+    short: "Work"
+    q: "Can I work on STAMP in Ireland?"
+    depends: "It depends on the conditions of your permission and any letter of permission from Immigration Service Delivery."
+  - id: register
+    title: "Registering and renewing (IRP)"
+    short: "Register / renew"
+    q: "How do I register or renew STAMP?"
+    depends: "It depends on your permission. Immigration Service Delivery handles registration and renewals."
+  - id: health
+    title: "Healthcare"
+    short: "Healthcare"
+    q: "Can I use public healthcare on STAMP?"
+    depends: "It depends on more than your stamp, including the conditions of your permission and whether you live here."
+  - id: tax
+    title: "Tax and Revenue (tax credits, emergency tax)"
+    short: "Tax"
+  - id: prsi
+    title: "PRSI-based payments"
+    short: "PRSI payments"
+    q: "Can I get PRSI-based social welfare payments on STAMP?"
+    depends: "It depends on more than your stamp, including your PRSI contributions and the conditions of your permission."
+  - id: means
+    title: "Means-tested payments (Habitual Residence Condition)"
+    short: "Means-tested"
+    q: "Can I get means-tested payments on STAMP?"
+    depends: "It depends on more than your stamp, including the Habitual Residence Condition, a means test and the conditions of your permission."
+  - id: housing
+    title: "Housing"
+    short: "Housing"
+  - id: family
+    title: "Family and dependants"
+    short: "Family"
+  - id: citizenship
+    title: "Does this time count towards citizenship?"
+    short: "Citizenship"
+    q: "Does time on STAMP count towards Irish citizenship?"
+    depends: "It depends on whether your stamp counts as reckonable residence and on the other naturalisation conditions."
+
+# Free personal help. `checked: true` means the address was confirmed to load; others show without a link until then.
+help:
+  - { name: "Citizens Information", url: "https://www.citizensinformation.ie/en/", checked: true }
+  - { name: "Crosscare Migrant Project", url: "https://www.crosscare.ie/", checked: false }
+  - { name: "Migrant Rights Centre Ireland", url: "https://www.mrci.ie/", checked: false }
+
+rows:
+  # ---------------- Stamp 0 ----------------
+  - stamp: "0"
+    topic: allows
+    summary: "Permission to stay in Ireland for a temporary period, subject to conditions: for example, to retire here as a person of independent means, or as a visiting academic."
+    quote:
+      - "Stamp 0 indicates permission to stay in Ireland for a temporary period, subject to conditions."
+      - "Retire to or live in Ireland as a person of independent means"
+      - "Be a visiting academic at an Irish university or college"
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "0"
+    topic: work
+    summary: "You can't work or run a business unless your letter of permission from Immigration Service Delivery says you can."
+    quote:
+      - "You must not work or engage in any business, trade or profession unless specified in a letter of permission from Immigration Service Delivery."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "0"
+    topic: register
+    summary: "You apply for Stamp 0 permission first, using the Stamp 0 application form, and register it at your local immigration office once it's granted."
+    quote:
+      - "Before you can register a Stamp 0 permission at the local immigration office, you must complete the Stamp 0 application form and be granted permission."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "0"
+    topic: health
+    summary: "The Stamp 0 conditions say you must have private medical insurance and cannot use publicly funded services, such as treatment at a public hospital."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services, for example be treated at a public hospital."
+      - "You must have private medical insurance."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "0"
+    topic: prsi
+    summary: "The Stamp 0 conditions say you cannot receive any benefits."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services, for example be treated at a public hospital."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "0"
+    topic: means
+    summary: "The Stamp 0 conditions say you cannot receive any benefits."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services, for example be treated at a public hospital."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 1 ----------------
+  - stamp: "1"
+    topic: allows
+    summary: "Permission to work or run a business in Ireland, subject to conditions. To get it you need a valid employment permit, or a letter from ISD saying you can work without one."
+    quote:
+      - "Stamp 1 indicates permission to work or operate a business in Ireland, subject to conditions."
+      - "In order to obtain a stamp 1 permission, you must hold a valid employment permit, or a letter from ISD stating that you can work without an employment permit."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "1"
+    topic: work
+    summary: "You need an employment permit before you start a job, unless your letter of permission says you don't need one."
+    quote:
+      - "You must not start a job or enter employment unless you or your employer has obtained an employment permit for you, or if your letter of permission clearly states you do not require an employment permit."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "1"
+    topic: register
+    summary: "Register your permission within 90 days (first registrations are at Burgh Quay, Dublin; renewals are online), and renew before your permission and registration expire."
+    quote:
+      - "Once you have a permission to stay in Ireland you must register it with the Irish immigration authorities, known as Immigration Service Delivery (ISD) within 90 days."
+      - "ISD registers first time permissions at Burgh Quay in Dublin. All subsequent permission renewals within the Republic of Ireland are to be applied for online."
+      - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "1"
+    topic: citizenship
+    summary: "Yes, time on Stamp 1 is reckonable residence for citizenship by naturalisation, subject to the other conditions."
+    quote:
+      - "Stamp 1 is reckonable as residence when applying for citizenship by naturalisation."
+      - "The time you accumulate on certain stamps may be used to calculate your reckonable residence (subject to conditions) if you apply for citizenship by naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 1G ----------------
+  - stamp: "1g"
+    topic: allows
+    summary: "Either you've finished your studies here and can look for work under the Third Level Graduate Programme, or you're the spouse or de facto partner of a Critical Skills Employment Permit holder or of a researcher on a Hosting Agreement."
+    quote:
+      - "Stamp 1G indicates you have finished your studies in Ireland and have permission to look for employment here under the Third Level Graduate Programme, subject to conditions."
+      - "Stamp 1G may also be given to spouses or de facto partners of a CSEP holder or of researchers in the State on a Hosting Agreement."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "1g"
+    topic: work
+    summary: "Graduates can work full time but can't run a business or be self-employed. Spouses and partners can work without an employment permit, but also can't run a business or be self-employed."
+    quote:
+      - "You can work full time in accordance with employment law requirements, but you are not permitted to operate a business or be self-employed."
+      - "Stamp 1G allows the holder to take up employment without the need to obtain an employment permit."
+      - "Not permitted to establish or operate a business"
+      - "Not permitted to be self-employed"
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "1g"
+    topic: register
+    summary: "Graduates: granted for 12 months, with a possible further 12 months after a master's degree. Spouses and partners: renew every year, and after 5 years you may apply for Stamp 4."
+    quote:
+      - "Stamp 1G is granted for 12 months only, except for those who have completed a master’s degree programme, when a further 12 months can be provided subject to conditions."
+      - "Renewal of the Stamp 1G registration should be applied for annually, and after 5 years on a Stamp 1G, you may apply for a Stamp 4."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "1g"
+    topic: health
+    summary: "For graduates, ISD says your other conditions stay the same as Stamp 2, which rules out publicly funded services such as public hospitals unless you have an entitlement via other means."
+    quote:
+      - "While on a Stamp 1G, your other permissions and conditions remain the same as for Stamp 2"
+      - "You cannot receive any benefits or use publicly funded services (for example, public hospitals) unless you have an entitlement via other means."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "Applies to Stamp 1G graduates; the page doesn't say the same for spouses and partners."
+  - stamp: "1g"
+    topic: citizenship
+    summary: "Yes, time on Stamp 1G, as a graduate or as a spouse or partner, counts as reckonable residence for citizenship, subject to the other conditions."
+    quote:
+      - "Note: Periods spent on Stamp 1G either as a Graduate Student or a Spouse/de facto partner of a Critical Skills Employment Permit holder or a Spouse/de facto partner of Researchers in the State on Hosting Agreements are considered as reckonable residence for the purpose of making an application for Citizenship/Naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 2 ----------------
+  - stamp: "2"
+    topic: allows
+    summary: "Permission to study a full-time course on the Interim List of Eligible Programmes (ILEP) for a set period, subject to conditions."
+    quote:
+      - "Stamp 2 indicates permission to study a full time course on the official Interim List of Eligible Programmes (ILEP) for a specified period, subject to conditions."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2"
+    topic: work
+    summary: "Casual work up to 20 hours a week during term and 40 hours a week during holidays. You can't run a business."
+    quote:
+      - "You can work in casual employment for a maximum of 20 hours per week during school term and 40 hours per week during holidays."
+      - "You must not engage in any other business or trade."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "The exact holiday dates are on another ISD page not yet added."
+  - stamp: "2"
+    topic: register
+    summary: "Register within 90 days (first registrations are at Burgh Quay, Dublin; renewals are online), and renew before expiry. Students can study here for a maximum of 7 years."
+    quote:
+      - "Once you have a permission to stay in Ireland you must register it with the Irish immigration authorities, known as Immigration Service Delivery (ISD) within 90 days."
+      - "ISD registers first time permissions at Burgh Quay in Dublin. All subsequent permission renewals within the Republic of Ireland are to be applied for online."
+      - "Students can only study in the State for a maximum of 7 years."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2"
+    topic: health
+    summary: "The Stamp 2 conditions say you can't use publicly funded services, such as public hospitals, unless you have an entitlement via other means."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services (for example, public hospitals) unless you have an entitlement via other means."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2"
+    topic: prsi
+    summary: "The Stamp 2 conditions say you can't receive any benefits unless you have an entitlement via other means."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services (for example, public hospitals) unless you have an entitlement via other means."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2"
+    topic: means
+    summary: "The Stamp 2 conditions say you can't receive any benefits unless you have an entitlement via other means."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services (for example, public hospitals) unless you have an entitlement via other means."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2"
+    topic: citizenship
+    summary: "No, time on Stamp 2 does not count as reckonable residence for citizenship."
+    quote:
+      - "Stamp 2 is not reckonable as residence when applying for citizenship by naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 2A ----------------
+  - stamp: "2a"
+    topic: allows
+    summary: "Permission for full-time study in Ireland on a course that is not on the Interim List of Eligible Programmes (ILEP), for a set period."
+    quote:
+      - "Stamp 2A indicates permission for full time study in Ireland for a course that is not on the official Interim List of Eligible Programmes (ILEP), for a specified period."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2a"
+    topic: work
+    summary: "You can't work or run a business."
+    quote:
+      - "You must not work or engage in any business, trade or profession."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2a"
+    topic: register
+    summary: "Register within 90 days (first registrations are at Burgh Quay, Dublin; renewals are online), and renew before your permission and registration expire."
+    quote:
+      - "Once you have a permission to stay in Ireland you must register it with the Irish immigration authorities, known as Immigration Service Delivery (ISD) within 90 days."
+      - "ISD registers first time permissions at Burgh Quay in Dublin. All subsequent permission renewals within the Republic of Ireland are to be applied for online."
+      - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2a"
+    topic: health
+    summary: "The Stamp 2A conditions say you must have private medical insurance and cannot use publicly funded services, such as public hospitals."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services, for example, public hospitals. You must have private medical insurance."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2a"
+    topic: prsi
+    summary: "The Stamp 2A conditions say you cannot receive any benefits."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services, for example, public hospitals."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2a"
+    topic: means
+    summary: "The Stamp 2A conditions say you cannot receive any benefits."
+    quote:
+      - "You cannot receive any benefits or use publicly funded services, for example, public hospitals."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "2a"
+    topic: citizenship
+    summary: "No, time on Stamp 2A does not count as reckonable residence for citizenship."
+    quote:
+      - "Stamp 2A is not reckonable as residence when applying for citizenship by naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 3 ----------------
+  - stamp: "3"
+    topic: allows
+    summary: "Permission to stay in Ireland for a set period, subject to conditions: for example, to volunteer, to be a minister of religion, or to join a non-EEA spouse, civil partner or family member who is here on a work permit."
+    quote:
+      - "Stamp 3 indicates permission to stay in Ireland for a specified period, subject to conditions."
+      - "Volunteer, for example with a charity or non-profit organisation"
+      - "Be a minister of religion"
+      - "Join your non-EEA/EU/Swiss spouse/civil partner or family member who is here based on a work permit."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "3"
+    topic: work
+    summary: "You can't work or run a business."
+    quote:
+      - "You cannot work or engage in any business, trade or profession."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "3"
+    topic: register
+    summary: "Register within 90 days (first registrations are at Burgh Quay, Dublin; renewals are online), and renew before your permission and registration expire."
+    quote:
+      - "Once you have a permission to stay in Ireland you must register it with the Irish immigration authorities, known as Immigration Service Delivery (ISD) within 90 days."
+      - "ISD registers first time permissions at Burgh Quay in Dublin. All subsequent permission renewals within the Republic of Ireland are to be applied for online."
+      - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "3"
+    topic: family
+    summary: "Stamp 3 is one of the permissions given to people joining a non-EEA spouse, civil partner or family member who is here on a work permit."
+    quote:
+      - "Join your non-EEA/EU/Swiss spouse/civil partner or family member who is here based on a work permit."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "3"
+    topic: citizenship
+    summary: "Yes, time on Stamp 3 is reckonable residence for citizenship by naturalisation, subject to the other conditions."
+    quote:
+      - "Stamp 3 is reckonable as residence when applying for citizenship by naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 4 ----------------
+  - stamp: "4"
+    topic: allows
+    summary: "Permission to stay in Ireland for a set period, subject to conditions. It's given, for example, after some years on certain employment permits, to the spouse or partner of an Irish citizen, to refugees, and for long-term residence."
+    quote:
+      - "Stamp 4 indicates permission to stay in Ireland for a specified period, subject to conditions."
+      - "With a valid Critical Skills Employment Permit for 2 years"
+      - "To join and reside with your Irish spouse, civil partner or de-facto partner"
+      - "As a convention or programme refugee, or based on subsidiary protection"
+      - "For Long Term Residence."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "4"
+    topic: work
+    summary: "You can work without an employment permit, work in a profession (subject to that profession's own rules), and set up and run a business."
+    quote:
+      - "You can take up employment and are not required to hold an Employment Permit. You can work in a profession, subject to conditions of the relevant professional or other bodies."
+      - "You can establish and operate a business."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "4"
+    topic: register
+    summary: "Register within 90 days (first registrations are at Burgh Quay, Dublin; renewals are online), and renew before your permission and registration expire."
+    quote:
+      - "Once you have a permission to stay in Ireland you must register it with the Irish immigration authorities, known as Immigration Service Delivery (ISD) within 90 days."
+      - "ISD registers first time permissions at Burgh Quay in Dublin. All subsequent permission renewals within the Republic of Ireland are to be applied for online."
+      - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "4"
+    topic: health
+    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency, so whether you can use a service depends on that service's own rules."
+    quote:
+      - "You may access state funds and services as determined by Government departments or agencies."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "The HSE's own eligibility page should be added here."
+  - stamp: "4"
+    topic: prsi
+    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency. PRSI-based payments have their own conditions, such as your PRSI contributions."
+    quote:
+      - "You may access state funds and services as determined by Government departments or agencies."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "The second sentence comes from the brief, not from this page: add the Department of Social Protection page."
+  - stamp: "4"
+    topic: means
+    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency. Means-tested payments have their own conditions, such as the Habitual Residence Condition and a means test."
+    quote:
+      - "You may access state funds and services as determined by Government departments or agencies."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "The second sentence comes from the brief, not from this page: add the Department of Social Protection page."
+  - stamp: "4"
+    topic: citizenship
+    summary: "Yes, time on Stamp 4 is reckonable residence for citizenship by naturalisation, subject to the other conditions."
+    quote:
+      - "Stamp 4 is reckonable as residence when applying for citizenship by naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 5 ----------------
+  - stamp: "5"
+    topic: allows
+    summary: "Permission to stay in Ireland without a time limit (\"without condition as to time\"), subject to other conditions. It's valid up to the expiry date of your passport."
+    quote:
+      - "Stamp 5 indicates permission to stay in Ireland without change to conditions on the time you can remain here, subject to other conditions."
+      - "The stamp will be valid up to the expiry date on your passport."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "5"
+    topic: register
+    summary: "You apply for Stamp 5 permission first, using the Stamp 5 application form, and register it at your local immigration office once it's granted."
+    quote:
+      - "Before you can register a Stamp 5 permission at the local immigration office, you must complete the Stamp 5 application form and be granted permission."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "5"
+    topic: citizenship
+    summary: "Yes, time on Stamp 5 is reckonable residence for citizenship by naturalisation, subject to the other conditions."
+    quote:
+      - "Stamp 5 is reckonable as residence when applying for citizenship by naturalisation."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+  # ---------------- Stamp 6 ----------------
+  - stamp: "6"
+    topic: allows
+    summary: "Stamp 6 shows you are an Irish citizen with dual citizenship."
+    quote:
+      - "Stamp 6 indicates you are an Irish citizen with dual-citizenship."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "6"
+    topic: register
+    summary: "Stamp 6 holders are dual citizens, so they don't register at the immigration office."
+    quote:
+      - "The holders of this stamp are dual citizens and therefore do not register at the immigration office."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+  - stamp: "6"
+    topic: citizenship
+    summary: "Stamp 6 holders are already Irish citizens."
+    quote:
+      - "Stamp 6 indicates you are an Irish citizen with dual-citizenship."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: ""
+
+# "First 90 days for international students" (Stamp 2 page), in this order. Same rule: a step's details show only when
+# reviewed; until then it shows the step name and its official link (or "official source being added").
+checklist:
+  - stage: "Before you fly"
+    step: "Health insurance"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs the ISD study-requirements page."
+  - stage: "Before you fly"
+    step: "Accommodation, and watch out for rental scams"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs an official rental-scam page (RTB, gov.ie or Citizens Information). The page also links to /rent/."
+  - stage: "Week 1"
+    step: "Student Leap Card"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs the official Student Leap Card page."
+  - stage: "Week 1"
+    step: "Open a bank account"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs Citizens Information's bank account page."
+  - stage: "Week 1"
+    step: "MyGovID"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs the official MyGovID page (gov.ie)."
+  - stage: "After classes start"
+    step: "Book and attend your first IRP registration at Burgh Quay"
+    summary: "Register your permission within 90 days of arrival. First-time registrations are at Burgh Quay in Dublin. If you can't get an appointment in time, keep proof that you tried to book within the 90 days."
+    quote:
+      - "Once you have a permission to stay in Ireland you must register it with the Irish immigration authorities, known as Immigration Service Delivery (ISD) within 90 days."
+      - "ISD registers first time permissions at Burgh Quay in Dublin."
+      - "However, please note that you must be able to demonstrate that you have sought an appointment within this 90 day period and that you have attempted to register as soon as possible."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "ISD says 90 days from having a permission; the brief says 'of arrival'. Check the wording before marking reviewed."
+  - stage: "When you get a job"
+    step: "Get a PPS Number"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs the gov.ie PPS Number page."
+  - stage: "When you get a job"
+    step: "Register your job in Revenue myAccount to avoid emergency tax"
+    summary: ""
+    quote: []
+    official_url: ""
+    source_name: ""
+    last_verified: ""
+    reviewed: false
+    notes: "Needs the Revenue 'starting your first job' page."
+  - stage: "Ongoing"
+    step: "Stamp 2 work-hour limits"
+    summary: "Up to 20 hours a week during term and 40 hours a week during holidays (casual work only)."
+    quote:
+      - "You can work in casual employment for a maximum of 20 hours per week during school term and 40 hours per week during holidays."
+    official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
+    source_name: "Immigration Service Delivery"
+    last_verified: "2026-11-24"
+    reviewed: false
+    notes: "The exact holiday dates are on another ISD page not yet added."

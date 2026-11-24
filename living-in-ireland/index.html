@@ -1,0 +1,39 @@
+---
+layout: default
+title: "Living in Ireland on a Stamp 0, 1, 1G, 2, 3, 4 or 5: what you can do and where to check"
+seo_title: "Irish Immigration Stamps: Where to Check"
+breadcrumb: "Living in Ireland"
+description: "What each Irish immigration stamp (0, 1, 1G, 2, 2A, 3, 4, 5, 6) lets you do, topic by topic, with the official page to check for work, healthcare, tax, social welfare, housing, family and citizenship."
+stamp_guide: true
+wide: true
+---
+{%- comment -%} Built from _data/stamps.yml. A cell shows a short answer only for rows Malav has reviewed. {%- endcomment -%}
+{%- assign D = site.data.stamps -%}
+{%- assign isd = D.rows | where: "topic", "allows" | first -%}
+<div class="prose">
+<p class="label">Ireland Guides</p>
+<h1>{{ page.title }}</h1>
+<p class="lead">A free guide to the official pages to check for each immigration stamp. Your stamp is only part of the answer: whether you can get a payment or service usually also depends on your PRSI contributions, the Habitual Residence Condition, a means test, or the conditions of your permission. That's why this guide points you to the official page to check, rather than telling you what you can get.</p>
+{% include living-notice.html %}
+<p><strong>Which stamp do I have?</strong> It's stated on your Irish Residence Permit (IRP) card, and often stamped in your passport (some permissions aren't). Immigration Service Delivery explains every stamp on its <a href="{{ isd.official_url }}">official stamps page</a>.</p>
+<p>Pick your stamp: {% for s in D.stamps %}<a href="{{ '/living-in-ireland/stamp-' | append: s.id | append: '/' | relative_url }}">{{ s.name }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
+</div>
+
+<h2>Every stamp, every topic</h2>
+<p class="small muted">Each cell links to the official page to check. A short answer appears once it has been checked against that page.</p>
+<div style="overflow-x:auto;margin:1rem 0 2rem" tabindex="0" role="region" aria-label="Stamps and topics table (scrolls sideways)">
+<style>.stamp-table th,.stamp-table a{white-space:nowrap}.stamp-table td{min-width:5.5rem}</style>
+<table class="small stamp-table">
+  <thead><tr><th scope="col">Stamp</th>{% for t in D.topics %}<th scope="col">{{ t.short }}</th>{% endfor %}</tr></thead>
+  <tbody>{% for s in D.stamps %}{% assign rows = D.rows | where: "stamp", s.id %}
+    <tr><th scope="row"><a href="{{ '/living-in-ireland/stamp-' | append: s.id | append: '/' | relative_url }}">{{ s.name }}</a></th>{% for t in D.topics %}{% assign r = rows | where: "topic", t.id | first %}
+      <td>{% if r and r.reviewed %}{{ r.summary | split: ". " | first | remove: "." }}. {% endif %}{% if r and r.official_url != "" %}<a href="{{ r.official_url }}" aria-label="{{ s.name }}, {{ t.title }}: official page">Check ↗</a>{% else %}<span class="muted">—</span>{% endif %}</td>{% endfor %}
+    </tr>{% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="small muted">— means the official source for that cell is still being added: see the stamp's own page, or ask one of the free services below.</p>
+
+<div class="prose">
+{% include living-help.html %}
+</div>
