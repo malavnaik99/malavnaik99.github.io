@@ -1,6 +1,7 @@
 ---
 id: 12
 title: "Prevalence: The Integrity Metric That Asks How Much Harm Users Actually See"
+seo_title: "Prevalence, the Integrity Metric, Explained"
 slug: prevalence-metric-trust-safety
 description: "Why counting removals can mislead, and how prevalence measurement gives a more honest picture of platform safety."
 series: trust-safety

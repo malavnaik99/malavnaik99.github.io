@@ -1,6 +1,7 @@
 ---
 id: 53
 title: "70% of Ireland's Rent Table Is Empty. Here's How I Cleaned It"
+seo_title: "70% of Ireland’s Rent Table Is Empty"
 slug: cleaning-irish-rents-open-data
 description: "How I turned the official Irish rent table (RTB, via the CSO) into one tidy, documented open dataset, and what 18 years of rents show."
 series: data-engineering

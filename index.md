@@ -194,9 +194,8 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
 <section class="section" aria-labelledby="writing-title">
   <p class="label"><b>05</b> / Writing &amp; Automation Lab</p>
   <div class="section-head"><h2 id="writing-title">Latest writing</h2><a href="{{ '/writing/' | relative_url }}">All posts →</a></div>
-  {% if lab %}<p class="botline"><span class="dot" style="background:var(--live)" aria-hidden="true"></span>blog bot · <b>{{ lab.posts_published }}</b> posts published ·{% for p in lab.platforms %} {{ p[0] }} <b>{{ p[1] }}</b>{% unless forloop.last %} ·{% endunless %}{% endfor %} · <b>{{ lab.posts_queued }}</b> queued · updated {{ lab.updated | date: "%-d %b %Y" }}</p>{% endif %}
   <ul class="post-list post-cards">
-    {% for post in site.posts limit: 3 %}<li data-series="{{ post.series }}"><a href="{{ post.url | relative_url }}"><span class="pd">{{ post.date | date: "%-d %b %Y" }}</span><span class="pt">{{ post.title }}</span></a></li>
+    {% for post in site.posts limit: 6 %}<li data-series="{{ post.series }}"><a href="{{ post.url | relative_url }}"><span class="pd">{{ post.date | date: "%-d %b %Y" }}</span><span class="pt">{{ post.title }}</span></a></li>
     {% endfor %}
   </ul>
 </section>

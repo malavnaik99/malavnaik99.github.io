@@ -1,6 +1,7 @@
 ---
 id: 13
 title: "Measuring LLM Hallucinations: A Simple Evaluation Harness You Can Build in an Afternoon"
+seo_title: "Measuring LLM Hallucinations: A Simple Harness"
 slug: measuring-llm-hallucinations
 description: "A minimal Python harness for checking whether an LLM's answers are supported by the context you gave it."
 series: genai

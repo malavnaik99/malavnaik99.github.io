@@ -1,6 +1,7 @@
 ---
 id: 7
 title: "The Data Quality Checks That Catch Problems Before Your Users Do"
+seo_title: "Data Quality Checks That Catch Problems Early"
 slug: data-quality-monitoring-checks
 description: "Six simple, automatable checks that stop bad data reaching dashboards, with SQL you can adapt."
 series: data-engineering

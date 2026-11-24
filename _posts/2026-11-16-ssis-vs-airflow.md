@@ -1,6 +1,7 @@
 ---
 id: 10
 title: "Five Years of SSIS Pipelines: What I'd Build Differently Today (and What Airflow Got Right)"
+seo_title: "SSIS vs Airflow: Lessons From Five Years"
 slug: ssis-vs-airflow
 description: "Comparing the GUI-first ETL world of SSIS with code-first orchestration, from someone who has run production pipelines in both mindsets."
 series: data-engineering

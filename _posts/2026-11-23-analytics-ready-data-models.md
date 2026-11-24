@@ -1,6 +1,7 @@
 ---
 id: 14
 title: "Designing Analytics-Ready Data Models: Star Schema Lessons from Financial Data"
+seo_title: "Star Schema Lessons From Financial Data"
 slug: analytics-ready-data-models
 description: "Practical dimensional modelling advice for analysts and engineers who want dashboards that are fast, correct and easy to extend."
 series: data-engineering

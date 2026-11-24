@@ -25,6 +25,10 @@ permalink: /llms.txt
 - [Irish Rent Reality Check]({{ '/rent/' | absolute_url }}): free tool showing the average new rent in every Irish county, town and Dublin district since 2008 (official RTB data via the CSO), its share of typical take-home pay, and which areas fit a budget; plus one page per county, e.g. [Rent in Galway]({{ '/rent/galway/' | absolute_url }}).
 - [Résumé]({{ '/resume/' | absolute_url }}): experience, education and skills, with a PDF download.
 
+## Latest posts
+{% for post in site.posts limit: 6 %}
+- [{{ post.title }}]({{ post.url | absolute_url }}): {{ post.description }}{% endfor %}
+
 ## Blog series
 {% for s in site.data.series %}
 - [{{ s.name }}]({{ '/blog/series/' | append: s.id | append: '/' | absolute_url }}): {{ s.description }}{% endfor %}

@@ -1,6 +1,7 @@
 ---
 id: 52
 title: "I Built a Search Tool for the EU Digital Services Act, and Tested It First"
+seo_title: "A Search Tool for the EU Digital Services Act"
 slug: searching-the-eu-digital-services-act
 description: "How I turned the EU Digital Services Act into a free, in-browser search tool that quotes and links the law, and how I measured keyword, semantic and hybrid search on 25 test questions."
 series: trust-safety

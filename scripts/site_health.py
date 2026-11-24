@@ -55,6 +55,13 @@ def page_title(body):
     return html.unescape(m.group(1).strip()) if m else ""
 
 
+def title_ok(url, page, full):
+    """Home and About carry the full branding title; every other page is "<page> | Malav Naik"."""
+    if url.rstrip("/") in (SITE, SITE + "/about"):
+        return full in page
+    return page.endswith(" | Malav Naik") and len(page) > len(" | Malav Naik")
+
+
 def has_person(body):
     for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', body, re.S):
         try:
@@ -98,8 +105,9 @@ def check_titles():
         if status != 200:
             problems.append(f"{url} answered {status}.")
             continue
-        if title not in page_title(body):
-            problems.append(f"{url}: title is \"{page_title(body) or '(none)'}\" and doesn't contain \"{title}\".")
+        if not title_ok(url, page_title(body), title):
+            want = f'"{title}"' if url.rstrip("/") in (SITE, SITE + "/about") else '"<page> | Malav Naik"'
+            problems.append(f"{url}: title is \"{page_title(body) or '(none)'}\" but should be {want}.")
         if not has_person(body):
             problems.append(f"{url}: the Person profile data (JSON-LD) is missing or broken.")
     return problems
@@ -288,6 +296,10 @@ def main(only=None):
 
 def self_test():
     assert page_title("<html><title>A &amp; B</title></html>") == "A & B"
+    full = "Malav Naik | Data & GenAI Engineer | Dublin, Ireland"
+    assert title_ok(SITE + "/", full, full) and title_ok(SITE + "/about/", full, full)
+    assert not title_ok(SITE + "/about/", "About | Malav Naik", full)
+    assert title_ok(SITE + "/rent/", "Irish Rent Reality Check | Malav Naik", full) and not title_ok(SITE + "/rent/", " | Malav Naik", full)
     assert has_person('<script type="application/ld+json">{"@graph":[{"@type":"Person"}]}</script>')
     assert not has_person('<script type="application/ld+json">{broken</script>')
     assert not is_client_word("meta") and not is_client_word("Metadata") and not is_client_word("Data")
