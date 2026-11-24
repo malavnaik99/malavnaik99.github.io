@@ -4,7 +4,8 @@
 # 2. If ANY check fails: nothing is saved, the live site keeps the old data, this run goes red (GitHub emails you)
 #    and an issue "Rent tool: weekly refresh failed" explains what broke. It closes itself after the next good run.
 # 3. If the data changed: commits it to main and starts "Deploy site to Pages" (a bot's push doesn't start it by itself).
-# 4. In a new year it also opens "Rent tool: update the tax rates" (the data still refreshes).
+# 4. New figures also start "Share kit", which prepares an r/irishpersonalfinance draft (it never posts).
+# 5. In a new year it also opens "Rent tool: update the tax rates" (the data still refreshes).
 name: Rent tool refresh
 
 on:
@@ -52,6 +53,7 @@ jobs:
           git commit -m "Rent tool: new CSO data (latest $latest)"
           git push origin HEAD:main
           gh workflow run static.yml --ref main
+          gh workflow run share-kit.yml --ref main -f kind=rent  # a Reddit draft, only if the CSO period is new
           echo "Published new data (latest $latest) and started the deploy."
 
       - name: Close the failure issue after a good run

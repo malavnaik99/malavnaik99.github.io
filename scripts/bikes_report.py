@@ -150,14 +150,15 @@ def compute(con, month, start, end):
     }
 
 
-def chart(r, path):
+def chart(r, path, size=(8, 4.5), dpi=100, corner=None):
+    """The hour-of-day chart. The share kit draws it at 1200x630 (size=(8, 4.2), dpi=150) with the site address in `corner`."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     hours = [x["local_hour"] for x in r["by_local_hour"]]
     vals = [x["avg_estimated_pickups"] for x in r["by_local_hour"]]
     b = r["busiest_hour"]
-    fig, ax = plt.subplots(figsize=(8, 4.5), dpi=100)
+    fig, ax = plt.subplots(figsize=size, dpi=dpi)
     fig.patch.set_facecolor("white")
     ax.bar(hours, vals, width=0.8, color=["#2a78d6" if h == b["local_hour"] else "#9cc3ee" for h in hours])
     ax.annotate(f"{b['label']}: {b['avg_estimated_pickups']}", (b["local_hour"], b["avg_estimated_pickups"]),
@@ -174,6 +175,8 @@ def chart(r, path):
     fig.suptitle(f"Dublin Bikes, {r['period']['label']}: when are bikes picked up?", x=0.06, ha="left", fontsize=14, fontweight="bold", color="#0b0b0b")
     ax.set_title("Average estimated pickups across all stations, by hour of day (Dublin time)", loc="left", fontsize=10, color="#52514e")
     fig.text(0.06, 0.02, CREDIT, fontsize=9, color="#52514e")
+    if corner:
+        fig.text(0.97, 0.02, corner, fontsize=9, color="#52514e", ha="right")
     fig.subplots_adjust(left=0.1, right=0.97, top=0.84, bottom=0.14)
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, facecolor="white")

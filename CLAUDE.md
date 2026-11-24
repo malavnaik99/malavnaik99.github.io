@@ -57,3 +57,7 @@ Never do
 * Never add paid tools, API keys or secrets to the repo.
 * Never invent achievements, numbers, testimonials or reviews.
 * Never create accounts or post on my behalf. Prepare the text; I post it.
+
+Shortcuts
+
+* "mark <stamp>/<topic> verified" (e.g. "mark 4/work verified"): run `python3 scripts/stamps_check.py --verify 4/work`, then commit. It sets `reviewed: true` and today's date for that row in `_data/stamps.yml` and refreshes `REVIEW-living-in-ireland.md`.

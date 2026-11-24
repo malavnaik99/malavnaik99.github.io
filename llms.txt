@@ -22,9 +22,11 @@ permalink: /llms.txt
 - [Work]({{ '/work/' | absolute_url }}): {{ site.projects.size }} public projects, each with the problem, approach, measured result and code.
 - [Labs]({{ '/labs/' | absolute_url }}): three sandboxes that run in the browser (moderation threshold, keyword vs vector search over the EU Digital Services Act, SQL over the Dublin bikes tables), each with a shareable link.
 - [Writing]({{ '/writing/' | absolute_url }}): all blog posts, filterable by series.
+- [Ireland Guides]({{ '/ireland-guides/' | absolute_url }}): his free guides to living in Ireland, built from official and open data (listed below).
 - [Irish Rent Reality Check]({{ '/rent/' | absolute_url }}): free tool showing the average new rent in every Irish county, town and Dublin district since 2008 (official RTB data via the CSO), its share of typical take-home pay, and which areas fit a budget; plus one page per county, e.g. [Rent in Galway]({{ '/rent/galway/' | absolute_url }}).
 - [Dublin Bikes statistics]({{ '/dublin-bikes/' | absolute_url }}): living monthly statistics from his open bikes and weather pipeline: estimated pickups per month, busiest and quietest stations, pickups by hour of day and the effect of rain, with the open data on Hugging Face.
-- [Résumé]({{ '/resume/' | absolute_url }}): experience, education and skills, with a PDF download.
+{% include stamps-live.html %}{% if stamps_live %}- [Living in Ireland]({{ '/living-in-ireland/' | absolute_url }}): for each Irish immigration stamp (0, 1, 1G, 2, 2A, 3, 4, 5, 6), what it allows and the official page to check for work, healthcare, tax, social welfare, housing, family and citizenship; one page per stamp, e.g. [Stamp 2]({{ '/living-in-ireland/stamp-2/' | absolute_url }}).
+{% endif %}- [Résumé]({{ '/resume/' | absolute_url }}): experience, education and skills, with a PDF download.
 
 ## Latest posts
 {% for post in site.posts limit: 6 %}

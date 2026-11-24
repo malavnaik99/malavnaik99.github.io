@@ -1,5 +1,7 @@
 # Builds last month's "Dublin Bikes in numbers" draft (JSON in _data/bikes/, chart, post in _drafts/) and opens a PR.
 # It never publishes: the post stays a draft until someone moves it to _posts/ and merges.
+# If it fails, the run goes red (GitHub emails you) and the issue "Dublin Bikes report: monthly run failed" says what
+# broke and what to do. Nothing is changed on the site. The issue closes itself after the next good run.
 name: Dublin Bikes monthly report
 
 on:
@@ -14,6 +16,10 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
+
+env:
+  FAIL_TITLE: "Dublin Bikes report: monthly run failed"
 
 jobs:
   report:
@@ -31,7 +37,8 @@ jobs:
         run: |
           month="${MONTH:-$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)}"
           echo "MONTH=$month" >> "$GITHUB_ENV"
-          python scripts/bikes_report.py --month "$month"
+          set -o pipefail
+          python scripts/bikes_report.py --month "$month" 2>&1 | tee build.log
       - name: Open a PR
         env:
           GH_TOKEN: ${{ github.token }}
@@ -46,3 +53,30 @@ jobs:
           gh pr view "$branch" > /dev/null 2>&1 || gh pr create --base main --head "$branch" \
             --title "Dublin Bikes in numbers: $MONTH (draft)" \
             --body "Automated monthly report. Every number in the draft comes from \`_data/bikes/$MONTH.json\`. Merging updates the /dublin-bikes/ statistics page straight away; the post itself is in \`_drafts/\`, so merging does not publish it."
+      - name: Close the failure issue after a good run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq ".[] | select(.title == \"$FAIL_TITLE\") | .number"); do
+            gh issue close "$n" --comment "Fixed: the monthly report ran successfully on $(date -u +%Y-%m-%d) ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."
+          done
+      - name: Report the failure as an issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "**What happened:** the monthly Dublin Bikes report for ${MONTH:-last month} failed on $(date -u +%Y-%m-%d). **The live site is fine:** nothing was changed, and /dublin-bikes/ keeps showing the last good month."
+            echo
+            echo "**The last lines of the run:**"
+            echo '```'
+            tail -n 15 build.log 2>/dev/null || echo "(no log: the run stopped before the report step; open the run link below)"
+            echo '```'
+            echo "**What to do:**"
+            echo "1. If the log mentions Hugging Face, a timeout or a network error, the data source was briefly down: wait a day, then press **Actions → Dublin Bikes monthly report → Run workflow** (leave the month empty)."
+            echo "2. If it says there is no data, or too little, for the month, check the pipeline's Hugging Face datasets were updated (huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw)."
+            echo "3. Otherwise open Claude Code on this repo and paste this issue."
+            echo
+            echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. This issue closes itself after the next successful run."
+          } > issue.md
+          n=$(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq "map(select(.title == \"$FAIL_TITLE\")) | .[0].number // empty")
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file issue.md; else gh issue create --title "$FAIL_TITLE" --body-file issue.md; fi

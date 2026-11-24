@@ -1,0 +1,8 @@
+<section aria-labelledby="free-help" style="border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;margin:2rem 0">
+  <h2 id="free-help" style="margin-top:0">Get free personal help</h2>
+  <p>These free services can look at your own situation:</p>
+  <ul>{% for h in site.data.stamps.help %}
+    <li>{% if h.checked %}<a href="{{ h.url }}">{{ h.name }}</a>{% else %}{{ h.name }}{% endif %}</li>{% endfor %}
+  </ul>
+  <p class="small muted">Spotted a mistake or an out-of-date link? <a href="{{ '/contact/' | relative_url }}">Report an error</a>.</p>
+</section>

@@ -7,6 +7,8 @@
   {%- comment -%} jekyll-seo-tag's own JSON-LD is cut off here; _includes/schema.html writes the structured data instead. {%- endcomment -%}
   {%- comment -%} <title> is written here, not by the plugin: the full branding title on the home and About pages, "<page> | Malav Naik" elsewhere (short enough not to be cut off in Google). A post can set seo_title for a shorter tab/Google title. {%- endcomment %}
   <title>{% if page.url == "/" or page.url == "/about/" %}{{ site.title | escape }}{% else %}{{ page.seo_title | default: page.title | escape }} | Malav Naik{% endif %}</title>
+  {%- comment -%} Living in Ireland pages stay out of Google until at least one of their rows has been reviewed. {%- endcomment %}
+  {% if page.stamp_guide %}{% include stamps-live.html stamp=page.stamp %}{% unless stamps_live %}<meta name="robots" content="noindex">{% endunless %}{% endif %}
   {% capture seo_tags %}{% seo title=false %}{% endcapture %}{% assign seo_tags = seo_tags | split: '<script type="application/ld+json">' | first %}
   {%- comment -%} The plugin runs site.title through Markdown, which reads "A | B" as a table and drops the pipe (same filters as jekyll-seo-tag 2.8); put the real title back. {%- endcomment -%}
   {% assign mangled = site.title | markdownify | strip_html | normalize_whitespace | escape_once %}{% assign seo_title = site.title | escape_once %}{% assign seo_tags = seo_tags | replace: mangled, seo_title %}{{ seo_tags }}
@@ -36,9 +38,9 @@
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
         {%- comment -%} Toolkit and Journey stay on the home page (/#toolkit, /#journey still work); they are no longer menu items. {%- endcomment %}
-        {% assign nav = "/work/|Work,/labs/|Labs,/writing/|Writing,/about/|About" | split: "," %}
+        {% assign nav = "/work/|Work,/labs/|Labs,/writing/|Writing,/ireland-guides/|Ireland Guides,/about/|About" | split: "," %}
         {% for item in nav %}{% assign p = item | split: "|" %}{% assign cur = false %}
-          {% if page.url == p[0] %}{% assign cur = true %}{% elsif p[0] == "/work/" and page.collection == "projects" %}{% assign cur = true %}{% elsif p[0] == "/writing/" and page.url contains "/blog/" %}{% assign cur = true %}{% endif %}
+          {% if page.url == p[0] %}{% assign cur = true %}{% elsif p[0] == "/work/" and page.collection == "projects" %}{% assign cur = true %}{% elsif p[0] == "/writing/" and page.url contains "/blog/" %}{% assign cur = true %}{% elsif p[0] == "/ireland-guides/" %}{% assign sect = page.url | split: "/" %}{% if sect[1] == "rent" or sect[1] == "dublin-bikes" or sect[1] == "living-in-ireland" %}{% assign cur = true %}{% endif %}{% endif %}
           <li><a href="{{ p[0] | relative_url }}"{% if cur %} aria-current="page"{% endif %}>{{ p[1] }}</a></li>
         {% endfor %}
           <li class="nav-resume"><a href="{{ '/resume/' | relative_url }}">Résumé</a></li>

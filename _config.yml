@@ -19,6 +19,8 @@ exclude:
   - backlinks/
   - docs/
   - seo/          # private SEO notes and outreach drafts, never published
+  - REVIEW-living-in-ireland.md   # Malav's review list for the Living in Ireland guide, never published
+  - share-kits/   # monthly Reddit and email drafts (scripts/share_kit.py), never published
 collections:
   projects:
     output: true

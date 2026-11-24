@@ -322,7 +322,7 @@ def summary(out, meta):
     for k, r in enumerate(rows, 1):
         r["rank"] = k
     return {"latest_period": P[-1], "latest_label": when(P[-1]), "year": P[-1][:4],
-            "data_updated": nice_date(meta.get("cso_updated") or meta["last_updated"]), "site_changed": nice_date(meta["last_updated"]),
+            "data_updated": nice_date(meta.get("cso_updated") or meta["last_updated"]), "data_updated_iso": meta.get("cso_updated") or meta["last_updated"], "site_changed": nice_date(meta["last_updated"]),
             "earnings_year": inc["year"], "tax_year": inc["tax_year"],
             "median_rent": round(statistics.median(r["rent"] for r in rows)),
             "median_eur": f"€{round(statistics.median(r['rent'] for r in rows)):,}", "counties": rows}
@@ -339,7 +339,8 @@ def county_page(c, out, meta, summ):
     nbrs = sorted((by[n] for n in NEIGHBOURS[c]), key=lambda r: (-r["rent"], r["name"]))
     close = min(nbrs, key=lambda r: (abs(r["rent"] - now), r["name"]))  # the most interesting "is it cheaper than…"
     source = (f'Data last updated: {summ["data_updated"]} · Source: RTB via CSO (<a href="https://data.cso.ie/table/RIH02">RIH02</a>), '
-              f'earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>)')
+              f'earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>) · '
+              f'Licence <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>')
 
     # ---- FAQ: every answer is worked out from the data above ----
     faq = [(f"What is the average rent in {c}?",

@@ -1,0 +1,105 @@
+# Prepares a "share kit" (Reddit posts, email pitch, chart) and opens an issue with it. It NEVER posts anything.
+#
+# - Dublin Bikes: runs when a "Dublin Bikes in numbers" post is published (a file added to _posts/ on main).
+# - Rent: started by "Rent tool refresh" after it publishes new data; makes a kit only if the CSO period is new.
+# - By hand: Actions → Share kit → Run workflow (choose bikes or rent; tick "force" to redo a rent kit).
+# Files go to share-kits/YYYY-MM/ (not published on the site). If it fails, the run goes red (GitHub emails you) and the
+# issue "Share kit: could not be prepared" explains what to do; it closes itself after the next good run.
+name: Share kit
+
+on:
+  push:
+    branches: [main]
+    paths: ["_posts/*dublin-bikes-in-numbers-*.md"]
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: "bikes or rent"
+        type: choice
+        options: [bikes, rent]
+        default: bikes
+      month:
+        description: "bikes only: edition month, YYYY-MM (default: the newest published edition)"
+        required: false
+      force:
+        description: "rent only: make a kit even if these figures already had one"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write  # save the kit to share-kits/
+  issues: write    # open the "Share kit ready" issue
+
+concurrency:
+  group: share-kit
+  cancel-in-progress: false
+
+env:
+  FAIL_TITLE: "Share kit: could not be prepared"
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  kit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q duckdb matplotlib pyyaml pillow
+      - run: python scripts/share_kit.py --self-test
+      - name: Write the kit
+        shell: bash
+        env:
+          KIND: ${{ inputs.kind || 'bikes' }}
+          MONTH: ${{ inputs.month }}
+          FORCE: ${{ inputs.force && '--force' || '' }}
+        run: |
+          set -o pipefail
+          if [ "$KIND" = rent ]; then python scripts/share_kit.py rent $FORCE 2>&1 | tee build.log
+          else python scripts/share_kit.py bikes ${MONTH:+--month "$MONTH"} 2>&1 | tee build.log; fi
+      - name: Save the kit and open the issue
+        shell: bash
+        run: |
+          [ -f share-kits/.issue.md ] || { echo "Nothing new to share."; exit 0; }
+          title=$(head -n 1 share-kits/.issue.md)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add share-kits
+          if ! git diff --cached --quiet; then
+            git commit -qm "$title"
+            git pull -q --rebase origin main
+            git push -q origin HEAD:main
+          fi
+          # One issue per kit: if it already exists (open or closed), don't open another.
+          found=$(gh issue list --state all --search "in:title \"$title\"" --json title --jq "map(select(.title == \"$title\")) | length")
+          if [ "${found:-0}" != "0" ]; then echo "Issue \"$title\" already exists."; exit 0; fi
+          tail -n +2 share-kits/.issue.md > issue.md
+          gh issue create --title "$title" --body-file issue.md
+      - name: Close the failure issue after a good run
+        shell: bash
+        run: |
+          for n in $(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq ".[] | select(.title == \"$FAIL_TITLE\") | .number"); do
+            gh issue close "$n" --comment "Fixed: the share kit was prepared on $(date -u +%Y-%m-%d)."
+          done
+      - name: Report the failure as an issue
+        if: failure()
+        shell: bash
+        run: |
+          { echo "**What happened:** the share kit (ready-to-post texts and chart) could not be prepared on $(date -u +%Y-%m-%d). **Nothing was posted anywhere, and the live site is unaffected.**"
+            echo
+            echo "**The last lines of the run:**"
+            echo '```'
+            tail -n 15 build.log 2>/dev/null || echo "(no log: the run stopped before the kit step; open the run link below)"
+            echo '```'
+            echo "**What to do:**"
+            echo "1. If it says \"No published edition\", the post isn't in \`_posts/\` yet: publish it first (MAINTENANCE.md, \"/dublin-bikes/ still shows last month\"), and the kit follows by itself."
+            echo "2. If it's a network or install error, press **Actions → Share kit → Run workflow** to try again."
+            echo "3. Otherwise open Claude Code on this repo and paste this issue."
+            echo
+            echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. This issue closes itself after the next good run."
+          } > fail.md
+          n=$(gh issue list --state open --search "in:title \"$FAIL_TITLE\"" --json number,title --jq "map(select(.title == \"$FAIL_TITLE\")) | .[0].number // empty")
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file fail.md; else gh issue create --title "$FAIL_TITLE" --body-file fail.md; fi
