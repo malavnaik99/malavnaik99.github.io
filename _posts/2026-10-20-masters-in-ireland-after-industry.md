@@ -1,6 +1,7 @@
 ---
 id: 5
 title: "A Master's in Ireland After Nine Years in Data"
+seo_title: "A Master’s in Ireland After Nine Years in Data"
 slug: masters-in-ireland-after-industry
 description: "Going back to university as an experienced data professional: what was worth it, what surprised me, and advice for anyone considering it."
 series: career

@@ -1,4 +1,4 @@
-# Builds last month's "Dublin Bikes in numbers" draft (JSON, chart, post in _drafts/) and opens a PR.
+# Builds last month's "Dublin Bikes in numbers" draft (JSON in _data/bikes/, chart, post in _drafts/) and opens a PR.
 # It never publishes: the post stays a draft until someone moves it to _posts/ and merges.
 name: Dublin Bikes monthly report
 
@@ -40,9 +40,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B "$branch"
-          git add "scripts/bikes_report_$MONTH.json" "images/bikes-report/$MONTH.png" "_drafts/dublin-bikes-in-numbers-$MONTH.md"
+          git add "_data/bikes/$MONTH.json" "images/bikes-report/$MONTH.png" "_drafts/dublin-bikes-in-numbers-$MONTH.md" dublin-bikes/index.html
           git commit -m "Dublin Bikes in numbers: $MONTH draft"
           git push --force -u origin "$branch"
           gh pr view "$branch" > /dev/null 2>&1 || gh pr create --base main --head "$branch" \
             --title "Dublin Bikes in numbers: $MONTH (draft)" \
-            --body "Automated monthly report. Every number in the draft comes from \`scripts/bikes_report_$MONTH.json\`. The post is in \`_drafts/\`, so merging does not publish it."
+            --body "Automated monthly report. Every number in the draft comes from \`_data/bikes/$MONTH.json\`. Merging updates the /dublin-bikes/ statistics page straight away; the post itself is in \`_drafts/\`, so merging does not publish it."

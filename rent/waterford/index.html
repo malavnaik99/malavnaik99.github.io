@@ -1,14 +1,18 @@
 ---
 # Written by scripts/rent_build.py from data/rent/rents.json. Don't edit by hand: changes are overwritten on the next refresh.
 layout: default
-title: "Rent in Waterford: average €1,266 a month (2025)"
-description: "The average new rent in County Waterford is €1,266 a month (July–December 2025), up 117% in 10 years. Rents for every town and area in Waterford, by bedrooms, from official RTB data."
+title: "Average Rent in Waterford 2025: €1,266/month"
+description: "The average new rent in County Waterford is €1,266 a month (July–December 2025), up €120 on a year. By bedrooms, property type and town, rent vs pay, neighbouring counties and FAQs, from official RTB data."
 rent_county: "Waterford"
 image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent Reality Check at malavnaik.com/rent" }
+dataset: {"name": "Average monthly rent of new tenancies in County Waterford, 2008–2025", "description": "The Residential Tenancies Board's average monthly rent for new tenancies in County Waterford and its towns, by bedrooms and property type, every half-year since 2008, published by the CSO in table RIH02.", "url": "https://data.cso.ie/table/RIH02", "license": "https://creativecommons.org/licenses/by/4.0/", "place": "County Waterford, Ireland", "keywords": ["rent", "Waterford", "Ireland", "RTB", "CSO", "housing"], "sources": ["https://data.cso.ie/table/RIH02", "https://data.cso.ie/table/DEA05"], "creator": "Residential Tenancies Board (RTB), published by the Central Statistics Office (CSO)"}
+faq: [{"q": "What is the average rent in Waterford?", "a": "€1,266 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO)."}, {"q": "Is rent going up in Waterford?", "a": "Yes: the average new rent is up €120 (10%) on a year earlier, and up €683 (117%) on ten years earlier."}, {"q": "Is Waterford cheaper than Kilkenny?", "a": "No. The average new rent is €1,266 a month in Waterford and €1,216 in Kilkenny, so Waterford is €50 a month dearer (July–December 2025)."}, {"q": "What salary do I need to rent in Waterford?", "a": "About €71,000 a year before tax, for one person paying the average new rent of €1,266 a month. That keeps rent to 30% of take-home pay, a common budgeting rule of thumb (estimated at 2026 Irish tax rates for a single PAYE employee)."}, {"q": "How much of a typical wage goes on rent in Waterford?", "a": "About 47%. Median pay in Co. Waterford is €730.77 a week before tax (2025, CSO), roughly €2,673 a month after tax, and the average new rent is €1,266 a month."}]
 ---
 <p class="eyebrow"><a href="/rent/">Irish Rent Reality Check</a> / Waterford</p>
-<h1>Rent in Waterford</h1>
-<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County Waterford was <strong>€1,266</strong> in July–December 2025, for all homes. That is up €120 (10%) on a year earlier, and up €683 (117%) on ten years earlier. Waterford is the 11th most expensive of Ireland's 26 counties for new rents. On typical pay in Co. Waterford, that rent takes about 47% of take-home pay.</p>
+<h1>Average rent in Waterford (2025)</h1>
+<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County Waterford was <strong>€1,266</strong> in July–December 2025, up €120 (10%) on a year earlier.</p>
+<p class="small muted">Data last updated: 14 May 2026 · Source: RTB via CSO (<a href="https://data.cso.ie/table/RIH02">RIH02</a>), earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>)</p>
+<p style="max-width:46rem">Waterford is the 11th most expensive of Ireland's 26 counties for new rents, and rents are up €683 (117%) on ten years earlier. On typical pay in Co. Waterford, the average rent takes about 47% of take-home pay.</p>
 <p><a class="btn btn-accent" href="/rent/?area=waterford">Explore Waterford in the rent tool</a></p>
 
 <section class="card" style="margin:1.5rem 0" aria-labelledby="beds-title">
@@ -17,12 +21,42 @@ image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent R
   <p class="small muted">– means the RTB published no average: too few new tenancies were registered.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="types-title">
+  <h2 id="types-title">By property type, July–December 2025</h2>
+  <table><thead><tr><th scope="col">Property type</th><th scope="col">Average monthly rent</th></tr></thead><tbody><tr><td>Apartment</td><td>€1,156</td></tr><tr><td>Detached house</td><td>€1,349</td></tr><tr><td>Semi-detached house</td><td>€1,419</td></tr><tr><td>Terraced house</td><td>€1,208</td></tr><tr><td>Other flats</td><td>–</td></tr></tbody></table>
+  <p class="small muted">All bedroom counts. – means the RTB published no average for that type.</p>
+</section>
+
 <section class="card" style="margin:1.5rem 0" aria-labelledby="areas-title">
   <h2 id="areas-title">Towns and areas in Waterford, all homes</h2>
   <div style="overflow-x:auto"><table><thead><tr><th scope="col">Area</th><th scope="col">Average monthly rent</th><th scope="col">Half-year</th></tr></thead><tbody><tr><td><a href="/rent/?area=templars-hall-waterford">Templars Hall, Waterford</a></td><td>€1,769</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=dunmore-road-waterford">Dunmore Road, Waterford</a></td><td>€1,478</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=cork-road-waterford">Cork Road, Waterford</a></td><td>€1,465</td><td>July–December 2023</td></tr><tr><td><a href="/rent/?area=waterford-city">Waterford City</a></td><td>€1,344</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=dunmore-east-waterford">Dunmore East, Waterford</a></td><td>€1,343</td><td>July–December 2024</td></tr><tr><td><a href="/rent/?area=inner-ring-road-waterford">Inner Ring Road, Waterford</a></td><td>€1,305</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=tramore-waterford">Tramore, Waterford</a></td><td>€1,283</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=dungarvan-waterford">Dungarvan, Waterford</a></td><td>€1,230</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=penrose-lane-waterford">Penrose Lane, Waterford</a></td><td>€1,048</td><td>July–December 2023</td></tr><tr><td><a href="/rent/?area=lismore-waterford">Lismore, Waterford</a></td><td>€971</td><td>July–December 2023</td></tr><tr><td><a href="/rent/?area=poleberry-waterford">Poleberry, Waterford</a></td><td>€945</td><td>July–December 2023</td></tr><tr><td><a href="/rent/?area=johns-hill-waterford">Johns Hill, Waterford</a></td><td>€909</td><td>July–December 2024</td></tr><tr><td><a href="/rent/?area=portlaw-waterford">Portlaw, Waterford</a></td><td>€860</td><td>July–December 2023</td></tr></tbody></table></div>
   <p class="small muted">Most expensive first. Areas without a published figure since July–December 2023 are left out.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="pay-title">
+  <h2 id="pay-title">Rent vs pay in Waterford</h2>
+  <table><tbody>
+    <tr><th scope="row">Median weekly pay, before tax (2025)</th><td>€730.77</td></tr>
+    <tr><th scope="row">Estimated take-home pay a month</th><td>€2,673</td></tr>
+    <tr><th scope="row">Average new rent a month</th><td>€1,266</td></tr>
+    <tr><th scope="row">Share of take-home pay on rent</th><td>47%</td></tr>
+    <tr><th scope="row">Pay needed to keep rent to 30% of take-home</th><td>about €71,000 a year</td></tr>
+  </tbody></table>
+  <p class="small muted">One person on the county's median pay, after income tax, USC and PRSI at 2026 rates (single PAYE employee). An estimate, not tax advice.</p>
+</section>
+
+<section class="card" style="margin:1.5rem 0" aria-labelledby="compare-title">
+  <h2 id="compare-title">How Waterford compares</h2>
+  <p>At €1,266 a month, Waterford's average new rent is €53 (4%) above the middle county's (€1,213: half of Ireland's 26 counties are dearer, half cheaper). The CSO's average-rent tables don't include a national figure, so this compares with the middle county instead. Neighbouring counties:</p>
+  <div style="overflow-x:auto"><table><thead><tr><th scope="col">County</th><th scope="col">Average monthly rent</th><th scope="col">Change on a year</th><th scope="col">Share of take-home pay</th></tr></thead><tbody><tr><td><a href="/rent/cork/">Cork</a></td><td>€1,558</td><td>+9%</td><td>54%</td></tr><tr><td><strong>Waterford</strong></td><td>€1,266</td><td>+10%</td><td>47%</td></tr><tr><td><a href="/rent/kilkenny/">Kilkenny</a></td><td>€1,216</td><td>+8%</td><td>44%</td></tr><tr><td><a href="/rent/wexford/">Wexford</a></td><td>€1,192</td><td>+7%</td><td>47%</td></tr><tr><td><a href="/rent/tipperary/">Tipperary</a></td><td>€1,092</td><td>+11%</td><td>41%</td></tr></tbody></table></div>
+  <p class="small muted">July–December 2025. <a href="/rent/#counties-title">All 26 counties</a>.</p>
+</section>
+
+<section style="margin:1.5rem 0" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently asked questions</h2>
+  <h3>What is the average rent in Waterford?</h3><p>€1,266 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO).</p><h3>Is rent going up in Waterford?</h3><p>Yes: the average new rent is up €120 (10%) on a year earlier, and up €683 (117%) on ten years earlier.</p><h3>Is Waterford cheaper than Kilkenny?</h3><p>No. The average new rent is €1,266 a month in Waterford and €1,216 in Kilkenny, so Waterford is €50 a month dearer (July–December 2025).</p><h3>What salary do I need to rent in Waterford?</h3><p>About €71,000 a year before tax, for one person paying the average new rent of €1,266 a month. That keeps rent to 30% of take-home pay, a common budgeting rule of thumb (estimated at 2026 Irish tax rates for a single PAYE employee).</p><h3>How much of a typical wage goes on rent in Waterford?</h3><p>About 47%. Median pay in Co. Waterford is €730.77 a week before tax (2025, CSO), roughly €2,673 a month after tax, and the average new rent is €1,266 a month.</p>
+</section>
+
 <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays, and not adjusted for inflation.
 Take-home pay: median weekly earnings in Co. Waterford (2025, €730.77 before tax, CSO table DEA05), estimated after tax for one PAYE earner at 2026 rates.
-Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Data last changed 2026-11-18.</p>
+Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>

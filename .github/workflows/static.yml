@@ -23,7 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history: scripts/lastmod.py reads each page's last change for the sitemap
       - uses: actions/configure-pages@v5
+      - name: Work out each page's last-change date for the sitemap
+        run: python3 scripts/lastmod.py
       - name: Copy identity.json into the site and check nothing has drifted from it
         run: python3 scripts/check_identity.py
       - name: Check the receipt cards still match docs/METRIC_SOURCES.md

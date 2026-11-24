@@ -1,6 +1,7 @@
 ---
 id: 8
 title: "Designing Decision Trees for Escalations: Classifying Messy Cases Consistently"
+seo_title: "Decision Trees for Escalations"
 slug: decision-trees-for-escalations
 description: "How structured decision logic turns ambiguous operational cases into consistent, auditable outcomes."
 series: trust-safety

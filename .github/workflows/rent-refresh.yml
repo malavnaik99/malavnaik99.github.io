@@ -44,11 +44,11 @@ jobs:
       - name: Publish if the data changed
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain data/rent rent)" ]; then echo "No new data. Nothing to publish."; exit 0; fi
+          if [ -z "$(git status --porcelain data/rent rent _data/rent_summary.json)" ]; then echo "No new data. Nothing to publish."; exit 0; fi
           latest=$(python3 -c "import json; print(json.load(open('data/rent/meta.json'))['latest_period'])")
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/rent rent
+          git add data/rent rent _data/rent_summary.json
           git commit -m "Rent tool: new CSO data (latest $latest)"
           git push origin HEAD:main
           gh workflow run static.yml --ref main

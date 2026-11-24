@@ -1,14 +1,18 @@
 ---
 # Written by scripts/rent_build.py from data/rent/rents.json. Don't edit by hand: changes are overwritten on the next refresh.
 layout: default
-title: "Rent in Cork: average €1,558 a month (2025)"
-description: "The average new rent in County Cork is €1,558 a month (July–December 2025), up 89% in 10 years. Rents for every town and area in Cork, by bedrooms, from official RTB data."
+title: "Average Rent in Cork 2025: €1,558/month"
+description: "The average new rent in County Cork is €1,558 a month (July–December 2025), up €131 on a year. By bedrooms, property type and town, rent vs pay, neighbouring counties and FAQs, from official RTB data."
 rent_county: "Cork"
 image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent Reality Check at malavnaik.com/rent" }
+dataset: {"name": "Average monthly rent of new tenancies in County Cork, 2008–2025", "description": "The Residential Tenancies Board's average monthly rent for new tenancies in County Cork and its towns, by bedrooms and property type, every half-year since 2008, published by the CSO in table RIH02.", "url": "https://data.cso.ie/table/RIH02", "license": "https://creativecommons.org/licenses/by/4.0/", "place": "County Cork, Ireland", "keywords": ["rent", "Cork", "Ireland", "RTB", "CSO", "housing"], "sources": ["https://data.cso.ie/table/RIH02", "https://data.cso.ie/table/DEA05"], "creator": "Residential Tenancies Board (RTB), published by the Central Statistics Office (CSO)"}
+faq: [{"q": "What is the average rent in Cork?", "a": "€1,558 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO)."}, {"q": "Is rent going up in Cork?", "a": "Yes: the average new rent is up €131 (9%) on a year earlier, and up €732 (89%) on ten years earlier."}, {"q": "Is Cork cheaper than Limerick?", "a": "Yes. The average new rent is €1,558 a month in Cork and €1,651 in Limerick, so Cork is €93 a month cheaper (July–December 2025)."}, {"q": "What salary do I need to rent in Cork?", "a": "About €95,500 a year before tax, for one person paying the average new rent of €1,558 a month. That keeps rent to 30% of take-home pay, a common budgeting rule of thumb (estimated at 2026 Irish tax rates for a single PAYE employee)."}, {"q": "How much of a typical wage goes on rent in Cork?", "a": "About 54%. Median pay in Co. Cork is €795.81 a week before tax (2025, CSO), roughly €2,878 a month after tax, and the average new rent is €1,558 a month."}]
 ---
 <p class="eyebrow"><a href="/rent/">Irish Rent Reality Check</a> / Cork</p>
-<h1>Rent in Cork</h1>
-<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County Cork was <strong>€1,558</strong> in July–December 2025, for all homes. That is up €131 (9%) on a year earlier, and up €732 (89%) on ten years earlier. Cork is the 6th most expensive of Ireland's 26 counties for new rents. On typical pay in Co. Cork, that rent takes about 54% of take-home pay.</p>
+<h1>Average rent in Cork (2025)</h1>
+<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County Cork was <strong>€1,558</strong> in July–December 2025, up €131 (9%) on a year earlier.</p>
+<p class="small muted">Data last updated: 14 May 2026 · Source: RTB via CSO (<a href="https://data.cso.ie/table/RIH02">RIH02</a>), earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>)</p>
+<p style="max-width:46rem">Cork is the 6th most expensive of Ireland's 26 counties for new rents, and rents are up €732 (89%) on ten years earlier. On typical pay in Co. Cork, the average rent takes about 54% of take-home pay.</p>
 <p><a class="btn btn-accent" href="/rent/?area=cork">Explore Cork in the rent tool</a></p>
 
 <section class="card" style="margin:1.5rem 0" aria-labelledby="beds-title">
@@ -17,12 +21,42 @@ image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent R
   <p class="small muted">– means the RTB published no average: too few new tenancies were registered.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="types-title">
+  <h2 id="types-title">By property type, July–December 2025</h2>
+  <table><thead><tr><th scope="col">Property type</th><th scope="col">Average monthly rent</th></tr></thead><tbody><tr><td>Apartment</td><td>€1,420</td></tr><tr><td>Detached house</td><td>€1,601</td></tr><tr><td>Semi-detached house</td><td>€1,731</td></tr><tr><td>Terraced house</td><td>€1,675</td></tr><tr><td>Other flats</td><td>€1,086</td></tr></tbody></table>
+  <p class="small muted">All bedroom counts. – means the RTB published no average for that type.</p>
+</section>
+
 <section class="card" style="margin:1.5rem 0" aria-labelledby="areas-title">
   <h2 id="areas-title">Towns and areas in Cork, all homes</h2>
   <div style="overflow-x:auto"><table><thead><tr><th scope="col">Area</th><th scope="col">Average monthly rent</th><th scope="col">Half-year</th></tr></thead><tbody><tr><td><a href="/rent/?area=bishopstown-cork">Bishopstown, Cork</a></td><td>€2,162</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=ballintemple-cork">Ballintemple, Cork</a></td><td>€1,939</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=kinsale-cork">Kinsale, Cork</a></td><td>€1,926</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=blackrock-cork">Blackrock, Cork</a></td><td>€1,807</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=cork-city">Cork City</a></td><td>€1,720</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=ballincollig-cork">Ballincollig, Cork</a></td><td>€1,663</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=blarney-cork">Blarney, Cork</a></td><td>€1,644</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=glanmire-cork">Glanmire, Cork</a></td><td>€1,628</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=carrigaline-cork">Carrigaline, Cork</a></td><td>€1,614</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=passage-west-cork">Passage West, Cork</a></td><td>€1,610</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=crosshaven-cork">Crosshaven, Cork</a></td><td>€1,605</td><td>July–December 2024</td></tr><tr><td><a href="/rent/?area=carrigtwohill-cork">Carrigtwohill, Cork</a></td><td>€1,582</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=douglas-cork">Douglas, Cork</a></td><td>€1,482</td><td>July–December 2023</td></tr><tr><td><a href="/rent/?area=midleton-cork">Midleton, Cork</a></td><td>€1,391</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=blackpool-cork">Blackpool, Cork</a></td><td>€1,356</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=rathcormac-cork">Rathcormac, Cork</a></td><td>€1,312</td><td>July–December 2024</td></tr><tr><td><a href="/rent/?area=cobh-cork">Cobh, Cork</a></td><td>€1,273</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=bandon-cork">Bandon, Cork</a></td><td>€1,259</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=clonakilty-cork">Clonakilty, Cork</a></td><td>€1,257</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=mallow-cork">Mallow, Cork</a></td><td>€1,248</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=macroom-cork">Macroom, Cork</a></td><td>€1,239</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=cloyne-cork">Cloyne, Cork</a></td><td>€1,238</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=fermoy-cork">Fermoy, Cork</a></td><td>€1,197</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=dunmanway-cork">Dunmanway, Cork</a></td><td>€1,149</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=youghal-cork">Youghal, Cork</a></td><td>€1,132</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=bantry-cork">Bantry, Cork</a></td><td>€1,108</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=kanturk-cork">Kanturk, Cork</a></td><td>€1,097</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=mitchelstown-cork">Mitchelstown, Cork</a></td><td>€1,089</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=skibbereen-cork">Skibbereen, Cork</a></td><td>€1,064</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=charleville-cork">Charleville, Cork</a></td><td>€1,043</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=castlemartyr-cork">Castlemartyr, Cork</a></td><td>€982</td><td>July–December 2023</td></tr><tr><td><a href="/rent/?area=millstreet-cork">Millstreet, Cork</a></td><td>€880</td><td>July–December 2023</td></tr></tbody></table></div>
   <p class="small muted">Most expensive first. Areas without a published figure since July–December 2023 are left out.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="pay-title">
+  <h2 id="pay-title">Rent vs pay in Cork</h2>
+  <table><tbody>
+    <tr><th scope="row">Median weekly pay, before tax (2025)</th><td>€795.81</td></tr>
+    <tr><th scope="row">Estimated take-home pay a month</th><td>€2,878</td></tr>
+    <tr><th scope="row">Average new rent a month</th><td>€1,558</td></tr>
+    <tr><th scope="row">Share of take-home pay on rent</th><td>54%</td></tr>
+    <tr><th scope="row">Pay needed to keep rent to 30% of take-home</th><td>about €95,500 a year</td></tr>
+  </tbody></table>
+  <p class="small muted">One person on the county's median pay, after income tax, USC and PRSI at 2026 rates (single PAYE employee). An estimate, not tax advice.</p>
+</section>
+
+<section class="card" style="margin:1.5rem 0" aria-labelledby="compare-title">
+  <h2 id="compare-title">How Cork compares</h2>
+  <p>At €1,558 a month, Cork's average new rent is €345 (28%) above the middle county's (€1,213: half of Ireland's 26 counties are dearer, half cheaper). The CSO's average-rent tables don't include a national figure, so this compares with the middle county instead. Neighbouring counties:</p>
+  <div style="overflow-x:auto"><table><thead><tr><th scope="col">County</th><th scope="col">Average monthly rent</th><th scope="col">Change on a year</th><th scope="col">Share of take-home pay</th></tr></thead><tbody><tr><td><a href="/rent/limerick/">Limerick</a></td><td>€1,651</td><td>+14%</td><td>59%</td></tr><tr><td><strong>Cork</strong></td><td>€1,558</td><td>+9%</td><td>54%</td></tr><tr><td><a href="/rent/waterford/">Waterford</a></td><td>€1,266</td><td>+10%</td><td>47%</td></tr><tr><td><a href="/rent/kerry/">Kerry</a></td><td>€1,201</td><td>+9%</td><td>49%</td></tr><tr><td><a href="/rent/tipperary/">Tipperary</a></td><td>€1,092</td><td>+11%</td><td>41%</td></tr></tbody></table></div>
+  <p class="small muted">July–December 2025. <a href="/rent/#counties-title">All 26 counties</a>.</p>
+</section>
+
+<section style="margin:1.5rem 0" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently asked questions</h2>
+  <h3>What is the average rent in Cork?</h3><p>€1,558 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO).</p><h3>Is rent going up in Cork?</h3><p>Yes: the average new rent is up €131 (9%) on a year earlier, and up €732 (89%) on ten years earlier.</p><h3>Is Cork cheaper than Limerick?</h3><p>Yes. The average new rent is €1,558 a month in Cork and €1,651 in Limerick, so Cork is €93 a month cheaper (July–December 2025).</p><h3>What salary do I need to rent in Cork?</h3><p>About €95,500 a year before tax, for one person paying the average new rent of €1,558 a month. That keeps rent to 30% of take-home pay, a common budgeting rule of thumb (estimated at 2026 Irish tax rates for a single PAYE employee).</p><h3>How much of a typical wage goes on rent in Cork?</h3><p>About 54%. Median pay in Co. Cork is €795.81 a week before tax (2025, CSO), roughly €2,878 a month after tax, and the average new rent is €1,558 a month.</p>
+</section>
+
 <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays, and not adjusted for inflation.
 Take-home pay: median weekly earnings in Co. Cork (2025, €795.81 before tax, CSO table DEA05), estimated after tax for one PAYE earner at 2026 rates.
-Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Data last changed 2026-11-18.</p>
+Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>

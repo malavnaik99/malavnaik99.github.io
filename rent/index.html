@@ -18,8 +18,10 @@ dataset:
   keywords: [rent, Ireland, RTB, CSO, housing, Dublin, open data]
   sources: [https://data.cso.ie/table/RIH02]
 ---
+{%- assign R = site.data.rent_summary %}{% assign top = R.counties | first %}{% assign low = R.counties | last %}{% assign dub = R.counties | where: "id", "dublin" | first %}
 {%- comment -%}
-Irish Rent Reality Check. Data: /data/rent/rents.json and meta.json, built by scripts/rent_build.py from CSO table RIH02.
+Irish Rent Reality Check. The numbers in the HTML (answers, county table, first rent card) come from _data/rent_summary.json,
+written by scripts/rent_build.py, so search engines see them without JavaScript; the script below then takes over. Data: /data/rent/rents.json and meta.json, built by scripts/rent_build.py from CSO table RIH02.
 Every view is saved in the address (?area=galway-city&beds=2&compare=cork,leitrim), so a copied link shows the same thing.
 Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place names are inserted as text, never as HTML.
 {%- endcomment -%}
@@ -60,6 +62,12 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
 .rent-finder-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 1rem; padding: .55rem .2rem; border-bottom: 1px solid var(--line); }
 .rent-finder-list b { font: 700 1rem/1.3 var(--font-head); text-align: right; }
 .rent-finder-list span { grid-column: 1 / -1; font-size: .8rem; color: var(--muted); }
+.rent-sort th button { all: unset; cursor: pointer; font: inherit; white-space: nowrap; }
+.rent-sort th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.rent-sort th[aria-sort="ascending"] button::after { content: " ↑"; }
+.rent-sort th[aria-sort="descending"] button::after { content: " ↓"; }
+.rent-sort td.r, .rent-sort th.r { text-align: right; }
+.rent-answers li { margin: .35rem 0; }
 @media (max-width: 560px) { .rent-changes { grid-template-columns: 1fr; } }
 </style>
 
@@ -67,6 +75,12 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
 <p class="eyebrow"><a href="{{ '/work/' | relative_url }}">Work</a> / <a href="{{ '/projects/irish-rents/' | relative_url }}">Irish rents dataset</a></p>
 <h1>Irish Rent Reality Check</h1>
 <p class="lead" style="max-width:46rem">What does renting really cost where you live? Pick an area to see the average monthly rent for a new tenancy, and how it has changed since 2008. Official RTB figures, published by the CSO.</p>
+<p style="max-width:46rem">The average monthly rent for a new tenancy ranges from <strong>{{ low.rent_eur }}</strong> in {{ low.name }} to <strong>{{ top.rent_eur }}</strong> in {{ top.name }} ({{ R.latest_label }}). Below: every county side by side, how much of typical take-home pay the rent takes, and a tool to look up any town or Dublin district.</p>
+<ul class="rent-answers" style="max-width:46rem">
+  <li><strong>Cheapest county to rent in:</strong> <a href="{{ '/rent/' | append: low.id | append: '/' | relative_url }}">{{ low.name }}</a>, average {{ low.rent_eur }} a month.</li>
+  <li><strong>Most expensive county:</strong> <a href="{{ '/rent/' | append: top.id | append: '/' | relative_url }}">{{ top.name }}</a>, average {{ top.rent_eur }} a month, about {{ top.share_pct }}% of typical take-home pay there.</li>
+</ul>
+<p class="small muted">Data last updated: {{ R.data_updated }} · Source: RTB via CSO (<a href="https://data.cso.ie/table/RIH02">RIH02</a>), earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>)</p>
 
 <div class="rent-grid">
   <section class="card" aria-labelledby="pick-title">
@@ -88,8 +102,8 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
 
   <section class="card rent-card" aria-labelledby="card-title" aria-live="polite">
     <h2 id="card-title" class="k">Average monthly rent, new tenancies</h2>
-    <p class="big" id="rentNow">Loading…</p>
-    <p class="muted" id="rentWhere"></p>
+    <p class="big" id="rentNow">{{ dub.rent_eur }}<small> a month</small></p>
+    <p class="muted" id="rentWhere">Co. Dublin, all homes, {{ R.latest_label }}</p>
     <ul class="rent-changes" id="rentChanges" aria-label="Change in average rent"></ul>
     <p class="small rent-note" id="rentNote" hidden></p>
     <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays. Not adjusted for inflation.</p>
@@ -148,21 +162,42 @@ Chart.js is the pinned copy in assets/vendor (same as /permits-2025/). All place
 
 <section class="card rent-about" aria-labelledby="counties-title" style="margin-bottom:1rem">
   <h2 id="counties-title">Rent by county</h2>
-  <ul class="rent-counties">
-  {%- assign counties = site.pages | where_exp: "p", "p.rent_county" | sort: "rent_county" %}
-  {%- for c in counties %}
-    <li><a href="{{ c.url | relative_url }}">Rent in {{ c.rent_county }}</a></li>
-  {%- endfor %}
-  </ul>
+  <p class="small muted">Average monthly rent for new tenancies, all homes, {{ R.latest_label }}. Share of take-home pay: the rent as a share of estimated take-home pay on the county's median wage ({{ R.earnings_year }}). Select a column heading to sort.</p>
+  <div style="overflow-x:auto"><table class="rent-sort" data-sortable>
+    <thead><tr><th scope="col"><button type="button">County</button></th><th scope="col" class="r" aria-sort="descending"><button type="button">Average monthly rent</button></th><th scope="col" class="r"><button type="button">Change on a year</button></th><th scope="col" class="r"><button type="button">Share of take-home pay</button></th></tr></thead>
+    <tbody>{% for c in R.counties %}
+      <tr><td data-v="{{ c.name }}"><a href="{{ '/rent/' | append: c.id | append: '/' | relative_url }}">{{ c.name }}</a></td><td class="r" data-v="{{ c.rent }}">{{ c.rent_eur }}</td><td class="r" data-v="{{ c.change_pct | default: -999 }}">{% if c.change_pct == nil %}–{% elsif c.change_pct >= 0 %}+{{ c.change_pct }}%{% else %}−{{ c.change_pct | abs }}%{% endif %}</td><td class="r" data-v="{{ c.share_pct }}">{{ c.share_pct }}%</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+  <p class="small muted">The middle county (median) is {{ R.median_eur }} a month. The CSO's average-rent tables don't include a national figure.</p>
 </section>
-
+<script>
+// Sort the county table by the clicked column: numbers by data-v, names A–Z first. Without JavaScript it stays most expensive first.
+document.querySelectorAll("table[data-sortable]").forEach(function (t) {
+  var ths = t.querySelectorAll("thead th"), body = t.tBodies[0];
+  ths.forEach(function (th, col) {
+    th.querySelector("button").addEventListener("click", function () {
+      var text = col === 0, cur = th.getAttribute("aria-sort");
+      // Clicking the sorted column flips it; a new column starts A–Z for names, biggest first for numbers.
+      var next = cur ? (cur === "ascending" ? "descending" : "ascending") : (text ? "ascending" : "descending");
+      var dir = next === "ascending" ? 1 : -1;
+      ths.forEach(function (h) { h.removeAttribute("aria-sort"); });
+      th.setAttribute("aria-sort", next);
+      Array.from(body.rows).sort(function (a, b) {
+        var x = a.cells[col].dataset.v, y = b.cells[col].dataset.v;
+        return dir * (text ? x.localeCompare(y) : x - y);
+      }).forEach(function (r) { body.appendChild(r); });
+    });
+  });
+});
+</script>
 <section class="card rent-about" aria-labelledby="about-title" style="margin-bottom:1rem">
   <h2 id="about-title">About the data</h2>
   <ul>
     <li><strong>Rents</strong> are the Residential Tenancies Board's average monthly rent for <strong>new tenancies</strong> registered in each half-year, from <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>. They are not what every tenant pays: people in long-running tenancies usually pay less. They are not adjusted for inflation.</li>
     <li><strong>Gaps are real.</strong> The RTB doesn't publish an average when too few new tenancies were registered, so some areas and bedroom counts have no figure for some half-years. Nothing is filled in or guessed.</li>
     <li><strong>Pay</strong> is the median weekly earnings of employees in each county, from <a href="https://data.cso.ie/table/DEA05">CSO table DEA05</a>. Take-home pay is an estimate for one person on PAYE; see "How this is worked out" above.</li>
-    <li><strong>Latest rents:</strong> <span id="metaLatest">see the source table</span>. <strong>Data last changed:</strong> <span id="metaUpdated">see the source table</span>. The site checks the CSO for new figures every week.</li>
+    <li><strong>Latest rents:</strong> <span id="metaLatest">{{ R.latest_label }}</span>. <strong>Data last changed:</strong> <span id="metaUpdated">{{ R.site_changed }}</span>. The site checks the CSO for new figures every week.</li>
     <li><strong>Licence:</strong> © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You're free to reuse these figures with credit.</li>
     <li><strong>The full cleaned dataset</strong> (every property type and bedroom count): <a href="https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb">Kaggle</a> · <a href="https://huggingface.co/datasets/Malavnaik/irish-rents-rtb">Hugging Face</a> · <a href="{{ '/projects/irish-rents/' | relative_url }}">project write-up</a>.</li>
   </ul>

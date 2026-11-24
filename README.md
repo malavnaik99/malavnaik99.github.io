@@ -24,7 +24,7 @@ The site has:
 | Station map | The Dublin bikes project page shows every station on an OpenStreetMap street map (Leaflet, pinned copy in `assets/vendor/`), loaded only when a visitor reaches it, with the full list as a table |
 | Project rows | /work/: each project with its headline number and a small static SVG chart drawn from its own data ([`scripts/make_charts.py`](scripts/make_charts.py)) |
 | Search | Ctrl+K and the home page "Ask about my work" box, over a build-time index ([`search.json`](search.json)) |
-| SEO | `jekyll-seo-tag` (titles, Open Graph and Twitter cards), `jekyll-sitemap`, `jekyll-feed` (RSS) |
+| SEO | `jekyll-seo-tag` (Open Graph and Twitter cards; `<title>` is written in `_layouts/default.html`), `sitemap.xml` (hand-written, dates from `scripts/lastmod.py`), `jekyll-feed` (RSS) |
 | Structured data | schema.org JSON-LD for Person, WebSite, BlogPosting and BreadcrumbList ([`_includes/schema.html`](_includes/schema.html)) |
 | AI and answer engines | [`llms.txt`](llms.txt), a [`robots.txt`](robots.txt) that welcomes search and AI crawlers, and an optional TL;DR and FAQ on each post |
 | Indexing | IndexNow, so Bing and other engines learn about each new post as soon as it is published |
@@ -47,7 +47,7 @@ You can read how it works on the [project page](https://malavnaik.com/projects/b
 You need Ruby 3.x.
 
 ```bash
-gem install jekyll jekyll-seo-tag jekyll-sitemap jekyll-feed
+gem install jekyll jekyll-seo-tag jekyll-feed
 jekyll serve
 ```
 

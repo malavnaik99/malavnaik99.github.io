@@ -24,6 +24,10 @@ re-run it, and how to undo a bad update. You never need to edit code to follow i
   - `data/rent/rents.json`: all the numbers the page uses;
   - `data/rent/meta.json`: source, latest half-year, and the date the data last changed;
   - `rent/<county>/index.html`: the county pages. They're written by the script; don't edit them by hand.
+  - `_data/rent_summary.json`: one row per county (rent, change on a year, share of take-home pay). The /rent/ page builds
+    its county table and "cheapest / most expensive" answers from it, so they show without JavaScript. Also script-written.
+  - To change the wording of the county pages: edit `county_page()` in `scripts/rent_build.py`, then run
+    `python3 scripts/rent_build.py --pages-only` (rewrites the pages from the saved data, no download) and commit.
 
 ## How to tell if it's broken
 
