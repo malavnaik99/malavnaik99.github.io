@@ -36,9 +36,9 @@
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
         {%- comment -%} Toolkit and Journey stay on the home page (/#toolkit, /#journey still work); they are no longer menu items. {%- endcomment %}
-        {% assign nav = "/work/|Work,/labs/|Labs,/writing/|Writing,/about/|About" | split: "," %}
+        {% assign nav = "/work/|Work,/labs/|Labs,/writing/|Writing,/ireland-guides/|Ireland Guides,/about/|About" | split: "," %}
         {% for item in nav %}{% assign p = item | split: "|" %}{% assign cur = false %}
-          {% if page.url == p[0] %}{% assign cur = true %}{% elsif p[0] == "/work/" and page.collection == "projects" %}{% assign cur = true %}{% elsif p[0] == "/writing/" and page.url contains "/blog/" %}{% assign cur = true %}{% endif %}
+          {% if page.url == p[0] %}{% assign cur = true %}{% elsif p[0] == "/work/" and page.collection == "projects" %}{% assign cur = true %}{% elsif p[0] == "/writing/" and page.url contains "/blog/" %}{% assign cur = true %}{% elsif p[0] == "/ireland-guides/" %}{% assign sect = page.url | split: "/" %}{% if sect[1] == "rent" or sect[1] == "dublin-bikes" or sect[1] == "living-in-ireland" %}{% assign cur = true %}{% endif %}{% endif %}
           <li><a href="{{ p[0] | relative_url }}"{% if cur %} aria-current="page"{% endif %}>{{ p[1] }}</a></li>
         {% endfor %}
           <li class="nav-resume"><a href="{{ '/resume/' | relative_url }}">Résumé</a></li>
