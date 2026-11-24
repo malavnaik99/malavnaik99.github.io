@@ -29,6 +29,8 @@ dataset:
 ## The problem
 Public city data is published live and then gone: the Dublinbikes feed only shows *right now*. To answer a question like **"how do weather and time of day change how many bikes are free?"** you need history, collected reliably and modelled so it can be trusted.
 
+**See what it shows:** [Dublin Bikes statistics](/dublin-bikes/), a page that updates every month with the busiest stations, peak hours and the rain effect.
+
 ## What I built
 An end-to-end pipeline that runs on free tiers only:
 

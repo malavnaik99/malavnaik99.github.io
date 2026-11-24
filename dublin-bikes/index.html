@@ -1,0 +1,81 @@
+---
+layout: default
+# The year in both titles is kept current by scripts/bikes_report.py (set_hub_year) each month.
+title: "Dublin Bikes Statistics (2026): Busiest Stations, Peak Hours & Rain Effect"
+seo_title: "Dublin Bikes Statistics (2026)"
+description: "Living Dublinbikes statistics: estimated pickups per month, the busiest and quietest stations, pickups by hour of day and how rain changes use. Updated monthly from open data."
+dataset:
+  name: "Dublin bikes and weather: station snapshots and hourly tables"
+  description: "Every Dublinbikes station's available bikes and docks, recorded every 15 minutes since 16 October 2026, joined with hourly Met Éireann weather at Dublin Airport, plus modelled hourly tables. Open data from an automated pipeline."
+  url: https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts
+  license: https://creativecommons.org/licenses/by/4.0/
+  place: "Dublin, Ireland"
+  keywords: [Dublin, Dublinbikes, bike share, cycling, weather, open data]
+  sources: [https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw]
+---
+{%- comment -%}
+A living page: every number comes from _data/bikes/<YYYY-MM>.json, one file per month, written by scripts/bikes_report.py
+(the "Dublin Bikes monthly report" workflow opens a pull request with each new month). Nothing here needs editing by hand.
+{%- endcomment -%}
+{%- assign months = site.data.bikes | sort -%}
+{%- assign latest = months | last -%}{%- assign r = latest[1] -%}
+{%- assign editions = site.posts | where_exp: "p", "p.bikes_month" -%}
+{%- assign top = r.busiest_stations | first -%}
+<p class="eyebrow"><a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}">Dublin bikes pipeline</a> / Statistics</p>
+<h1>Dublin Bikes Statistics ({{ r.month | slice: 0, 4 }}): Busiest Stations, Peak Hours &amp; Rain Effect</h1>
+<p class="lead">During {{ r.period.label }}, Dublinbikes saw about <strong>{% include num.html n=r.estimated_pickups_per_day %} estimated pickups a day</strong>. The busiest hour was {{ r.busiest_hour.label }} and the busiest station was {{ top.station }}.</p>
+<p class="small muted">Last updated: {{ r.period.last_day | date: "%-d %B %Y" }} (latest data) · Source: Dublinbikes feed (Dublin City Council / JCDecaux) and Met Éireann, recorded by my <a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}">open data pipeline</a></p>
+
+<h2 id="pickups-per-month">Estimated pickups per month</h2>
+<table>
+  <thead><tr><th scope="col">Month</th><th scope="col">Days covered</th><th scope="col">Estimated pickups</th><th scope="col">Per day</th><th scope="col">Busiest hour</th><th scope="col">Rain effect</th></tr></thead>
+  <tbody>{% for m in months reversed %}{% assign d = m[1] %}{% assign post = editions | where: "bikes_month", m[0] | first %}
+    <tr><td>{% if post %}<a href="{{ post.url | relative_url }}">{{ d.period.label }}</a>{% else %}{{ d.period.label }}{% endif %}</td><td>{% assign t1 = d.period.last_day | date: "%s" | plus: 0 %}{% assign t0 = d.period.first_day | date: "%s" | plus: 0 %}{{ t1 | minus: t0 | divided_by: 86400 | plus: 1 }}</td><td>{% include num.html n=d.estimated_pickups_total %}</td><td>{% include num.html n=d.estimated_pickups_per_day %}</td><td>{{ d.busiest_hour.label }}</td><td>{% if d.rain.pct_change_vs_dry_same_hour == nil or d.rain.wet_hours < 5 %}too few rainy hours{% elsif d.rain.pct_change_vs_dry_same_hour < 0 %}−{{ d.rain.pct_change_vs_dry_same_hour | abs }}% in rain{% else %}+{{ d.rain.pct_change_vs_dry_same_hour }}% in rain{% endif %}</td></tr>{% endfor %}
+  </tbody>
+</table>
+<p class="small muted">Rain effect: estimated pickups in rainy hours compared with dry hours at the same time of day. October 2026 is a half month: the pipeline started on 16 October.</p>
+
+<h2 id="latest-month">Latest month: {{ r.period.label }}</h2>
+{% include bikes-edition.html month=r.month hub=true %}
+
+<h2 id="methodology">How these numbers are made</h2>
+<ul>
+  <li><strong>Pickups are estimates.</strong> Every 15 minutes the pipeline records how many bikes each station has. When a station has fewer bikes than at the previous snapshot, the difference counts as pickups. Bikes taken away by the <strong>rebalancing vans</strong> count too, so this is not an official trip count.</li>
+  <li><strong>Gaps:</strong> a drop across a gap of more than 30 minutes (missed snapshots) is not counted. Stations with no capacity, or that never had a bike in the period, are left out.</li>
+  <li><strong>Docks holding a bike:</strong> the average number of available bikes divided by the station's capacity.</li>
+  <li><strong>Rain:</strong> a rainy hour has at least 0.1 mm of rain at Dublin Airport (Met Éireann); a dry hour has none. Hours with only a trace (0.01 mm) or no reading are left out. Rainy hours are compared with the dry-hour average at the same hour of day, weekdays and weekends matched separately.</li>
+  <li><strong>Times</strong> are Irish local time.</li>
+</ul>
+
+<h2 id="faq">Frequently asked questions</h2>
+{%- assign evening = nil %}{% for h in r.by_local_hour %}{% if h.local_hour >= 12 %}{% if evening == nil or h.avg_estimated_pickups > evening.avg_estimated_pickups %}{% assign evening = h %}{% endif %}{% endif %}{% endfor %}
+{%- assign second = r.busiest_stations[1] %}{% assign third = r.busiest_stations[2] %}
+{%- capture q1 %}What is the busiest Dublin Bikes station?{% endcapture %}
+{%- capture a1 %}{{ top.station }}, with about {% include num.html n=top.estimated_pickups %} estimated pickups during {{ r.period.label }}. Next were {{ second.station }} and {{ third.station }}.{% endcapture %}
+{%- capture q2 %}What time of day is Dublin Bikes busiest?{% endcapture %}
+{%- capture a2 %}{{ r.busiest_hour.label }}, with an average of {{ r.busiest_hour.avg_estimated_pickups }} estimated pickups an hour across all stations during {{ r.period.label }}. The busiest hour after midday was {{ evening.local_hour }}:00–{{ evening.local_hour | plus: 1 }}:00, with {{ evening.avg_estimated_pickups }}.{% endcapture %}
+{%- capture q3 %}How many Dublin Bikes trips are there a day?{% endcapture %}
+{%- capture a3 %}About {% include num.html n=r.estimated_pickups_per_day %} estimated pickups a day during {{ r.period.label }}, across {{ r.coverage.stations_reported }} stations. This counts bikes leaving stations, including bikes moved by rebalancing vans, so it is an estimate, not an official trip count.{% endcapture %}
+{%- capture q4 %}Does rain reduce Dublin Bikes use?{% endcapture %}
+{%- capture a4 %}{% if r.rain.pct_change_vs_dry_same_hour == nil or r.rain.wet_hours < 5 %}There were too few rainy hours during {{ r.period.label }} to say. Earlier months are in the table above.{% else %}Yes, in the latest data. During {{ r.period.label }}, rainy hours had {{ r.rain.pct_change_vs_dry_same_hour | abs }}% {% if r.rain.pct_change_vs_dry_same_hour < 0 %}fewer{% else %}more{% endif %} estimated pickups than dry hours at the same time of day ({{ r.rain.wet_hours }} rainy hours, at least 0.1 mm at Dublin Airport). It's a small sample, so treat it as a first look.{% endif %}{% endcapture %}
+{%- capture q5 %}Where does this data come from, and can I use it?{% endcapture %}
+{%- capture a5 %}From the public Dublinbikes feed (Dublin City Council / JCDecaux), recorded every 15 minutes by my automated pipeline and joined with hourly Met Éireann weather. The data is open on Hugging Face under CC BY 4.0: reuse it with a credit and a link.{% endcapture %}
+{%- assign qs = q1 | append: "§§" | append: q2 | append: "§§" | append: q3 | append: "§§" | append: q4 | append: "§§" | append: q5 | split: "§§" %}
+{%- assign as = a1 | append: "§§" | append: a2 | append: "§§" | append: a3 | append: "§§" | append: a4 | append: "§§" | append: a5 | split: "§§" %}
+{% for q in qs %}<h3>{{ q }}</h3>
+<p>{{ as[forloop.index0] | strip }}</p>
+{% endfor %}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "FAQPage", "url": {{ page.url | absolute_url | jsonify }}, "mainEntity": [{% for q in qs %}
+  { "@type": "Question", "name": {{ q | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ as[forloop.index0] | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
+] }
+</script>
+
+<h2 id="data">The data and every edition</h2>
+<ul>
+  <li>Open data, CC BY 4.0: <a href="https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw">raw 15-minute snapshots</a> and <a href="https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts">modelled hourly tables</a> on Hugging Face.</li>
+  <li>How the pipeline works: <a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}">Dublin bikes and weather pipeline</a>, and the <a href="{{ '/blog/dublin-bikes-data-pipeline/' | relative_url }}">write-up</a>.</li>
+  <li>Monthly editions of <em>Dublin Bikes in numbers</em>:
+    <ul>{% for e in editions %}<li><a href="{{ e.url | relative_url }}">{{ e.title | remove: "Dublin Bikes in numbers: " }}</a></li>{% endfor %}</ul>
+  </li>
+</ul>

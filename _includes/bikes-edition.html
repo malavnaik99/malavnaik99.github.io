@@ -1,0 +1,74 @@
+{%- comment -%}
+One "Dublin Bikes in numbers" edition, built from _data/bikes/<month>.json (written by scripts/bikes_report.py).
+Used by every monthly post ({% include bikes-edition.html month=page.bikes_month %}) and by /dublin-bikes/ (hub=true).
+Posts get links to the previous and next published editions; the hub gets the hour-by-hour table open.
+{%- endcomment -%}
+{%- assign r = site.data.bikes[include.month] -%}
+{%- assign b = r.busiest_hour -%}
+{%- assign alt = "Bar chart of average estimated Dublinbikes pickups per hour by hour of day, " | append: r.period.label | append: ". The busiest hour is " | append: b.label | append: " with " | append: b.avg_estimated_pickups | append: " pickups on average." -%}
+<h2 id="the-headline">The headline</h2>
+<p>About <strong>{% include num.html n=r.estimated_pickups_total %} estimated pickups</strong> across {{ r.coverage.stations_reported }} stations, or roughly {% include num.html n=r.estimated_pickups_per_day %} a day.</p>
+
+<h2 id="the-busiest-hour">The busiest hour</h2>
+<p><img src="{{ '/images/bikes-report/' | append: include.month | append: '.png' | relative_url }}" alt="{{ alt }}" width="800" height="450"></p>
+<p>The busiest hour was <strong>{{ b.label }}</strong>, with {{ b.avg_estimated_pickups }} estimated pickups on average across all stations.</p>
+<details{% if include.hub %} open{% endif %}>
+  <summary>Estimated pickups by hour of day, as a table</summary>
+  <table>
+    <thead><tr><th scope="col">Hour (Irish time)</th><th scope="col">Average estimated pickups</th></tr></thead>
+    <tbody>{% for h in r.by_local_hour %}{% assign hh = h.local_hour | plus: 100 | append: "" | slice: 1, 2 %}{% assign nx = h.local_hour | plus: 101 | modulo: 100 | plus: 100 | append: "" | slice: 1, 2 %}{% if h.local_hour == 23 %}{% assign nx = "00" %}{% endif %}
+      <tr><td>{{ hh }}:00–{{ nx }}:00</td><td>{{ h.avg_estimated_pickups }}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</details>
+
+<h2 id="busiest-and-quietest-stations">Busiest and quietest stations</h2>
+{%- assign lists = "busiest_stations|Most estimated pickups,quietest_stations|Fewest estimated pickups" | split: "," %}
+{%- for l in lists %}{% assign kv = l | split: "|" %}
+<table>
+  <caption>{{ kv[1] }}, {{ r.period.label }}</caption>
+  <thead><tr><th scope="col">Rank</th><th scope="col">Station</th><th scope="col">Estimated pickups</th><th scope="col">Docks holding a bike</th></tr></thead>
+  <tbody>{% assign key = kv[0] %}{% for s in r[key] %}
+    <tr><td>{{ forloop.index }}</td><td>{{ s.station }}</td><td>{% include num.html n=s.estimated_pickups %}</td><td>{{ s.pct_docks_with_bike }}%</td></tr>{% endfor %}
+  </tbody>
+</table>
+{%- endfor %}
+
+<h2 id="where-to-find-a-bike">Where to find a bike</h2>
+<p>Average share of docks holding a bike: the emptiest stations are the hardest places to find one.</p>
+{%- assign lists = "emptiest_stations|Emptiest stations,fullest_stations|Fullest stations" | split: "," %}
+{%- for l in lists %}{% assign kv = l | split: "|" %}
+<table>
+  <caption>{{ kv[1] }}, {{ r.period.label }}</caption>
+  <thead><tr><th scope="col">Rank</th><th scope="col">Station</th><th scope="col">Docks holding a bike</th><th scope="col">Estimated pickups</th></tr></thead>
+  <tbody>{% assign key = kv[0] %}{% for s in r[key] %}
+    <tr><td>{{ forloop.index }}</td><td>{{ s.station }}</td><td>{{ s.pct_docks_with_bike }}%</td><td>{% include num.html n=s.estimated_pickups %}</td></tr>{% endfor %}
+  </tbody>
+</table>
+{%- endfor %}
+
+<h2 id="what-rain-did">What rain did</h2>
+{%- assign rain = r.rain %}
+{%- if rain.pct_change_vs_dry_same_hour == nil or rain.wet_hours < 5 %}
+<p>There were only {{ rain.wet_hours }} rainy hours, too few to compare with dry weather this time.</p>
+{%- else %}
+<p>It rained (at least 0.1 mm at Dublin Airport) in {{ rain.wet_hours }} hours. In those hours there were <strong>{{ rain.pct_change_vs_dry_same_hour | abs }}% {% if rain.pct_change_vs_dry_same_hour < 0 %}fewer{% else %}more{% endif %} estimated pickups</strong> than in dry hours at the same time of day. Without adjusting for the time of day, rainy hours averaged {{ rain.wet_avg_estimated_pickups_per_hour }} pickups and dry hours {{ rain.dry_avg_estimated_pickups_per_hour }}. Hours with only a trace of rain are left out. It's a small sample, so treat this as a first look.</p>
+<table>
+  <caption>Rainy vs dry hours, {{ r.period.label }}</caption>
+  <thead><tr><th scope="col"></th><th scope="col">Hours</th><th scope="col">Average estimated pickups an hour</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Rainy (0.1 mm or more)</th><td>{{ rain.wet_hours }}</td><td>{{ rain.wet_avg_estimated_pickups_per_hour }}</td></tr>
+    <tr><th scope="row">Dry (0 mm)</th><td>{{ rain.dry_hours }}</td><td>{{ rain.dry_avg_estimated_pickups_per_hour }}</td></tr>
+  </tbody>
+</table>
+{%- endif %}
+{%- assign mom = r.month_on_month %}
+<p>{% if mom == nil %}Month-on-month comparisons start with the November edition.{% else %}Compared with {{ mom.previous_month | append: "-01" | date: "%B" }}, estimated pickups per day {% if mom.pct_change_estimated_pickups_per_day >= 0 %}rose{% else %}fell{% endif %} by {{ mom.pct_change_estimated_pickups_per_day | abs }}%.{% endif %}</p>
+{%- unless include.hub %}
+{%- assign editions = site.posts | where_exp: "p", "p.bikes_month" | sort: "bikes_month" %}
+{%- assign i = 0 %}{% for e in editions %}{% if e.bikes_month == include.month %}{% assign i = forloop.index0 %}{% endif %}{% endfor %}
+{%- assign prev_i = i | minus: 1 %}{% assign next_i = i | plus: 1 %}
+<nav class="small" aria-label="Other editions" style="margin-top:1.5rem">
+  {% if i > 0 %}<a href="{{ editions[prev_i].url | relative_url }}" rel="prev">← {{ editions[prev_i].title | remove: "Dublin Bikes in numbers: " }}</a> · {% endif %}<a href="{{ '/dublin-bikes/' | relative_url }}">All editions and running totals</a>{% if editions[next_i] %} · <a href="{{ editions[next_i].url | relative_url }}" rel="next">{{ editions[next_i].title | remove: "Dublin Bikes in numbers: " }} →</a>{% endif %}
+</nav>
+{%- endunless %}

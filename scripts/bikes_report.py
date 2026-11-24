@@ -1,7 +1,7 @@
 """Monthly "Dublin Bikes in numbers" report.
 
 Reads the public Hugging Face datasets published by dublin-data-pipeline and writes, for one month:
-  scripts/bikes_report_YYYY-MM.json      every number used in the post
+  _data/bikes/YYYY-MM.json               every number used in the post and on /dublin-bikes/ (the site reads it at build)
   images/bikes-report/YYYY-MM.png        one chart (estimated pickups by hour of day)
   _drafts/dublin-bikes-in-numbers-YYYY-MM.md   a draft post built only from the JSON
 
@@ -113,7 +113,7 @@ def compute(con, month, start, end):
 
     per_day = round(total / span_h * 24)
     prev = (dt.date(start.year, start.month, 1) - dt.timedelta(1)).strftime("%Y-%m")
-    prev_path = ROOT / f"scripts/bikes_report_{prev}.json"
+    prev_path = ROOT / f"_data/bikes/{prev}.json"
     mom = None
     if prev_path.exists():
         p = json.loads(prev_path.read_text())["estimated_pickups_per_day"]
@@ -182,77 +182,30 @@ def chart(r, path):
 
 
 def post(r, png, slug):
-    p, rain, b = r["period"], r["rain"], r["busiest_hour"]
-    n = lambda x: f"{x:,}"
+    """The draft post: front matter and the words around the numbers. The numbers, tables and the links to the
+    other editions come from _includes/bikes-edition.html, which reads _data/bikes/<month>.json."""
+    p, b = r["period"], r["busiest_hour"]
     url = f"{SITE}/blog/{slug}/"
     img = f"{SITE}/{png.relative_to(ROOT).as_posix()}"
     alt = (f"Bar chart of average estimated Dublinbikes pickups per hour by hour of day, {p['label']}. "
            f"The busiest hour is {b['label']} with {b['avg_estimated_pickups']} pickups on average.")
-    stations = lambda key, field, unit: "\n".join(
-        f"{i}. {s['station']}: {n(s[field])}{unit}" for i, s in enumerate(r[key], 1))
-    if rain["pct_change_vs_dry_same_hour"] is None or rain["wet_hours"] < 5:
-        rain_text = f"There were only {rain['wet_hours']} rainy hours, too few to compare with dry weather this time."
-    else:
-        pct = rain["pct_change_vs_dry_same_hour"]
-        rain_text = (f"It rained (at least 0.1 mm at Dublin Airport) in {rain['wet_hours']} hours. In those hours there were "
-                     f"**{abs(pct)}% {'fewer' if pct < 0 else 'more'} estimated pickups** than in dry hours at the same time of day. "
-                     f"Without adjusting for the time of day, rainy hours averaged {rain['wet_avg_estimated_pickups_per_hour']} pickups "
-                     f"and dry hours {rain['dry_avg_estimated_pickups_per_hour']}. Hours with only a trace of rain are left out. It's a small sample, so treat this as a first look.")
-    mom = r["month_on_month"]
-    mom_text = ("Month-on-month comparisons start with the November edition." if mom is None else
-                f"Compared with {dt.datetime.strptime(mom['previous_month'], '%Y-%m'):%B}, estimated pickups per day "
-                f"{'rose' if mom['pct_change_estimated_pickups_per_day'] >= 0 else 'fell'} by "
-                f"{abs(mom['pct_change_estimated_pickups_per_day'])}%.")
     launch = (f"This is the first edition. My pipeline started collecting on {dt.date.fromisoformat(p['first_day']):%-d %B}, so it covers "
               if r["month"] == "2026-10" else "This edition covers ")
     body = f"""---
 title: "Dublin Bikes in numbers: {p['label']}"
 slug: {slug}
+bikes_month: "{r['month']}"
 description: "When and where Dubliners picked up Dublinbikes during {p['label']}, and what rain did to it, from my open bikes and weather data."
 tags: [dublin, dublinbikes, opendata, dataengineering]
 image: "/{png.relative_to(ROOT).as_posix()}"
 image_alt: "{alt}"
 ---
 
-A monthly look at Dublinbikes, built from my [bikes and weather pipeline](/projects/dublin-bikes-pipeline/). {launch}**{p['label']}**.
+A monthly look at Dublinbikes, built from my [bikes and weather pipeline](/projects/dublin-bikes-pipeline/). {launch}**{p['label']}**. Every edition and the running totals are on the [Dublin Bikes statistics](/dublin-bikes/) page.
 
 **How I count pickups:** every 15 minutes I record how many bikes each station has, and whenever a station has fewer bikes than 15 minutes earlier, I count the difference as pickups, so the numbers are estimates (bikes moved by the rebalancing vans count too).
 
-## The headline
-
-About **{n(r['estimated_pickups_total'])} estimated pickups** across {r['coverage']['stations_reported']} stations, or roughly {n(r['estimated_pickups_per_day'])} a day.
-
-## The busiest hour
-
-![{alt}](/{png.relative_to(ROOT).as_posix()}){{: width="800" height="450"}}
-
-The busiest hour was **{b['label']}**, with {b['avg_estimated_pickups']} estimated pickups on average across all stations.
-
-## Busiest and quietest stations
-
-Most estimated pickups:
-
-{stations('busiest_stations', 'estimated_pickups', '')}
-
-Fewest:
-
-{stations('quietest_stations', 'estimated_pickups', '')}
-
-## Where to find a bike
-
-Average share of docks holding a bike. Emptiest stations:
-
-{stations('emptiest_stations', 'pct_docks_with_bike', '%')}
-
-Fullest stations:
-
-{stations('fullest_stations', 'pct_docks_with_bike', '%')}
-
-## What rain did
-
-{rain_text}
-
-{mom_text}
+{{% include bikes-edition.html month=page.bikes_month %}}
 
 ## Use this data
 
@@ -269,6 +222,15 @@ You're welcome to reuse the chart in articles, slides or posts, as long as you l
     return body
 
 
+def set_hub_year(month):
+    """Keep the year in the /dublin-bikes/ title in step with the latest edition (the title can't hold Liquid)."""
+    hub = ROOT / "dublin-bikes/index.html"
+    text = hub.read_text()
+    new = re.sub(r"^((?:seo_)?title: .*?)\b20\d\d\b", lambda m: m.group(1) + month[:4], text, flags=re.M)
+    hub.write_text(new)
+    return new
+
+
 def self_test():
     con = duckdb.connect()
     con.sql("""create table snap as select * from (values
@@ -281,6 +243,8 @@ def self_test():
     assert con.sql("select sum(pickups) from pickups").fetchall()[0][0] == 3
     assert label(dt.date(2026, 10, 16), dt.date(2026, 10, 31)) == "16–31 October 2026"
     assert label(dt.date(2026, 11, 1), dt.date(2026, 11, 30)) == "November 2026"
+    assert re.sub(r"^((?:seo_)?title: .*?)\b20\d\d\b", lambda m: m.group(1) + "2027", 'title: "Stats (2026): x"\nyear: 2026', flags=re.M) \
+        == 'title: "Stats (2027): x"\nyear: 2026'  # set_hub_year's pattern: only title lines change
     print("self-test ok")
 
 
@@ -309,7 +273,7 @@ def main():
         con.sql(f"create view {t} as select * from read_parquet('{f}')")
     r = compute(con, month, start, end)
 
-    out = ROOT / f"scripts/bikes_report_{month}.json"
+    out = ROOT / f"_data/bikes/{month}.json"
     png = ROOT / f"images/bikes-report/{month}.png"
     draft = ROOT / f"_drafts/dublin-bikes-in-numbers-{month}.md"
     slug = f"dublin-bikes-in-numbers-{dt.datetime.strptime(month, '%Y-%m'):%B-%Y}".lower()
@@ -317,6 +281,7 @@ def main():
     chart(r, png)
     draft.parent.mkdir(exist_ok=True)
     draft.write_text(post(r, png, slug))
+    set_hub_year(month)
     print(json.dumps(r, indent=2, ensure_ascii=False))
     print(f"\nWrote {out.relative_to(ROOT)}, {png.relative_to(ROOT)} ({png.stat().st_size // 1024} KB), {draft.relative_to(ROOT)}")
 
