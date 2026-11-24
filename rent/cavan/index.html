@@ -1,14 +1,18 @@
 ---
 # Written by scripts/rent_build.py from data/rent/rents.json. Don't edit by hand: changes are overwritten on the next refresh.
 layout: default
-title: "Rent in Cavan: average €1,111 a month (2025)"
-description: "The average new rent in County Cavan is €1,111 a month (July–December 2025), up 131% in 10 years. Rents for every town and area in Cavan, by bedrooms, from official RTB data."
+title: "Average Rent in Cavan 2025: €1,111/month"
+description: "The average new rent in County Cavan is €1,111 a month (July–December 2025), up €111 on a year. By bedrooms, property type and town, rent vs pay, neighbouring counties and FAQs, from official RTB data."
 rent_county: "Cavan"
 image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent Reality Check at malavnaik.com/rent" }
+dataset: {"name": "Average monthly rent of new tenancies in County Cavan, 2008–2025", "description": "The Residential Tenancies Board's average monthly rent for new tenancies in County Cavan and its towns, by bedrooms and property type, every half-year since 2008, published by the CSO in table RIH02.", "url": "https://data.cso.ie/table/RIH02", "license": "https://creativecommons.org/licenses/by/4.0/", "place": "County Cavan, Ireland", "keywords": ["rent", "Cavan", "Ireland", "RTB", "CSO", "housing"], "sources": ["https://data.cso.ie/table/RIH02", "https://data.cso.ie/table/DEA05"], "creator": "Residential Tenancies Board (RTB), published by the Central Statistics Office (CSO)"}
+faq: [{"q": "What is the average rent in Cavan?", "a": "€1,111 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO)."}, {"q": "Is rent going up in Cavan?", "a": "Yes: the average new rent is up €111 (11%) on a year earlier, and up €631 (131%) on ten years earlier."}, {"q": "Is Cavan cheaper than Longford?", "a": "Yes. The average new rent is €1,111 a month in Cavan and €1,134 in Longford, so Cavan is €23 a month cheaper (July–December 2025)."}, {"q": "What salary do I need to rent in Cavan?", "a": "About €59,000 a year before tax, for one person paying the average new rent of €1,111 a month. That keeps rent to 30% of take-home pay, a common budgeting rule of thumb (estimated at 2026 Irish tax rates for a single PAYE employee)."}, {"q": "How much of a typical wage goes on rent in Cavan?", "a": "About 42%. Median pay in Co. Cavan is €722.47 a week before tax (2025, CSO), roughly €2,647 a month after tax, and the average new rent is €1,111 a month."}]
 ---
 <p class="eyebrow"><a href="/rent/">Irish Rent Reality Check</a> / Cavan</p>
-<h1>Rent in Cavan</h1>
-<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County Cavan was <strong>€1,111</strong> in July–December 2025, for all homes. That is up €111 (11%) on a year earlier, and up €631 (131%) on ten years earlier. Cavan is the 21st most expensive of Ireland's 26 counties for new rents. On typical pay in Co. Cavan, that rent takes about 42% of take-home pay.</p>
+<h1>Average rent in Cavan (2025)</h1>
+<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County Cavan was <strong>€1,111</strong> in July–December 2025, up €111 (11%) on a year earlier.</p>
+<p class="small muted">Data last updated: 14 May 2026 · Source: RTB via CSO (<a href="https://data.cso.ie/table/RIH02">RIH02</a>), earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>)</p>
+<p style="max-width:46rem">Cavan is the 21st most expensive of Ireland's 26 counties for new rents, and rents are up €631 (131%) on ten years earlier. On typical pay in Co. Cavan, the average rent takes about 42% of take-home pay.</p>
 <p><a class="btn btn-accent" href="/rent/?area=cavan">Explore Cavan in the rent tool</a></p>
 
 <section class="card" style="margin:1.5rem 0" aria-labelledby="beds-title">
@@ -17,12 +21,42 @@ image: { path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent R
   <p class="small muted">– means the RTB published no average: too few new tenancies were registered.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="types-title">
+  <h2 id="types-title">By property type, July–December 2025</h2>
+  <table><thead><tr><th scope="col">Property type</th><th scope="col">Average monthly rent</th></tr></thead><tbody><tr><td>Apartment</td><td>€1,042</td></tr><tr><td>Detached house</td><td>€1,145</td></tr><tr><td>Semi-detached house</td><td>€1,191</td></tr><tr><td>Terraced house</td><td>€1,065</td></tr><tr><td>Other flats</td><td>–</td></tr></tbody></table>
+  <p class="small muted">All bedroom counts. – means the RTB published no average for that type.</p>
+</section>
+
 <section class="card" style="margin:1.5rem 0" aria-labelledby="areas-title">
   <h2 id="areas-title">Towns and areas in Cavan, all homes</h2>
   <div style="overflow-x:auto"><table><thead><tr><th scope="col">Area</th><th scope="col">Average monthly rent</th><th scope="col">Half-year</th></tr></thead><tbody><tr><td><a href="/rent/?area=virginia-cavan">Virginia, Cavan</a></td><td>€1,233</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=cavan-town">Cavan Town</a></td><td>€1,217</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=kingscourt-cavan">Kingscourt, Cavan</a></td><td>€1,204</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=bailieborough-cavan">Bailieborough, Cavan</a></td><td>€1,058</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=ballyconnell-cavan">Ballyconnell, Cavan</a></td><td>€973</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=ballyjamesduff-cavan">Ballyjamesduff, Cavan</a></td><td>€940</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=belturbet-cavan">Belturbet, Cavan</a></td><td>€917</td><td>July–December 2025</td></tr><tr><td><a href="/rent/?area=cootehill-cavan">Cootehill, Cavan</a></td><td>€879</td><td>July–December 2025</td></tr></tbody></table></div>
   <p class="small muted">Most expensive first. Areas without a published figure since July–December 2023 are left out.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="pay-title">
+  <h2 id="pay-title">Rent vs pay in Cavan</h2>
+  <table><tbody>
+    <tr><th scope="row">Median weekly pay, before tax (2025)</th><td>€722.47</td></tr>
+    <tr><th scope="row">Estimated take-home pay a month</th><td>€2,647</td></tr>
+    <tr><th scope="row">Average new rent a month</th><td>€1,111</td></tr>
+    <tr><th scope="row">Share of take-home pay on rent</th><td>42%</td></tr>
+    <tr><th scope="row">Pay needed to keep rent to 30% of take-home</th><td>about €59,000 a year</td></tr>
+  </tbody></table>
+  <p class="small muted">One person on the county's median pay, after income tax, USC and PRSI at 2026 rates (single PAYE employee). An estimate, not tax advice.</p>
+</section>
+
+<section class="card" style="margin:1.5rem 0" aria-labelledby="compare-title">
+  <h2 id="compare-title">How Cavan compares</h2>
+  <p>At €1,111 a month, Cavan's average new rent is €102 (8%) below the middle county's (€1,213: half of Ireland's 26 counties are dearer, half cheaper). The CSO's average-rent tables don't include a national figure, so this compares with the middle county instead. Neighbouring counties:</p>
+  <div style="overflow-x:auto"><table><thead><tr><th scope="col">County</th><th scope="col">Average monthly rent</th><th scope="col">Change on a year</th><th scope="col">Share of take-home pay</th></tr></thead><tbody><tr><td><a href="/rent/meath/">Meath</a></td><td>€1,547</td><td>+7%</td><td>54%</td></tr><tr><td><a href="/rent/westmeath/">Westmeath</a></td><td>€1,276</td><td>+10%</td><td>47%</td></tr><tr><td><a href="/rent/longford/">Longford</a></td><td>€1,134</td><td>+11%</td><td>45%</td></tr><tr><td><strong>Cavan</strong></td><td>€1,111</td><td>+11%</td><td>42%</td></tr><tr><td><a href="/rent/monaghan/">Monaghan</a></td><td>€1,034</td><td>+12%</td><td>41%</td></tr><tr><td><a href="/rent/leitrim/">Leitrim</a></td><td>€1,010</td><td>+10%</td><td>39%</td></tr></tbody></table></div>
+  <p class="small muted">July–December 2025. <a href="/rent/#counties-title">All 26 counties</a>.</p>
+</section>
+
+<section style="margin:1.5rem 0" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently asked questions</h2>
+  <h3>What is the average rent in Cavan?</h3><p>€1,111 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO).</p><h3>Is rent going up in Cavan?</h3><p>Yes: the average new rent is up €111 (11%) on a year earlier, and up €631 (131%) on ten years earlier.</p><h3>Is Cavan cheaper than Longford?</h3><p>Yes. The average new rent is €1,111 a month in Cavan and €1,134 in Longford, so Cavan is €23 a month cheaper (July–December 2025).</p><h3>What salary do I need to rent in Cavan?</h3><p>About €59,000 a year before tax, for one person paying the average new rent of €1,111 a month. That keeps rent to 30% of take-home pay, a common budgeting rule of thumb (estimated at 2026 Irish tax rates for a single PAYE employee).</p><h3>How much of a typical wage goes on rent in Cavan?</h3><p>About 42%. Median pay in Co. Cavan is €722.47 a week before tax (2025, CSO), roughly €2,647 a month after tax, and the average new rent is €1,111 a month.</p>
+</section>
+
 <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays, and not adjusted for inflation.
 Take-home pay: median weekly earnings in Co. Cavan (2025, €722.47 before tax, CSO table DEA05), estimated after tax for one PAYE earner at 2026 rates.
-Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Data last changed 2026-11-18.</p>
+Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>

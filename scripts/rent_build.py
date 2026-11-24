@@ -6,12 +6,14 @@ checks both, and only then writes:
   data/rent/rents.json   every place's rent per half-year, for "all bedrooms" and 1, 2, 3 and 4+ beds,
                          plus each county's typical pay and estimated take-home pay ("income")
   data/rent/meta.json    source, licence, latest half-year and the date the data last changed
-  rent/<county>/index.html  one page per county with key facts, for search engines (regenerated every run)
+  rent/<county>/index.html  one page per county: key facts, tables, neighbours, FAQ (regenerated every run)
+  _data/rent_summary.json   one row per county, for the /rent/ hub's table and answers (regenerated every run)
 
 If any check fails, nothing is written and the script exits with an error (the workflow then fails and opens an issue).
 
   python3 scripts/rent_build.py               download from the CSO and build
   python3 scripts/rent_build.py --source F --earnings G   build from saved copies of RIH02 and DEA05 (JSON-stat)
+  python3 scripts/rent_build.py --pages-only  rewrite the pages from the saved data/rent files, no download
   python3 scripts/rent_build.py --self-test   quick checks of the code itself, no download
 """
 import argparse
@@ -21,6 +23,7 @@ import itertools
 import json
 import os
 import re
+import statistics
 import sys
 import urllib.request
 
@@ -35,6 +38,37 @@ COUNTIES = {"Carlow", "Cavan", "Clare", "Cork", "Donegal", "Dublin", "Galway", "
 # Bedroom categories shown on the page. "1 to 2 bed" and "1 to 3 bed" are left out: they overlap the others.
 BEDS = {"All bedrooms": "all", "One bed": "1", "Two bed": "2", "Three bed": "3", "Four plus bed": "4"}
 DIMS = {"HalfYear", "Number of Bedrooms", "Property Type", "Location"}  # the columns we expect from the CSO
+TYPES = ["Apartment", "Detached house", "Semi detached house", "Terrace house", "Other flats"]  # county pages' type table
+# Counties that share a land border (Republic of Ireland only). The self-test checks every pair goes both ways.
+NEIGHBOURS = {
+    "Carlow": ["Kildare", "Wicklow", "Wexford", "Kilkenny", "Laois"],
+    "Cavan": ["Leitrim", "Longford", "Westmeath", "Meath", "Monaghan"],
+    "Clare": ["Galway", "Tipperary", "Limerick"],
+    "Cork": ["Kerry", "Limerick", "Tipperary", "Waterford"],
+    "Donegal": ["Leitrim"],
+    "Dublin": ["Meath", "Kildare", "Wicklow"],
+    "Galway": ["Mayo", "Roscommon", "Offaly", "Tipperary", "Clare"],
+    "Kerry": ["Cork", "Limerick"],
+    "Kildare": ["Dublin", "Meath", "Offaly", "Laois", "Carlow", "Wicklow"],
+    "Kilkenny": ["Carlow", "Laois", "Tipperary", "Waterford", "Wexford"],
+    "Laois": ["Offaly", "Kildare", "Carlow", "Kilkenny", "Tipperary"],
+    "Leitrim": ["Donegal", "Sligo", "Roscommon", "Longford", "Cavan"],
+    "Limerick": ["Clare", "Tipperary", "Cork", "Kerry"],
+    "Longford": ["Leitrim", "Roscommon", "Westmeath", "Cavan"],
+    "Louth": ["Meath", "Monaghan"],
+    "Mayo": ["Galway", "Roscommon", "Sligo"],
+    "Meath": ["Louth", "Monaghan", "Cavan", "Westmeath", "Offaly", "Kildare", "Dublin"],
+    "Monaghan": ["Cavan", "Meath", "Louth"],
+    "Offaly": ["Westmeath", "Meath", "Kildare", "Laois", "Tipperary", "Galway", "Roscommon"],
+    "Roscommon": ["Sligo", "Leitrim", "Longford", "Westmeath", "Offaly", "Galway", "Mayo"],
+    "Sligo": ["Mayo", "Roscommon", "Leitrim"],
+    "Tipperary": ["Galway", "Offaly", "Laois", "Kilkenny", "Waterford", "Cork", "Limerick", "Clare"],
+    "Waterford": ["Cork", "Tipperary", "Kilkenny", "Wexford"],
+    "Westmeath": ["Meath", "Cavan", "Longford", "Roscommon", "Offaly"],
+    "Wexford": ["Wicklow", "Carlow", "Kilkenny", "Waterford"],
+    "Wicklow": ["Dublin", "Kildare", "Carlow", "Wexford"],
+}
+RULE = 0.30  # "rent under 30% of take-home pay", a common budgeting rule of thumb, used for "what salary do I need"
 
 # ---- Tax rates for a single PAYE employee. UPDATE ONCE A YEAR after the Budget (the build warns in January). ----
 # Checked Nov 2026 on revenue.ie (USC standard rates, Budget 2026 summary) and gov.ie (PRSI Class A rates).
@@ -61,6 +95,16 @@ def take_home_monthly(weekly):
             usc += max(0, top - start) * rate
             start = end or start
     return (year - tax - usc - year * TAX["prsi"]) / 12
+
+
+def salary_needed(rent):
+    """Gross yearly pay (to the nearest €500) whose estimated take-home keeps `rent` at RULE of take-home pay."""
+    want, lo, hi = rent / RULE, 425.0, 20_000.0
+    check(take_home_monthly(lo) < want < take_home_monthly(hi), f"Rent €{rent} is outside what salary_needed() handles.")
+    for _ in range(60):  # take-home rises with pay, so halve the range until it pins the weekly pay
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if take_home_monthly(mid) < want else (lo, mid)
+    return round(hi * 52 / 500) * 500
 
 
 def earnings_by_county(table, previous_meta=None):
@@ -177,6 +221,13 @@ def build(table, earnings, previous_meta=None):
         series = rent.setdefault(pid, {}).setdefault(BEDS[r["Number of Bedrooms"]], [None] * len(periods))
         series[col[r["HalfYear"]]] = round(r["value"])
 
+    # Each county's latest rent by property type (all bedrooms), for the county pages.
+    types = {}
+    for r in pub:
+        if r["Location"] in COUNTIES and r["HalfYear"] == latest and r["Number of Bedrooms"] == "All bedrooms" \
+                and r["Property Type"] in TYPES:
+            types.setdefault(slug(r["Location"]), {})[r["Property Type"]] = round(r["value"])
+
     # No sudden empty data: every county must have an "all bedrooms" rent for the latest half-year, in a sane range.
     counties = [p for p in places.values() if p["level"] == "county"]
     check(len(counties) == 26, f"Expected 26 counties, found {len(counties)}.")
@@ -190,6 +241,7 @@ def build(table, earnings, previous_meta=None):
         "periods": periods,
         "places": sorted(places.values(), key=lambda p: (p["county"], p["level"] != "county", p["name"])),
         "rent": {pid: rent[pid] for pid in sorted(rent)},
+        "types": {c: types[c] for c in sorted(types)},
         "income": earnings_by_county(earnings, previous_meta),
     }
     meta = {
@@ -245,22 +297,78 @@ def change(s, i, years):
     return f"{'up' if d >= 0 else 'down'} €{abs(d):,} ({abs(pct)}%)"
 
 
-def county_page(c, out, meta, rank):
-    P, rent, inc = out["periods"], out["rent"], out["income"]["counties"][c]
-    cid, e = slug(c), html.escape
-    s = rent[cid]["all"]
-    i = max(k for k, v in enumerate(s) if v is not None)
-    now, ch1, ch10 = s[i], change(s, i, 1), change(s, i, 10)
-    pct = round(now / inc["take_home"] * 100)
-    facts = [f"The average monthly rent for a new tenancy in County {c} was <strong>€{now:,}</strong> in {when(P[i])}, for all homes."]
-    if ch1 and ch10:
-        facts.append(f"That is {ch1} on a year earlier, and {ch10} on ten years earlier.")
-    facts.append(f"{c} is the {'most' if rank == 1 else ordinal(rank) + ' most'} expensive of Ireland's 26 counties for new rents."
-                 f" On typical pay in Co. {c}, that rent takes about {pct}% of take-home pay.")
+def nice_date(iso):
+    d = datetime.date.fromisoformat(iso[:10])
+    return f"{d.day} {d:%B %Y}"
+
+
+def pct_text(p):
+    return "–" if p is None else f"{'+' if p >= 0 else '−'}{abs(p)}%"
+
+
+def summary(out, meta):
+    """One row per county, most expensive first. The /rent/ hub (via _data/rent_summary.json) and the county pages read it."""
+    P, rent, inc = out["periods"], out["rent"], out["income"]
+    rows = []
+    for c in sorted(COUNTIES):
+        s = rent[slug(c)]["all"]  # build() checked every county has a rent for the latest half-year
+        now, prev = s[-1], (s[-3] if len(s) > 2 else None)
+        pay = inc["counties"][c]
+        rows.append({"name": c, "id": slug(c), "rent": now, "rent_eur": f"€{now:,}",
+                     "change_pct": round((now / prev - 1) * 100) if prev else None,
+                     "weekly_pay": pay["weekly"], "take_home": pay["take_home"],
+                     "share_pct": round(now / pay["take_home"] * 100)})
+    rows.sort(key=lambda r: (-r["rent"], r["name"]))
+    for k, r in enumerate(rows, 1):
+        r["rank"] = k
+    return {"latest_period": P[-1], "latest_label": when(P[-1]), "year": P[-1][:4],
+            "data_updated": nice_date(meta.get("cso_updated") or meta["last_updated"]), "site_changed": nice_date(meta["last_updated"]),
+            "earnings_year": inc["year"], "tax_year": inc["tax_year"],
+            "median_rent": round(statistics.median(r["rent"] for r in rows)),
+            "median_eur": f"€{round(statistics.median(r['rent'] for r in rows)):,}", "counties": rows}
+
+
+def county_page(c, out, meta, summ):
+    P, rent, e = out["periods"], out["rent"], html.escape
+    by = {r["name"]: r for r in summ["counties"]}
+    me, cid, inc = by[c], slug(c), out["income"]["counties"][c]
+    s, i = rent[cid]["all"], len(P) - 1
+    now, period, yr = s[i], when(P[i]), P[i][:4]
+    ch1, ch10 = change(s, i, 1), change(s, i, 10)
+    share, salary, med = me["share_pct"], salary_needed(now), summ["median_rent"]
+    nbrs = sorted((by[n] for n in NEIGHBOURS[c]), key=lambda r: (-r["rent"], r["name"]))
+    close = min(nbrs, key=lambda r: (abs(r["rent"] - now), r["name"]))  # the most interesting "is it cheaper than…"
+    source = (f'Data last updated: {summ["data_updated"]} · Source: RTB via CSO (<a href="https://data.cso.ie/table/RIH02">RIH02</a>), '
+              f'earnings CSO (<a href="https://data.cso.ie/table/DEA05">DEA05</a>)')
+
+    # ---- FAQ: every answer is worked out from the data above ----
+    faq = [(f"What is the average rent in {c}?",
+            f"€{now:,} a month for a new tenancy in {period}, averaged over all homes (RTB figures published by the CSO).")]
+    if ch1:
+        faq.append((f"Is rent going up in {c}?",
+                    f"{'Yes' if s[i] > s[i - 2] else 'No'}: the average new rent is {ch1} on a year earlier"
+                    + (f", and {ch10} on ten years earlier." if ch10 else ".")))
+    n, nr = close["name"], close["rent"]
+    faq.append((f"Is {c} cheaper than {n}?",
+                f"Yes. The average new rent is €{now:,} a month in {c} and €{nr:,} in {n}, so {c} is €{nr - now:,} a month cheaper ({period})."
+                if now < nr else
+                f"No. The average new rent is €{now:,} a month in {c} and €{nr:,} in {n}, so {c} is €{now - nr:,} a month dearer ({period})."
+                if now > nr else f"They are the same: the average new rent is €{now:,} a month in both ({period})."))
+    faq.append((f"What salary do I need to rent in {c}?",
+                f"About €{salary:,} a year before tax, for one person paying the average new rent of €{now:,} a month. "
+                f"That keeps rent to {round(RULE * 100)}% of take-home pay, a common budgeting rule of thumb "
+                f"(estimated at {out['income']['tax_year']} Irish tax rates for a single PAYE employee)."))
+    faq.append((f"How much of a typical wage goes on rent in {c}?",
+                f"About {share}%. Median pay in Co. {c} is €{inc['weekly']:,.2f} a week before tax ({out['income']['year']}, CSO), "
+                f"roughly €{inc['take_home']:,} a month after tax, and the average new rent is €{now:,} a month."))
+
     beds = "".join(
         f"<tr><td>{label}</td><td>{'€{:,}'.format(v[-1]) if v and v[-1] is not None else '–'}</td></tr>"
         for key, label in [("all", "All homes"), ("1", "1 bed"), ("2", "2 beds"), ("3", "3 beds"), ("4", "4+ beds")]
         for v in [rent[cid].get(key)])
+    types = out.get("types", {}).get(cid, {})
+    type_rows = "".join(f"<tr><td>{t.replace('Semi detached', 'Semi-detached').replace('Terrace house', 'Terraced house')}</td>"
+                        f"<td>{'€{:,}'.format(types[t]) if t in types else '–'}</td></tr>" for t in TYPES)
     areas = []
     for p in out["places"]:
         a = rent[p["id"]].get("all", [])
@@ -269,21 +377,41 @@ def county_page(c, out, meta, rank):
             areas.append((a[k], p, P[k]))
     rows = "".join(f'<tr><td><a href="/rent/?area={p["id"]}">{e(p["name"])}</a></td><td>€{v:,}</td><td>{when(w)}</td></tr>'
                    for v, p, w in sorted(areas, key=lambda r: (-r[0], r[1]["name"])))
-    title = f"Rent in {c}: average €{now:,} a month ({P[i][:4]})"
-    desc = (f"The average new rent in County {c} is €{now:,} a month ({when(P[i])})"
-            + (f", {ch10.split(' ')[0]} {ch10.split('(')[1][:-1]} in 10 years" if ch10 else "")  # "up 100%"
-            + f". Rents for every town and area in {c}, by bedrooms, from official RTB data.")
+    cmp_rows = "".join(
+        f'<tr><td>{"<strong>" + e(r["name"]) + "</strong>" if r is me else f"""<a href="/rent/{r["id"]}/">{e(r["name"])}</a>"""}</td>'
+        f'<td>€{r["rent"]:,}</td><td>{pct_text(r["change_pct"])}</td><td>{r["share_pct"]}%</td></tr>'
+        for r in sorted(nbrs + [me], key=lambda r: (-r["rent"], r["name"])))
+    gap = now - med
+    vs_mid = ("exactly the middle county's" if gap == 0 else
+              f"€{abs(gap):,} ({abs(round(gap / med * 100))}%) {'above' if gap > 0 else 'below'} the middle county's")
+
+    title = f"Average Rent in {c} {yr}: €{now:,}/month"
+    desc = (f"The average new rent in County {c} is €{now:,} a month ({period})"
+            + (f", {ch1.split(' (')[0]} on a year" if ch1 else "")
+            + f". By bedrooms, property type and town, rent vs pay, neighbouring counties and FAQs, from official RTB data.")
+    dataset = {"name": f"Average monthly rent of new tenancies in County {c}, 2008–{yr}",
+               "description": f"The Residential Tenancies Board's average monthly rent for new tenancies in County {c} and its towns, "
+                              f"by bedrooms and property type, every half-year since 2008, published by the CSO in table RIH02.",
+               "url": "https://data.cso.ie/table/RIH02", "license": "https://creativecommons.org/licenses/by/4.0/",
+               "place": f"County {c}, Ireland", "keywords": ["rent", c, "Ireland", "RTB", "CSO", "housing"],
+               "sources": ["https://data.cso.ie/table/RIH02", "https://data.cso.ie/table/DEA05"],
+               "creator": "Residential Tenancies Board (RTB), published by the Central Statistics Office (CSO)"}
+    fm = lambda v: json.dumps(v, ensure_ascii=False)  # JSON is valid YAML, and safe for any text
     return f"""---
 # Written by scripts/rent_build.py from data/rent/rents.json. Don't edit by hand: changes are overwritten on the next refresh.
 layout: default
-title: {json.dumps(title, ensure_ascii=False)}
-description: {json.dumps(desc, ensure_ascii=False)}
-rent_county: {json.dumps(c)}
+title: {fm(title)}
+description: {fm(desc)}
+rent_county: {fm(c)}
 image: {{ path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent Reality Check at malavnaik.com/rent" }}
+dataset: {fm(dataset)}
+faq: {fm([{"q": q, "a": a} for q, a in faq])}
 ---
 <p class="eyebrow"><a href="/rent/">Irish Rent Reality Check</a> / {e(c)}</p>
-<h1>Rent in {e(c)}</h1>
-<p class="lead" style="max-width:46rem">{' '.join(facts)}</p>
+<h1>Average rent in {e(c)} ({yr})</h1>
+<p class="lead" style="max-width:46rem">The average monthly rent for a new tenancy in County {e(c)} was <strong>€{now:,}</strong> in {period}{f", {ch1} on a year earlier" if ch1 else ""}.</p>
+<p class="small muted">{source}</p>
+<p style="max-width:46rem">{e(c)} is the {'most' if me['rank'] == 1 else ordinal(me['rank']) + ' most'} expensive of Ireland's 26 counties for new rents{f", and rents are {ch10} on ten years earlier" if ch10 else ""}. On typical pay in Co. {e(c)}, the average rent takes about {share}% of take-home pay.</p>
 <p><a class="btn btn-accent" href="/rent/?area={cid}">Explore {e(c)} in the rent tool</a></p>
 
 <section class="card" style="margin:1.5rem 0" aria-labelledby="beds-title">
@@ -291,31 +419,62 @@ image: {{ path: /images/rent/og.png, width: 1200, height: 630, alt: "Irish Rent 
   <table><thead><tr><th scope="col">Bedrooms</th><th scope="col">Average monthly rent</th></tr></thead><tbody>{beds}</tbody></table>
   <p class="small muted">– means the RTB published no average: too few new tenancies were registered.</p>
 </section>
-
+{f'''
+<section class="card" style="margin:1.5rem 0" aria-labelledby="types-title">
+  <h2 id="types-title">By property type, {when(P[-1])}</h2>
+  <table><thead><tr><th scope="col">Property type</th><th scope="col">Average monthly rent</th></tr></thead><tbody>{type_rows}</tbody></table>
+  <p class="small muted">All bedroom counts. – means the RTB published no average for that type.</p>
+</section>
+''' if types else ''}
 <section class="card" style="margin:1.5rem 0" aria-labelledby="areas-title">
   <h2 id="areas-title">Towns and areas in {e(c)}, all homes</h2>
   <div style="overflow-x:auto"><table><thead><tr><th scope="col">Area</th><th scope="col">Average monthly rent</th><th scope="col">Half-year</th></tr></thead><tbody>{rows}</tbody></table></div>
   <p class="small muted">Most expensive first. Areas without a published figure since {when(P[-5])} are left out.</p>
 </section>
 
+<section class="card" style="margin:1.5rem 0" aria-labelledby="pay-title">
+  <h2 id="pay-title">Rent vs pay in {e(c)}</h2>
+  <table><tbody>
+    <tr><th scope="row">Median weekly pay, before tax ({out["income"]["year"]})</th><td>€{inc["weekly"]:,.2f}</td></tr>
+    <tr><th scope="row">Estimated take-home pay a month</th><td>€{inc["take_home"]:,}</td></tr>
+    <tr><th scope="row">Average new rent a month</th><td>€{now:,}</td></tr>
+    <tr><th scope="row">Share of take-home pay on rent</th><td>{share}%</td></tr>
+    <tr><th scope="row">Pay needed to keep rent to {round(RULE * 100)}% of take-home</th><td>about €{salary:,} a year</td></tr>
+  </tbody></table>
+  <p class="small muted">One person on the county's median pay, after income tax, USC and PRSI at {out["income"]["tax_year"]} rates (single PAYE employee). An estimate, not tax advice.</p>
+</section>
+
+<section class="card" style="margin:1.5rem 0" aria-labelledby="compare-title">
+  <h2 id="compare-title">How {e(c)} compares</h2>
+  <p>At €{now:,} a month, {e(c)}'s average new rent is {vs_mid} (€{med:,}: half of Ireland's 26 counties are dearer, half cheaper). The CSO's average-rent tables don't include a national figure, so this compares with the middle county instead. Neighbouring counties:</p>
+  <div style="overflow-x:auto"><table><thead><tr><th scope="col">County</th><th scope="col">Average monthly rent</th><th scope="col">Change on a year</th><th scope="col">Share of take-home pay</th></tr></thead><tbody>{cmp_rows}</tbody></table></div>
+  <p class="small muted">{when(P[-1])}. <a href="/rent/#counties-title">All 26 counties</a>.</p>
+</section>
+
+<section style="margin:1.5rem 0" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently asked questions</h2>
+  {"".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in faq)}
+</section>
+
 <p class="small muted">Averages for <strong>new</strong> tenancies registered with the RTB, not what every tenant pays, and not adjusted for inflation.
 Take-home pay: median weekly earnings in Co. {e(c)} ({out["income"]["year"]}, €{inc["weekly"]:,.2f} before tax, CSO table DEA05), estimated after tax for one PAYE earner at {out["income"]["tax_year"]} rates.
-Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Data last changed {meta["last_updated"]}.</p>
+Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a> and <a href="https://data.cso.ie/table/DEA05">DEA05</a>, © CSO and RTB, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 """
 
 
-def write_county_pages(out, meta):
-    """Write rent/<county>/index.html for all 26 counties. Same data in, same pages out, so git only sees real changes."""
-    P, rent = out["periods"], out["rent"]
-    latest = {c: rent[slug(c)]["all"][-1] for c in COUNTIES}  # build() checked every county has one
-    order = sorted(COUNTIES, key=lambda c: -latest[c])
+def write_pages(out, meta):
+    """Write rent/<county>/index.html for all 26 counties and _data/rent_summary.json for the hub.
+    Same data in, same files out, so git only sees real changes."""
+    summ = summary(out, meta)
     for c in COUNTIES:
-        page = county_page(c, out, meta, order.index(c) + 1)
-        assert f"€{latest[c]:,}" in page, c
+        page = county_page(c, out, meta, summ)
+        assert f"€{out['rent'][slug(c)]['all'][-1]:,}" in page and page.count("<h3>") >= 4 and "Data last updated" in page, c
         os.makedirs(os.path.join(ROOT, "rent", slug(c)), exist_ok=True)
         with open(os.path.join(ROOT, "rent", slug(c), "index.html"), "w", encoding="utf-8") as f:
             f.write(page)
-    print(f"Wrote {len(COUNTIES)} county pages in rent/ (latest {P[-1]}).")
+    with open(os.path.join(ROOT, "_data", "rent_summary.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps(summ, indent=1, ensure_ascii=False) + "\n")
+    print(f"Wrote {len(COUNTIES)} county pages in rent/ and _data/rent_summary.json (latest {out['periods'][-1]}).")
 
 
 def self_test():
@@ -341,6 +500,10 @@ def self_test():
     assert round(take_home_monthly(500), 2) == round((26000 - 1200 - 339.82 - 1131) / 12, 2)
     assert [ordinal(n) for n in (1, 2, 3, 4, 11, 12, 13, 21, 22)] == ["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd"]
     assert change([100, None, 150], 2, 1) == "up €50 (50%)" and change([100, None, None, 150], 3, 1) is None
+    assert set(NEIGHBOURS) == COUNTIES and all(c in NEIGHBOURS[n] for c in COUNTIES for n in NEIGHBOURS[c]), "NEIGHBOURS isn't two-way"
+    for r in (900, 1500, 2600):  # the pay found really does keep rent at about 30% of take-home (within the €500 rounding)
+        assert abs(take_home_monthly(salary_needed(r) / 52) * RULE - r) < 15, r
+    assert nice_date("2026-05-14T11:00:00Z") == "14 May 2026" and pct_text(-3) == "−3%" and pct_text(None) == "–"
     print("Self-test passed.")
 
 
@@ -349,23 +512,26 @@ def main():
     ap.add_argument("--source", help="saved JSON-stat copy of RIH02 instead of downloading")
     ap.add_argument("--earnings", help="saved JSON-stat copy of DEA05 instead of downloading")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--pages-only", action="store_true", help="rewrite the pages from the saved data, no download")
     a = ap.parse_args()
     if a.self_test:
         return self_test()
+    meta_path = os.path.join(OUT, "meta.json")
+    if a.pages_only:
+        return write_pages(json.load(open(os.path.join(OUT, "rents.json"), encoding="utf-8")), json.load(open(meta_path)))
     def load(path, code):
         if path:
             return json.load(open(path, encoding="utf-8"))
         with urllib.request.urlopen(API.format(code), timeout=300) as r:
             return json.load(r)
     table, earnings = load(a.source, "RIH02"), load(a.earnings, "DEA05")
-    meta_path = os.path.join(OUT, "meta.json")
     previous = json.load(open(meta_path)) if os.path.exists(meta_path) else None
     try:
         out, meta = build(table, earnings, previous)
     except CheckFailed as e:
         sys.exit(f"CHECK FAILED, nothing was published: {e}")
     write(out, meta)
-    write_county_pages(out, json.load(open(meta_path)))
+    write_pages(out, json.load(open(meta_path)))
 
 
 if __name__ == "__main__":
