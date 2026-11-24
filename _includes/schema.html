@@ -76,7 +76,9 @@
       "description": {{ page.dataset.description | jsonify }},
       "url": {{ page.dataset.url | jsonify }},
 {% if page.dataset.license %}      "license": {{ page.dataset.license | jsonify }},
-{% endif %}      "sameAs": {{ page_url | jsonify }},
+{% endif %}{%- comment -%} When the data itself last changed: the CSO's own update date for rent pages, else the page's last commit. {%- endcomment %}
+{% assign ds_mod = site.data.lastmod[page.path] | default: site.time | date: "%Y-%m-%d" %}{% if page.url contains "/rent/" %}{% assign ds_mod = site.data.rent_summary.data_updated_iso %}{% endif %}      "dateModified": {{ ds_mod | jsonify }},
+      "sameAs": {{ page_url | jsonify }},
       "keywords": {{ page.dataset.keywords | join: ", " | jsonify }},
       "spatialCoverage": {{ page.dataset.place | jsonify }},
       "isAccessibleForFree": true,
