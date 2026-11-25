@@ -42,9 +42,9 @@
       "headline": {{ page.title | jsonify }},
       "description": {{ page.description | jsonify }},
       "image": {{ page.image.path | default: page.image | absolute_url | jsonify }},
-      "author": { "@id": {{ person_id | jsonify }}, "name": "Malav Naik", "url": {{ "/about/" | absolute_url | jsonify }} },
+      "author": { "@type": "Person", "@id": {{ person_id | jsonify }}, "name": "Malav Naik", "url": {{ "/about/" | absolute_url | jsonify }} },
       "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-      "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+      "dateModified": {{ site.data.lastmod[page.path] | default: page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
       "mainEntityOfPage": { "@type": "WebPage", "@id": {{ page_url | jsonify }} },
       "keywords": {{ page.tags | join: ", " | jsonify }},
       "inLanguage": "en"
@@ -84,11 +84,11 @@
       "isAccessibleForFree": true,
       "creator": {% if page.dataset.creator %}{ "@type": "Organization", "name": {{ page.dataset.creator | jsonify }} }{% else %}{ "@id": {{ person_id | jsonify }}, "name": "Malav Naik" }{% endif %},
       "isBasedOn": {{ page.dataset.sources | jsonify }}
-    }{% endif %}{% if page.faq %},
+    }{% endif %}{% assign faq = page.faq | default: site.data[page.faq_from].faq %}{% if faq %},
     {
       "@type": "FAQPage",
       "url": {{ page_url | jsonify }},
-      "mainEntity": [{% for f in page.faq %}
+      "mainEntity": [{% for f in faq %}
         { "@type": "Question", "name": {{ f.q | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.a | markdownify | strip_html | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
       ]
     }{% endif %}{% unless page.url == "/" or page.url == "/404.html" %},

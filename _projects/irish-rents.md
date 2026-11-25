@@ -16,6 +16,24 @@ featured: true
 code_url: https://github.com/malavnaik99/irish-rents-dataset
 demo_url: https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb
 tech: [Python, pandas, Kaggle, Hugging Face Datasets, GitHub Actions, CSO open data]
+# Shown at the end of the page, with FAQPage schema (_includes/faq.html, _includes/sources.html).
+faq:
+  - q: "Where does this Irish rent data come from?"
+    a: "From CSO table [RIH02](https://data.cso.ie/table/RIH02), the RTB Average Monthly Rent Report: the average monthly rent of new tenancies registered with the Residential Tenancies Board, published by the Central Statistics Office."
+  - q: "What does the cleaned dataset contain?"
+    a: "201,912 rents for 437 places (all 26 counties, 36 towns, cities and Dublin postal districts, and 375 smaller areas), every half-year from 2008 to 2025, by number of bedrooms and property type."
+  - q: "Is the rent data free to use?"
+    a: "Yes. The source data is © Central Statistics Office and Residential Tenancies Board, licensed CC BY 4.0, and the cleaned dataset uses the same licence: reuse it with credit."
+  - q: "Why are some rents missing?"
+    a: "The RTB leaves a cell empty when too few new tenancies were registered for a reliable average. Those rows are dropped and the reason is documented, so nobody averages in a zero."
+  - q: "Is this what every tenant pays?"
+    a: "No. These are averages for new tenancies only, not what all tenants pay, and they're not adjusted for inflation."
+  - q: "Where can I download the dataset?"
+    a: "On [Kaggle](https://www.kaggle.com/datasets/malavnaik/irish-rents-rtb) and [Hugging Face](https://huggingface.co/datasets/Malavnaik/irish-rents-rtb). A [Kaggle notebook](https://www.kaggle.com/code/malavnaik/cleaning-irish-rents-rtb) shows every cleaning step and rebuilds the data from the official source."
+sources:
+  - name: "CSO table RIH02: RTB Average Monthly Rent Report"
+    url: https://data.cso.ie/table/RIH02
+    note: "average monthly rent of new tenancies, © Central Statistics Office and Residential Tenancies Board, CC BY 4.0"
 ---
 **Try it:** the [Irish Rent Reality Check](/rent/) turns this data into a free tool: pick any area to see its rent, how it has changed, how much of typical pay it takes, and where your budget fits.
 

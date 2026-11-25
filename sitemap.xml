@@ -14,6 +14,6 @@ listed: no PDFs, images or /assets/. A page leaves the sitemap with `sitemap: fa
 {%- endunless %}{% endfor %}
 {%- assign pages = site.projects | concat: site.html_pages %}
 {%- for p in pages %}{% if p.stamp_guide %}{% include stamps-live.html stamp=p.stamp %}{% unless stamps_live %}{% continue %}{% endunless %}{% endif %}{% unless p.sitemap == false or p.url == "/404.html" or p.redirect_to %}
-<url><loc>{{ p.url | absolute_url | xml_escape }}</loc><lastmod>{{ p.last_modified_at | default: site.data.lastmod[p.path] | default: site.time | date: "%Y-%m-%d" }}</lastmod></url>
+<url><loc>{{ p.url | absolute_url | xml_escape }}</loc><lastmod>{{ site.data.lastmod[p.path] | default: p.last_modified_at | default: site.time | date: "%Y-%m-%d" }}</lastmod></url>
 {%- endunless %}{% endfor %}
 </urlset>

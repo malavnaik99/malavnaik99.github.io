@@ -17,6 +17,16 @@ dataset:
   place: "Ireland"
   keywords: [rent, Ireland, RTB, CSO, housing, Dublin, open data]
   sources: [https://data.cso.ie/table/RIH02]
+# FAQ: written each week by scripts/rent_build.py into _data/rent_summary.json, so its numbers stay current (see _includes/faq.html).
+faq_from: rent_summary
+# Sources section (_includes/sources.html).
+sources:
+  - name: "CSO table RIH02: RTB Average Monthly Rent Report"
+    url: https://data.cso.ie/table/RIH02
+    note: "average monthly rent of new tenancies, © Central Statistics Office and Residential Tenancies Board, CC BY 4.0"
+  - name: "CSO table DEA05: median weekly earnings by county"
+    url: https://data.cso.ie/table/DEA05
+    note: "pay figures for the rent-vs-pay estimates, © Central Statistics Office, CC BY 4.0"
 ---
 {%- assign R = site.data.rent_summary %}{% assign top = R.counties | first %}{% assign low = R.counties | last %}{% assign dub = R.counties | where: "id", "dublin" | first %}
 {%- comment -%}
@@ -213,6 +223,9 @@ document.querySelectorAll("table[data-sortable]").forEach(function (t) {
   </ol>
   <p class="small">Code: <a href="https://github.com/malavnaik99/malavnaik99.github.io/blob/main/scripts/rent_build.py">the build script</a> · <a href="https://github.com/malavnaik99/malavnaik99.github.io/blob/main/rent/index.html">this page</a>. Built by <a href="{{ '/about/' | relative_url }}">Malav Naik</a>, Data &amp; GenAI Engineer in Dublin.</p>
 </section>
+
+{% include faq.html %}
+{% include sources.html %}
 
 <p class="small muted" id="rentSource">Sources: <a href="https://data.cso.ie/table/RIH02">CSO table RIH02</a>, RTB Average Monthly Rent Report, and <a href="https://data.cso.ie/table/DEA05">CSO table DEA05</a>, Weekly Earnings by county, © Central Statistics Office and Residential Tenancies Board, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>

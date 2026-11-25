@@ -25,6 +25,34 @@ dataset:
   place: "Dublin, Ireland"
   keywords: [Dublinbikes, bike sharing, weather, Dublin, GBFS, Met Éireann, dbt, DuckDB, Parquet]
   sources: [https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw]
+# Shown at the end of the page, with FAQPage schema (_includes/faq.html, _includes/sources.html).
+faq:
+  - q: "Where does the Dublin Bikes data come from?"
+    a: "Station data comes from the public Dublinbikes feed (GBFS), run by Dublin City Council and JCDecaux. Weather is Met Éireann's hourly observations at Dublin Airport."
+  - q: "Is the Dublin Bikes data free to use?"
+    a: "Yes. The Dublinbikes feed and Met Éireann's weather are both open data under CC BY 4.0, and my [raw snapshots](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw) and [modelled tables](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts) on Hugging Face are CC BY 4.0 too: reuse them with a credit and a link."
+  - q: "How often is the data collected?"
+    a: "Every Dublinbikes station is recorded every 15 minutes, and the Dublin Airport weather once an hour. Every morning dbt rebuilds the modelled tables."
+  - q: "How do you know the data is correct?"
+    a: "14 automatic data tests run every time: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day). A failure sends me a Telegram alert."
+  - q: "How much does the pipeline cost to run?"
+    a: "€0. It runs on free tiers only: GitHub Actions for the jobs and Hugging Face for the data and dbt docs."
+  - q: "Where can I see what the data shows?"
+    a: "On the [Dublin Bikes statistics](/dublin-bikes/) page, which updates every month with the busiest stations, peak hours and the rain effect."
+sources:
+  - name: "Dublinbikes API (Dublin City Council), on data.gov.ie"
+    url: https://data.gov.ie/dataset/dublinbikes-api
+    note: "station bikes and free docks (GBFS feed, Dublin City Council / JCDecaux), CC BY 4.0"
+  # TODO – please confirm: which Met Éireann feed the pipeline reads (see dublin-data-pipeline's collector), then add its url.
+  # Possible match, not checked against the code: https://data.gov.ie/dataset/dublin-airport-hourly-data
+  - name: "Met Éireann: Dublin Airport weather observations"
+    note: "hourly rain and weather, CC BY 4.0"
+  - name: "OpenStreetMap"
+    url: https://www.openstreetmap.org/copyright
+    note: "street map behind the station map, © OpenStreetMap contributors"
+  - name: "My recorded snapshots on Hugging Face"
+    url: https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw
+    note: "every 15-minute snapshot the pipeline has saved, CC BY 4.0"
 ---
 ## The problem
 Public city data is published live and then gone: the Dublinbikes feed only shows *right now*. To answer a question like **"how do weather and time of day change how many bikes are free?"** you need history, collected reliably and modelled so it can be trusted.

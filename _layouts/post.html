@@ -3,15 +3,19 @@ layout: default
 ---
 {% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200 | at_least: 1 %}{% if page.minutes %}{% assign minutes = page.minutes %}{% endif %}
 {% assign series = site.data.series | where: "id", page.series | first %}
-{% assign updated = page.last_modified_at | default: page.date %}
+{% comment %} "Last updated" = the post file's last git commit (scripts/lastmod.py, run by the deploy). The same expression is in schema.html's dateModified. {% endcomment %}
+{% assign updated = site.data.lastmod[page.path] | default: page.last_modified_at | default: page.date %}
+{% assign published_day = page.date | date: "%Y-%m-%d" %}{% assign updated_day = updated | date: "%Y-%m-%d" %}
+{% assign idn = site.data.identity %}
 <article>
   <header>
     {% if series %}<p class="eyebrow"><a href="{{ '/blog/series/' | append: series.id | append: '/' | relative_url }}">{{ series.name }}</a></p>{% endif %}
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
-    <p class="meta">Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
-      · Updated <time datetime="{{ updated | date_to_xmlschema }}">{{ updated | date: "%-d %B %Y" }}</time>
-      · {{ minutes }} min read · by <a href="{{ '/about/' | relative_url }}">Malav Naik</a></p>
+    <p class="meta">By <a href="{{ '/about/' | relative_url }}" rel="author">{{ idn.name | default: "Malav Naik" }}</a> · {{ idn.job_title | default: "Data & GenAI Engineer" }}, {{ idn.location.city | default: "Dublin" }}<br>
+      Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+      {%- if updated_day > published_day %} · Last updated <time datetime="{{ updated | date_to_xmlschema }}">{{ updated | date: "%-d %B %Y" }}</time>{% endif %}
+      · {{ minutes }} min read</p>
   </header>
   {% if page.tldr %}<aside class="tldr" aria-label="Summary"><p class="eyebrow">TL;DR</p>{{ page.tldr | markdownify }}</aside>{% endif %}
   {% assign h2s = content | split: '<h2 id="' %}{% if h2s.size > 4 %}
@@ -21,12 +25,8 @@ layout: default
   <div class="post-body">
     {{ content | replace: '<img ', '<img loading="lazy" decoding="async" ' | replace_first: 'loading="lazy"', 'fetchpriority="high"' }}
   </div>
-  {% if page.faq %}
-  <section aria-labelledby="faq">
-    <h2 id="faq">Frequently asked questions</h2>
-    {% for f in page.faq %}<h3>{{ f.q }}</h3>{{ f.a | markdownify }}{% endfor %}
-  </section>
-  {% endif %}
+  {% include faq.html %}
+  {% include sources.html %}
   {% if page.tags.size > 0 %}
   <ul class="chips" aria-label="Tags">{% for t in page.tags %}<li><a href="{{ '/blog/topics/' | relative_url }}#tag-{{ t }}">#{{ t }}</a></li>{% endfor %}</ul>
   {% endif %}

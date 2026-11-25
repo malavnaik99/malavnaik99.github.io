@@ -1,0 +1,15 @@
+{%- comment -%}
+  "Frequently asked questions" from front matter. Either list them on the page:
+    faq:
+      - q: "Question?"
+        a: "Answer (Markdown allowed)."
+  or, when the answers come from data, name a _data file whose `faq` list holds them:  faq_from: rent_summary
+  schema.html writes the FAQPage JSON-LD from the same list, so the page and the schema always match.
+{%- endcomment -%}
+{%- assign faq = page.faq | default: site.data[page.faq_from].faq -%}
+{%- if faq %}
+<section aria-labelledby="faq">
+  <h2 id="faq">Frequently asked questions</h2>
+  {% for f in faq %}<h3>{{ f.q }}</h3>{{ f.a | markdownify }}{% endfor %}
+</section>
+{%- endif %}
