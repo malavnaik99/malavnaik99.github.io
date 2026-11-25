@@ -1,0 +1,3 @@
+{%- comment -%} One stamp FAQ answer (include.t = topic, include.r = that stamp's row). The visible FAQ and the FAQPage schema both use this, so they always match word for word. {%- endcomment -%}
+{%- assign r = include.r -%}
+{%- if r and r.reviewed %}{{ r.summary }}{% else %}{{ include.t.depends }}{% endif %} {% if r and r.official_url != "" %}Check the official page: <a href="{{ r.official_url }}">{{ r.source_name }}</a>.{% else %}Ask one of the free services below about your situation.{% endif -%}
