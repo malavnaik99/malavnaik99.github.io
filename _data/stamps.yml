@@ -462,8 +462,8 @@ rows:
       - "For Long Term Residence."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "4"
     topic: work
@@ -473,8 +473,8 @@ rows:
       - "You can establish and operate a business."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "4"
     topic: register
@@ -485,8 +485,8 @@ rows:
       - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "4"
     topic: health
@@ -495,29 +495,29 @@ rows:
       - "You may access state funds and services as determined by Government departments or agencies."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: "The HSE's own eligibility page should be added here."
   - stamp: "4"
     topic: prsi
-    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency. PRSI-based payments have their own conditions, such as your PRSI contributions."
+    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency, so whether you can get a payment depends on that payment's own rules."
     quote:
       - "You may access state funds and services as determined by Government departments or agencies."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
-    notes: "The second sentence comes from the brief, not from this page: add the Department of Social Protection page."
+    last_verified: "2026-11-25"
+    reviewed: true
+    notes: "Add the Department of Social Protection page for the payment's own conditions."
   - stamp: "4"
     topic: means
-    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency. Means-tested payments have their own conditions, such as the Habitual Residence Condition and a means test."
+    summary: "The Stamp 4 conditions say you may access state funds and services as decided by each government department or agency, so whether you can get a payment depends on that payment's own rules."
     quote:
       - "You may access state funds and services as determined by Government departments or agencies."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
-    notes: "The second sentence comes from the brief, not from this page: add the Department of Social Protection page."
+    last_verified: "2026-11-25"
+    reviewed: true
+    notes: "Add the Department of Social Protection page for the payment's own conditions."
   - stamp: "4"
     topic: citizenship
     summary: "Yes, time on Stamp 4 is reckonable residence for citizenship by naturalisation, subject to the other conditions."
@@ -525,8 +525,8 @@ rows:
       - "Stamp 4 is reckonable as residence when applying for citizenship by naturalisation."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 5 ----------------
