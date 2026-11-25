@@ -689,3 +689,7 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .share { margin: 1rem 0 0; }
 /* Launch badge: dark version by default, light version when the site is in light mode */
 .badge-light { display: none; } :root[data-theme="light"] .badge-light { display: inline; } :root[data-theme="light"] .badge-dark { display: none; }
+/* If the badge image can't load (their server, or an ad blocker), show the same link as text instead of a broken image */
+.launch-badge .badge-text { display: none; }
+.launch-badge .badge-off img { display: none !important; }
+.launch-badge .badge-off .badge-text { display: inline-block; padding: .45rem .8rem; border: 1px solid var(--line); border-radius: 8px; font-size: .85rem; color: var(--muted); text-decoration: none; }
