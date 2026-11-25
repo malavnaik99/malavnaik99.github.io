@@ -687,8 +687,6 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { margin: 0 0 1rem; }
 .lab > h2 { margin-bottom: .3rem; }
 .lab > .muted { margin: 0; }
 .share { margin: 1rem 0 0; }
-/* Launch badge: dark version by default, light version when the site is in light mode */
-.badge-light { display: none; } :root[data-theme="light"] .badge-light { display: inline; } :root[data-theme="light"] .badge-dark { display: none; }
 /* If the badge image can't load (their server, or an ad blocker), show the same link as text instead of a broken image */
 .launch-badge .badge-text { display: none; }
 .launch-badge .badge-off img { display: none !important; }
