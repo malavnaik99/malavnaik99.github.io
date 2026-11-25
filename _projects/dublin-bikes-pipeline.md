@@ -40,13 +40,13 @@ faq:
   - q: "Where can I see what the data shows?"
     a: "On the [Dublin Bikes statistics](/dublin-bikes/) page, which updates every month with the busiest stations, peak hours and the rain effect."
 sources:
-  - name: "Dublinbikes API (Dublin City Council), on data.gov.ie"
-    url: https://data.gov.ie/dataset/dublinbikes-api
-    note: "station bikes and free docks (GBFS feed, Dublin City Council / JCDecaux), CC BY 4.0"
-  # TODO – please confirm: which Met Éireann feed the pipeline reads (see dublin-data-pipeline's collector), then add its url.
-  # Possible match, not checked against the code: https://data.gov.ie/dataset/dublin-airport-hourly-data
-  - name: "Met Éireann: Dublin Airport weather observations"
-    note: "hourly rain and weather, CC BY 4.0"
+  # Both addresses are the ones dublin-data-pipeline's ingest.py reads (GBFS and WEATHER near its top).
+  - name: "Dublinbikes GBFS feed (Dublin City Council / JCDecaux)"
+    url: https://api.cyclocity.fr/contracts/dublin/gbfs/v3/gbfs.json
+    note: "station bikes and free docks, every 15 minutes, CC BY 4.0"
+  - name: "Met Éireann weather observations for Dublin"
+    url: https://prodapi.metweb.ie/observations/dublin/today
+    note: "hourly rain and weather, CC BY 4.0, \"Source: Met Éireann\""
   - name: "OpenStreetMap"
     url: https://www.openstreetmap.org/copyright
     note: "street map behind the station map, © OpenStreetMap contributors"
