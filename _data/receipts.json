@@ -6,10 +6,10 @@
   "test": "Says \"live\" only if that run finished in the last 60 minutes; otherwise it says \"runs every 15 min\" and claims nothing live"
  },
  "tests": {
-  "shown": "14",
+  "shown": "Number of data tests (from the pipeline's run log)",
   "dataset": "The Dublin bikes star schema: `fct_station_hour` with `dim_station` and `dim_hour`, built by dbt in DuckDB",
   "file": "The dbt tests in [malavnaik99/dublin-data-pipeline](https://github.com/malavnaik99/dublin-data-pipeline), described on the [case study](/projects/dublin-bikes-pipeline/), step 3",
-  "test": "14 automatic tests on every run: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day); a failure sends a Telegram alert"
+  "test": "Automatic tests on every run, counted from the pipeline's own run log: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day); a failure sends a Telegram alert"
  },
  "rocauc": {
   "shown": "0.957",

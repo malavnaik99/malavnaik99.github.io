@@ -5,7 +5,7 @@ Params: project, n (the row number), level (heading level, default 3).
 {%- endcomment -%}
 {%- assign p = include.project -%}
 {%- assign h = include.level | default: 3 -%}
-{%- if p.headline_lab -%}{%- assign headline = site.data.automation[p.headline_lab] -%}{%- else -%}{%- assign headline = p.headline -%}{%- endif -%}
+{%- if p.headline_lab -%}{%- assign headline = site.data.automation[p.headline_lab] -%}{%- elsif p.headline_pipeline -%}{%- assign headline = site.data.pipeline[p.headline_pipeline] -%}{%- else -%}{%- assign headline = p.headline -%}{%- endif -%}
 <li class="prow">
   <span class="prow-n mono" aria-hidden="true">{{ include.n }}</span>
   <div class="prow-main">

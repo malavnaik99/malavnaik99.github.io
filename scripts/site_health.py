@@ -1,6 +1,6 @@
 """Weekly health check for malavnaik.com (run by .github/workflows/site-health.yml).
 
-Runs seven checks. For each failing check it opens one GitHub Issue titled "Site health: <check>" (or updates the
+Runs eight checks. For each failing check it opens one GitHub Issue titled "Site health: <check>" (or updates the
 one already open); when the check passes again it closes that issue. Without GITHUB_TOKEN it only prints results.
 
     python3 scripts/site_health.py                    # all checks
@@ -190,6 +190,24 @@ def check_sky():
     return [] if age <= 2 else [f"The newest bike data was made at {made}, {age:.1f} hours ago; it should be under 2 hours."]
 
 
+def check_pipeline_tests():
+    """The home page's "N automatic data tests" must match the pipeline's run log (read at each deploy)."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import pipeline_tests
+    status, _, _, body = fetch(pipeline_tests.RUN_LOG)
+    if status != 200:
+        return [f"The pipeline's run log ({pipeline_tests.RUN_LOG}) answered {status} instead of 200 (OK), so deploys keep the last known count."]
+    try:
+        want = pipeline_tests.read(body)["tests_total"]
+    except ValueError as e:
+        return [f"The pipeline's run log isn't in the expected form: {e}"]
+    status, _, _, home = fetch(SITE + "/")
+    shown = re.search(r'<b>(\d+)</b> <span class="k">automatic data tests', home)
+    if status != 200 or not shown:
+        return [f"Couldn't find the \"automatic data tests\" number on the home page (status {status})."]
+    return [] if int(shown.group(1)) == want else [f"The home page says {shown.group(1)} data tests; the pipeline's run log says {want}."]
+
+
 CHECKS = [
     ("Site not loading", check_https,
      "malavnaik.com didn't load over HTTPS, or the http:// / www addresses don't forward to it.",
@@ -215,6 +233,10 @@ CHECKS = [
      "The live bike data behind the home page sky is more than two hours old, so visitors see the saved snapshot instead.",
      "The Dublin bikes pipeline (malavnaik99/dublin-data-pipeline) stopped running or stopped publishing its small \"latest\" file.",
      "1. Open the pipeline repo → **Actions**: is the latest run red, or missing?\n2. If it failed, ask Claude: \"The bike pipeline failed with this error: <paste it>\".\n3. Nothing on malavnaik.com is broken meanwhile: the sky shows the saved snapshot and says so.\n4. To stop these alerts for good, empty the `url` in `_data/sky_live.json`."),
+    ("Data test count out of date", check_pipeline_tests,
+     "The number of automatic data tests shown on the site doesn't match the Dublin bikes pipeline, or the pipeline's run log couldn't be read.",
+     "The pipeline gained or lost a test and the site hasn't been rebuilt since, or Hugging Face (where the run log lives) was down or the file moved.",
+     "1. GitHub → this repo → **Actions → Deploy site to Pages → Run workflow**. Each deploy reads the current count, so this usually fixes it.\n2. If the problem says the run log couldn't be read, check the pipeline repo (malavnaik99/dublin-data-pipeline) → **Actions** for a red run, and that `run_log.json` still exists in the Hugging Face dataset Malavnaik/dublin-bikes-weather-marts.\n3. Nothing else on the site is affected: it shows the last known count meanwhile.\n4. Otherwise ask Claude and paste this issue."),
     ("Employer's client named in the repo", check_client,
      "A file in this repo mentions the company your employer's client is, which your rules forbid anywhere.",
      "New text (a post, a page, notes or code) used the company's name instead of \"a global technology client\".",
@@ -305,7 +327,7 @@ def self_test():
     assert not is_client_word("meta") and not is_client_word("Metadata") and not is_client_word("Data")
     assert all(not is_client_word(w) for w in ["Google", "Accenture", "Anthropic", "OpenAI", "Airbnb"])
     assert check_cname() == [] and (ROOT / "backlinks/tracker.csv").exists()
-    assert any(n == "Bike sky data is old" for n, *_ in CHECKS)
+    assert any(n == "Bike sky data is old" for n, *_ in CHECKS) and any(n == "Data test count out of date" for n, *_ in CHECKS)
     print("Self-test passed.")
 
 
