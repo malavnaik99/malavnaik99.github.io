@@ -13,7 +13,7 @@ permalink: /search.json
   {%- capture x %}{{ p.description }} {{ p.tech | join: " " }}{% endcapture %}
   {"t": {{ p.title | jsonify }}, "u": {{ p.url | relative_url | jsonify }}, "d": {{ p.summary | default: p.description | jsonify }}, "k": "Project", "x": {{ x | jsonify }}},
 {%- endfor -%}
-{%- for p in site.html_pages -%}{%- if p.title and p.sitemap != false and p.redirect_to == nil and p.url != "/" -%}
+{%- for p in site.html_pages -%}{%- if p.stamp_guide -%}{%- include stamps-live.html stamp=p.stamp -%}{%- unless stamps_live -%}{%- continue -%}{%- endunless -%}{%- endif -%}{%- if p.title and p.sitemap != false and p.redirect_to == nil and p.url != "/" -%}
   {"t": {{ p.title | jsonify }}, "u": {{ p.url | relative_url | jsonify }}, "d": {{ p.description | jsonify }}, "k": "Page"},
 {%- endif -%}{%- endfor -%}
   {"t": "Home", "u": "/", "d": {{ site.description | jsonify }}, "k": "Page"}
