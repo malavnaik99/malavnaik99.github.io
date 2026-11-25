@@ -296,5 +296,27 @@
    "share_pct": 42,
    "rank": 26
   }
+ ],
+ "faq": [
+  {
+   "q": "What is the average rent in Dublin?",
+   "a": "€2,162 a month for a new tenancy in July–December 2025, averaged over all homes (RTB figures published by the CSO). [Rent in Dublin by bedrooms, property type and area](/rent/dublin/)."
+  },
+  {
+   "q": "Which county is the cheapest to rent in Ireland?",
+   "a": "Donegal, where the average new rent is €992 a month (July–December 2025). The most expensive county is Dublin, at €2,162."
+  },
+  {
+   "q": "Where does this rent data come from?",
+   "a": "From the Residential Tenancies Board's average monthly rent for new tenancies, published by the Central Statistics Office in [table RIH02](https://data.cso.ie/table/RIH02). Pay figures are median weekly earnings by county from [CSO table DEA05](https://data.cso.ie/table/DEA05). Both are licensed CC BY 4.0."
+  },
+  {
+   "q": "How often is the rent data updated?",
+   "a": "The RTB publishes an average for each half-year. This site checks the CSO for new figures every week and updates itself when they change. The latest figures are for July–December 2025; the CSO last updated them on 14 May 2026."
+  },
+  {
+   "q": "Is this what every tenant pays?",
+   "a": "No. These are averages for new tenancies only. People in long-running tenancies usually pay less, and the figures are not adjusted for inflation."
+  }
  ]
 }

@@ -321,11 +321,37 @@ def summary(out, meta):
     rows.sort(key=lambda r: (-r["rent"], r["name"]))
     for k, r in enumerate(rows, 1):
         r["rank"] = k
+    updated = nice_date(meta.get("cso_updated") or meta["last_updated"])
     return {"latest_period": P[-1], "latest_label": when(P[-1]), "year": P[-1][:4],
-            "data_updated": nice_date(meta.get("cso_updated") or meta["last_updated"]), "data_updated_iso": meta.get("cso_updated") or meta["last_updated"], "site_changed": nice_date(meta["last_updated"]),
+            "data_updated": updated, "data_updated_iso": meta.get("cso_updated") or meta["last_updated"], "site_changed": nice_date(meta["last_updated"]),
             "earnings_year": inc["year"], "tax_year": inc["tax_year"],
             "median_rent": round(statistics.median(r["rent"] for r in rows)),
-            "median_eur": f"€{round(statistics.median(r['rent'] for r in rows)):,}", "counties": rows}
+            "median_eur": f"€{round(statistics.median(r['rent'] for r in rows)):,}", "counties": rows,
+            "faq": hub_faq(rows, when(P[-1]), updated)}
+
+
+def hub_faq(rows, period, updated):
+    """FAQ for the /rent/ hub (shown by _includes/faq.html, FAQPage schema from the same list). Answers are Markdown."""
+    by, top, low = {r["name"]: r for r in rows}, rows[0], rows[-1]
+    d = by["Dublin"]
+    return [
+        {"q": "What is the average rent in Dublin?",
+         "a": f"{d['rent_eur']} a month for a new tenancy in {period}, averaged over all homes (RTB figures published by the CSO). "
+              f"[Rent in Dublin by bedrooms, property type and area](/rent/dublin/)."},
+        {"q": "Which county is the cheapest to rent in Ireland?",
+         "a": f"{low['name']}, where the average new rent is {low['rent_eur']} a month ({period}). "
+              f"The most expensive county is {top['name']}, at {top['rent_eur']}."},
+        {"q": "Where does this rent data come from?",
+         "a": "From the Residential Tenancies Board's average monthly rent for new tenancies, published by the Central Statistics Office "
+              "in [table RIH02](https://data.cso.ie/table/RIH02). Pay figures are median weekly earnings by county from "
+              "[CSO table DEA05](https://data.cso.ie/table/DEA05). Both are licensed CC BY 4.0."},
+        {"q": "How often is the rent data updated?",
+         "a": f"The RTB publishes an average for each half-year. This site checks the CSO for new figures every week and updates itself "
+              f"when they change. The latest figures are for {period}; the CSO last updated them on {updated}."},
+        {"q": "Is this what every tenant pays?",
+         "a": "No. These are averages for new tenancies only. People in long-running tenancies usually pay less, "
+              "and the figures are not adjusted for inflation."},
+    ]
 
 
 def county_page(c, out, meta, summ):
@@ -505,6 +531,9 @@ def self_test():
     for r in (900, 1500, 2600):  # the pay found really does keep rent at about 30% of take-home (within the €500 rounding)
         assert abs(take_home_monthly(salary_needed(r) / 52) * RULE - r) < 15, r
     assert nice_date("2026-05-14T11:00:00Z") == "14 May 2026" and pct_text(-3) == "−3%" and pct_text(None) == "–"
+    rows = [{"name": "Dublin", "rent": 2000, "rent_eur": "€2,000"}, {"name": "Leitrim", "rent": 900, "rent_eur": "€900"}]
+    f = hub_faq(rows, "July–December 2025", "14 May 2026")
+    assert "€2,000" in f[0]["a"] and f[1]["a"].startswith("Leitrim") and "14 May 2026" in f[3]["a"], f
     print("Self-test passed.")
 
 

@@ -10,4 +10,6 @@ layout: default
      {% if page.code_url %}<a class="btn" href="{{ page.code_url }}">Code on GitHub</a>{% endif %}</p>
   {% if page.sandbox %}<h2 class="sr-only">Try it yourself</h2>{% include sandbox-{{ page.sandbox }}.html %}{% endif %}
   {{ content }}
+  {% include faq.html %}
+  {% include sources.html %}
 </article>
