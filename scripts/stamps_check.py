@@ -357,11 +357,13 @@ def self_test():
     shutil.copy(real, tmp)
     DATA = tmp
     try:
-        verify(["4/work", "2/checklist-6"])
+        todo = [r["key"] for r in all_rows(load()) if r.get("summary") and not r["reviewed"]]
+        pick = [k for k in todo if "checklist" not in k][:1] + [k for k in todo if "checklist" in k][:1]
+        verify(pick)  # practise on rows not yet reviewed, so real approvals never make this fail
         after = all_rows(load())
         changed = {r["key"] for r, b in zip(after, all_rows(yaml.safe_load(real.read_text()))) if r != b}
-        assert changed == {"4/work", "2/checklist-6"}, changed
-        assert next(r for r in after if r["key"] == "4/work")["last_verified"] == dt.date.today().isoformat()
+        assert changed == set(pick), (changed, pick)
+        assert all(r["last_verified"] == dt.date.today().isoformat() for r in after if r["key"] in pick)
         assert tmp.read_text().startswith("# Living in Ireland")  # comments kept
     finally:
         DATA = real
