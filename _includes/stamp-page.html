@@ -41,9 +41,16 @@ A row's summary shows only when reviewed; otherwise just its official link. Word
   <h2 id="faq">Frequently asked questions</h2>
   {% for t in D.topics %}{% if t.q %}{% assign r = rows | where: "topic", t.id | first %}
   <h3>{{ t.q | replace: "STAMP", S.name }}</h3>
-  <p>{% if r and r.reviewed %}{{ r.summary }}{% else %}{{ t.depends }}{% endif %} {% if r and r.official_url != "" %}Check the official page: <a href="{{ r.official_url }}">{{ r.source_name }}</a>.{% else %}Ask one of the free services below about your situation.{% endif %}</p>
+  <p>{% include stamp-faq-answer.html t=t r=r %}</p>
   {% endif %}{% endfor %}
 </section>
+
+{%- assign linked = rows | where_exp: "x", "x.official_url != ''" -%}
+{%- if page.stamp == "2" %}{% assign cl = D.checklist | where_exp: "x", "x.official_url != ''" %}{% assign linked = linked | concat: cl %}{% endif -%}
+{%- assign urls = linked | map: "official_url" | uniq -%}
+{%- assign stamp_sources = "" | split: "" -%}
+{%- for u in urls %}{% assign hit = linked | where: "official_url", u | first %}{% assign stamp_sources = stamp_sources | push: hit %}{% endfor -%}
+{% include sources.html items=stamp_sources %}
 
 {% include living-help.html %}
 <p class="small muted">Other stamps: {% for s in D.stamps %}{% unless s.id == page.stamp %}<a href="{{ '/living-in-ireland/stamp-' | append: s.id | append: '/' | relative_url }}">{{ s.name }}</a>{% unless forloop.last %} · {% endunless %}{% endunless %}{% endfor %}</p>
@@ -65,8 +72,8 @@ A row's summary shows only when reviewed; otherwise just its official link. Word
     {
       "@type": "FAQPage",
       "url": {{ page.url | absolute_url | jsonify }},
-      "mainEntity": [{% assign first = true %}{% for t in D.topics %}{% if t.q %}{% assign r = rows | where: "topic", t.id | first %}{% capture a %}{% if r and r.reviewed %}{{ r.summary }}{% else %}{{ t.depends }}{% endif %}{% if r and r.official_url != "" %} Check the official page: {{ r.official_url }}{% else %} Ask a free service such as Citizens Information about your situation.{% endif %}{% endcapture %}{% unless first %},{% endunless %}{% assign first = false %}
-        { "@type": "Question", "name": {{ t.q | replace: "STAMP", S.name | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ a | strip | jsonify }} } }{% endif %}{% endfor %}
+      "mainEntity": [{% assign first = true %}{% for t in D.topics %}{% if t.q %}{% assign r = rows | where: "topic", t.id | first %}{% capture a %}{% include stamp-faq-answer.html t=t r=r %}{% endcapture %}{% unless first %},{% endunless %}{% assign first = false %}
+        { "@type": "Question", "name": {{ t.q | replace: "STAMP", S.name | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ a | strip_html | strip | jsonify }} } }{% endif %}{% endfor %}
       ]
     }
   ]

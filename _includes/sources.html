@@ -4,12 +4,15 @@
       - name: "CSO table RIH02: RTB Average Monthly Rent Report"
         url: https://data.cso.ie/table/RIH02     # leave out if not confirmed: the name shows without a link
         note: "rents of new tenancies, CC BY 4.0" # optional
+  A page can also pass its own list: {% include sources.html items=list %}. Items may use source_name/official_url
+  instead of name/url (the Living in Ireland rows in _data/stamps.yml do).
 {%- endcomment -%}
-{%- if page.sources %}
+{%- assign sources = include.items | default: page.sources -%}
+{%- if sources.size > 0 %}
 <section aria-labelledby="sources">
   <h2 id="sources">Sources</h2>
-  <ul>{% for s in page.sources %}
-    <li>{% if s.url %}<a href="{{ s.url }}">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}{% if s.note %}: {{ s.note }}{% endif %}</li>{% endfor %}
+  <ul>{% for s in sources %}{% assign s_name = s.name | default: s.source_name %}{% assign s_url = s.url | default: s.official_url %}
+    <li>{% if s_url %}<a href="{{ s_url }}">{{ s_name }}</a>{% else %}{{ s_name }}{% endif %}{% if s.note %}: {{ s.note }}{% endif %}</li>{% endfor %}
   </ul>
 </section>
 {%- endif %}
