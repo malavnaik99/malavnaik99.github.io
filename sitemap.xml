@@ -3,14 +3,14 @@ layout: null
 sitemap: false
 ---
 {%- comment -%}
-Replaces jekyll-sitemap so every URL has a <lastmod>: a post's last_modified_at or date, otherwise the date of the
-page's last commit (_data/lastmod.json, written by scripts/lastmod.py in the deploy workflow). Only real pages are
+Replaces jekyll-sitemap so every URL has a <lastmod>: the date of the
+page's last commit (posts fall back to last_modified_at or their date) (_data/lastmod.json, written by scripts/lastmod.py in the deploy workflow). Only real pages are
 listed: no PDFs, images or /assets/. A page leaves the sitemap with `sitemap: false` in its front matter.
 {%- endcomment -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for d in site.posts %}{% unless d.sitemap == false %}
-<url><loc>{{ d.url | absolute_url | xml_escape }}</loc><lastmod>{{ d.last_modified_at | default: d.date | date: "%Y-%m-%d" }}</lastmod></url>
+<url><loc>{{ d.url | absolute_url | xml_escape }}</loc><lastmod>{{ site.data.lastmod[d.path] | default: d.last_modified_at | default: d.date | date: "%Y-%m-%d" }}</lastmod></url>
 {%- endunless %}{% endfor %}
 {%- assign pages = site.projects | concat: site.html_pages %}
 {%- for p in pages %}{% if p.stamp_guide %}{% include stamps-live.html stamp=p.stamp %}{% unless stamps_live %}{% continue %}{% endunless %}{% endif %}{% unless p.sitemap == false or p.url == "/404.html" or p.redirect_to %}
