@@ -149,8 +149,8 @@ rows:
       - "In order to obtain a stamp 1 permission, you must hold a valid employment permit, or a letter from ISD stating that you can work without an employment permit."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "1"
     topic: work
@@ -159,8 +159,8 @@ rows:
       - "You must not start a job or enter employment unless you or your employer has obtained an employment permit for you, or if your letter of permission clearly states you do not require an employment permit."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "1"
     topic: register
@@ -171,8 +171,8 @@ rows:
       - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "1"
     topic: citizenship
@@ -182,8 +182,8 @@ rows:
       - "The time you accumulate on certain stamps may be used to calculate your reckonable residence (subject to conditions) if you apply for citizenship by naturalisation."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 1G ----------------
