@@ -19,7 +19,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,5 +42,13 @@ jobs:
           missing=$(grep -rlP '<img(?![^>]*\balt=)[^>]*>' _site || true)
           if [ -n "$missing" ]; then echo "Images without alt text in:"; echo "$missing"; exit 1; fi
       - uses: actions/upload-pages-artifact@v3
+      # GitHub sometimes can't see the just-uploaded site for a few seconds ("No artifacts named github-pages"):
+      # wait and try once more instead of failing. If the retry fails too, the run goes red as usual.
       - id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+      - id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
