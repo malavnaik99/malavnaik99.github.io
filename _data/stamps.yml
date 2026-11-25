@@ -195,8 +195,8 @@ rows:
       - "Stamp 1G may also be given to spouses or de facto partners of a CSEP holder or of researchers in the State on a Hosting Agreement."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "1g"
     topic: work
@@ -208,8 +208,8 @@ rows:
       - "Not permitted to be self-employed"
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "1g"
     topic: register
@@ -219,8 +219,8 @@ rows:
       - "Renewal of the Stamp 1G registration should be applied for annually, and after 5 years on a Stamp 1G, you may apply for a Stamp 4."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "1g"
     topic: health
@@ -230,8 +230,8 @@ rows:
       - "You cannot receive any benefits or use publicly funded services (for example, public hospitals) unless you have an entitlement via other means."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: "Applies to Stamp 1G graduates; the page doesn't say the same for spouses and partners."
   - stamp: "1g"
     topic: citizenship
@@ -240,8 +240,8 @@ rows:
       - "Note: Periods spent on Stamp 1G either as a Graduate Student or a Spouse/de facto partner of a Critical Skills Employment Permit holder or a Spouse/de facto partner of Researchers in the State on Hosting Agreements are considered as reckonable residence for the purpose of making an application for Citizenship/Naturalisation."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 2 ----------------
