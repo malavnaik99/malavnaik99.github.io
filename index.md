@@ -28,7 +28,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
 {% capture signals %}
   <li><span class="k">pipeline</span> <span data-pipeline><span class="dot" aria-hidden="true"></span><span class="status">runs every 15 min</span></span></li>
   <li><b>0.957</b> <span class="k">ROC-AUC, content moderation model</span></li>
-  <li><b>14</b> <span class="k">automatic data tests on every run</span></li>
+  <li><b>{{ site.data.pipeline.tests_total }}</b> <span class="k">automatic data tests on every run</span></li>
   <li><b>€0</b> <span class="k">monthly cost</span></li>
   <li><span class="k">Ask the EU Digital Services Act</span> <b>84% top-3 hit rate</b></li>
   {% if lab %}<li><span class="k">blog bot</span> <b>{{ lab.posts_published }}</b> <span class="k">posts published</span></li>
@@ -68,7 +68,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
     <p class="source">source: <a href="{{ '/projects/moderation-classifier/' | relative_url }}">/projects/moderation-classifier/</a></p>
   </div>
   <div class="answer" id="ans-2" hidden>
-    <p>Small and append-only first: the Dublin bikes collector saves every station every 15 minutes. dbt on DuckDB then builds a tested star schema with 14 automatic data checks, published as Parquet on Hugging Face, for €0 a month.</p>
+    <p>Small and append-only first: the Dublin bikes collector saves every station every 15 minutes. dbt on DuckDB then builds a tested star schema with {{ site.data.pipeline.tests_total }} automatic data checks, published as Parquet on Hugging Face, for €0 a month.</p>
     <p class="source">source: <a href="{{ '/projects/dublin-bikes-pipeline/' | relative_url }}">/projects/dublin-bikes-pipeline/</a></p>
   </div>
   <div class="answer" id="ans-3" hidden>
@@ -93,7 +93,7 @@ description: "Malav Naik, Data & GenAI Engineer in Dublin, Ireland: tested data 
     <ol class="flow" aria-label="How the pipeline works">
       <li><b>Source</b><span>Dublinbikes + Met Éireann</span></li>
       <li><b>DuckDB staging</b><span>types, time zones, de-duplication</span></li>
-      <li><b>dbt marts</b><span>star schema · 14 tests</span></li>
+      <li><b>dbt marts</b><span>star schema · {{ site.data.pipeline.tests_total }} tests</span></li>
       <li><b>Parquet on Hugging Face</b><span>public dataset</span></li>
       <li><b>Dashboard + SQL console</b><span>in your browser</span></li>
     </ol>

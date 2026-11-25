@@ -2,13 +2,13 @@
 title: "Dublin bikes + weather data pipeline"
 summary: "Collects every Dublinbikes station every 15 minutes, models it with dbt and DuckDB into a tested star schema, and feeds a live dashboard – for €0."
 problem: "The Dublinbikes feed only shows right now; questions about weather and time of day need history that can be trusted."
-approach: "A collector every 15 minutes, then a daily dbt + DuckDB run into an incremental star schema with 14 automatic data tests and Telegram alerts."
+approach: "A collector every 15 minutes, then a daily dbt + DuckDB run into an incremental star schema with automatic data tests and Telegram alerts."
 result: "Every station, every 15 minutes, modelled and tested into a live dashboard and public dataset, for €0."
 description: "A data pipeline by Data & GenAI Engineer Malav Naik: a Python collector, a dbt + DuckDB star schema with freshness and volume tests, and a live Dublinbikes dashboard."
 order: 2
 # Project row (home page and /work/)
 oneline: "Collects every Dublinbikes station every 15 minutes and models it with dbt and DuckDB into a tested star schema, for €0."
-headline: "14"
+headline_pipeline: tests_total   # read from the pipeline's run log at each deploy (_data/pipeline.json)
 headline_label: "automatic data tests on every run"
 chart: "bikes"
 try_url: "/labs/#sql"
@@ -34,7 +34,7 @@ faq:
   - q: "How often is the data collected?"
     a: "Every Dublinbikes station is recorded every 15 minutes, and the Dublin Airport weather once an hour. Every morning dbt rebuilds the modelled tables."
   - q: "How do you know the data is correct?"
-    a: "14 automatic data tests run every time: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day). A failure sends me a Telegram alert."
+    a: "Automatic data tests run every time: keys unique and never empty, every fact linked to its dimensions, counts never negative, freshness (newest data under 2 hours old) and volume (at least 75% of the expected snapshots in the last day). A failure sends me a Telegram alert."
   - q: "How much does the pipeline cost to run?"
     a: "€0. It runs on free tiers only: GitHub Actions for the jobs and Hugging Face for the data and dbt docs."
   - q: "Where can I see what the data shows?"
@@ -87,7 +87,7 @@ An end-to-end pipeline that runs on free tiers only:
 
 1. **Collect:** a Python job on GitHub Actions, started every 15 minutes, saves each station's bikes and free docks, and once an hour the Dublin Airport weather, as date-partitioned Parquet files in a public [Hugging Face dataset](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-raw). After three failures in a row it switches itself off and messages me on Telegram.
 2. **Model:** every morning dbt builds, in DuckDB: *staging* views (types, time zones, de-duplication) → an *hourly* summary per station → a **star schema**: `fct_station_hour` with `dim_station` and `dim_hour` (local time, weekday and that hour's weather). The fact table is **incremental and idempotent**: each run recomputes only the last few hours, and rerunning gives the same result. See the [dbt docs and lineage graph](https://huggingface.co/spaces/Malavnaik/dublin-bikes-dbt-docs).
-3. **Check:** 14 automatic data tests run every time: keys unique and never empty, every fact linked to its dimensions, counts never negative, **freshness** (newest data under 2 hours old) and **volume** (at least 75% of the expected snapshots in the last day). A failure sends me a Telegram alert.
+3. **Check:** {{ site.data.pipeline.tests_total }} automatic data tests run every time: keys unique and never empty, every fact linked to its dimensions, counts never negative, **freshness** (newest data under 2 hours old) and **volume** (at least 75% of the expected snapshots in the last day). A failure sends me a Telegram alert.
 4. **Publish:** the tables, a run log and the dashboard summary go to a second [Hugging Face dataset](https://huggingface.co/datasets/Malavnaik/dublin-bikes-weather-marts). Cost: €0.
 
 ## Live dashboard

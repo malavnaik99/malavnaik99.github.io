@@ -28,6 +28,10 @@ jobs:
       - uses: actions/configure-pages@v5
       - name: Work out each page's last-change date for the sitemap
         run: python3 scripts/lastmod.py
+      - name: Read how many data tests the Dublin bikes pipeline runs (keeps the last known count if it can't)
+        run: |
+          python3 scripts/pipeline_tests.py --self-test
+          python3 scripts/pipeline_tests.py
       - name: Copy identity.json into the site and check nothing has drifted from it
         run: python3 scripts/check_identity.py
       - name: Check the Living in Ireland data (quotes word for word, wording rule)
