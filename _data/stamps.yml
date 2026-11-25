@@ -85,8 +85,8 @@ rows:
       - "Be a visiting academic at an Irish university or college"
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "0"
     topic: work
@@ -95,8 +95,8 @@ rows:
       - "You must not work or engage in any business, trade or profession unless specified in a letter of permission from Immigration Service Delivery."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "0"
     topic: register
@@ -105,8 +105,8 @@ rows:
       - "Before you can register a Stamp 0 permission at the local immigration office, you must complete the Stamp 0 application form and be granted permission."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "0"
     topic: health
@@ -116,8 +116,8 @@ rows:
       - "You must have private medical insurance."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "0"
     topic: prsi
@@ -126,8 +126,8 @@ rows:
       - "You cannot receive any benefits or use publicly funded services, for example be treated at a public hospital."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "0"
     topic: means
@@ -136,8 +136,8 @@ rows:
       - "You cannot receive any benefits or use publicly funded services, for example be treated at a public hospital."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 1 ----------------
@@ -327,8 +327,8 @@ rows:
       - "Stamp 2A indicates permission for full time study in Ireland for a course that is not on the official Interim List of Eligible Programmes (ILEP), for a specified period."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "2a"
     topic: work
@@ -337,8 +337,8 @@ rows:
       - "You must not work or engage in any business, trade or profession."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "2a"
     topic: register
@@ -349,8 +349,8 @@ rows:
       - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "2a"
     topic: health
@@ -359,8 +359,8 @@ rows:
       - "You cannot receive any benefits or use publicly funded services, for example, public hospitals. You must have private medical insurance."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "2a"
     topic: prsi
@@ -369,8 +369,8 @@ rows:
       - "You cannot receive any benefits or use publicly funded services, for example, public hospitals."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "2a"
     topic: means
@@ -379,8 +379,8 @@ rows:
       - "You cannot receive any benefits or use publicly funded services, for example, public hospitals."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "2a"
     topic: citizenship
@@ -389,8 +389,8 @@ rows:
       - "Stamp 2A is not reckonable as residence when applying for citizenship by naturalisation."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 3 ----------------
@@ -404,8 +404,8 @@ rows:
       - "Join your non-EEA/EU/Swiss spouse/civil partner or family member who is here based on a work permit."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "3"
     topic: work
@@ -414,8 +414,8 @@ rows:
       - "You cannot work or engage in any business, trade or profession."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "3"
     topic: register
@@ -426,8 +426,8 @@ rows:
       - "If you wish to stay in Ireland past the expiry date of your immigration permission, you must apply to renew your permission and registration before they expire."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "3"
     topic: family
@@ -436,8 +436,8 @@ rows:
       - "Join your non-EEA/EU/Swiss spouse/civil partner or family member who is here based on a work permit."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "3"
     topic: citizenship
@@ -446,8 +446,8 @@ rows:
       - "Stamp 3 is reckonable as residence when applying for citizenship by naturalisation."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 4 ----------------
@@ -536,10 +536,11 @@ rows:
     quote:
       - "Stamp 5 indicates permission to stay in Ireland without change to conditions on the time you can remain here, subject to other conditions."
       - "The stamp will be valid up to the expiry date on your passport."
+      - "Remain in Ireland ‘Without condition as to time’ (WCATT)."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "5"
     topic: register
@@ -548,8 +549,8 @@ rows:
       - "Before you can register a Stamp 5 permission at the local immigration office, you must complete the Stamp 5 application form and be granted permission."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "5"
     topic: citizenship
@@ -558,8 +559,8 @@ rows:
       - "Stamp 5 is reckonable as residence when applying for citizenship by naturalisation."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
   # ---------------- Stamp 6 ----------------
@@ -570,8 +571,8 @@ rows:
       - "Stamp 6 indicates you are an Irish citizen with dual-citizenship."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "6"
     topic: register
@@ -580,8 +581,8 @@ rows:
       - "The holders of this stamp are dual citizens and therefore do not register at the immigration office."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
   - stamp: "6"
     topic: citizenship
@@ -590,8 +591,8 @@ rows:
       - "Stamp 6 indicates you are an Irish citizen with dual-citizenship."
     official_url: "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/immigration-permission-stamps/"
     source_name: "Immigration Service Delivery"
-    last_verified: "2026-11-24"
-    reviewed: false
+    last_verified: "2026-11-25"
+    reviewed: true
     notes: ""
 
 # "First 90 days for international students" (Stamp 2 page), in this order. Same rule: a step's details show only when
